@@ -23,6 +23,7 @@ type Generator struct {
 	genCache      map[string]codegen.CodeGen
 }
 
+// Generate generates the code for the given platform, version, and framework
 func (db *Generator) Generate(platform string, version int, rootDir string, framework string, ignoreTypes set.Set[string]) {
 	db.Platform = platform
 	db.Version = version
@@ -136,6 +137,22 @@ func (db *Generator) Generate(platform string, version int, rootDir string, fram
 				})
 				continue
 			}
+		case "Function":
+			functionGen := db.ToFunctionGen(framework, s)
+			if functionGen == nil {
+				log.Println("skipping function", s.Name)
+				continue
+			}
+			functionGen.Init()
+			fw := &codegen.FileWriter{
+				Name:        s.Name,
+				Module:      *functionGen.Type.Module,
+				PlatformDir: rootDir,
+			}
+			fw.Add(functionGen)
+			fw.WriteCode()
+		default:
+			log.Println("skipping", s.Kind, s.Name)
 		}
 	}
 	mw.WriteCode()
