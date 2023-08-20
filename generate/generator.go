@@ -138,21 +138,7 @@ func (db *Generator) Generate(platform string, version int, rootDir string, fram
 				continue
 			}
 		case "Function":
-			functionGen := db.ToFunctionGen(framework, s)
-			if functionGen == nil {
-				log.Println("skipping function", s.Name)
-				continue
-			}
-			functionGen.Init()
-			fw := &codegen.FileWriter{
-				Name:        s.Name,
-				Module:      *functionGen.Type.Module,
-				PlatformDir: rootDir,
-			}
-			fw.Add(functionGen)
-			fw.WriteCode()
-		default:
-			log.Println("skipping", s.Kind, s.Name)
+			mw.Functions = append(mw.Functions, db.ToFunction(framework, s))
 		}
 	}
 	mw.WriteCode()
