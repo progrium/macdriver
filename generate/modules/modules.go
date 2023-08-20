@@ -101,6 +101,7 @@ func CanIgnoreNotFound(p any) bool {
 		"QuickLook",
 		"force feedback",
 		"opengl es",
+		"ColorSync",
 	} {
 		if strings.EqualFold(m, mod) {
 			return true

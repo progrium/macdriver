@@ -138,7 +138,12 @@ func (db *Generator) Generate(platform string, version int, rootDir string, fram
 				continue
 			}
 		case "Function":
-			mw.Functions = append(mw.Functions, db.ToFunction(framework, s))
+			fn := db.ToFunction(framework, s)
+			if fn == nil {
+				log.Println("skipping function", s.Name)
+				continue
+			}
+			mw.Functions = append(mw.Functions, fn)
 		}
 	}
 	mw.WriteCode()
