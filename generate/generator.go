@@ -143,6 +143,17 @@ func (db *Generator) Generate(platform string, version int, rootDir string, fram
 				continue
 			}
 			mw.Functions = append(mw.Functions, fn)
+		case "Struct":
+			if s.Name != "CGImageRef" {
+				continue
+			}
+			fn := db.ToStruct(framework, s)
+			if fn == nil {
+				continue
+			}
+			mw.Structs = append(mw.Structs, fn)
+		default:
+			log.Printf("skipping '%s', unhandled kind: %s", s.Name, s.Kind)
 		}
 	}
 	mw.WriteCode()
