@@ -26,6 +26,10 @@ func (p *ProtocolType) ObjcName() string {
 	return "id<" + p.Name + ">"
 }
 
+func (p *ProtocolType) CName() string {
+	return "id<" + p.Name + ">"
+}
+
 func (p *ProtocolType) GoImports() set.Set[string] {
 	return set.New("github.com/progrium/macdriver/objc", "github.com/progrium/macdriver/macos/"+p.Module.Package)
 }
