@@ -8,17 +8,23 @@ import (
 
 // for weird struct refs like those ending in "Ref"
 type RefType struct {
-	Name string // c and objc type name
-	// GName  string          // the go struct name
-	// Module *modules.Module // the module
+	Name   string          // c and objc type name
+	GName  string          // the go struct name
+	Module *modules.Module // the module
 }
 
 func (s *RefType) GoImports() set.Set[string] {
-	return set.New("unsafe")
+	if s.Module == nil {
+		return set.New("unsafe")
+	}
+	return set.New("github.com/progrium/macdriver/macos/" + s.Module.Package)
 }
 
 func (s *RefType) GoName(currentModule *modules.Module, receiveFromObjc bool) string {
-	return "unsafe.Pointer"
+	if s.Module == nil {
+		return "unsafe.Pointer"
+	}
+	return FullGoName(*s.Module, s.GName, *currentModule)
 }
 
 func (s *RefType) ObjcName() string {
@@ -30,5 +36,5 @@ func (s *RefType) CName() string {
 }
 
 func (s *RefType) DeclareModule() *modules.Module {
-	return nil
+	return s.Module
 }

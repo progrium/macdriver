@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/progrium/macdriver/generate/codegen"
+	"github.com/progrium/macdriver/generate/modules"
 	"github.com/progrium/macdriver/generate/typing"
 )
 
@@ -253,7 +254,7 @@ func (db *Generator) ToFunction(fw string, sym Symbol) *codegen.Function {
 	}
 	fn := &codegen.Function{
 		Name:        sym.Name,
-		GoName:      sym.Name,
+		GoName:      modules.TrimPrefix(sym.Name),
 		Description: sym.Description,
 		DocURL:      sym.DocURL(),
 		Type:        fntyp,
