@@ -29,7 +29,6 @@ package coregraphics
 // void ContextSetFont(void * c, void * font);
 // void ContextDrawPDFDocument(void * c, CGRect rect, void * document, NSInteger page);
 // CGRect ContextConvertRectToUserSpace(void * c, CGRect rect);
-// void * ColorSpaceCreateWithPropertyList(void* plist);
 // void * ColorRetain(void * color);
 // void ContextBeginPath(void * c);
 // bool ColorSpaceIsHLGBased(void * s);
@@ -73,7 +72,6 @@ package coregraphics
 // void ContextAddCurveToPoint(void * c, float cp1x, float cp1y, float cp2x, float cp2y, float x, float y);
 // void * ColorCreateGenericCMYK(float cyan, float magenta, float yellow, float black, float alpha);
 // void * ColorSpaceCreateExtendedLinearized(void * space);
-// void * DisplayIOServicePort(uint32_t display);
 // void * ColorSpaceCreateWithICCData(void* data);
 // int32_t GetDisplaysWithRect(CGRect rect, uint32_t maxDisplays, CGDirectDisplayID* displays, uint32_t* matchingDisplayCount);
 // int32_t PostMouseEvent(CGPoint mouseCursorPosition, NSInteger updateMouseCursorPosition, uint32_t buttonCount, NSInteger mouseButtonDown);
@@ -358,7 +356,6 @@ package coregraphics
 // uint DisplayPixelsWide(uint32_t display);
 // void ContextSetShouldAntialias(void * c, BOOL shouldAntialias);
 // int32_t DisplaySwitchToMode(uint32_t display, void * mode);
-// int32_t GetEventTapList(uint32_t maxNumberOfTaps, CGEventTapInformation* tapList, uint32_t* eventTapCount);
 // bool EventTapIsEnabled(void * tap);
 // bool PDFDictionaryGetStream(void * dict, uint8_t* key, void * value);
 // void * ColorSpaceCreateIndexed(void * baseSpace, NSUInteger lastIndex, uint8_t* colorTable);
@@ -563,7 +560,6 @@ package coregraphics
 // void EventSourceSetLocalEventsFilterDuringSuppressionState(void * source, uint32_t filter, uint32_t state);
 // void * DisplayCurrentMode(uint32_t display);
 // int32_t WaitForScreenUpdateRects(uint32_t requestedOperations, CGScreenUpdateOperation* currentOperation, CGRect* rects, NSUInteger* rectCount, CGScreenUpdateMoveDelta* delta);
-// void * ColorConversionInfoCreateFromListWithArguments(void * options, void * , uint32_t , int32_t , NSObject* );
 // void ContextSetGrayStrokeColor(void * c, float gray, float alpha);
 // uint32_t DisplayVendorNumber(uint32_t display);
 // bool RectContainsPoint(CGRect rect, CGPoint point);
@@ -660,7 +656,7 @@ import (
 // Synthesizes a low-level keyboard event on the local machine. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541792-cgpostkeyboardevent?language=objc
-func PostKeyboardEvent(keyChar CharCode, virtualKey KeyCode, keyDown kernel.Boolean_t) Error {
+func PostKeyboardEvent(keyChar CharCode, virtualKey KeyCode, keyDown int) Error {
 	rv := C.PostKeyboardEvent(C.uint16_t(keyChar), C.uint16_t(virtualKey), C.NSInteger(keyDown))
 	return Error(rv)
 }
@@ -669,7 +665,7 @@ func PostKeyboardEvent(keyChar CharCode, virtualKey KeyCode, keyDown kernel.Bool
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455774-cgcontextstrokeellipseinrect?language=objc
 func ContextStrokeEllipseInRect(c ContextRef, rect Rect) {
-	C.ContextStrokeEllipseInRect(c, rect)
+	C.ContextStrokeEllipseInRect(c, C.CGRect(rect))
 }
 
 // Returns a rectangle that is transformed from user space coordinate to device space coordinates. [Full Topic]
@@ -728,9 +724,9 @@ func ImageGetAlphaInfo(image ImageRef) ImageAlphaInfo {
 // Returns a Boolean value indicating whether a display is connected or online. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454476-cgdisplayisonline?language=objc
-func DisplayIsOnline(display DirectDisplayID) kernel.Boolean_t {
+func DisplayIsOnline(display DirectDisplayID) int {
 	rv := C.DisplayIsOnline(C.uint32_t(display))
-	return kernel.Boolean_t(rv)
+	return int(rv)
 }
 
 // Releases a display fade reservation, and unfades the display if needed. [Full Topic]
@@ -831,14 +827,6 @@ func ContextDrawPDFDocument(c ContextRef, rect Rect, document PDFDocumentRef, pa
 func ContextConvertRectToUserSpace(c ContextRef, rect Rect) Rect {
 	rv := C.ContextConvertRectToUserSpace(c, rect)
 	return Rect(rv)
-}
-
-// Creates a color space from a property list. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/2962829-cgcolorspacecreatewithpropertyli?language=objc
-func ColorSpaceCreateWithPropertyList(plist corefoundation.PropertyListRef) ColorSpaceRef {
-	rv := C.ColorSpaceCreateWithPropertyList(C.void * (plist))
-	return ColorSpaceRef(rv)
 }
 
 // Increments the retain count of a color. [Full Topic]
@@ -1173,14 +1161,6 @@ func ColorSpaceCreateExtendedLinearized(space ColorSpaceRef) ColorSpaceRef {
 	return ColorSpaceRef(rv)
 }
 
-// Returns the I/O Kit service port of the specified display. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1543516-cgdisplayioserviceport?language=objc
-func DisplayIOServicePort(display DirectDisplayID) kernel.Io_service_t {
-	rv := C.DisplayIOServicePort(C.uint32_t(display))
-	return kernel.Io_service_t(rv)
-}
-
 // Creates an ICC-based color space using the ICC profile contained in the specified data. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2866135-cgcolorspacecreatewithiccdata?language=objc
@@ -1200,7 +1180,7 @@ func GetDisplaysWithRect(rect Rect, maxDisplays uint32, displays *DirectDisplayI
 // Synthesizes a low-level mouse-button event on the local machine. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541785-cgpostmouseevent?language=objc
-func PostMouseEvent(mouseCursorPosition Point, updateMouseCursorPosition kernel.Boolean_t, buttonCount ButtonCount, mouseButtonDown kernel.Boolean_t) Error {
+func PostMouseEvent(mouseCursorPosition Point, updateMouseCursorPosition int, buttonCount ButtonCount, mouseButtonDown int) Error {
 	rv := C.PostMouseEvent(mouseCursorPosition, C.NSInteger(updateMouseCursorPosition), C.uint32_t(buttonCount), C.NSInteger(mouseButtonDown))
 	return Error(rv)
 }
@@ -1462,9 +1442,9 @@ func EventCreateData(allocator corefoundation.AllocatorRef, event EventRef) core
 // Returns a Boolean value indicating whether a display is running in a stereo graphics mode. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455025-cgdisplayisstereo?language=objc
-func DisplayIsStereo(display DirectDisplayID) kernel.Boolean_t {
+func DisplayIsStereo(display DirectDisplayID) int {
 	rv := C.DisplayIsStereo(C.uint32_t(display))
-	return kernel.Boolean_t(rv)
+	return int(rv)
 }
 
 // Transforms the user coordinate system in a context using a specified matrix. [Full Topic]
@@ -1584,7 +1564,7 @@ func PointMakeWithDictionaryRepresentation(dict corefoundation.DictionaryRef, po
 //	[Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454804-cgeventposttopid?language=objc
-func EventPostToPid(pid kernel.Pid_t, event EventRef) {
+func EventPostToPid(pid int32, event EventRef) {
 	C.EventPostToPid(C.NSObject*(pid), event)
 }
 
@@ -1684,7 +1664,7 @@ func ConfigureDisplayFadeEffect(config unsafe.Pointer, fadeOutSeconds DisplayFad
 // Performs a single fade operation. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456189-cgdisplayfade?language=objc
-func DisplayFade(token DisplayFadeReservationToken, duration DisplayFadeInterval, startBlend DisplayBlendFraction, endBlend DisplayBlendFraction, redBlend float64, greenBlend float64, blueBlend float64, synchronous kernel.Boolean_t) Error {
+func DisplayFade(token DisplayFadeReservationToken, duration DisplayFadeInterval, startBlend DisplayBlendFraction, endBlend DisplayBlendFraction, redBlend float64, greenBlend float64, blueBlend float64, synchronous int) Error {
 	rv := C.DisplayFade(C.uint32_t(token), C.float(duration), C.float(startBlend), C.float(endBlend), redBlend, greenBlend, blueBlend, C.NSInteger(synchronous))
 	return Error(rv)
 }
@@ -1777,7 +1757,7 @@ func ColorSpaceCreateICCBased(nComponents uint, range_ *float64, profile DataPro
 // Connects or disconnects the mouse and cursor while an application is in the foreground. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454486-cgassociatemouseandmousecursorpo?language=objc
-func AssociateMouseAndMouseCursorPosition(connected kernel.Boolean_t) Error {
+func AssociateMouseAndMouseCursorPosition(connected int) Error {
 	rv := C.AssociateMouseAndMouseCursorPosition(C.NSInteger(connected))
 	return Error(rv)
 }
@@ -1831,9 +1811,9 @@ func ContextSetFlatness(c ContextRef, flatness float64) {
 // Returns a Boolean value indicating whether a display is active. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455222-cgdisplayisactive?language=objc
-func DisplayIsActive(display DirectDisplayID) kernel.Boolean_t {
+func DisplayIsActive(display DirectDisplayID) int {
 	rv := C.DisplayIsActive(C.uint32_t(display))
-	return kernel.Boolean_t(rv)
+	return int(rv)
 }
 
 // Sets the pattern phase of a context. [Full Topic]
@@ -2076,9 +2056,9 @@ func ContextTranslateCTM(c ContextRef, tx float64, ty float64) {
 // Returns a Boolean value indicating whether Quartz is using OpenGL-based window acceleration (Quartz Extreme) to render in a display. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455721-cgdisplayusesopenglacceleration?language=objc
-func DisplayUsesOpenGLAcceleration(display DirectDisplayID) kernel.Boolean_t {
+func DisplayUsesOpenGLAcceleration(display DirectDisplayID) int {
 	rv := C.DisplayUsesOpenGLAcceleration(C.uint32_t(display))
-	return kernel.Boolean_t(rv)
+	return int(rv)
 }
 
 // Sets how sample values are composited by a graphics context. [Full Topic]
@@ -2167,9 +2147,9 @@ func EventTapPostEvent(proxy unsafe.Pointer, event EventRef) {
 // Returns a Boolean value indicating whether a display is in a mirroring set. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455558-cgdisplayisinmirrorset?language=objc
-func DisplayIsInMirrorSet(display DirectDisplayID) kernel.Boolean_t {
+func DisplayIsInMirrorSet(display DirectDisplayID) int {
 	rv := C.DisplayIsInMirrorSet(C.uint32_t(display))
-	return kernel.Boolean_t(rv)
+	return int(rv)
 }
 
 //	[Full Topic]
@@ -2190,7 +2170,7 @@ func ContextClearRect(c ContextRef, rect Rect) {
 // Sets the Unicode string associated with a Quartz keyboard event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456028-cgeventkeyboardsetunicodestring?language=objc
-func EventKeyboardSetUnicodeString(event EventRef, stringLength objc.Object, unicodeString *kernel.UniChar) {
+func EventKeyboardSetUnicodeString(event EventRef, stringLength objc.IObject, unicodeString *uint16) {
 	C.EventKeyboardSetUnicodeString(event, stringLength, unicodeString)
 }
 
@@ -2621,9 +2601,9 @@ func DataProviderCopyData(provider DataProviderRef) corefoundation.DataRef {
 // Returns a Boolean value indicating whether a display is in a hardware mirroring set. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454506-cgdisplayisinhwmirrorset?language=objc
-func DisplayIsInHWMirrorSet(display DirectDisplayID) kernel.Boolean_t {
+func DisplayIsInHWMirrorSet(display DirectDisplayID) int {
 	rv := C.DisplayIsInHWMirrorSet(C.uint32_t(display))
-	return kernel.Boolean_t(rv)
+	return int(rv)
 }
 
 // Returns the mask that indicates which classes of local hardware events are enabled during event suppression. [Full Topic]
@@ -2661,7 +2641,7 @@ func ContextGetPathBoundingBox(c ContextRef) Rect {
 // Returns the Unicode string associated with a Quartz keyboard event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456120-cgeventkeyboardgetunicodestring?language=objc
-func EventKeyboardGetUnicodeString(event EventRef, maxStringLength objc.Object, actualStringLength objc.Object, unicodeString *kernel.UniChar) {
+func EventKeyboardGetUnicodeString(event EventRef, maxStringLength objc.IObject, actualStringLength objc.IObject, unicodeString *uint16) {
 	C.EventKeyboardGetUnicodeString(event, maxStringLength, actualStringLength, unicodeString)
 }
 
@@ -2754,7 +2734,7 @@ func ContextSetStrokePattern(c ContextRef, pattern PatternRef, components *float
 // Returns information about the display mode closest to a specified depth and screen size. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562060-cgdisplaybestmodeforparameters?language=objc
-func DisplayBestModeForParameters(display DirectDisplayID, bitsPerPixel uint, width uint, height uint, exactMatch *kernel.Boolean_t) corefoundation.DictionaryRef {
+func DisplayBestModeForParameters(display DirectDisplayID, bitsPerPixel uint, width uint, height uint, exactMatch *int) corefoundation.DictionaryRef {
 	rv := C.DisplayBestModeForParameters(C.uint32_t(display), bitsPerPixel, width, height, exactMatch)
 	return corefoundation.DictionaryRef(rv)
 }
@@ -3372,14 +3352,6 @@ func DisplaySwitchToMode(display DirectDisplayID, mode corefoundation.Dictionary
 	return Error(rv)
 }
 
-// Gets a list of currently installed event taps. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455395-cggeteventtaplist?language=objc
-func GetEventTapList(maxNumberOfTaps uint32, tapList *EventTapInformation, eventTapCount *uint32) Error {
-	rv := C.GetEventTapList(maxNumberOfTaps, tapList, eventTapCount)
-	return Error(rv)
-}
-
 // Returns a Boolean value indicating whether an event tap is enabled. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456102-cgeventtapisenabled?language=objc
@@ -3572,9 +3544,9 @@ func ColorConversionInfoCreateWithOptions(src ColorSpaceRef, dst ColorSpaceRef, 
 // Returns a Boolean value indicating whether a fade operation is currently in progress. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1571962-cgdisplayfadeoperationinprogress?language=objc
-func DisplayFadeOperationInProgress() kernel.Boolean_t {
+func DisplayFadeOperationInProgress() int {
 	rv := C.DisplayFadeOperationInProgress()
-	return kernel.Boolean_t(rv)
+	return int(rv)
 }
 
 // Restores the permanent display configuration settings for the current user. [Full Topic]
@@ -4007,9 +3979,9 @@ func ImageGetDataProvider(image ImageRef) DataProviderRef {
 // Returns a Boolean value indicating whether a display is captured. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562061-cgdisplayiscaptured?language=objc
-func DisplayIsCaptured(display DirectDisplayID) kernel.Boolean_t {
+func DisplayIsCaptured(display DirectDisplayID) int {
 	rv := C.DisplayIsCaptured(C.uint32_t(display))
-	return kernel.Boolean_t(rv)
+	return int(rv)
 }
 
 // Sets the fill pattern in the specified graphics context. [Full Topic]
@@ -4086,7 +4058,7 @@ func ColorCreateCopyByMatchingToColorSpace(arg0 ColorSpaceRef, intent ColorRende
 // Turns off local hardware events in the current session. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541773-cginhibitlocalevents?language=objc
-func InhibitLocalEvents(inhibit kernel.Boolean_t) Error {
+func InhibitLocalEvents(inhibit int) Error {
 	rv := C.InhibitLocalEvents(C.NSInteger(inhibit))
 	return Error(rv)
 }
@@ -4180,7 +4152,7 @@ func DisplayModeCopyPixelEncoding(mode DisplayModeRef) corefoundation.StringRef 
 // Immediately enables or disables stereo operation for a display. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454316-cgdisplaysetstereooperation?language=objc
-func DisplaySetStereoOperation(display DirectDisplayID, stereo kernel.Boolean_t, forceBlueLine kernel.Boolean_t, option ConfigureOption) Error {
+func DisplaySetStereoOperation(display DirectDisplayID, stereo int, forceBlueLine int, option ConfigureOption) Error {
 	rv := C.DisplaySetStereoOperation(C.uint32_t(display), C.NSInteger(stereo), C.NSInteger(forceBlueLine), C.uint32_t(option))
 	return Error(rv)
 }
@@ -4249,9 +4221,9 @@ func FontGetStemV(font FontRef) float64 {
 // Returns a Boolean value indicating whether the mouse cursor is visible. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541812-cgcursorisvisible?language=objc
-func CursorIsVisible() kernel.Boolean_t {
+func CursorIsVisible() int {
 	rv := C.CursorIsVisible()
-	return kernel.Boolean_t(rv)
+	return int(rv)
 }
 
 // Strokes a sequence of line segments. [Full Topic]
@@ -4673,7 +4645,7 @@ func DataConsumerRelease(consumer DataConsumerRef) {
 // Enables or disables stereo operation for a display, as part of a display configuration. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456308-cgconfiguredisplaystereooperatio?language=objc
-func ConfigureDisplayStereoOperation(config unsafe.Pointer, display DirectDisplayID, stereo kernel.Boolean_t, forceBlueLine kernel.Boolean_t) Error {
+func ConfigureDisplayStereoOperation(config unsafe.Pointer, display DirectDisplayID, stereo int, forceBlueLine int) Error {
 	rv := C.ConfigureDisplayStereoOperation(config, C.uint32_t(display), C.NSInteger(stereo), C.NSInteger(forceBlueLine))
 	return Error(rv)
 }
@@ -4696,9 +4668,9 @@ func PathAddCurveToPoint(path MutablePathRef, m *AffineTransform, cp1x float64, 
 // Returns a Boolean value indicating whether a display is built-in, such as the internal display in portable systems. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454566-cgdisplayisbuiltin?language=objc
-func DisplayIsBuiltin(display DirectDisplayID) kernel.Boolean_t {
+func DisplayIsBuiltin(display DirectDisplayID) int {
 	rv := C.DisplayIsBuiltin(C.uint32_t(display))
-	return kernel.Boolean_t(rv)
+	return int(rv)
 }
 
 // Hides the mouse cursor, and increments the hide cursor count. [Full Topic]
@@ -4766,9 +4738,9 @@ func GradientCreateWithColors(space ColorSpaceRef, colors corefoundation.ArrayRe
 // Returns a Boolean value indicating whether a display is always in a mirroring set. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456110-cgdisplayisalwaysinmirrorset?language=objc
-func DisplayIsAlwaysInMirrorSet(display DirectDisplayID) kernel.Boolean_t {
+func DisplayIsAlwaysInMirrorSet(display DirectDisplayID) int {
 	rv := C.DisplayIsAlwaysInMirrorSet(C.uint32_t(display))
-	return kernel.Boolean_t(rv)
+	return int(rv)
 }
 
 // Creates a dashed copy of another path. [Full Topic]
@@ -4812,9 +4784,9 @@ func SetDisplayTransferByFormula(display DirectDisplayID, redMin GammaValue, red
 // Returns a Boolean value indicating whether a display is sleeping (and is therefore not drawable). [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454260-cgdisplayisasleep?language=objc
-func DisplayIsAsleep(display DirectDisplayID) kernel.Boolean_t {
+func DisplayIsAsleep(display DirectDisplayID) int {
 	rv := C.DisplayIsAsleep(C.uint32_t(display))
-	return kernel.Boolean_t(rv)
+	return int(rv)
 }
 
 // Returns the bitmap information for a bitmap image. [Full Topic]
@@ -4883,7 +4855,7 @@ func ContextSetLineWidth(c ContextRef, width float64) {
 // Enables or disables the merging of actual key and mouse state with the application-specified state in a synthetic event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541787-cgenableeventstatecombining?language=objc
-func EnableEventStateCombining(combineState kernel.Boolean_t) Error {
+func EnableEventStateCombining(combineState int) Error {
 	rv := C.EnableEventStateCombining(C.NSInteger(combineState))
 	return Error(rv)
 }
@@ -4962,14 +4934,6 @@ func DisplayCurrentMode(display DirectDisplayID) corefoundation.DictionaryRef {
 func WaitForScreenUpdateRects(requestedOperations ScreenUpdateOperation, currentOperation *ScreenUpdateOperation, rects *Rect, rectCount *uint, delta *ScreenUpdateMoveDelta) Error {
 	rv := C.WaitForScreenUpdateRects(C.uint32_t(requestedOperations), currentOperation, rects, rectCount, delta)
 	return Error(rv)
-}
-
-//	[Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/2866016-cgcolorconversioninfocreatefroml?language=objc
-func ColorConversionInfoCreateFromListWithArguments(options corefoundation.DictionaryRef, arg0 ColorSpaceRef, arg1 ColorConversionInfoTransformType, arg2 ColorRenderingIntent, arg3 kernel.Va_list) ColorConversionInfoRef {
-	rv := C.ColorConversionInfoCreateFromListWithArguments(options, arg0, C.uint32_t(arg1), C.int32_t(arg2), C.NSObject*(arg3))
-	return ColorConversionInfoRef(rv)
 }
 
 // Sets the current stroke color to a value in the DeviceGray color space. [Full Topic]
@@ -5163,7 +5127,7 @@ func ColorSpaceGetColorTableCount(space ColorSpaceRef) uint {
 // Returns information about the display mode closest to a specified depth, screen size, and refresh rate. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562066-cgdisplaybestmodeforparametersan?language=objc
-func DisplayBestModeForParametersAndRefreshRate(display DirectDisplayID, bitsPerPixel uint, width uint, height uint, refreshRate RefreshRate, exactMatch *kernel.Boolean_t) corefoundation.DictionaryRef {
+func DisplayBestModeForParametersAndRefreshRate(display DirectDisplayID, bitsPerPixel uint, width uint, height uint, refreshRate RefreshRate, exactMatch *int) corefoundation.DictionaryRef {
 	rv := C.DisplayBestModeForParametersAndRefreshRate(C.uint32_t(display), bitsPerPixel, width, height, C.double(refreshRate), exactMatch)
 	return corefoundation.DictionaryRef(rv)
 }
@@ -5279,9 +5243,9 @@ func ReleaseAllDisplays() Error {
 // Returns a Boolean value indicating whether the mouse cursor is drawn in framebuffer memory. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541804-cgcursorisdrawninframebuffer?language=objc
-func CursorIsDrawnInFramebuffer() kernel.Boolean_t {
+func CursorIsDrawnInFramebuffer() int {
 	rv := C.CursorIsDrawnInFramebuffer()
-	return kernel.Boolean_t(rv)
+	return int(rv)
 }
 
 // Returns the serial number of a display monitor. [Full Topic]
@@ -5542,9 +5506,9 @@ func FontCreatePostScriptSubset(font FontRef, subsetName corefoundation.StringRe
 // Returns a Boolean value indicating whether a display is the main display. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455448-cgdisplayismain?language=objc
-func DisplayIsMain(display DirectDisplayID) kernel.Boolean_t {
+func DisplayIsMain(display DirectDisplayID) int {
 	rv := C.DisplayIsMain(C.uint32_t(display))
-	return kernel.Boolean_t(rv)
+	return int(rv)
 }
 
 // Creates a mutable graphics path. [Full Topic]

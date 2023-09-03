@@ -70,9 +70,6 @@ void ContextDrawPDFDocument(void * c, CGRect rect, void * document, NSInteger pa
 CGRect ContextConvertRectToUserSpace(void * c, CGRect rect) {
 	return CGContextConvertRectToUserSpace(c, rect);
 }
-void * ColorSpaceCreateWithPropertyList(void* plist) {
-	return CGColorSpaceCreateWithPropertyList(plist);
-}
 void * ColorRetain(void * color) {
 	return CGColorRetain(color);
 }
@@ -103,7 +100,6 @@ CGRect PDFPageGetBoxRect(void * page, int32_t box) {
 void ContextStrokeRectWithWidth(void * c, CGRect rect, float width) {
 	return CGContextStrokeRectWithWidth(c, rect, width);
 }
-// // TODO: CGPathApplyWithBlock not implemented (missing block param support)
 void * SessionCopyCurrentDictionary() {
 	return CGSessionCopyCurrentDictionary();
 }
@@ -203,13 +199,9 @@ void * ColorCreateGenericCMYK(float cyan, float magenta, float yellow, float bla
 void * ColorSpaceCreateExtendedLinearized(void * space) {
 	return CGColorSpaceCreateExtendedLinearized(space);
 }
-void * DisplayIOServicePort(uint32_t display) {
-	return CGDisplayIOServicePort(display);
-}
 void * ColorSpaceCreateWithICCData(void* data) {
 	return CGColorSpaceCreateWithICCData(data);
 }
-// // TODO: CGPDFOperatorTableSetCallback not implemented (missing block param support)
 int32_t GetDisplaysWithRect(CGRect rect, uint32_t maxDisplays, CGDirectDisplayID* displays, uint32_t* matchingDisplayCount) {
 	return CGGetDisplaysWithRect(rect, maxDisplays, displays, matchingDisplayCount);
 }
@@ -858,7 +850,6 @@ NSUInteger ImageGetBitsPerComponent(void * image) {
 int32_t CaptureAllDisplays() {
 	return CGCaptureAllDisplays();
 }
-// // TODO: CGDisplayStreamCreate not implemented (missing block param support)
 double EventSourceGetPixelsPerLine(void * source) {
 	return CGEventSourceGetPixelsPerLine(source);
 }
@@ -1059,9 +1050,6 @@ void ContextSetShouldAntialias(void * c, BOOL shouldAntialias) {
 }
 int32_t DisplaySwitchToMode(uint32_t display, void * mode) {
 	return CGDisplaySwitchToMode(display, mode);
-}
-int32_t GetEventTapList(uint32_t maxNumberOfTaps, CGEventTapInformation* tapList, uint32_t* eventTapCount) {
-	return CGGetEventTapList(maxNumberOfTaps, tapList, eventTapCount);
 }
 BOOL EventTapIsEnabled(void * tap) {
 	return CGEventTapIsEnabled(tap);
@@ -1291,7 +1279,6 @@ void EventSourceSetKeyboardType(void * source, uint32_t keyboardType) {
 void * DisplayCopyAllDisplayModes(uint32_t display, void * options) {
 	return CGDisplayCopyAllDisplayModes(display, options);
 }
-// // TODO: CGErrorSetCallback not implemented (missing block param support)
 NSUInteger DisplayPixelsHigh(uint32_t display) {
 	return CGDisplayPixelsHigh(display);
 }
@@ -1670,17 +1657,11 @@ void * DataConsumerRetain(void * consumer) {
 void EventSourceSetLocalEventsFilterDuringSuppressionState(void * source, uint32_t filter, uint32_t state) {
 	return CGEventSourceSetLocalEventsFilterDuringSuppressionState(source, filter, state);
 }
-id<MTLDevice> DirectDisplayCopyCurrentMetalDevice(uint32_t display) {
-	return CGDirectDisplayCopyCurrentMetalDevice(display);
-}
 void * DisplayCurrentMode(uint32_t display) {
 	return CGDisplayCurrentMode(display);
 }
 int32_t WaitForScreenUpdateRects(uint32_t requestedOperations, CGScreenUpdateOperation* currentOperation, CGRect* rects, NSUInteger* rectCount, CGScreenUpdateMoveDelta* delta) {
 	return CGWaitForScreenUpdateRects(requestedOperations, currentOperation, rects, rectCount, delta);
-}
-void * ColorConversionInfoCreateFromListWithArguments(void * options, void * arg0, uint32_t arg1, int32_t arg2, NSObject* arg3) {
-	return CGColorConversionInfoCreateFromListWithArguments(options, arg0, arg1, arg2, arg3);
 }
 void ContextSetGrayStrokeColor(void * c, float gray, float alpha) {
 	return CGContextSetGrayStrokeColor(c, gray, alpha);
@@ -1745,7 +1726,6 @@ CGPoint EventGetUnflippedLocation(void * event) {
 void * ImageCreateWithMask(void * image, void * mask) {
 	return CGImageCreateWithMask(image, mask);
 }
-// // TODO: CGDisplayStreamCreateWithDispatchQueue not implemented (missing block param support)
 void PDFContextSetURLForRect(void * context, void * url, CGRect rect) {
 	return CGPDFContextSetURLForRect(context, url, rect);
 }

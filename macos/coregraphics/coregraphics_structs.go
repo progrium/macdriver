@@ -31,6 +31,11 @@ type Rect struct {
 	Size   Size
 }
 
+type Vector struct {
+	Dx Float
+	Dy Float
+}
+
 type Size struct {
 	Width  Float
 	Height Float
