@@ -111,10 +111,6 @@ func (db *Generator) TypeFromSymbol(sym Symbol) typing.Type {
 			Module: modules.Get(module),
 		}
 	case "Function":
-		if sym.Name != "CGDisplayCreateImage" &&
-			sym.Name != "CGMainDisplayID" {
-			return nil
-		}
 		typ, err := sym.Parse()
 		if err != nil {
 			fmt.Printf("TypeFromSymbol: failed to parse %s: %s\n", sym.Declaration, err)
