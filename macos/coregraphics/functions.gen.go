@@ -6,38 +6,25 @@ package coregraphics
 // #import <stdint.h>
 // #import <stdbool.h>
 // #import "CoreGraphics/CoreGraphics.h"
-// void * ColorSpaceCreateCalibratedGray(float* whitePoint, float* blackPoint, float gamma);
-// bool PDFDocumentUnlockWithPassword(void * document, uint8_t* password);
+// bool PDFDictionaryGetArray(void * dict, char* key, void * value);
 import "C"
 import (
 	"unsafe"
 )
 
-// Creates a calibrated grayscale color space. [Full Topic]
+// Returns whether there is a PDF array associated with a specified key in a PDF dictionary and, if so, retrieves that array. [Full Topic]
 //
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408887-cgcolorspacecreatecalibratedgray?language=objc
-func ColorSpaceCreateCalibratedGray(whitePoint *float64, blackPoint *float64, gamma float64) ColorSpaceRef {
-	rv := C.ColorSpaceCreateCalibratedGray(
-		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(whitePoint)),
-		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(blackPoint)),
-		// *typing.PrimitiveType
-		C.float(gamma),
-	)
-	// *typing.RefType
-	return ColorSpaceRef(rv)
-}
-
-// Unlocks an encrypted PDF document when a valid password is supplied. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402599-cgpdfdocumentunlockwithpassword?language=objc
-func PDFDocumentUnlockWithPassword(document PDFDocumentRef, password *uint8) bool {
-	rv := C.PDFDocumentUnlockWithPassword(
+// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1430229-cgpdfdictionarygetarray?language=objc
+func PDFDictionaryGetArray(dict unsafe.Pointer, key string, value unsafe.Pointer) bool {
+	keyVal := C.CString(key)
+	defer C.free(unsafe.Pointer(keyVal))
+	rv := C.PDFDictionaryGetArray(
 		// *typing.RefType
-		unsafe.Pointer(document),
-		// *typing.PointerType
-		(*C.uint8_t)(unsafe.Pointer(password)),
+		unsafe.Pointer(dict),
+		// *typing.CStringType
+		keyVal,
+		// *typing.RefType
+		unsafe.Pointer(value),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
