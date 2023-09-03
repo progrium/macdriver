@@ -85,19 +85,16 @@ package coregraphics
 // CGAffineTransform AffineTransformMakeScale(float sx, float sy);
 // void ContextDrawLayerInRect(void * context, CGRect rect, void * layer);
 // bool RectIsInfinite(CGRect rect);
-// void ContextShowGlyphsWithAdvances(void * c, CGGlyph* glyphs, CGSize* advances, NSUInteger count);
 // void * ImageCreateCopyWithColorSpace(void * image, void * space);
 // bool PreflightPostEventAccess();
 // void ContextRelease(void * c);
 // int32_t DataConsumerGetTypeID();
 // int32_t CompleteDisplayConfiguration(void * config, uint32_t option);
 // void PDFContextEndTag(void * context);
-// void * ColorSpaceCopyICCProfile(void * space);
 // void * ColorCreateGenericGrayGamma2_2(float gray, float alpha);
 // CGRect PathGetBoundingBox(void * path);
 // void PDFDocumentGetVersion(void * document, NSInteger* majorVersion, NSInteger* minorVersion);
 // void PathAddRoundedRect(void * path, CGAffineTransform* transform, CGRect rect, float cornerWidth, float cornerHeight);
-// void * DisplayAvailableModes(uint32_t dsp);
 // int32_t WindowLevelForKey(int32_t key);
 // void ContextSetRenderingIntent(void * c, int32_t intent);
 // void ContextSetShadowWithColor(void * c, CGSize offset, float blur, void * color);
@@ -137,7 +134,6 @@ package coregraphics
 // void * ColorSpaceCreateDeviceCMYK();
 // int32_t ConfigureDisplayFadeEffect(void * config, float fadeOutSeconds, float fadeInSeconds, float fadeRed, float fadeGreen, float fadeBlue);
 // int32_t DisplayFade(uint32_t token, float duration, float startBlend, float endBlend, float redBlend, float greenBlend, float blueBlend, NSInteger synchronous);
-// bool SizeEqualToSize(CGSize size1, CGSize size2);
 // void ContextSetShouldSubpixelQuantizeFonts(void * c, BOOL shouldSubpixelQuantizeFonts);
 // CGPoint EventGetLocation(void * event);
 // bool PSConverterAbort(void * converter);
@@ -171,7 +167,6 @@ package coregraphics
 // void * FontCreatePostScriptEncoding(void * font, CGGlyph* encoding);
 // void ContextDrawLayerAtPoint(void * context, CGPoint point, void * layer);
 // bool PDFArrayGetStream(void * array, NSUInteger index, void * value);
-// void ContextShowTextAtPoint(void * c, float x, float y, uint8_t* string_, NSUInteger length);
 // void EventSourceSetPixelsPerLine(void * source, double pixelsPerLine);
 // void * EventCreateKeyboardEvent(void * source, uint16_t virtualKey, BOOL keyDown);
 // uint32_t EventSourceCounterForEventType(int32_t stateID, uint32_t eventType);
@@ -179,7 +174,6 @@ package coregraphics
 // void EventSetTimestamp(void * event, uint64_t timestamp);
 // bool EventSourceKeyState(int32_t stateID, uint16_t key);
 // float RectGetHeight(CGRect rect);
-// void ContextShowGlyphsAtPoint(void * c, float x, float y, CGGlyph* glyphs, NSUInteger count);
 // bool PDFDictionaryGetInteger(void * dict, uint8_t* key, CGPDFInteger* value);
 // double EventSourceSecondsSinceLastEventType(int32_t stateID, uint32_t eventType);
 // CGRect RectIntegral(CGRect rect);
@@ -232,7 +226,6 @@ package coregraphics
 // void * PDFContentStreamCreateWithStream(void * stream, void * streamResources, void * parent);
 // void ContextDrawRadialGradient(void * c, void * gradient, CGPoint startCenter, float startRadius, CGPoint endCenter, float endRadius, uint32_t options);
 // void * PDFStringCopyDate(void * string_);
-// void * WindowServerCFMachPort();
 // int32_t GetOnlineDisplayList(uint32_t maxDisplays, CGDirectDisplayID* onlineDisplays, uint32_t* displayCount);
 // CGPoint ContextConvertPointToDeviceSpace(void * c, CGPoint point);
 // void * PathCreateCopy(void * path);
@@ -272,7 +265,6 @@ package coregraphics
 // CGRect PDFDocumentGetMediaBox(void * document, NSInteger page);
 // void* ColorSpaceCopyPropertyList(void * space);
 // void ContextSetStrokePattern(void * c, void * pattern, float* components);
-// void * DisplayBestModeForParameters(uint32_t display, NSUInteger bitsPerPixel, NSUInteger width, NSUInteger height, boolean_t* exactMatch);
 // bool PDFDictionaryGetDictionary(void * dict, uint8_t* key, void * value);
 // void ContextClipToRect(void * c, CGRect rect);
 // void ContextResetClip(void * c);
@@ -320,7 +312,6 @@ package coregraphics
 // bool PDFDictionaryGetString(void * dict, uint8_t* key, void * value);
 // void DisplayModeRelease(void * mode);
 // void ContextAddRects(void * c, CGRect* rects, NSUInteger count);
-// void ContextSelectFont(void * c, uint8_t* name, float size, int32_t textEncoding);
 // void * PathCreateMutableCopyByTransformingPath(void * path, CGAffineTransform* transform);
 // CGAffineTransform AffineTransformMakeTranslation(float tx, float ty);
 // void ContextSetCharacterSpacing(void * c, float spacing);
@@ -352,7 +343,6 @@ package coregraphics
 // void ContextStrokePath(void * c);
 // uint DisplayPixelsWide(uint32_t display);
 // void ContextSetShouldAntialias(void * c, BOOL shouldAntialias);
-// int32_t DisplaySwitchToMode(uint32_t display, void * mode);
 // bool EventTapIsEnabled(void * tap);
 // bool PDFDictionaryGetStream(void * dict, uint8_t* key, void * value);
 // void * ColorSpaceCreateIndexed(void * baseSpace, NSUInteger lastIndex, uint8_t* colorTable);
@@ -377,7 +367,6 @@ package coregraphics
 // float FontGetItalicAngle(void * font);
 // int32_t ConfigureDisplayOrigin(void * config, uint32_t display, int32_t x, int32_t y);
 // void * ColorConversionInfoCreateWithOptions(void * src, void * dst, void * options);
-// int DisplayFadeOperationInProgress();
 // void RestorePermanentDisplayConfiguration();
 // uint32_t BitmapContextGetAlphaInfo(void * context);
 // void ContextClosePath(void * c);
@@ -418,7 +407,6 @@ package coregraphics
 // int32_t DisplayCapture(uint32_t display);
 // void ContextAddEllipseInRect(void * c, CGRect rect);
 // void * GradientCreateWithColorComponents(void * space, float* components, float* locations, NSUInteger count);
-// bool RectEqualToRect(CGRect rect1, CGRect rect2);
 // void * ColorSpaceCreateCalibratedRGB(float* whitePoint, float* blackPoint, float* gamma, float* matrix);
 // void ContextDrawShading(void * c, void * shading);
 // float RectGetMidY(CGRect rect);
@@ -433,9 +421,7 @@ package coregraphics
 // void DisplayStreamUpdateGetMovedRectsDelta(void * updateRef, float* dx, float* dy);
 // int32_t SetDisplayTransferByByteTable(uint32_t display, uint32_t tableSize, uint8_t* redTable, uint8_t* greenTable, uint8_t* blueTable);
 // void * ImageGetDataProvider(void * image);
-// int DisplayIsCaptured(uint32_t display);
 // void ContextSetFillPattern(void * c, void * pattern, float* components);
-// int32_t WaitForScreenRefreshRects(CGRect* rects, uint32_t* count);
 // int32_t DataProviderGetTypeID();
 // void * DataProviderCreateWithFilename(uint8_t* filename);
 // bool PDFScannerPopString(void * scanner, void * value);
@@ -460,11 +446,9 @@ package coregraphics
 // void ContextFillPath(void * c);
 // int32_t PDFDocumentGetTypeID();
 // bool PDFArrayGetString(void * array, NSUInteger index, void * value);
-// void ContextShowText(void * c, uint8_t* string_, NSUInteger length);
 // int32_t ImageGetRenderingIntent(void * image);
 // void EventPost(uint32_t tap, void * event);
 // float FontGetStemV(void * font);
-// int CursorIsVisible();
 // void ContextStrokeLineSegments(void * c, CGPoint* points, NSUInteger count);
 // void ContextEOFillPath(void * c);
 // bool PDFArrayGetObject(void * array, NSUInteger index, void * value);
@@ -547,7 +531,6 @@ package coregraphics
 // void * DisplayCreateImage(uint32_t displayID);
 // void ContextSetLineWidth(void * c, float width);
 // int32_t EnableEventStateCombining(NSInteger combineState);
-// void * ColorSpaceCreateWithICCProfile(void * data);
 // void PatternRelease(void * pattern);
 // void ContextEOClip(void * c);
 // void * ColorSpaceCreateExtended(void * space);
@@ -555,8 +538,6 @@ package coregraphics
 // CGPoint ContextConvertPointToUserSpace(void * c, CGPoint point);
 // void * DataConsumerRetain(void * consumer);
 // void EventSourceSetLocalEventsFilterDuringSuppressionState(void * source, uint32_t filter, uint32_t state);
-// void * DisplayCurrentMode(uint32_t display);
-// int32_t WaitForScreenUpdateRects(uint32_t requestedOperations, CGScreenUpdateOperation* currentOperation, CGRect* rects, NSUInteger* rectCount, CGScreenUpdateMoveDelta* delta);
 // void ContextSetGrayStrokeColor(void * c, float gray, float alpha);
 // uint32_t DisplayVendorNumber(uint32_t display);
 // bool RectContainsPoint(CGRect rect, CGPoint point);
@@ -581,10 +562,8 @@ package coregraphics
 // void PDFContextSetURLForRect(void * context, void * url, CGRect rect);
 // void * ColorSpaceCreateLinearized(void * space);
 // uint ColorSpaceGetColorTableCount(void * space);
-// void * DisplayBestModeForParametersAndRefreshRate(uint32_t display, NSUInteger bitsPerPixel, NSUInteger width, NSUInteger height, double refreshRate, boolean_t* exactMatch);
 // uint32_t OpenGLDisplayMaskToDisplayID(uint32_t mask);
 // uint DisplayStreamUpdateGetDropCount(void * updateRef);
-// bool PointEqualToPoint(CGPoint point1, CGPoint point2);
 // void ContextFlush(void * c);
 // CGVector VectorMake(float dx, float dy);
 // uint DisplayModeGetHeight(void * mode);
@@ -596,7 +575,6 @@ package coregraphics
 // uint PDFStringGetLength(void * string_);
 // void ContextClip(void * c);
 // int32_t ReleaseAllDisplays();
-// int CursorIsDrawnInFramebuffer();
 // uint32_t DisplaySerialNumber(uint32_t display);
 // bool PDFArrayGetArray(void * array, NSUInteger index, void * value);
 // void * ColorSpaceCopyName(void * space);
@@ -615,7 +593,6 @@ package coregraphics
 // void * ImageRetain(void * image);
 // void * ImageCreateWithImageInRect(void * image, CGRect rect);
 // int PDFPageGetRotationAngle(void * page);
-// int32_t ConfigureDisplayMode(void * config, uint32_t display, void * mode);
 // void ContextAddLineToPoint(void * c, float x, float y);
 // bool PDFScannerPopBoolean(void * scanner, CGPDFBoolean* value);
 // void * FontCreateWithFontName(void * name);
@@ -632,8 +609,6 @@ package coregraphics
 // void * FontCreatePostScriptSubset(void * font, void * subsetName, int32_t format, CGGlyph* glyphs, NSUInteger count, CGGlyph* encoding);
 // int DisplayIsMain(uint32_t display);
 // void * PathCreateMutable();
-// void ReleaseScreenRefreshRects(CGRect* rects);
-// void ContextShowGlyphs(void * c, CGGlyph* g, NSUInteger count);
 // void DisplayRestoreColorSyncSettings();
 // void ContextSetLineDash(void * c, float phase, float* lengths, NSUInteger count);
 // int32_t DisplayModeGetTypeID();
@@ -1704,22 +1679,6 @@ func RectIsInfinite(rect Rect) bool {
 	return bool(rv)
 }
 
-// Draws an array of glyphs with varying offsets. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586503-cgcontextshowglyphswithadvances?language=objc
-func ContextShowGlyphsWithAdvances(c ContextRef, glyphs *Glyph, advances *Size, count uint) {
-	C.ContextShowGlyphsWithAdvances(
-		// *typing.RefType
-		unsafe.Pointer(c),
-		// *typing.PointerType
-		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
-		// *typing.PointerType
-		(*C.CGSize)(unsafe.Pointer(advances)),
-		// *typing.PrimitiveType
-		C.NSUInteger(count),
-	)
-}
-
 // Creates a copy of a bitmap image, replacing its colorspace. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455355-cgimagecreatecopywithcolorspace?language=objc
@@ -1787,18 +1746,6 @@ func PDFContextEndTag(context ContextRef) {
 	)
 }
 
-// Returns a copy of the ICC profile of the provided color space. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408889-cgcolorspacecopyiccprofile?language=objc
-func ColorSpaceCopyICCProfile(space ColorSpaceRef) corefoundation.DataRef {
-	rv := C.ColorSpaceCopyICCProfile(
-		// *typing.RefType
-		unsafe.Pointer(space),
-	)
-	// *typing.RefType
-	return corefoundation.DataRef(rv)
-}
-
 // Creates a color in the Generic gray color space with a gamma ramp of 2.2. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3042354-cgcolorcreategenericgraygamma2_2?language=objc
@@ -1855,19 +1802,6 @@ func PathAddRoundedRect(path MutablePathRef, transform *AffineTransform, rect Re
 		// *typing.PrimitiveType
 		C.float(cornerHeight),
 	)
-}
-
-// Returns information about the currently available display modes. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562068-cgdisplayavailablemodes?language=objc
-func DisplayAvailableModes(dsp DirectDisplayID) corefoundation.ArrayRef {
-	rv := C.DisplayAvailableModes(
-		// *typing.AliasType
-		// *typing.PrimitiveType
-		(C.uint32_t)(dsp),
-	)
-	// *typing.RefType
-	return corefoundation.ArrayRef(rv)
 }
 
 // Returns the window level that corresponds to one of the standard window types. [Full Topic]
@@ -2442,20 +2376,6 @@ func DisplayFade(token DisplayFadeReservationToken, duration DisplayFadeInterval
 	return Error(rv)
 }
 
-// Returns whether two sizes are equal. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455176-cgsizeequaltosize?language=objc
-func SizeEqualToSize(size1 Size, size2 Size) bool {
-	rv := C.SizeEqualToSize(
-		// *typing.StructType
-		*(*C.CGSize)(unsafe.Pointer(&size1)),
-		// *typing.StructType
-		*(*C.CGSize)(unsafe.Pointer(&size2)),
-	)
-	// *typing.PrimitiveType
-	return bool(rv)
-}
-
 // Enables or disables subpixel quantization in a graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455766-cgcontextsetshouldsubpixelquanti?language=objc
@@ -2895,24 +2815,6 @@ func PDFArrayGetStream(array unsafe.Pointer, index uint, value unsafe.Pointer) b
 	return bool(rv)
 }
 
-// Displays a character string at a position you specify. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586505-cgcontextshowtextatpoint?language=objc
-func ContextShowTextAtPoint(c ContextRef, x float64, y float64, string_ *uint8, length uint) {
-	C.ContextShowTextAtPoint(
-		// *typing.RefType
-		unsafe.Pointer(c),
-		// *typing.PrimitiveType
-		C.float(x),
-		// *typing.PrimitiveType
-		C.float(y),
-		// *typing.PointerType
-		(*C.uint8_t)(unsafe.Pointer(string_)),
-		// *typing.PrimitiveType
-		C.NSUInteger(length),
-	)
-}
-
 // Sets the scale of pixels per line in a scrolling event source. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408766-cgeventsourcesetpixelsperline?language=objc
@@ -3013,24 +2915,6 @@ func RectGetHeight(rect Rect) float64 {
 	)
 	// *typing.PrimitiveType
 	return float64(rv)
-}
-
-// Displays an array of glyphs at a position you specify. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586502-cgcontextshowglyphsatpoint?language=objc
-func ContextShowGlyphsAtPoint(c ContextRef, x float64, y float64, glyphs *Glyph, count uint) {
-	C.ContextShowGlyphsAtPoint(
-		// *typing.RefType
-		unsafe.Pointer(c),
-		// *typing.PrimitiveType
-		C.float(x),
-		// *typing.PrimitiveType
-		C.float(y),
-		// *typing.PointerType
-		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
-		// *typing.PrimitiveType
-		C.NSUInteger(count),
-	)
 }
 
 // Returns whether there is a PDF integer associated with a specified key in a PDF dictionary and, if so, retrieves that integer. [Full Topic]
@@ -3758,15 +3642,6 @@ func PDFStringCopyDate(string_ unsafe.Pointer) corefoundation.DateRef {
 	return corefoundation.DateRef(rv)
 }
 
-// Returns a Core Foundation Mach port (CFMachPort) that corresponds to the macOS window server. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541813-cgwindowservercfmachport?language=objc
-func WindowServerCFMachPort() corefoundation.MachPortRef {
-	rv := C.WindowServerCFMachPort()
-	// *typing.RefType
-	return corefoundation.MachPortRef(rv)
-}
-
 // Provides a list of displays that are online (active, mirrored, or sleeping). [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454964-cggetonlinedisplaylist?language=objc
@@ -4322,27 +4197,6 @@ func ContextSetStrokePattern(c ContextRef, pattern PatternRef, components *float
 		// *typing.PointerType
 		(*C.float)(unsafe.Pointer(components)),
 	)
-}
-
-// Returns information about the display mode closest to a specified depth and screen size. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562060-cgdisplaybestmodeforparameters?language=objc
-func DisplayBestModeForParameters(display DirectDisplayID, bitsPerPixel uint, width uint, height uint, exactMatch *int) corefoundation.DictionaryRef {
-	rv := C.DisplayBestModeForParameters(
-		// *typing.AliasType
-		// *typing.PrimitiveType
-		(C.uint32_t)(display),
-		// *typing.PrimitiveType
-		C.NSUInteger(bitsPerPixel),
-		// *typing.PrimitiveType
-		C.NSUInteger(width),
-		// *typing.PrimitiveType
-		C.NSUInteger(height),
-		// *typing.PointerType
-		(*C.boolean_t)(unsafe.Pointer(exactMatch)),
-	)
-	// *typing.RefType
-	return corefoundation.DictionaryRef(rv)
 }
 
 // Returns whether there is another PDF dictionary associated with a specified key in a PDF dictionary and, if so, retrieves that dictionary. [Full Topic]
@@ -4968,23 +4822,6 @@ func ContextAddRects(c ContextRef, rects *Rect, count uint) {
 	)
 }
 
-// Sets the font and font size in a graphics context. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586511-cgcontextselectfont?language=objc
-func ContextSelectFont(c ContextRef, name *uint8, size float64, textEncoding TextEncoding) {
-	C.ContextSelectFont(
-		// *typing.RefType
-		unsafe.Pointer(c),
-		// *typing.PointerType
-		(*C.uint8_t)(unsafe.Pointer(name)),
-		// *typing.PrimitiveType
-		C.float(size),
-		// *typing.AliasType
-		// *typing.PrimitiveType
-		(C.int32_t)(textEncoding),
-	)
-}
-
 // Creates a mutable copy of a graphics path transformed by a transformation matrix. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411150-cgpathcreatemutablecopybytransfo?language=objc
@@ -5370,21 +5207,6 @@ func ContextSetShouldAntialias(c ContextRef, shouldAntialias bool) {
 	)
 }
 
-// Switches a display to a different mode. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562065-cgdisplayswitchtomode?language=objc
-func DisplaySwitchToMode(display DirectDisplayID, mode corefoundation.DictionaryRef) Error {
-	rv := C.DisplaySwitchToMode(
-		// *typing.AliasType
-		// *typing.PrimitiveType
-		(C.uint32_t)(display),
-		// *typing.RefType
-		unsafe.Pointer(mode),
-	)
-	// *typing.AliasType
-	return Error(rv)
-}
-
 // Returns a Boolean value indicating whether an event tap is enabled. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456102-cgeventtapisenabled?language=objc
@@ -5708,15 +5530,6 @@ func ColorConversionInfoCreateWithOptions(src ColorSpaceRef, dst ColorSpaceRef, 
 	)
 	// *typing.RefType
 	return ColorConversionInfoRef(rv)
-}
-
-// Returns a Boolean value indicating whether a fade operation is currently in progress. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1571962-cgdisplayfadeoperationinprogress?language=objc
-func DisplayFadeOperationInProgress() int {
-	rv := C.DisplayFadeOperationInProgress()
-	// *typing.AliasType
-	return int(rv)
 }
 
 // Restores the permanent display configuration settings for the current user. [Full Topic]
@@ -6247,20 +6060,6 @@ func GradientCreateWithColorComponents(space ColorSpaceRef, components *float64,
 	return GradientRef(rv)
 }
 
-// Returns whether two rectangles are equal in size and position. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456516-cgrectequaltorect?language=objc
-func RectEqualToRect(rect1 Rect, rect2 Rect) bool {
-	rv := C.RectEqualToRect(
-		// *typing.StructType
-		*(*C.CGRect)(unsafe.Pointer(&rect1)),
-		// *typing.StructType
-		*(*C.CGRect)(unsafe.Pointer(&rect2)),
-	)
-	// *typing.PrimitiveType
-	return bool(rv)
-}
-
 // Creates a calibrated RGB color space. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408861-cgcolorspacecreatecalibratedrgb?language=objc
@@ -6458,19 +6257,6 @@ func ImageGetDataProvider(image ImageRef) DataProviderRef {
 	return DataProviderRef(rv)
 }
 
-// Returns a Boolean value indicating whether a display is captured. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562061-cgdisplayiscaptured?language=objc
-func DisplayIsCaptured(display DirectDisplayID) int {
-	rv := C.DisplayIsCaptured(
-		// *typing.AliasType
-		// *typing.PrimitiveType
-		(C.uint32_t)(display),
-	)
-	// *typing.AliasType
-	return int(rv)
-}
-
 // Sets the fill pattern in the specified graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456334-cgcontextsetfillpattern?language=objc
@@ -6483,20 +6269,6 @@ func ContextSetFillPattern(c ContextRef, pattern PatternRef, components *float64
 		// *typing.PointerType
 		(*C.float)(unsafe.Pointer(components)),
 	)
-}
-
-// Waits for screen refresh operations. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541809-cgwaitforscreenrefreshrects?language=objc
-func WaitForScreenRefreshRects(rects *Rect, count *uint32) Error {
-	rv := C.WaitForScreenRefreshRects(
-		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(rects)),
-		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(count)),
-	)
-	// *typing.AliasType
-	return Error(rv)
 }
 
 // Returns the Core Foundation type identifier for data providers. [Full Topic]
@@ -6810,20 +6582,6 @@ func PDFArrayGetString(array unsafe.Pointer, index uint, value unsafe.Pointer) b
 	return bool(rv)
 }
 
-// Displays a character array at the current text position, a point specified by the current text matrix. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586507-cgcontextshowtext?language=objc
-func ContextShowText(c ContextRef, string_ *uint8, length uint) {
-	C.ContextShowText(
-		// *typing.RefType
-		unsafe.Pointer(c),
-		// *typing.PointerType
-		(*C.uint8_t)(unsafe.Pointer(string_)),
-		// *typing.PrimitiveType
-		C.NSUInteger(length),
-	)
-}
-
 // Returns the rendering intent setting for a bitmap image. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456350-cgimagegetrenderingintent?language=objc
@@ -6859,15 +6617,6 @@ func FontGetStemV(font FontRef) float64 {
 	)
 	// *typing.PrimitiveType
 	return float64(rv)
-}
-
-// Returns a Boolean value indicating whether the mouse cursor is visible. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541812-cgcursorisvisible?language=objc
-func CursorIsVisible() int {
-	rv := C.CursorIsVisible()
-	// *typing.AliasType
-	return int(rv)
 }
 
 // Strokes a sequence of line segments. [Full Topic]
@@ -8034,18 +7783,6 @@ func EnableEventStateCombining(combineState int) Error {
 	return Error(rv)
 }
 
-// Creates an ICC-based color space using the ICC profile contained in the specified data. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408895-cgcolorspacecreatewithiccprofile?language=objc
-func ColorSpaceCreateWithICCProfile(data corefoundation.DataRef) ColorSpaceRef {
-	rv := C.ColorSpaceCreateWithICCProfile(
-		// *typing.RefType
-		unsafe.Pointer(data),
-	)
-	// *typing.RefType
-	return ColorSpaceRef(rv)
-}
-
 // Decrements the retain count of a Core Graphics pattern. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1552266-cgpatternrelease?language=objc
@@ -8130,40 +7867,6 @@ func EventSourceSetLocalEventsFilterDuringSuppressionState(source EventSourceRef
 		// *typing.PrimitiveType
 		(C.uint32_t)(state),
 	)
-}
-
-// Returns information about the current display mode. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562062-cgdisplaycurrentmode?language=objc
-func DisplayCurrentMode(display DirectDisplayID) corefoundation.DictionaryRef {
-	rv := C.DisplayCurrentMode(
-		// *typing.AliasType
-		// *typing.PrimitiveType
-		(C.uint32_t)(display),
-	)
-	// *typing.RefType
-	return corefoundation.DictionaryRef(rv)
-}
-
-// Waits for screen update operations. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541790-cgwaitforscreenupdaterects?language=objc
-func WaitForScreenUpdateRects(requestedOperations ScreenUpdateOperation, currentOperation *ScreenUpdateOperation, rects *Rect, rectCount *uint, delta *ScreenUpdateMoveDelta) Error {
-	rv := C.WaitForScreenUpdateRects(
-		// *typing.AliasType
-		// *typing.PrimitiveType
-		(C.uint32_t)(requestedOperations),
-		// *typing.PointerType
-		(*C.CGScreenUpdateOperation)(unsafe.Pointer(currentOperation)),
-		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(rects)),
-		// *typing.PointerType
-		(*C.NSUInteger)(unsafe.Pointer(rectCount)),
-		// *typing.PointerType
-		(*C.CGScreenUpdateMoveDelta)(unsafe.Pointer(delta)),
-	)
-	// *typing.AliasType
-	return Error(rv)
 }
 
 // Sets the current stroke color to a value in the DeviceGray color space. [Full Topic]
@@ -8474,30 +8177,6 @@ func ColorSpaceGetColorTableCount(space ColorSpaceRef) uint {
 	return uint(rv)
 }
 
-// Returns information about the display mode closest to a specified depth, screen size, and refresh rate. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562066-cgdisplaybestmodeforparametersan?language=objc
-func DisplayBestModeForParametersAndRefreshRate(display DirectDisplayID, bitsPerPixel uint, width uint, height uint, refreshRate RefreshRate, exactMatch *int) corefoundation.DictionaryRef {
-	rv := C.DisplayBestModeForParametersAndRefreshRate(
-		// *typing.AliasType
-		// *typing.PrimitiveType
-		(C.uint32_t)(display),
-		// *typing.PrimitiveType
-		C.NSUInteger(bitsPerPixel),
-		// *typing.PrimitiveType
-		C.NSUInteger(width),
-		// *typing.PrimitiveType
-		C.NSUInteger(height),
-		// *typing.AliasType
-		// *typing.PrimitiveType
-		(C.double)(refreshRate),
-		// *typing.PointerType
-		(*C.boolean_t)(unsafe.Pointer(exactMatch)),
-	)
-	// *typing.RefType
-	return corefoundation.DictionaryRef(rv)
-}
-
 // Maps an OpenGL display mask to a display ID. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455386-cgopengldisplaymasktodisplayid?language=objc
@@ -8521,20 +8200,6 @@ func DisplayStreamUpdateGetDropCount(updateRef DisplayStreamUpdateRef) uint {
 	)
 	// *typing.PrimitiveType
 	return uint(rv)
-}
-
-// Returns whether two points are equal. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456179-cgpointequaltopoint?language=objc
-func PointEqualToPoint(point1 Point, point2 Point) bool {
-	rv := C.PointEqualToPoint(
-		// *typing.StructType
-		*(*C.CGPoint)(unsafe.Pointer(&point1)),
-		// *typing.StructType
-		*(*C.CGPoint)(unsafe.Pointer(&point2)),
-	)
-	// *typing.PrimitiveType
-	return bool(rv)
 }
 
 // Forces all pending drawing operations in a window context to be rendered immediately to the destination device. [Full Topic]
@@ -8666,15 +8331,6 @@ func ReleaseAllDisplays() Error {
 	rv := C.ReleaseAllDisplays()
 	// *typing.AliasType
 	return Error(rv)
-}
-
-// Returns a Boolean value indicating whether the mouse cursor is drawn in framebuffer memory. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541804-cgcursorisdrawninframebuffer?language=objc
-func CursorIsDrawnInFramebuffer() int {
-	rv := C.CursorIsDrawnInFramebuffer()
-	// *typing.AliasType
-	return int(rv)
 }
 
 // Returns the serial number of a display monitor. [Full Topic]
@@ -8899,23 +8555,6 @@ func PDFPageGetRotationAngle(page PDFPageRef) int {
 	return int(rv)
 }
 
-// Configures the display mode of a display. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1543535-cgconfiguredisplaymode?language=objc
-func ConfigureDisplayMode(config unsafe.Pointer, display DirectDisplayID, mode corefoundation.DictionaryRef) Error {
-	rv := C.ConfigureDisplayMode(
-		// *typing.RefType
-		unsafe.Pointer(config),
-		// *typing.AliasType
-		// *typing.PrimitiveType
-		(C.uint32_t)(display),
-		// *typing.RefType
-		unsafe.Pointer(mode),
-	)
-	// *typing.AliasType
-	return Error(rv)
-}
-
 // Appends a straight line segment from the current point to the provided point . [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455213-cgcontextaddlinetopoint?language=objc
@@ -9117,30 +8756,6 @@ func PathCreateMutable() MutablePathRef {
 	rv := C.PathCreateMutable()
 	// *typing.RefType
 	return MutablePathRef(rv)
-}
-
-// Deallocates a list of rectangles that represent changed areas on local displays. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541780-cgreleasescreenrefreshrects?language=objc
-func ReleaseScreenRefreshRects(rects *Rect) {
-	C.ReleaseScreenRefreshRects(
-		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(rects)),
-	)
-}
-
-// Displays an array of glyphs at the current text position. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586500-cgcontextshowglyphs?language=objc
-func ContextShowGlyphs(c ContextRef, g *Glyph, count uint) {
-	C.ContextShowGlyphs(
-		// *typing.RefType
-		unsafe.Pointer(c),
-		// *typing.PointerType
-		(*C.CGGlyph)(unsafe.Pointer(g)),
-		// *typing.PrimitiveType
-		C.NSUInteger(count),
-	)
 }
 
 // Restores the gamma tables to the values in the user’s ColorSync display profile. [Full Topic]

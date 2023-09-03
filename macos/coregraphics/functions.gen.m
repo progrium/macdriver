@@ -238,9 +238,6 @@ void ContextDrawLayerInRect(void * context, CGRect rect, void * layer) {
 BOOL RectIsInfinite(CGRect rect) {
 	return CGRectIsInfinite(rect);
 }
-void ContextShowGlyphsWithAdvances(void * c, CGGlyph* glyphs, CGSize* advances, NSUInteger count) {
-	return CGContextShowGlyphsWithAdvances(c, glyphs, advances, count);
-}
 void * ImageCreateCopyWithColorSpace(void * image, void * space) {
 	return CGImageCreateCopyWithColorSpace(image, space);
 }
@@ -259,9 +256,6 @@ int32_t CompleteDisplayConfiguration(void * config, uint32_t option) {
 void PDFContextEndTag(void * context) {
 	return CGPDFContextEndTag(context);
 }
-void * ColorSpaceCopyICCProfile(void * space) {
-	return CGColorSpaceCopyICCProfile(space);
-}
 void * ColorCreateGenericGrayGamma2_2(float gray, float alpha) {
 	return CGColorCreateGenericGrayGamma2_2(gray, alpha);
 }
@@ -273,9 +267,6 @@ void PDFDocumentGetVersion(void * document, NSInteger* majorVersion, NSInteger* 
 }
 void PathAddRoundedRect(void * path, CGAffineTransform* transform, CGRect rect, float cornerWidth, float cornerHeight) {
 	return CGPathAddRoundedRect(path, transform, rect, cornerWidth, cornerHeight);
-}
-void * DisplayAvailableModes(uint32_t dsp) {
-	return CGDisplayAvailableModes(dsp);
 }
 int32_t WindowLevelForKey(int32_t key) {
 	return CGWindowLevelForKey(key);
@@ -394,9 +385,6 @@ int32_t ConfigureDisplayFadeEffect(void * config, float fadeOutSeconds, float fa
 int32_t DisplayFade(uint32_t token, float duration, float startBlend, float endBlend, float redBlend, float greenBlend, float blueBlend, NSInteger synchronous) {
 	return CGDisplayFade(token, duration, startBlend, endBlend, redBlend, greenBlend, blueBlend, synchronous);
 }
-BOOL SizeEqualToSize(CGSize size1, CGSize size2) {
-	return CGSizeEqualToSize(size1, size2);
-}
 void ContextSetShouldSubpixelQuantizeFonts(void * c, BOOL shouldSubpixelQuantizeFonts) {
 	return CGContextSetShouldSubpixelQuantizeFonts(c, shouldSubpixelQuantizeFonts);
 }
@@ -496,9 +484,6 @@ void ContextDrawLayerAtPoint(void * context, CGPoint point, void * layer) {
 BOOL PDFArrayGetStream(void * array, NSUInteger index, void * value) {
 	return CGPDFArrayGetStream(array, index, value);
 }
-void ContextShowTextAtPoint(void * c, float x, float y, uint8_t* string_, NSUInteger length) {
-	return CGContextShowTextAtPoint(c, x, y, string_, length);
-}
 void EventSourceSetPixelsPerLine(void * source, double pixelsPerLine) {
 	return CGEventSourceSetPixelsPerLine(source, pixelsPerLine);
 }
@@ -519,9 +504,6 @@ BOOL EventSourceKeyState(int32_t stateID, uint16_t key) {
 }
 float RectGetHeight(CGRect rect) {
 	return CGRectGetHeight(rect);
-}
-void ContextShowGlyphsAtPoint(void * c, float x, float y, CGGlyph* glyphs, NSUInteger count) {
-	return CGContextShowGlyphsAtPoint(c, x, y, glyphs, count);
 }
 BOOL PDFDictionaryGetInteger(void * dict, uint8_t* key, CGPDFInteger* value) {
 	return CGPDFDictionaryGetInteger(dict, key, value);
@@ -679,9 +661,6 @@ void ContextDrawRadialGradient(void * c, void * gradient, CGPoint startCenter, f
 void * PDFStringCopyDate(void * string_) {
 	return CGPDFStringCopyDate(string_);
 }
-void * WindowServerCFMachPort() {
-	return CGWindowServerCFMachPort();
-}
 int32_t GetOnlineDisplayList(uint32_t maxDisplays, CGDirectDisplayID* onlineDisplays, uint32_t* displayCount) {
 	return CGGetOnlineDisplayList(maxDisplays, onlineDisplays, displayCount);
 }
@@ -798,9 +777,6 @@ void* ColorSpaceCopyPropertyList(void * space) {
 }
 void ContextSetStrokePattern(void * c, void * pattern, float* components) {
 	return CGContextSetStrokePattern(c, pattern, components);
-}
-void * DisplayBestModeForParameters(uint32_t display, NSUInteger bitsPerPixel, NSUInteger width, NSUInteger height, boolean_t* exactMatch) {
-	return CGDisplayBestModeForParameters(display, bitsPerPixel, width, height, exactMatch);
 }
 BOOL PDFDictionaryGetDictionary(void * dict, uint8_t* key, void * value) {
 	return CGPDFDictionaryGetDictionary(dict, key, value);
@@ -943,9 +919,6 @@ void DisplayModeRelease(void * mode) {
 void ContextAddRects(void * c, CGRect* rects, NSUInteger count) {
 	return CGContextAddRects(c, rects, count);
 }
-void ContextSelectFont(void * c, uint8_t* name, float size, int32_t textEncoding) {
-	return CGContextSelectFont(c, name, size, textEncoding);
-}
 void * PathCreateMutableCopyByTransformingPath(void * path, CGAffineTransform* transform) {
 	return CGPathCreateMutableCopyByTransformingPath(path, transform);
 }
@@ -1039,9 +1012,6 @@ NSUInteger DisplayPixelsWide(uint32_t display) {
 void ContextSetShouldAntialias(void * c, BOOL shouldAntialias) {
 	return CGContextSetShouldAntialias(c, shouldAntialias);
 }
-int32_t DisplaySwitchToMode(uint32_t display, void * mode) {
-	return CGDisplaySwitchToMode(display, mode);
-}
 BOOL EventTapIsEnabled(void * tap) {
 	return CGEventTapIsEnabled(tap);
 }
@@ -1113,9 +1083,6 @@ int32_t ConfigureDisplayOrigin(void * config, uint32_t display, int32_t x, int32
 }
 void * ColorConversionInfoCreateWithOptions(void * src, void * dst, void * options) {
 	return CGColorConversionInfoCreateWithOptions(src, dst, options);
-}
-NSInteger DisplayFadeOperationInProgress() {
-	return CGDisplayFadeOperationInProgress();
 }
 void RestorePermanentDisplayConfiguration() {
 	return CGRestorePermanentDisplayConfiguration();
@@ -1237,9 +1204,6 @@ void ContextAddEllipseInRect(void * c, CGRect rect) {
 void * GradientCreateWithColorComponents(void * space, float* components, float* locations, NSUInteger count) {
 	return CGGradientCreateWithColorComponents(space, components, locations, count);
 }
-BOOL RectEqualToRect(CGRect rect1, CGRect rect2) {
-	return CGRectEqualToRect(rect1, rect2);
-}
 void * ColorSpaceCreateCalibratedRGB(float* whitePoint, float* blackPoint, float* gamma, float* matrix) {
 	return CGColorSpaceCreateCalibratedRGB(whitePoint, blackPoint, gamma, matrix);
 }
@@ -1282,14 +1246,8 @@ int32_t SetDisplayTransferByByteTable(uint32_t display, uint32_t tableSize, uint
 void * ImageGetDataProvider(void * image) {
 	return CGImageGetDataProvider(image);
 }
-NSInteger DisplayIsCaptured(uint32_t display) {
-	return CGDisplayIsCaptured(display);
-}
 void ContextSetFillPattern(void * c, void * pattern, float* components) {
 	return CGContextSetFillPattern(c, pattern, components);
-}
-int32_t WaitForScreenRefreshRects(CGRect* rects, uint32_t* count) {
-	return CGWaitForScreenRefreshRects(rects, count);
 }
 int32_t DataProviderGetTypeID() {
 	return CGDataProviderGetTypeID();
@@ -1363,9 +1321,6 @@ int32_t PDFDocumentGetTypeID() {
 BOOL PDFArrayGetString(void * array, NSUInteger index, void * value) {
 	return CGPDFArrayGetString(array, index, value);
 }
-void ContextShowText(void * c, uint8_t* string_, NSUInteger length) {
-	return CGContextShowText(c, string_, length);
-}
 int32_t ImageGetRenderingIntent(void * image) {
 	return CGImageGetRenderingIntent(image);
 }
@@ -1374,9 +1329,6 @@ void EventPost(uint32_t tap, void * event) {
 }
 float FontGetStemV(void * font) {
 	return CGFontGetStemV(font);
-}
-NSInteger CursorIsVisible() {
-	return CGCursorIsVisible();
 }
 void ContextStrokeLineSegments(void * c, CGPoint* points, NSUInteger count) {
 	return CGContextStrokeLineSegments(c, points, count);
@@ -1624,9 +1576,6 @@ void ContextSetLineWidth(void * c, float width) {
 int32_t EnableEventStateCombining(NSInteger combineState) {
 	return CGEnableEventStateCombining(combineState);
 }
-void * ColorSpaceCreateWithICCProfile(void * data) {
-	return CGColorSpaceCreateWithICCProfile(data);
-}
 void PatternRelease(void * pattern) {
 	return CGPatternRelease(pattern);
 }
@@ -1647,12 +1596,6 @@ void * DataConsumerRetain(void * consumer) {
 }
 void EventSourceSetLocalEventsFilterDuringSuppressionState(void * source, uint32_t filter, uint32_t state) {
 	return CGEventSourceSetLocalEventsFilterDuringSuppressionState(source, filter, state);
-}
-void * DisplayCurrentMode(uint32_t display) {
-	return CGDisplayCurrentMode(display);
-}
-int32_t WaitForScreenUpdateRects(uint32_t requestedOperations, CGScreenUpdateOperation* currentOperation, CGRect* rects, NSUInteger* rectCount, CGScreenUpdateMoveDelta* delta) {
-	return CGWaitForScreenUpdateRects(requestedOperations, currentOperation, rects, rectCount, delta);
 }
 void ContextSetGrayStrokeColor(void * c, float gray, float alpha) {
 	return CGContextSetGrayStrokeColor(c, gray, alpha);
@@ -1726,17 +1669,11 @@ void * ColorSpaceCreateLinearized(void * space) {
 NSUInteger ColorSpaceGetColorTableCount(void * space) {
 	return CGColorSpaceGetColorTableCount(space);
 }
-void * DisplayBestModeForParametersAndRefreshRate(uint32_t display, NSUInteger bitsPerPixel, NSUInteger width, NSUInteger height, double refreshRate, boolean_t* exactMatch) {
-	return CGDisplayBestModeForParametersAndRefreshRate(display, bitsPerPixel, width, height, refreshRate, exactMatch);
-}
 uint32_t OpenGLDisplayMaskToDisplayID(uint32_t mask) {
 	return CGOpenGLDisplayMaskToDisplayID(mask);
 }
 NSUInteger DisplayStreamUpdateGetDropCount(void * updateRef) {
 	return CGDisplayStreamUpdateGetDropCount(updateRef);
-}
-BOOL PointEqualToPoint(CGPoint point1, CGPoint point2) {
-	return CGPointEqualToPoint(point1, point2);
 }
 void ContextFlush(void * c) {
 	return CGContextFlush(c);
@@ -1770,9 +1707,6 @@ void ContextClip(void * c) {
 }
 int32_t ReleaseAllDisplays() {
 	return CGReleaseAllDisplays();
-}
-NSInteger CursorIsDrawnInFramebuffer() {
-	return CGCursorIsDrawnInFramebuffer();
 }
 uint32_t DisplaySerialNumber(uint32_t display) {
 	return CGDisplaySerialNumber(display);
@@ -1828,9 +1762,6 @@ void * ImageCreateWithImageInRect(void * image, CGRect rect) {
 NSInteger PDFPageGetRotationAngle(void * page) {
 	return CGPDFPageGetRotationAngle(page);
 }
-int32_t ConfigureDisplayMode(void * config, uint32_t display, void * mode) {
-	return CGConfigureDisplayMode(config, display, mode);
-}
 void ContextAddLineToPoint(void * c, float x, float y) {
 	return CGContextAddLineToPoint(c, x, y);
 }
@@ -1878,12 +1809,6 @@ NSInteger DisplayIsMain(uint32_t display) {
 }
 void * PathCreateMutable() {
 	return CGPathCreateMutable();
-}
-void ReleaseScreenRefreshRects(CGRect* rects) {
-	return CGReleaseScreenRefreshRects(rects);
-}
-void ContextShowGlyphs(void * c, CGGlyph* g, NSUInteger count) {
-	return CGContextShowGlyphs(c, g, count);
 }
 void DisplayRestoreColorSyncSettings() {
 	return CGDisplayRestoreColorSyncSettings();
