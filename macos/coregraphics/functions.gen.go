@@ -124,7 +124,6 @@ package coregraphics
 // void * ShadingCreateAxial(void * space, CGPoint start, CGPoint end, void * function, BOOL extendStart, BOOL extendEnd);
 // void ContextSetShadow(void * c, CGSize offset, float blur);
 // bool PointMakeWithDictionaryRepresentation(void * dict, CGPoint* point);
-// void EventPostToPid(NSObject* pid, void * event);
 // CGPoint ContextGetTextPosition(void * c);
 // uint BitmapContextGetBitsPerPixel(void * context);
 // void ContextAddArc(void * c, float x, float y, float radius, float startAngle, float endAngle, NSInteger clockwise);
@@ -203,7 +202,6 @@ package coregraphics
 // int DisplayIsInMirrorSet(uint32_t display);
 // bool ColorSpaceIsPQBased(void * s);
 // void ContextClearRect(void * c, CGRect rect);
-// void EventKeyboardSetUnicodeString(void * event, NSObject* stringLength, UniChar* unicodeString);
 // int32_t DisplayRelease(uint32_t display);
 // void * PDFPageGetDocument(void * page);
 // int32_t GetDisplayTransferByTable(uint32_t display, uint32_t capacity, CGGammaValue* redTable, CGGammaValue* greenTable, CGGammaValue* blueTable, uint32_t* sampleCount);
@@ -263,7 +261,6 @@ package coregraphics
 // void * FontCopyTableForTag(void * font, uint32_t tag);
 // uint8_t* PDFStringGetBytePtr(void * string_);
 // CGRect ContextGetPathBoundingBox(void * c);
-// void EventKeyboardGetUnicodeString(void * event, NSObject* maxStringLength, NSObject* actualStringLength, UniChar* unicodeString);
 // void * LayerRetain(void * layer);
 // void ContextSetAllowsFontSubpixelPositioning(void * c, BOOL allowsFontSubpixelPositioning);
 // int32_t ColorGetTypeID();
@@ -650,7 +647,6 @@ import (
 	"unsafe"
 
 	"github.com/progrium/macdriver/macos/corefoundation"
-	"github.com/progrium/macdriver/objc"
 )
 
 // Synthesizes a low-level keyboard event on the local machine. [Full Topic]
@@ -668,6 +664,7 @@ func PostKeyboardEvent(keyChar CharCode, virtualKey KeyCode, keyDown int) Error 
 		// *typing.PrimitiveType
 		(C.NSInteger)(keyDown),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -693,6 +690,7 @@ func ContextConvertRectToDeviceSpace(c ContextRef, rect Rect) Rect {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -744,6 +742,7 @@ func RectApplyAffineTransform(rect Rect, t AffineTransform) Rect {
 		// *typing.StructType
 		*(*C.CGAffineTransform)(unsafe.Pointer(&t)),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -755,6 +754,7 @@ func EventSourceGetUserData(source EventSourceRef) int64 {
 		// *typing.RefType
 		unsafe.Pointer(source),
 	)
+	// *typing.PrimitiveType
 	return int64(rv)
 }
 
@@ -766,6 +766,7 @@ func ImageGetAlphaInfo(image ImageRef) ImageAlphaInfo {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.AliasType
 	return ImageAlphaInfo(rv)
 }
 
@@ -778,6 +779,7 @@ func DisplayIsOnline(display DirectDisplayID) int {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return int(rv)
 }
 
@@ -790,6 +792,7 @@ func ReleaseDisplayFadeReservation(token DisplayFadeReservationToken) Error {
 		// *typing.PrimitiveType
 		(C.uint32_t)(token),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -801,6 +804,7 @@ func ColorSpaceUsesExtendedRange(space ColorSpaceRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -812,6 +816,7 @@ func BitmapContextGetBitsPerComponent(context ContextRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(context),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -827,6 +832,7 @@ func PDFContextCreate(consumer DataConsumerRef, mediaBox *Rect, auxiliaryInfo co
 		// *typing.RefType
 		unsafe.Pointer(auxiliaryInfo),
 	)
+	// *typing.RefType
 	return ContextRef(rv)
 }
 
@@ -838,6 +844,7 @@ func ColorSpaceGetName(space ColorSpaceRef) corefoundation.StringRef {
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.RefType
 	return corefoundation.StringRef(rv)
 }
 
@@ -861,6 +868,7 @@ func ColorGetColorSpace(color ColorRef) ColorSpaceRef {
 		// *typing.RefType
 		unsafe.Pointer(color),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -875,6 +883,7 @@ func EventGetIntegerValueField(event EventRef, field EventField) int64 {
 		// *typing.PrimitiveType
 		(C.uint32_t)(field),
 	)
+	// *typing.PrimitiveType
 	return int64(rv)
 }
 
@@ -900,6 +909,7 @@ func ColorSpaceCopyICCData(space ColorSpaceRef) corefoundation.DataRef {
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.RefType
 	return corefoundation.DataRef(rv)
 }
 
@@ -941,6 +951,7 @@ func ContextConvertRectToUserSpace(c ContextRef, rect Rect) Rect {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -952,6 +963,7 @@ func ColorRetain(color ColorRef) ColorRef {
 		// *typing.RefType
 		unsafe.Pointer(color),
 	)
+	// *typing.RefType
 	return ColorRef(rv)
 }
 
@@ -973,6 +985,7 @@ func ColorSpaceIsHLGBased(s ColorSpaceRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(s),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -986,6 +999,7 @@ func ColorCreateGenericGray(gray float64, alpha float64) ColorRef {
 		// *typing.PrimitiveType
 		C.float(alpha),
 	)
+	// *typing.RefType
 	return ColorRef(rv)
 }
 
@@ -1028,6 +1042,7 @@ func PathAddArc(path MutablePathRef, m *AffineTransform, x float64, y float64, r
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454922-cgeventgettypeid?language=objc
 func EventGetTypeID() corefoundation.TypeID {
 	rv := C.EventGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -1061,6 +1076,7 @@ func PDFPageGetBoxRect(page PDFPageRef, box PDFBox) Rect {
 		// *typing.PrimitiveType
 		(C.int32_t)(box),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -1083,6 +1099,7 @@ func ContextStrokeRectWithWidth(c ContextRef, rect Rect, width float64) {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454780-cgsessioncopycurrentdictionary?language=objc
 func SessionCopyCurrentDictionary() corefoundation.DictionaryRef {
 	rv := C.SessionCopyCurrentDictionary()
+	// *typing.RefType
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -1091,6 +1108,7 @@ func SessionCopyCurrentDictionary() corefoundation.DictionaryRef {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454302-cgshadinggettypeid?language=objc
 func ShadingGetTypeID() corefoundation.TypeID {
 	rv := C.ShadingGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -1102,6 +1120,7 @@ func ColorSpaceCreatePattern(baseSpace ColorSpaceRef) ColorSpaceRef {
 		// *typing.RefType
 		unsafe.Pointer(baseSpace),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -1114,6 +1133,7 @@ func DisplayBounds(display DirectDisplayID) Rect {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -1135,6 +1155,7 @@ func ContextSetTextDrawingMode(c ContextRef, mode TextDrawingMode) {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408908-cgcolorspacecreatedevicegray?language=objc
 func ColorSpaceCreateDeviceGray() ColorSpaceRef {
 	rv := C.ColorSpaceCreateDeviceGray()
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -1150,6 +1171,7 @@ func ColorSpaceCreateCalibratedGray(whitePoint *float64, blackPoint *float64, ga
 		// *typing.PrimitiveType
 		C.float(gamma),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -1173,6 +1195,7 @@ func PathCreateCopyByStrokingPath(path unsafe.Pointer, transform *AffineTransfor
 		// *typing.PrimitiveType
 		C.float(miterLimit),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -1186,6 +1209,7 @@ func ColorEqualToColor(color1 ColorRef, color2 ColorRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(color2),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -1203,6 +1227,7 @@ func PathContainsPoint(path unsafe.Pointer, m *AffineTransform, point Point, eoF
 		// *typing.PrimitiveType
 		C.BOOL(eoFill),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -1214,6 +1239,7 @@ func FontCopyVariations(font FontRef) corefoundation.DictionaryRef {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.RefType
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -1225,6 +1251,7 @@ func FontRetain(font FontRef) FontRef {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.RefType
 	return FontRef(rv)
 }
 
@@ -1237,6 +1264,7 @@ func DisplayCopyColorSpace(display DirectDisplayID) ColorSpaceRef {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -1248,6 +1276,7 @@ func ImageGetWidth(image ImageRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -1259,6 +1288,7 @@ func PDFDocumentCreateWithURL(url corefoundation.URLRef) PDFDocumentRef {
 		// *typing.RefType
 		unsafe.Pointer(url),
 	)
+	// *typing.RefType
 	return PDFDocumentRef(rv)
 }
 
@@ -1289,6 +1319,7 @@ func RectMake(x float64, y float64, width float64, height float64) Rect {
 		// *typing.PrimitiveType
 		C.float(height),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -1300,6 +1331,7 @@ func ColorGetNumberOfComponents(color ColorRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(color),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -1313,6 +1345,7 @@ func PathCreateWithRect(rect Rect, transform *AffineTransform) unsafe.Pointer {
 		// *typing.PointerType
 		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -1324,6 +1357,7 @@ func ContextGetPathCurrentPoint(c ContextRef) Point {
 		// *typing.RefType
 		unsafe.Pointer(c),
 	)
+	// *typing.StructType
 	return *(*Point)(unsafe.Pointer(&rv))
 }
 
@@ -1356,6 +1390,7 @@ func PathAddPath(path1 MutablePathRef, m *AffineTransform, path2 unsafe.Pointer)
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3656524-cgrequestscreencaptureaccess?language=objc
 func RequestScreenCaptureAccess() bool {
 	rv := C.RequestScreenCaptureAccess()
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -1364,6 +1399,7 @@ func RequestScreenCaptureAccess() bool {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454784-cgdisplaystreamgettypeid?language=objc
 func DisplayStreamGetTypeID() corefoundation.TypeID {
 	rv := C.DisplayStreamGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -1377,6 +1413,7 @@ func SizeMakeWithDictionaryRepresentation(dict corefoundation.DictionaryRef, siz
 		// *typing.PointerType
 		(*C.CGSize)(unsafe.Pointer(size)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -1388,6 +1425,7 @@ func ColorSpaceIsWideGamutRGB(arg0 ColorSpaceRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(arg0),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -1409,6 +1447,7 @@ func FontGetUnitsPerEm(font FontRef) int {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.PrimitiveType
 	return int(rv)
 }
 
@@ -1420,6 +1459,7 @@ func PDFContentStreamRetain(cs unsafe.Pointer) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(cs),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -1473,6 +1513,7 @@ func ColorCreateGenericCMYK(cyan float64, magenta float64, yellow float64, black
 		// *typing.PrimitiveType
 		C.float(alpha),
 	)
+	// *typing.RefType
 	return ColorRef(rv)
 }
 
@@ -1484,6 +1525,7 @@ func ColorSpaceCreateExtendedLinearized(space ColorSpaceRef) ColorSpaceRef {
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -1496,6 +1538,7 @@ func ColorSpaceCreateWithICCData(data corefoundation.TypeRef) ColorSpaceRef {
 		// *typing.VoidPointerType
 		unsafe.Pointer(data),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -1509,10 +1552,11 @@ func GetDisplaysWithRect(rect Rect, maxDisplays uint32, displays *DirectDisplayI
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(displays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(displays)),
 		// *typing.PointerType
 		(*C.uint32_t)(unsafe.Pointer(matchingDisplayCount)),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -1533,6 +1577,7 @@ func PostMouseEvent(mouseCursorPosition Point, updateMouseCursorPosition int, bu
 		// *typing.PrimitiveType
 		(C.NSInteger)(mouseButtonDown),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -1544,6 +1589,7 @@ func DisplayModeGetWidth(mode DisplayModeRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(mode),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -1565,6 +1611,7 @@ func FontGetCapHeight(font FontRef) int {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.PrimitiveType
 	return int(rv)
 }
 
@@ -1576,6 +1623,7 @@ func PDFArrayGetCount(array unsafe.Pointer) uint {
 		// *typing.RefType
 		unsafe.Pointer(array),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -1599,6 +1647,7 @@ func PDFDocumentUnlockWithPassword(document PDFDocumentRef, password *uint8) boo
 		// *typing.PointerType
 		(*C.uint8_t)(unsafe.Pointer(password)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -1611,6 +1660,7 @@ func DisplayRotation(display DirectDisplayID) float64 {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -1624,6 +1674,7 @@ func AffineTransformMakeScale(sx float64, sy float64) AffineTransform {
 		// *typing.PrimitiveType
 		C.float(sy),
 	)
+	// *typing.StructType
 	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
@@ -1649,6 +1700,7 @@ func RectIsInfinite(rect Rect) bool {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -1660,7 +1712,7 @@ func ContextShowGlyphsWithAdvances(c ContextRef, glyphs *Glyph, advances *Size, 
 		// *typing.RefType
 		unsafe.Pointer(c),
 		// *typing.PointerType
-		(*C.NSInteger)(unsafe.Pointer(glyphs)),
+		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
 		// *typing.PointerType
 		(*C.CGSize)(unsafe.Pointer(advances)),
 		// *typing.PrimitiveType
@@ -1678,6 +1730,7 @@ func ImageCreateCopyWithColorSpace(image ImageRef, space ColorSpaceRef) ImageRef
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -1686,6 +1739,7 @@ func ImageCreateCopyWithColorSpace(image ImageRef, space ColorSpaceRef) ImageRef
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3656520-cgpreflightposteventaccess?language=objc
 func PreflightPostEventAccess() bool {
 	rv := C.PreflightPostEventAccess()
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -1704,6 +1758,7 @@ func ContextRelease(c ContextRef) {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455226-cgdataconsumergettypeid?language=objc
 func DataConsumerGetTypeID() corefoundation.TypeID {
 	rv := C.DataConsumerGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -1718,6 +1773,7 @@ func CompleteDisplayConfiguration(config unsafe.Pointer, option ConfigureOption)
 		// *typing.PrimitiveType
 		(C.uint32_t)(option),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -1739,6 +1795,7 @@ func ColorSpaceCopyICCProfile(space ColorSpaceRef) corefoundation.DataRef {
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.RefType
 	return corefoundation.DataRef(rv)
 }
 
@@ -1752,6 +1809,7 @@ func ColorCreateGenericGrayGamma2_2(gray float64, alpha float64) ColorRef {
 		// *typing.PrimitiveType
 		C.float(alpha),
 	)
+	// *typing.RefType
 	return ColorRef(rv)
 }
 
@@ -1763,6 +1821,7 @@ func PathGetBoundingBox(path unsafe.Pointer) Rect {
 		// *typing.RefType
 		unsafe.Pointer(path),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -1807,6 +1866,7 @@ func DisplayAvailableModes(dsp DirectDisplayID) corefoundation.ArrayRef {
 		// *typing.PrimitiveType
 		(C.uint32_t)(dsp),
 	)
+	// *typing.RefType
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -1819,6 +1879,7 @@ func WindowLevelForKey(key WindowLevelKey) WindowLevel {
 		// *typing.PrimitiveType
 		(C.int32_t)(key),
 	)
+	// *typing.AliasType
 	return WindowLevel(rv)
 }
 
@@ -1856,6 +1917,7 @@ func ContextSetShadowWithColor(c ContextRef, offset Size, blur float64, color Co
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456445-cgpatterngettypeid?language=objc
 func PatternGetTypeID() corefoundation.TypeID {
 	rv := C.PatternGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -1867,6 +1929,7 @@ func DisplayModeRetain(mode DisplayModeRef) DisplayModeRef {
 		// *typing.RefType
 		unsafe.Pointer(mode),
 	)
+	// *typing.RefType
 	return DisplayModeRef(rv)
 }
 
@@ -1878,6 +1941,7 @@ func EventGetTimestamp(event EventRef) EventTimestamp {
 		// *typing.RefType
 		unsafe.Pointer(event),
 	)
+	// *typing.AliasType
 	return EventTimestamp(rv)
 }
 
@@ -1889,6 +1953,7 @@ func PathCreateMutableCopy(path unsafe.Pointer) MutablePathRef {
 		// *typing.RefType
 		unsafe.Pointer(path),
 	)
+	// *typing.RefType
 	return MutablePathRef(rv)
 }
 
@@ -1902,6 +1967,7 @@ func PDFDocumentGetRotationAngle(document PDFDocumentRef, page int) int {
 		// *typing.PrimitiveType
 		C.NSInteger(page),
 	)
+	// *typing.PrimitiveType
 	return int(rv)
 }
 
@@ -1913,6 +1979,7 @@ func ContextGetCTM(c ContextRef) AffineTransform {
 		// *typing.RefType
 		unsafe.Pointer(c),
 	)
+	// *typing.StructType
 	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
@@ -1926,6 +1993,7 @@ func EventCreateData(allocator corefoundation.AllocatorRef, event EventRef) core
 		// *typing.RefType
 		unsafe.Pointer(event),
 	)
+	// *typing.RefType
 	return corefoundation.DataRef(rv)
 }
 
@@ -1938,6 +2006,7 @@ func DisplayIsStereo(display DirectDisplayID) int {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return int(rv)
 }
 
@@ -1963,6 +2032,7 @@ func ContextConvertSizeToUserSpace(c ContextRef, size Size) Size {
 		// *typing.StructType
 		*(*C.CGSize)(unsafe.Pointer(&size)),
 	)
+	// *typing.StructType
 	return *(*Size)(unsafe.Pointer(&rv))
 }
 
@@ -1974,8 +2044,9 @@ func PDFScannerPopInteger(scanner unsafe.Pointer, value *PDFInteger) bool {
 		// *typing.RefType
 		unsafe.Pointer(scanner),
 		// *typing.PointerType
-		(*C.int32_t)(unsafe.Pointer(value)),
+		(*C.CGPDFInteger)(unsafe.Pointer(value)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -2000,6 +2071,7 @@ func DisplayScreenSize(display DirectDisplayID) Size {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.StructType
 	return *(*Size)(unsafe.Pointer(&rv))
 }
 
@@ -2023,6 +2095,7 @@ func PDFPageRetain(page PDFPageRef) PDFPageRef {
 		// *typing.RefType
 		unsafe.Pointer(page),
 	)
+	// *typing.RefType
 	return PDFPageRef(rv)
 }
 
@@ -2047,6 +2120,7 @@ func DisplayCopyDisplayMode(display DirectDisplayID) DisplayModeRef {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.RefType
 	return DisplayModeRef(rv)
 }
 
@@ -2075,10 +2149,11 @@ func GetDisplaysWithOpenGLDisplayMask(mask OpenGLDisplayMask, maxDisplays uint32
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(displays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(displays)),
 		// *typing.PointerType
 		(*C.uint32_t)(unsafe.Pointer(matchingDisplayCount)),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -2094,6 +2169,7 @@ func PDFDictionaryGetArray(dict unsafe.Pointer, key *uint8, value unsafe.Pointer
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -2115,6 +2191,7 @@ func ShadingCreateAxial(space ColorSpaceRef, start Point, end Point, function Fu
 		// *typing.PrimitiveType
 		C.BOOL(extendEnd),
 	)
+	// *typing.RefType
 	return ShadingRef(rv)
 }
 
@@ -2142,20 +2219,8 @@ func PointMakeWithDictionaryRepresentation(dict corefoundation.DictionaryRef, po
 		// *typing.PointerType
 		(*C.CGPoint)(unsafe.Pointer(point)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
-}
-
-//	[Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454804-cgeventposttopid?language=objc
-func EventPostToPid(pid int32, event EventRef) {
-	C.EventPostToPid(
-		// *typing.AliasType
-		// *typing.ClassType
-		unsafe.Pointer(pid),
-		// *typing.RefType
-		unsafe.Pointer(event),
-	)
 }
 
 // Returns the location at which text is drawn. [Full Topic]
@@ -2166,6 +2231,7 @@ func ContextGetTextPosition(c ContextRef) Point {
 		// *typing.RefType
 		unsafe.Pointer(c),
 	)
+	// *typing.StructType
 	return *(*Point)(unsafe.Pointer(&rv))
 }
 
@@ -2177,6 +2243,7 @@ func BitmapContextGetBitsPerPixel(context ContextRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(context),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -2234,6 +2301,7 @@ func EventCreateScrollWheelEvent2(source EventSourceRef, units ScrollEventUnit, 
 		// *typing.PrimitiveType
 		C.int32_t(wheel3),
 	)
+	// *typing.RefType
 	return EventRef(rv)
 }
 
@@ -2245,6 +2313,7 @@ func ColorSpaceGetModel(space ColorSpaceRef) ColorSpaceModel {
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.AliasType
 	return ColorSpaceModel(rv)
 }
 
@@ -2263,6 +2332,7 @@ func ImageCreateWithPNGDataProvider(source DataProviderRef, decode *float64, sho
 		// *typing.PrimitiveType
 		(C.int32_t)(intent),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -2290,6 +2360,7 @@ func EventCreateFromData(allocator corefoundation.AllocatorRef, data corefoundat
 		// *typing.RefType
 		unsafe.Pointer(data),
 	)
+	// *typing.RefType
 	return EventRef(rv)
 }
 
@@ -2303,6 +2374,7 @@ func PDFDocumentGetArtBox(document PDFDocumentRef, page int) Rect {
 		// *typing.PrimitiveType
 		C.NSInteger(page),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -2311,6 +2383,7 @@ func PDFDocumentGetArtBox(document PDFDocumentRef, page int) Rect {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408897-cgcolorspacecreatedevicecmyk?language=objc
 func ColorSpaceCreateDeviceCMYK() ColorSpaceRef {
 	rv := C.ColorSpaceCreateDeviceCMYK()
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -2334,6 +2407,7 @@ func ConfigureDisplayFadeEffect(config unsafe.Pointer, fadeOutSeconds DisplayFad
 		// *typing.PrimitiveType
 		C.float(fadeBlue),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -2364,6 +2438,7 @@ func DisplayFade(token DisplayFadeReservationToken, duration DisplayFadeInterval
 		// *typing.PrimitiveType
 		(C.NSInteger)(synchronous),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -2377,6 +2452,7 @@ func SizeEqualToSize(size1 Size, size2 Size) bool {
 		// *typing.StructType
 		*(*C.CGSize)(unsafe.Pointer(&size2)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -2400,6 +2476,7 @@ func EventGetLocation(event EventRef) Point {
 		// *typing.RefType
 		unsafe.Pointer(event),
 	)
+	// *typing.StructType
 	return *(*Point)(unsafe.Pointer(&rv))
 }
 
@@ -2411,6 +2488,7 @@ func PSConverterAbort(converter PSConverterRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(converter),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -2419,6 +2497,7 @@ func PSConverterAbort(converter PSConverterRef) bool {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454989-cgdisplaystreamupdategettypeid?language=objc
 func DisplayStreamUpdateGetTypeID() corefoundation.TypeID {
 	rv := C.DisplayStreamUpdateGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -2444,6 +2523,7 @@ func SizeCreateDictionaryRepresentation(size Size) corefoundation.DictionaryRef 
 		// *typing.StructType
 		*(*C.CGSize)(unsafe.Pointer(&size)),
 	)
+	// *typing.RefType
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -2459,6 +2539,7 @@ func EventSourceButtonState(stateID EventSourceStateID, button MouseButton) bool
 		// *typing.PrimitiveType
 		(C.uint32_t)(button),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -2482,6 +2563,7 @@ func AffineTransformMakeRotation(angle float64) AffineTransform {
 		// *typing.PrimitiveType
 		C.float(angle),
 	)
+	// *typing.StructType
 	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
@@ -2499,6 +2581,7 @@ func ColorSpaceCreateICCBased(nComponents uint, range_ *float64, profile DataPro
 		// *typing.RefType
 		unsafe.Pointer(alternate),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -2511,6 +2594,7 @@ func AssociateMouseAndMouseCursorPosition(connected int) Error {
 		// *typing.PrimitiveType
 		(C.NSInteger)(connected),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -2522,6 +2606,7 @@ func PDFDocumentRetain(document PDFDocumentRef) PDFDocumentRef {
 		// *typing.RefType
 		unsafe.Pointer(document),
 	)
+	// *typing.RefType
 	return PDFDocumentRef(rv)
 }
 
@@ -2533,6 +2618,7 @@ func PathGetCurrentPoint(path unsafe.Pointer) Point {
 		// *typing.RefType
 		unsafe.Pointer(path),
 	)
+	// *typing.StructType
 	return *(*Point)(unsafe.Pointer(&rv))
 }
 
@@ -2559,6 +2645,7 @@ func ContextSetRGBStrokeColor(c ContextRef, red float64, green float64, blue flo
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3656523-cgpreflightscreencaptureaccess?language=objc
 func PreflightScreenCaptureAccess() bool {
 	rv := C.PreflightScreenCaptureAccess()
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -2573,12 +2660,13 @@ func SetDisplayTransferByTable(display DirectDisplayID, tableSize uint32, redTab
 		// *typing.PrimitiveType
 		C.uint32_t(tableSize),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(redTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(redTable)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(greenTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(greenTable)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(blueTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(blueTable)),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -2603,6 +2691,7 @@ func DisplayIsActive(display DirectDisplayID) int {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return int(rv)
 }
 
@@ -2649,6 +2738,7 @@ func FontCopyTableTags(font FontRef) corefoundation.ArrayRef {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.RefType
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -2660,10 +2750,11 @@ func GetActiveDisplayList(maxDisplays uint32, activeDisplays *DirectDisplayID, d
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(activeDisplays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(activeDisplays)),
 		// *typing.PointerType
 		(*C.uint32_t)(unsafe.Pointer(displayCount)),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -2677,6 +2768,7 @@ func PathIsRect(path unsafe.Pointer, rect *Rect) bool {
 		// *typing.PointerType
 		(*C.CGRect)(unsafe.Pointer(rect)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -2688,6 +2780,7 @@ func DataProviderCreateWithURL(url corefoundation.URLRef) DataProviderRef {
 		// *typing.RefType
 		unsafe.Pointer(url),
 	)
+	// *typing.RefType
 	return DataProviderRef(rv)
 }
 
@@ -2700,6 +2793,7 @@ func EventSourceCreate(stateID EventSourceStateID) EventSourceRef {
 		// *typing.PrimitiveType
 		(C.int32_t)(stateID),
 	)
+	// *typing.RefType
 	return EventSourceRef(rv)
 }
 
@@ -2711,6 +2805,7 @@ func ContextGetInterpolationQuality(c ContextRef) InterpolationQuality {
 		// *typing.RefType
 		unsafe.Pointer(c),
 	)
+	// *typing.AliasType
 	return InterpolationQuality(rv)
 }
 
@@ -2724,6 +2819,7 @@ func ColorConversionInfoCreate(src ColorSpaceRef, dst ColorSpaceRef) ColorConver
 		// *typing.RefType
 		unsafe.Pointer(dst),
 	)
+	// *typing.RefType
 	return ColorConversionInfoRef(rv)
 }
 
@@ -2737,6 +2833,7 @@ func PDFDocumentGetTrimBox(document PDFDocumentRef, page int) Rect {
 		// *typing.PrimitiveType
 		C.NSInteger(page),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -2750,6 +2847,7 @@ func RectContainsRect(rect1 Rect, rect2 Rect) bool {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect2)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -2761,8 +2859,9 @@ func FontCreatePostScriptEncoding(font FontRef, encoding *Glyph) corefoundation.
 		// *typing.RefType
 		unsafe.Pointer(font),
 		// *typing.PointerType
-		(*C.NSInteger)(unsafe.Pointer(encoding)),
+		(*C.CGGlyph)(unsafe.Pointer(encoding)),
 	)
+	// *typing.RefType
 	return corefoundation.DataRef(rv)
 }
 
@@ -2792,6 +2891,7 @@ func PDFArrayGetStream(array unsafe.Pointer, index uint, value unsafe.Pointer) b
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -2838,6 +2938,7 @@ func EventCreateKeyboardEvent(source EventSourceRef, virtualKey KeyCode, keyDown
 		// *typing.PrimitiveType
 		C.BOOL(keyDown),
 	)
+	// *typing.RefType
 	return EventRef(rv)
 }
 
@@ -2853,6 +2954,7 @@ func EventSourceCounterForEventType(stateID EventSourceStateID, eventType EventT
 		// *typing.PrimitiveType
 		(C.uint32_t)(eventType),
 	)
+	// *typing.PrimitiveType
 	return uint32(rv)
 }
 
@@ -2897,6 +2999,7 @@ func EventSourceKeyState(stateID EventSourceStateID, key KeyCode) bool {
 		// *typing.PrimitiveType
 		(C.uint16_t)(key),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -2908,6 +3011,7 @@ func RectGetHeight(rect Rect) float64 {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -2923,7 +3027,7 @@ func ContextShowGlyphsAtPoint(c ContextRef, x float64, y float64, glyphs *Glyph,
 		// *typing.PrimitiveType
 		C.float(y),
 		// *typing.PointerType
-		(*C.NSInteger)(unsafe.Pointer(glyphs)),
+		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
 		// *typing.PrimitiveType
 		C.NSUInteger(count),
 	)
@@ -2939,8 +3043,9 @@ func PDFDictionaryGetInteger(dict unsafe.Pointer, key *uint8, value *PDFInteger)
 		// *typing.PointerType
 		(*C.uint8_t)(unsafe.Pointer(key)),
 		// *typing.PointerType
-		(*C.int32_t)(unsafe.Pointer(value)),
+		(*C.CGPDFInteger)(unsafe.Pointer(value)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -2956,6 +3061,7 @@ func EventSourceSecondsSinceLastEventType(stateID EventSourceStateID, eventType 
 		// *typing.PrimitiveType
 		(C.uint32_t)(eventType),
 	)
+	// *typing.AliasType
 	return corefoundation.TimeInterval(rv)
 }
 
@@ -2967,6 +3073,7 @@ func RectIntegral(rect Rect) Rect {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -2992,8 +3099,9 @@ func PDFArrayGetNumber(array unsafe.Pointer, index uint, value *PDFReal) bool {
 		// *typing.PrimitiveType
 		C.NSUInteger(index),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(value)),
+		(*C.CGPDFReal)(unsafe.Pointer(value)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -3009,6 +3117,7 @@ func ColorCreateWithPattern(space ColorSpaceRef, pattern PatternRef, components 
 		// *typing.PointerType
 		(*C.float)(unsafe.Pointer(components)),
 	)
+	// *typing.RefType
 	return ColorRef(rv)
 }
 
@@ -3035,6 +3144,7 @@ func DisplayUsesOpenGLAcceleration(display DirectDisplayID) int {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return int(rv)
 }
 
@@ -3071,12 +3181,13 @@ func FontGetGlyphBBoxes(font FontRef, glyphs *Glyph, count uint, bboxes *Rect) b
 		// *typing.RefType
 		unsafe.Pointer(font),
 		// *typing.PointerType
-		(*C.NSInteger)(unsafe.Pointer(glyphs)),
+		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
 		// *typing.PrimitiveType
 		C.NSUInteger(count),
 		// *typing.PointerType
 		(*C.CGRect)(unsafe.Pointer(bboxes)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -3090,10 +3201,11 @@ func GetDisplaysWithPoint(point Point, maxDisplays uint32, displays *DirectDispl
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(displays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(displays)),
 		// *typing.PointerType
 		(*C.uint32_t)(unsafe.Pointer(matchingDisplayCount)),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -3115,6 +3227,7 @@ func RectGetMinX(rect Rect) float64 {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -3136,6 +3249,7 @@ func BitmapContextGetBytesPerRow(context ContextRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(context),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -3151,6 +3265,7 @@ func WindowListCreate(option WindowListOption, relativeToWindow WindowID) corefo
 		// *typing.PrimitiveType
 		(C.uint32_t)(relativeToWindow),
 	)
+	// *typing.RefType
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -3164,6 +3279,7 @@ func SizeApplyAffineTransform(size Size, t AffineTransform) Size {
 		// *typing.StructType
 		*(*C.CGAffineTransform)(unsafe.Pointer(&t)),
 	)
+	// *typing.StructType
 	return *(*Size)(unsafe.Pointer(&rv))
 }
 
@@ -3188,6 +3304,7 @@ func DisplayIsInMirrorSet(display DirectDisplayID) int {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return int(rv)
 }
 
@@ -3199,6 +3316,7 @@ func ColorSpaceIsPQBased(s ColorSpaceRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(s),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -3214,20 +3332,6 @@ func ContextClearRect(c ContextRef, rect Rect) {
 	)
 }
 
-// Sets the Unicode string associated with a Quartz keyboard event. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456028-cgeventkeyboardsetunicodestring?language=objc
-func EventKeyboardSetUnicodeString(event EventRef, stringLength objc.IObject, unicodeString *uint16) {
-	C.EventKeyboardSetUnicodeString(
-		// *typing.RefType
-		unsafe.Pointer(event),
-		// *typing.ClassType
-		stringLength,
-		// *typing.PointerType
-		(*C.uint16_t)(unsafe.Pointer(unicodeString)),
-	)
-}
-
 // Releases a captured display. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455685-cgdisplayrelease?language=objc
@@ -3237,6 +3341,7 @@ func DisplayRelease(display DirectDisplayID) Error {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -3248,6 +3353,7 @@ func PDFPageGetDocument(page PDFPageRef) PDFDocumentRef {
 		// *typing.RefType
 		unsafe.Pointer(page),
 	)
+	// *typing.RefType
 	return PDFDocumentRef(rv)
 }
 
@@ -3262,14 +3368,15 @@ func GetDisplayTransferByTable(display DirectDisplayID, capacity uint32, redTabl
 		// *typing.PrimitiveType
 		C.uint32_t(capacity),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(redTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(redTable)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(greenTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(greenTable)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(blueTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(blueTable)),
 		// *typing.PointerType
 		(*C.uint32_t)(unsafe.Pointer(sampleCount)),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -3283,6 +3390,7 @@ func AffineTransformEqualToTransform(t1 AffineTransform, t2 AffineTransform) boo
 		// *typing.StructType
 		*(*C.CGAffineTransform)(unsafe.Pointer(&t2)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -3294,6 +3402,7 @@ func PDFScannerGetContentStream(scanner unsafe.Pointer) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(scanner),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -3318,6 +3427,7 @@ func PathAddLineToPoint(path MutablePathRef, m *AffineTransform, x float64, y fl
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3656519-cgpreflightlisteneventaccess?language=objc
 func PreflightListenEventAccess() bool {
 	rv := C.PreflightListenEventAccess()
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -3329,6 +3439,7 @@ func EventGetType(event EventRef) EventType {
 		// *typing.RefType
 		unsafe.Pointer(event),
 	)
+	// *typing.AliasType
 	return EventType(rv)
 }
 
@@ -3340,8 +3451,9 @@ func PDFScannerPopNumber(scanner unsafe.Pointer, value *PDFReal) bool {
 		// *typing.RefType
 		unsafe.Pointer(scanner),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(value)),
+		(*C.CGPDFReal)(unsafe.Pointer(value)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -3357,6 +3469,7 @@ func ColorSpaceCreateLab(whitePoint *float64, blackPoint *float64, range_ *float
 		// *typing.PointerType
 		(*C.float)(unsafe.Pointer(range_)),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -3378,6 +3491,7 @@ func ContextGetClipBoundingBox(c ContextRef) Rect {
 		// *typing.RefType
 		unsafe.Pointer(c),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -3386,6 +3500,7 @@ func ContextGetClipBoundingBox(c ContextRef) Rect {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455932-cgpdfoperatortablecreate?language=objc
 func PDFOperatorTableCreate() unsafe.Pointer {
 	rv := C.PDFOperatorTableCreate()
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -3413,6 +3528,7 @@ func PointApplyAffineTransform(point Point, t AffineTransform) Point {
 		// *typing.StructType
 		*(*C.CGAffineTransform)(unsafe.Pointer(&t)),
 	)
+	// *typing.StructType
 	return *(*Point)(unsafe.Pointer(&rv))
 }
 
@@ -3431,6 +3547,7 @@ func ImageCreateWithJPEGDataProvider(source DataProviderRef, decode *float64, sh
 		// *typing.PrimitiveType
 		(C.int32_t)(intent),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -3439,6 +3556,7 @@ func ImageCreateWithJPEGDataProvider(source DataProviderRef, decode *float64, sh
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408789-cgeventsourcegettypeid?language=objc
 func EventSourceGetTypeID() corefoundation.TypeID {
 	rv := C.EventSourceGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -3472,6 +3590,7 @@ func ImageCreate(width uint, height uint, bitsPerComponent uint, bitsPerPixel ui
 		// *typing.PrimitiveType
 		(C.int32_t)(intent),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -3483,6 +3602,7 @@ func RectIsNull(rect Rect) bool {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -3494,6 +3614,7 @@ func EventSourceGetSourceStateID(source EventSourceRef) EventSourceStateID {
 		// *typing.RefType
 		unsafe.Pointer(source),
 	)
+	// *typing.AliasType
 	return EventSourceStateID(rv)
 }
 
@@ -3505,6 +3626,7 @@ func GradientRetain(gradient GradientRef) GradientRef {
 		// *typing.RefType
 		unsafe.Pointer(gradient),
 	)
+	// *typing.RefType
 	return GradientRef(rv)
 }
 
@@ -3518,8 +3640,9 @@ func PDFArrayGetBoolean(array unsafe.Pointer, index uint, value *PDFBoolean) boo
 		// *typing.PrimitiveType
 		C.NSUInteger(index),
 		// *typing.PointerType
-		(*C.uint8_t)(unsafe.Pointer(value)),
+		(*C.CGPDFBoolean)(unsafe.Pointer(value)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -3543,6 +3666,7 @@ func ColorGetPattern(color ColorRef) PatternRef {
 		// *typing.RefType
 		unsafe.Pointer(color),
 	)
+	// *typing.RefType
 	return PatternRef(rv)
 }
 
@@ -3554,6 +3678,7 @@ func PathGetPathBoundingBox(path unsafe.Pointer) Rect {
 		// *typing.RefType
 		unsafe.Pointer(path),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -3566,6 +3691,7 @@ func CaptureAllDisplaysWithOptions(options CaptureOptions) Error {
 		// *typing.PrimitiveType
 		(C.uint32_t)(options),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -3577,6 +3703,7 @@ func WindowListCreateDescriptionFromArray(windowArray corefoundation.ArrayRef) c
 		// *typing.RefType
 		unsafe.Pointer(windowArray),
 	)
+	// *typing.RefType
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -3592,6 +3719,7 @@ func PDFContentStreamCreateWithStream(stream unsafe.Pointer, streamResources uns
 		// *typing.RefType
 		unsafe.Pointer(parent),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -3626,6 +3754,7 @@ func PDFStringCopyDate(string_ unsafe.Pointer) corefoundation.DateRef {
 		// *typing.RefType
 		unsafe.Pointer(string_),
 	)
+	// *typing.RefType
 	return corefoundation.DateRef(rv)
 }
 
@@ -3634,6 +3763,7 @@ func PDFStringCopyDate(string_ unsafe.Pointer) corefoundation.DateRef {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541813-cgwindowservercfmachport?language=objc
 func WindowServerCFMachPort() corefoundation.MachPortRef {
 	rv := C.WindowServerCFMachPort()
+	// *typing.RefType
 	return corefoundation.MachPortRef(rv)
 }
 
@@ -3645,10 +3775,11 @@ func GetOnlineDisplayList(maxDisplays uint32, onlineDisplays *DirectDisplayID, d
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(onlineDisplays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(onlineDisplays)),
 		// *typing.PointerType
 		(*C.uint32_t)(unsafe.Pointer(displayCount)),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -3662,6 +3793,7 @@ func ContextConvertPointToDeviceSpace(c ContextRef, point Point) Point {
 		// *typing.StructType
 		*(*C.CGPoint)(unsafe.Pointer(&point)),
 	)
+	// *typing.StructType
 	return *(*Point)(unsafe.Pointer(&rv))
 }
 
@@ -3673,6 +3805,7 @@ func PathCreateCopy(path unsafe.Pointer) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(path),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -3684,6 +3817,7 @@ func BitmapContextCreateImage(context ContextRef) ImageRef {
 		// *typing.RefType
 		unsafe.Pointer(context),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -3695,6 +3829,7 @@ func ColorSpaceGetNumberOfComponents(space ColorSpaceRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -3706,6 +3841,7 @@ func FunctionRetain(function FunctionRef) FunctionRef {
 		// *typing.RefType
 		unsafe.Pointer(function),
 	)
+	// *typing.RefType
 	return FunctionRef(rv)
 }
 
@@ -3718,24 +3854,25 @@ func GetDisplayTransferByFormula(display DirectDisplayID, redMin *GammaValue, re
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(redMin)),
+		(*C.CGGammaValue)(unsafe.Pointer(redMin)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(redMax)),
+		(*C.CGGammaValue)(unsafe.Pointer(redMax)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(redGamma)),
+		(*C.CGGammaValue)(unsafe.Pointer(redGamma)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(greenMin)),
+		(*C.CGGammaValue)(unsafe.Pointer(greenMin)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(greenMax)),
+		(*C.CGGammaValue)(unsafe.Pointer(greenMax)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(greenGamma)),
+		(*C.CGGammaValue)(unsafe.Pointer(greenGamma)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(blueMin)),
+		(*C.CGGammaValue)(unsafe.Pointer(blueMin)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(blueMax)),
+		(*C.CGGammaValue)(unsafe.Pointer(blueMax)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(blueGamma)),
+		(*C.CGGammaValue)(unsafe.Pointer(blueGamma)),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -3749,6 +3886,7 @@ func PDFScannerPopStream(scanner unsafe.Pointer, value unsafe.Pointer) bool {
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -3760,6 +3898,7 @@ func ColorSpaceRetain(space ColorSpaceRef) ColorSpaceRef {
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -3777,6 +3916,7 @@ func ColorCreateSRGB(red float64, green float64, blue float64, alpha float64) Co
 		// *typing.PrimitiveType
 		C.float(alpha),
 	)
+	// *typing.RefType
 	return ColorRef(rv)
 }
 
@@ -3793,7 +3933,8 @@ func DisplayStreamUpdateGetRects(updateRef DisplayStreamUpdateRef, rectType Disp
 		// *typing.PointerType
 		(*C.NSUInteger)(unsafe.Pointer(rectCount)),
 	)
-	return *Rect(rv)
+	// *typing.PointerType
+	return *(**Rect)(unsafe.Pointer(&rv))
 }
 
 // Return the color space for a bitmap image. [Full Topic]
@@ -3804,6 +3945,7 @@ func ImageGetColorSpace(image ImageRef) ColorSpaceRef {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -3819,6 +3961,7 @@ func SetLocalEventsFilterDuringSuppressionState(filter EventFilterMask, state Ev
 		// *typing.PrimitiveType
 		(C.uint32_t)(state),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -3844,6 +3987,7 @@ func ShadingCreateRadial(space ColorSpaceRef, start Point, startRadius float64, 
 		// *typing.PrimitiveType
 		C.BOOL(extendEnd),
 	)
+	// *typing.RefType
 	return ShadingRef(rv)
 }
 
@@ -3886,6 +4030,7 @@ func BitmapContextGetHeight(context ContextRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(context),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -3897,6 +4042,7 @@ func ColorGetAlpha(color ColorRef) float64 {
 		// *typing.RefType
 		unsafe.Pointer(color),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -3908,6 +4054,7 @@ func ImageGetHeight(image ImageRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -3919,6 +4066,7 @@ func ColorSpaceCreateWithName(name corefoundation.StringRef) ColorSpaceRef {
 		// *typing.RefType
 		unsafe.Pointer(name),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -3955,6 +4103,7 @@ func ConfigureDisplayWithDisplayMode(config unsafe.Pointer, display DirectDispla
 		// *typing.RefType
 		unsafe.Pointer(options),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -3966,6 +4115,7 @@ func DataProviderCopyData(provider DataProviderRef) corefoundation.DataRef {
 		// *typing.RefType
 		unsafe.Pointer(provider),
 	)
+	// *typing.RefType
 	return corefoundation.DataRef(rv)
 }
 
@@ -3978,6 +4128,7 @@ func DisplayIsInHWMirrorSet(display DirectDisplayID) int {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return int(rv)
 }
 
@@ -3992,6 +4143,7 @@ func EventSourceGetLocalEventsFilterDuringSuppressionState(source EventSourceRef
 		// *typing.PrimitiveType
 		(C.uint32_t)(state),
 	)
+	// *typing.AliasType
 	return EventFilterMask(rv)
 }
 
@@ -4005,6 +4157,7 @@ func FontCopyTableForTag(font FontRef, tag uint32) corefoundation.DataRef {
 		// *typing.PrimitiveType
 		C.uint32_t(tag),
 	)
+	// *typing.RefType
 	return corefoundation.DataRef(rv)
 }
 
@@ -4016,7 +4169,8 @@ func PDFStringGetBytePtr(string_ unsafe.Pointer) *uint8 {
 		// *typing.RefType
 		unsafe.Pointer(string_),
 	)
-	return *uint8(rv)
+	// *typing.PointerType
+	return *(**uint8)(unsafe.Pointer(&rv))
 }
 
 // Returns the smallest rectangle that contains the current path. [Full Topic]
@@ -4027,23 +4181,8 @@ func ContextGetPathBoundingBox(c ContextRef) Rect {
 		// *typing.RefType
 		unsafe.Pointer(c),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
-}
-
-// Returns the Unicode string associated with a Quartz keyboard event. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456120-cgeventkeyboardgetunicodestring?language=objc
-func EventKeyboardGetUnicodeString(event EventRef, maxStringLength objc.IObject, actualStringLength objc.IObject, unicodeString *uint16) {
-	C.EventKeyboardGetUnicodeString(
-		// *typing.RefType
-		unsafe.Pointer(event),
-		// *typing.ClassType
-		maxStringLength,
-		// *typing.ClassType
-		actualStringLength,
-		// *typing.PointerType
-		(*C.uint16_t)(unsafe.Pointer(unicodeString)),
-	)
 }
 
 // Increments the retain count of a layer object. [Full Topic]
@@ -4054,6 +4193,7 @@ func LayerRetain(layer LayerRef) LayerRef {
 		// *typing.RefType
 		unsafe.Pointer(layer),
 	)
+	// *typing.RefType
 	return LayerRef(rv)
 }
 
@@ -4074,6 +4214,7 @@ func ContextSetAllowsFontSubpixelPositioning(c ContextRef, allowsFontSubpixelPos
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455568-cgcolorgettypeid?language=objc
 func ColorGetTypeID() corefoundation.TypeID {
 	rv := C.ColorGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -4085,6 +4226,7 @@ func ImageGetByteOrderInfo(image ImageRef) ImageByteOrderInfo {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.AliasType
 	return ImageByteOrderInfo(rv)
 }
 
@@ -4096,6 +4238,7 @@ func PDFDocumentCreateWithProvider(provider DataProviderRef) PDFDocumentRef {
 		// *typing.RefType
 		unsafe.Pointer(provider),
 	)
+	// *typing.RefType
 	return PDFDocumentRef(rv)
 }
 
@@ -4107,12 +4250,13 @@ func FontGetGlyphAdvances(font FontRef, glyphs *Glyph, count uint, advances *int
 		// *typing.RefType
 		unsafe.Pointer(font),
 		// *typing.PointerType
-		(*C.NSInteger)(unsafe.Pointer(glyphs)),
+		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
 		// *typing.PrimitiveType
 		C.NSUInteger(count),
 		// *typing.PointerType
 		(*C.NSInteger)(unsafe.Pointer(advances)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -4124,6 +4268,7 @@ func ImageGetPixelFormatInfo(image ImageRef) ImagePixelFormatInfo {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.AliasType
 	return ImagePixelFormatInfo(rv)
 }
 
@@ -4135,6 +4280,7 @@ func FontCopyVariationAxes(font FontRef) corefoundation.ArrayRef {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.RefType
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -4148,6 +4294,7 @@ func PDFDocumentGetMediaBox(document PDFDocumentRef, page int) Rect {
 		// *typing.PrimitiveType
 		C.NSInteger(page),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -4159,6 +4306,7 @@ func ColorSpaceCopyPropertyList(space ColorSpaceRef) corefoundation.PropertyList
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.AliasType
 	return corefoundation.PropertyListRef(rv)
 }
 
@@ -4191,8 +4339,9 @@ func DisplayBestModeForParameters(display DirectDisplayID, bitsPerPixel uint, wi
 		// *typing.PrimitiveType
 		C.NSUInteger(height),
 		// *typing.PointerType
-		(*C.NSInteger)(unsafe.Pointer(exactMatch)),
+		(*C.boolean_t)(unsafe.Pointer(exactMatch)),
 	)
+	// *typing.RefType
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -4208,6 +4357,7 @@ func PDFDictionaryGetDictionary(dict unsafe.Pointer, key *uint8, value unsafe.Po
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -4245,6 +4395,7 @@ func PDFArrayGetDictionary(array unsafe.Pointer, index uint, value unsafe.Pointe
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -4276,6 +4427,7 @@ func WarpMouseCursorPosition(newCursorPosition Point) Error {
 		// *typing.StructType
 		*(*C.CGPoint)(unsafe.Pointer(&newCursorPosition)),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -4290,6 +4442,7 @@ func DisplayMoveCursorToPoint(display DirectDisplayID, point Point) Error {
 		// *typing.StructType
 		*(*C.CGPoint)(unsafe.Pointer(&point)),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -4305,6 +4458,7 @@ func WindowListCopyWindowInfo(option WindowListOption, relativeToWindow WindowID
 		// *typing.PrimitiveType
 		(C.uint32_t)(relativeToWindow),
 	)
+	// *typing.RefType
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -4317,6 +4471,7 @@ func ShieldingWindowID(display DirectDisplayID) WindowID {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return WindowID(rv)
 }
 
@@ -4362,6 +4517,7 @@ func ImageGetBitsPerComponent(image ImageRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -4370,6 +4526,7 @@ func ImageGetBitsPerComponent(image ImageRef) uint {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455221-cgcapturealldisplays?language=objc
 func CaptureAllDisplays() Error {
 	rv := C.CaptureAllDisplays()
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -4381,6 +4538,7 @@ func EventSourceGetPixelsPerLine(source EventSourceRef) float64 {
 		// *typing.RefType
 		unsafe.Pointer(source),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -4396,6 +4554,7 @@ func RectInset(rect Rect, dx float64, dy float64) Rect {
 		// *typing.PrimitiveType
 		C.float(dy),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -4407,6 +4566,7 @@ func BeginDisplayConfiguration(config unsafe.Pointer) Error {
 		// *typing.RefType
 		unsafe.Pointer(config),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -4420,6 +4580,7 @@ func PDFArrayGetNull(array unsafe.Pointer, index uint) bool {
 		// *typing.PrimitiveType
 		C.NSUInteger(index),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -4431,7 +4592,8 @@ func ImageGetDecode(image ImageRef) *float64 {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
-	return *float64(rv)
+	// *typing.PointerType
+	return *(**float64)(unsafe.Pointer(&rv))
 }
 
 //	[Full Topic]
@@ -4442,6 +4604,7 @@ func DataProviderGetInfo(provider DataProviderRef) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(provider),
 	)
+	// *typing.VoidPointerType
 	return unsafe.Pointer(rv)
 }
 
@@ -4455,6 +4618,7 @@ func DisplayStreamUpdateCreateMergedUpdate(firstUpdate DisplayStreamUpdateRef, s
 		// *typing.RefType
 		unsafe.Pointer(secondUpdate),
 	)
+	// *typing.RefType
 	return DisplayStreamUpdateRef(rv)
 }
 
@@ -4466,8 +4630,9 @@ func PDFStreamCopyData(stream unsafe.Pointer, format *PDFDataFormat) corefoundat
 		// *typing.RefType
 		unsafe.Pointer(stream),
 		// *typing.PointerType
-		(*C.int32_t)(unsafe.Pointer(format)),
+		(*C.CGPDFDataFormat)(unsafe.Pointer(format)),
 	)
+	// *typing.RefType
 	return corefoundation.DataRef(rv)
 }
 
@@ -4479,6 +4644,7 @@ func PatternRetain(pattern PatternRef) PatternRef {
 		// *typing.RefType
 		unsafe.Pointer(pattern),
 	)
+	// *typing.RefType
 	return PatternRef(rv)
 }
 
@@ -4494,6 +4660,7 @@ func PDFDictionaryGetObject(dict unsafe.Pointer, key *uint8, value unsafe.Pointe
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -4505,6 +4672,7 @@ func BitmapContextGetColorSpace(context ContextRef) ColorSpaceRef {
 		// *typing.RefType
 		unsafe.Pointer(context),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -4516,6 +4684,7 @@ func RectIsEmpty(rect Rect) bool {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -4527,6 +4696,7 @@ func RectGetMinY(rect Rect) float64 {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -4547,6 +4717,7 @@ func WindowListCreateImage(screenBounds Rect, listOption WindowListOption, windo
 		// *typing.PrimitiveType
 		(C.uint32_t)(imageOption),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -4561,6 +4732,7 @@ func PostScrollWheelEvent(wheelCount WheelCount, wheel1 int32) Error {
 		// *typing.PrimitiveType
 		C.int32_t(wheel1),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -4569,6 +4741,7 @@ func PostScrollWheelEvent(wheelCount WheelCount, wheel1 int32) Error {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408926-cgcolorspacegettypeid?language=objc
 func ColorSpaceGetTypeID() corefoundation.TypeID {
 	rv := C.ColorSpaceGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -4580,6 +4753,7 @@ func ShadingRetain(shading ShadingRef) ShadingRef {
 		// *typing.RefType
 		unsafe.Pointer(shading),
 	)
+	// *typing.RefType
 	return ShadingRef(rv)
 }
 
@@ -4591,6 +4765,7 @@ func ColorCreateCopy(color ColorRef) ColorRef {
 		// *typing.RefType
 		unsafe.Pointer(color),
 	)
+	// *typing.RefType
 	return ColorRef(rv)
 }
 
@@ -4623,6 +4798,7 @@ func PDFPageRelease(page PDFPageRef) {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455014-cgimagegettypeid?language=objc
 func ImageGetTypeID() corefoundation.TypeID {
 	rv := C.ImageGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -4636,6 +4812,7 @@ func PDFScannerPopDictionary(scanner unsafe.Pointer, value unsafe.Pointer) bool 
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -4684,6 +4861,7 @@ func RectIntersection(r1 Rect, r2 Rect) Rect {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&r2)),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -4695,6 +4873,7 @@ func DisplayModeGetIODisplayModeID(mode DisplayModeRef) int32 {
 		// *typing.RefType
 		unsafe.Pointer(mode),
 	)
+	// *typing.PrimitiveType
 	return int32(rv)
 }
 
@@ -4707,6 +4886,7 @@ func DisplayPrimaryDisplay(display DirectDisplayID) DirectDisplayID {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return DirectDisplayID(rv)
 }
 
@@ -4732,6 +4912,7 @@ func FontGetDescent(font FontRef) int {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.PrimitiveType
 	return int(rv)
 }
 
@@ -4759,6 +4940,7 @@ func PDFDictionaryGetString(dict unsafe.Pointer, key *uint8, value unsafe.Pointe
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -4813,6 +4995,7 @@ func PathCreateMutableCopyByTransformingPath(path unsafe.Pointer, transform *Aff
 		// *typing.PointerType
 		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
 	)
+	// *typing.RefType
 	return MutablePathRef(rv)
 }
 
@@ -4826,6 +5009,7 @@ func AffineTransformMakeTranslation(tx float64, ty float64) AffineTransform {
 		// *typing.PrimitiveType
 		C.float(ty),
 	)
+	// *typing.StructType
 	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
@@ -4849,6 +5033,7 @@ func DisplayModeGetIOFlags(mode DisplayModeRef) uint32 {
 		// *typing.RefType
 		unsafe.Pointer(mode),
 	)
+	// *typing.PrimitiveType
 	return uint32(rv)
 }
 
@@ -4870,6 +5055,7 @@ func DataProviderRetain(provider DataProviderRef) DataProviderRef {
 		// *typing.RefType
 		unsafe.Pointer(provider),
 	)
+	// *typing.RefType
 	return DataProviderRef(rv)
 }
 
@@ -4881,6 +5067,7 @@ func ColorSpaceSupportsOutput(space ColorSpaceRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -4923,6 +5110,7 @@ func PDFContextCreateWithURL(url corefoundation.URLRef, mediaBox *Rect, auxiliar
 		// *typing.RefType
 		unsafe.Pointer(auxiliaryInfo),
 	)
+	// *typing.RefType
 	return ContextRef(rv)
 }
 
@@ -4931,6 +5119,7 @@ func PDFContextCreateWithURL(url corefoundation.URLRef, mediaBox *Rect, auxiliar
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454478-cgpdfpagegettypeid?language=objc
 func PDFPageGetTypeID() corefoundation.TypeID {
 	rv := C.PDFPageGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -4944,6 +5133,7 @@ func PDFDocumentGetBleedBox(document PDFDocumentRef, page int) Rect {
 		// *typing.PrimitiveType
 		C.NSInteger(page),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -4955,6 +5145,7 @@ func PDFContentStreamCreateWithPage(page PDFPageRef) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(page),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -4966,6 +5157,7 @@ func FontCreateWithDataProvider(provider DataProviderRef) FontRef {
 		// *typing.RefType
 		unsafe.Pointer(provider),
 	)
+	// *typing.RefType
 	return FontRef(rv)
 }
 
@@ -4979,8 +5171,9 @@ func PDFDictionaryGetNumber(dict unsafe.Pointer, key *uint8, value *PDFReal) boo
 		// *typing.PointerType
 		(*C.uint8_t)(unsafe.Pointer(key)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(value)),
+		(*C.CGPDFReal)(unsafe.Pointer(value)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5002,6 +5195,7 @@ func ImageCreateCopy(image ImageRef) ImageRef {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -5023,6 +5217,7 @@ func ColorSpaceIsHDR(arg0 ColorSpaceRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(arg0),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5034,6 +5229,7 @@ func PDFDocumentGetID(document PDFDocumentRef) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(document),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -5057,6 +5253,7 @@ func FontGetNumberOfGlyphs(font FontRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -5082,6 +5279,7 @@ func PDFPageGetDictionary(page PDFPageRef) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(page),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -5094,6 +5292,7 @@ func DisplayGammaTableCapacity(display DirectDisplayID) uint32 {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.PrimitiveType
 	return uint32(rv)
 }
 
@@ -5132,6 +5331,7 @@ func ContextGetTextMatrix(c ContextRef) AffineTransform {
 		// *typing.RefType
 		unsafe.Pointer(c),
 	)
+	// *typing.StructType
 	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
@@ -5154,6 +5354,7 @@ func DisplayPixelsWide(display DirectDisplayID) uint {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -5180,6 +5381,7 @@ func DisplaySwitchToMode(display DirectDisplayID, mode corefoundation.Dictionary
 		// *typing.RefType
 		unsafe.Pointer(mode),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -5191,6 +5393,7 @@ func EventTapIsEnabled(tap corefoundation.MachPortRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(tap),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5206,6 +5409,7 @@ func PDFDictionaryGetStream(dict unsafe.Pointer, key *uint8, value unsafe.Pointe
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5221,6 +5425,7 @@ func ColorSpaceCreateIndexed(baseSpace ColorSpaceRef, lastIndex uint, colorTable
 		// *typing.PointerType
 		(*C.uint8_t)(unsafe.Pointer(colorTable)),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -5233,7 +5438,8 @@ func PDFTagTypeGetName(tagType PDFTagType) *uint8 {
 		// *typing.PrimitiveType
 		(C.int32_t)(tagType),
 	)
-	return *uint8(rv)
+	// *typing.PointerType
+	return *(**uint8)(unsafe.Pointer(&rv))
 }
 
 // Sets the current fill color to a value in the DeviceGray color space. [Full Topic]
@@ -5262,6 +5468,7 @@ func PDFContentStreamGetResource(cs unsafe.Pointer, category *uint8, name *uint8
 		// *typing.PointerType
 		(*C.uint8_t)(unsafe.Pointer(name)),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -5275,8 +5482,9 @@ func PDFDictionaryGetBoolean(dict unsafe.Pointer, key *uint8, value *PDFBoolean)
 		// *typing.PointerType
 		(*C.uint8_t)(unsafe.Pointer(key)),
 		// *typing.PointerType
-		(*C.uint8_t)(unsafe.Pointer(value)),
+		(*C.CGPDFBoolean)(unsafe.Pointer(value)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5294,6 +5502,7 @@ func PSConverterConvert(converter PSConverterRef, provider DataProviderRef, cons
 		// *typing.RefType
 		unsafe.Pointer(options),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5317,6 +5526,7 @@ func PDFDocumentGetCropBox(document PDFDocumentRef, page int) Rect {
 		// *typing.PrimitiveType
 		C.NSInteger(page),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -5329,6 +5539,7 @@ func DisplayIDToOpenGLDisplayMask(display DirectDisplayID) OpenGLDisplayMask {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return OpenGLDisplayMask(rv)
 }
 
@@ -5340,6 +5551,7 @@ func RectGetMaxX(rect Rect) float64 {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -5351,6 +5563,7 @@ func ContextIsPathEmpty(c ContextRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(c),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5359,6 +5572,7 @@ func ContextIsPathEmpty(c ContextRef) bool {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2113681-cgcolorconversioninfogettypeid?language=objc
 func ColorConversionInfoGetTypeID() corefoundation.TypeID {
 	rv := C.ColorConversionInfoGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -5370,6 +5584,7 @@ func ImageGetBitsPerPixel(image ImageRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -5383,6 +5598,7 @@ func RectMakeWithDictionaryRepresentation(dict corefoundation.DictionaryRef, rec
 		// *typing.PointerType
 		(*C.CGRect)(unsafe.Pointer(rect)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5394,6 +5610,7 @@ func DisplayModeGetPixelHeight(mode DisplayModeRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(mode),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -5402,6 +5619,7 @@ func DisplayModeGetPixelHeight(mode DisplayModeRef) uint {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408837-cgcolorspacecreatedevicergb?language=objc
 func ColorSpaceCreateDeviceRGB() ColorSpaceRef {
 	rv := C.ColorSpaceCreateDeviceRGB()
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -5425,6 +5643,7 @@ func LayerGetContext(layer LayerRef) ContextRef {
 		// *typing.RefType
 		unsafe.Pointer(layer),
 	)
+	// *typing.RefType
 	return ContextRef(rv)
 }
 
@@ -5438,8 +5657,9 @@ func PDFArrayGetInteger(array unsafe.Pointer, index uint, value *PDFInteger) boo
 		// *typing.PrimitiveType
 		C.NSUInteger(index),
 		// *typing.PointerType
-		(*C.int32_t)(unsafe.Pointer(value)),
+		(*C.CGPDFInteger)(unsafe.Pointer(value)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5451,6 +5671,7 @@ func FontGetItalicAngle(font FontRef) float64 {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -5469,6 +5690,7 @@ func ConfigureDisplayOrigin(config unsafe.Pointer, display DirectDisplayID, x in
 		// *typing.PrimitiveType
 		C.int32_t(y),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -5484,6 +5706,7 @@ func ColorConversionInfoCreateWithOptions(src ColorSpaceRef, dst ColorSpaceRef, 
 		// *typing.RefType
 		unsafe.Pointer(options),
 	)
+	// *typing.RefType
 	return ColorConversionInfoRef(rv)
 }
 
@@ -5492,6 +5715,7 @@ func ColorConversionInfoCreateWithOptions(src ColorSpaceRef, dst ColorSpaceRef, 
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1571962-cgdisplayfadeoperationinprogress?language=objc
 func DisplayFadeOperationInProgress() int {
 	rv := C.DisplayFadeOperationInProgress()
+	// *typing.AliasType
 	return int(rv)
 }
 
@@ -5510,6 +5734,7 @@ func BitmapContextGetAlphaInfo(context ContextRef) ImageAlphaInfo {
 		// *typing.RefType
 		unsafe.Pointer(context),
 	)
+	// *typing.AliasType
 	return ImageAlphaInfo(rv)
 }
 
@@ -5533,6 +5758,7 @@ func PathEqualToPath(path1 unsafe.Pointer, path2 unsafe.Pointer) bool {
 		// *typing.RefType
 		unsafe.Pointer(path2),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5552,6 +5778,7 @@ func EventCreateMouseEvent(source EventSourceRef, mouseType EventType, mouseCurs
 		// *typing.PrimitiveType
 		(C.uint32_t)(mouseButton),
 	)
+	// *typing.RefType
 	return EventRef(rv)
 }
 
@@ -5560,6 +5787,7 @@ func EventCreateMouseEvent(source EventSourceRef, mouseType EventType, mouseCurs
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455620-cgmaindisplayid?language=objc
 func MainDisplayID() DirectDisplayID {
 	rv := C.MainDisplayID()
+	// *typing.AliasType
 	return DirectDisplayID(rv)
 }
 
@@ -5575,6 +5803,7 @@ func AffineTransformTranslate(t AffineTransform, tx float64, ty float64) AffineT
 		// *typing.PrimitiveType
 		C.float(ty),
 	)
+	// *typing.StructType
 	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
@@ -5588,6 +5817,7 @@ func PDFDocumentGetPage(document PDFDocumentRef, pageNumber uint) PDFPageRef {
 		// *typing.PrimitiveType
 		C.NSUInteger(pageNumber),
 	)
+	// *typing.RefType
 	return PDFPageRef(rv)
 }
 
@@ -5599,6 +5829,7 @@ func RectGetMidX(rect Rect) float64 {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -5610,6 +5841,7 @@ func EventSourceGetKeyboardType(source EventSourceRef) EventSourceKeyboardType {
 		// *typing.RefType
 		unsafe.Pointer(source),
 	)
+	// *typing.AliasType
 	return EventSourceKeyboardType(rv)
 }
 
@@ -5635,6 +5867,7 @@ func ColorCreateCopyWithAlpha(color ColorRef, alpha float64) ColorRef {
 		// *typing.PrimitiveType
 		C.float(alpha),
 	)
+	// *typing.RefType
 	return ColorRef(rv)
 }
 
@@ -5646,6 +5879,7 @@ func PDFDocumentGetAccessPermissions(document PDFDocumentRef) PDFAccessPermissio
 		// *typing.RefType
 		unsafe.Pointer(document),
 	)
+	// *typing.AliasType
 	return PDFAccessPermissions(rv)
 }
 
@@ -5659,6 +5893,7 @@ func AffineTransformRotate(t AffineTransform, angle float64) AffineTransform {
 		// *typing.PrimitiveType
 		C.float(angle),
 	)
+	// *typing.StructType
 	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
@@ -5670,6 +5905,7 @@ func EventCreateCopy(event EventRef) EventRef {
 		// *typing.RefType
 		unsafe.Pointer(event),
 	)
+	// *typing.RefType
 	return EventRef(rv)
 }
 
@@ -5700,6 +5936,7 @@ func PDFPageGetDrawingTransform(page PDFPageRef, box PDFBox, rect Rect, rotate i
 		// *typing.PrimitiveType
 		C.BOOL(preserveAspectRatio),
 	)
+	// *typing.StructType
 	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
@@ -5708,6 +5945,7 @@ func PDFPageGetDrawingTransform(page PDFPageRef, box PDFBox, rect Rect, rotate i
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456352-cgshieldingwindowlevel?language=objc
 func ShieldingWindowLevel() WindowLevel {
 	rv := C.ShieldingWindowLevel()
+	// *typing.AliasType
 	return WindowLevel(rv)
 }
 
@@ -5719,6 +5957,7 @@ func DisplayModeIsUsableForDesktopGUI(mode DisplayModeRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(mode),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5727,6 +5966,7 @@ func DisplayModeIsUsableForDesktopGUI(mode DisplayModeRef) bool {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1398453-cggradientgettypeid?language=objc
 func GradientGetTypeID() corefoundation.TypeID {
 	rv := C.GradientGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -5738,6 +5978,7 @@ func PointCreateDictionaryRepresentation(point Point) corefoundation.DictionaryR
 		// *typing.StructType
 		*(*C.CGPoint)(unsafe.Pointer(&point)),
 	)
+	// *typing.RefType
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -5753,6 +5994,7 @@ func RectOffset(rect Rect, dx float64, dy float64) Rect {
 		// *typing.PrimitiveType
 		C.float(dy),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -5768,6 +6010,7 @@ func PDFArrayGetName(array unsafe.Pointer, index uint, value *uint8) bool {
 		// *typing.PointerType
 		(*C.uint8_t)(unsafe.Pointer(value)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5799,6 +6042,7 @@ func ColorSpaceGetBaseColorSpace(space ColorSpaceRef) ColorSpaceRef {
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -5814,6 +6058,7 @@ func LayerCreateWithContext(context ContextRef, size Size, auxiliaryInfo corefou
 		// *typing.RefType
 		unsafe.Pointer(auxiliaryInfo),
 	)
+	// *typing.RefType
 	return LayerRef(rv)
 }
 
@@ -5825,6 +6070,7 @@ func DisplayModeGetPixelWidth(mode DisplayModeRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(mode),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -5838,6 +6084,7 @@ func ImageCreateWithMaskingColors(image ImageRef, components *float64) ImageRef 
 		// *typing.PointerType
 		(*C.float)(unsafe.Pointer(components)),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -5863,6 +6110,7 @@ func FontCopyPostScriptName(font FontRef) corefoundation.StringRef {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.RefType
 	return corefoundation.StringRef(rv)
 }
 
@@ -5874,6 +6122,7 @@ func ImageIsMask(image ImageRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5897,6 +6146,7 @@ func RectStandardize(rect Rect) Rect {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -5908,6 +6158,7 @@ func FontGetFontBBox(font FontRef) Rect {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -5923,6 +6174,7 @@ func PDFDictionaryGetName(dict unsafe.Pointer, key *uint8, value *uint8) bool {
 		// *typing.PointerType
 		(*C.uint8_t)(unsafe.Pointer(value)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5936,6 +6188,7 @@ func PDFScannerPopObject(scanner unsafe.Pointer, value unsafe.Pointer) bool {
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -5947,6 +6200,7 @@ func DisplayStreamGetRunLoopSource(displayStream DisplayStreamRef) corefoundatio
 		// *typing.RefType
 		unsafe.Pointer(displayStream),
 	)
+	// *typing.RefType
 	return corefoundation.RunLoopSourceRef(rv)
 }
 
@@ -5959,6 +6213,7 @@ func DisplayCapture(display DirectDisplayID) Error {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -5988,6 +6243,7 @@ func GradientCreateWithColorComponents(space ColorSpaceRef, components *float64,
 		// *typing.PrimitiveType
 		C.NSUInteger(count),
 	)
+	// *typing.RefType
 	return GradientRef(rv)
 }
 
@@ -6001,6 +6257,7 @@ func RectEqualToRect(rect1 Rect, rect2 Rect) bool {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect2)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -6018,6 +6275,7 @@ func ColorSpaceCreateCalibratedRGB(whitePoint *float64, blackPoint *float64, gam
 		// *typing.PointerType
 		(*C.float)(unsafe.Pointer(matrix)),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -6041,6 +6299,7 @@ func RectGetMidY(rect Rect) float64 {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -6055,6 +6314,7 @@ func DisplayCreateImageForRect(display DirectDisplayID, rect Rect) ImageRef {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -6068,6 +6328,7 @@ func ColorCreate(space ColorSpaceRef, components *float64) ColorRef {
 		// *typing.PointerType
 		(*C.float)(unsafe.Pointer(components)),
 	)
+	// *typing.RefType
 	return ColorRef(rv)
 }
 
@@ -6105,6 +6366,7 @@ func PDFDocumentGetNumberOfPages(document PDFDocumentRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(document),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -6132,6 +6394,7 @@ func DisplayCopyAllDisplayModes(display DirectDisplayID, options corefoundation.
 		// *typing.RefType
 		unsafe.Pointer(options),
 	)
+	// *typing.RefType
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -6144,6 +6407,7 @@ func DisplayPixelsHigh(display DirectDisplayID) uint {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -6178,6 +6442,7 @@ func SetDisplayTransferByByteTable(display DirectDisplayID, tableSize uint32, re
 		// *typing.PointerType
 		(*C.uint8_t)(unsafe.Pointer(blueTable)),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -6189,6 +6454,7 @@ func ImageGetDataProvider(image ImageRef) DataProviderRef {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.RefType
 	return DataProviderRef(rv)
 }
 
@@ -6201,6 +6467,7 @@ func DisplayIsCaptured(display DirectDisplayID) int {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return int(rv)
 }
 
@@ -6228,6 +6495,7 @@ func WaitForScreenRefreshRects(rects *Rect, count *uint32) Error {
 		// *typing.PointerType
 		(*C.uint32_t)(unsafe.Pointer(count)),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -6236,6 +6504,7 @@ func WaitForScreenRefreshRects(rects *Rect, count *uint32) Error {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408290-cgdataprovidergettypeid?language=objc
 func DataProviderGetTypeID() corefoundation.TypeID {
 	rv := C.DataProviderGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -6247,6 +6516,7 @@ func DataProviderCreateWithFilename(filename *uint8) DataProviderRef {
 		// *typing.PointerType
 		(*C.uint8_t)(unsafe.Pointer(filename)),
 	)
+	// *typing.RefType
 	return DataProviderRef(rv)
 }
 
@@ -6260,6 +6530,7 @@ func PDFScannerPopString(scanner unsafe.Pointer, value unsafe.Pointer) bool {
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -6271,6 +6542,7 @@ func ImageGetBytesPerRow(image ImageRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -6282,6 +6554,7 @@ func DataProviderCreateWithCFData(data corefoundation.DataRef) DataProviderRef {
 		// *typing.RefType
 		unsafe.Pointer(data),
 	)
+	// *typing.RefType
 	return DataProviderRef(rv)
 }
 
@@ -6293,6 +6566,7 @@ func PDFDocumentAllowsCopying(document PDFDocumentRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(document),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -6311,6 +6585,7 @@ func ColorCreateCopyByMatchingToColorSpace(arg0 ColorSpaceRef, intent ColorRende
 		// *typing.RefType
 		unsafe.Pointer(options),
 	)
+	// *typing.RefType
 	return ColorRef(rv)
 }
 
@@ -6323,6 +6598,7 @@ func InhibitLocalEvents(inhibit int) Error {
 		// *typing.PrimitiveType
 		(C.NSInteger)(inhibit),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -6336,6 +6612,7 @@ func SizeMake(width float64, height float64) Size {
 		// *typing.PrimitiveType
 		C.float(height),
 	)
+	// *typing.StructType
 	return *(*Size)(unsafe.Pointer(&rv))
 }
 
@@ -6347,6 +6624,7 @@ func RectGetMaxY(rect Rect) float64 {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -6358,6 +6636,7 @@ func PDFDocumentAllowsPrinting(document PDFDocumentRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(document),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -6396,6 +6675,7 @@ func FontGetGlyphWithGlyphName(font FontRef, name corefoundation.StringRef) Glyp
 		// *typing.RefType
 		unsafe.Pointer(name),
 	)
+	// *typing.AliasType
 	return Glyph(rv)
 }
 
@@ -6409,6 +6689,7 @@ func PDFScannerPopArray(scanner unsafe.Pointer, value unsafe.Pointer) bool {
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -6420,6 +6701,7 @@ func RectCreateDictionaryRepresentation(arg0 Rect) corefoundation.DictionaryRef 
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&arg0)),
 	)
+	// *typing.RefType
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -6431,6 +6713,7 @@ func BitmapContextGetData(context ContextRef) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(context),
 	)
+	// *typing.VoidPointerType
 	return unsafe.Pointer(rv)
 }
 
@@ -6442,6 +6725,7 @@ func FontGetAscent(font FontRef) int {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.PrimitiveType
 	return int(rv)
 }
 
@@ -6453,6 +6737,7 @@ func DisplayModeCopyPixelEncoding(mode DisplayModeRef) corefoundation.StringRef 
 		// *typing.RefType
 		unsafe.Pointer(mode),
 	)
+	// *typing.RefType
 	return corefoundation.StringRef(rv)
 }
 
@@ -6474,6 +6759,7 @@ func DisplaySetStereoOperation(display DirectDisplayID, stereo int, forceBlueLin
 		// *typing.PrimitiveType
 		(C.uint32_t)(option),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -6485,6 +6771,7 @@ func ImageGetShouldInterpolate(image ImageRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -6503,6 +6790,7 @@ func ContextFillPath(c ContextRef) {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402597-cgpdfdocumentgettypeid?language=objc
 func PDFDocumentGetTypeID() corefoundation.TypeID {
 	rv := C.PDFDocumentGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -6518,6 +6806,7 @@ func PDFArrayGetString(array unsafe.Pointer, index uint, value unsafe.Pointer) b
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -6543,6 +6832,7 @@ func ImageGetRenderingIntent(image ImageRef) ColorRenderingIntent {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.AliasType
 	return ColorRenderingIntent(rv)
 }
 
@@ -6567,6 +6857,7 @@ func FontGetStemV(font FontRef) float64 {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -6575,6 +6866,7 @@ func FontGetStemV(font FontRef) float64 {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541812-cgcursorisvisible?language=objc
 func CursorIsVisible() int {
 	rv := C.CursorIsVisible()
+	// *typing.AliasType
 	return int(rv)
 }
 
@@ -6614,6 +6906,7 @@ func PDFArrayGetObject(array unsafe.Pointer, index uint, value unsafe.Pointer) b
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -6629,6 +6922,7 @@ func DisplayCaptureWithOptions(display DirectDisplayID, options CaptureOptions) 
 		// *typing.PrimitiveType
 		(C.uint32_t)(options),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -6645,6 +6939,7 @@ func ContextPathContainsPoint(c ContextRef, point Point, mode PathDrawingMode) b
 		// *typing.PrimitiveType
 		(C.int32_t)(mode),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -6656,6 +6951,7 @@ func ColorSpaceUsesITUR_2100TF(arg0 ColorSpaceRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(arg0),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -6667,6 +6963,7 @@ func PDFDocumentGetOutline(document PDFDocumentRef) corefoundation.DictionaryRef
 		// *typing.RefType
 		unsafe.Pointer(document),
 	)
+	// *typing.RefType
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -6678,6 +6975,7 @@ func DisplayStreamStop(displayStream DisplayStreamRef) Error {
 		// *typing.RefType
 		unsafe.Pointer(displayStream),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -6696,6 +6994,7 @@ func PathRelease(path unsafe.Pointer) {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411192-cgpathgettypeid?language=objc
 func PathGetTypeID() corefoundation.TypeID {
 	rv := C.PathGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -6714,6 +7013,7 @@ func PDFDocumentRelease(document PDFDocumentRef) {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454440-cgwindowservercreateserverport?language=objc
 func WindowServerCreateServerPort() corefoundation.MachPortRef {
 	rv := C.WindowServerCreateServerPort()
+	// *typing.RefType
 	return corefoundation.MachPortRef(rv)
 }
 
@@ -6725,6 +7025,7 @@ func ContextGetUserSpaceToDeviceSpaceTransform(c ContextRef) AffineTransform {
 		// *typing.RefType
 		unsafe.Pointer(c),
 	)
+	// *typing.StructType
 	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
@@ -6756,6 +7057,7 @@ func PathCreateWithRoundedRect(rect Rect, cornerWidth float64, cornerHeight floa
 		// *typing.PointerType
 		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -6782,6 +7084,7 @@ func PDFObjectGetType(object unsafe.Pointer) PDFObjectType {
 		// *typing.RefType
 		unsafe.Pointer(object),
 	)
+	// *typing.AliasType
 	return PDFObjectType(rv)
 }
 
@@ -6807,6 +7110,7 @@ func ImageMaskCreate(width uint, height uint, bitsPerComponent uint, bitsPerPixe
 		// *typing.PrimitiveType
 		C.BOOL(shouldInterpolate),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -6824,6 +7128,7 @@ func ColorCreateGenericRGB(red float64, green float64, blue float64, alpha float
 		// *typing.PrimitiveType
 		C.float(alpha),
 	)
+	// *typing.RefType
 	return ColorRef(rv)
 }
 
@@ -6838,6 +7143,7 @@ func EventGetDoubleValueField(event EventRef, field EventField) float64 {
 		// *typing.PrimitiveType
 		(C.uint32_t)(field),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -6849,6 +7155,7 @@ func PDFDocumentGetInfo(document PDFDocumentRef) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(document),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -6860,6 +7167,7 @@ func PSConverterIsConverting(converter PSConverterRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(converter),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -6873,6 +7181,7 @@ func FontCreateCopyWithVariations(font FontRef, variations corefoundation.Dictio
 		// *typing.RefType
 		unsafe.Pointer(variations),
 	)
+	// *typing.RefType
 	return FontRef(rv)
 }
 
@@ -6890,6 +7199,7 @@ func ConfigureDisplayMirrorOfDisplay(config unsafe.Pointer, display DirectDispla
 		// *typing.PrimitiveType
 		(C.uint32_t)(master),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -6901,6 +7211,7 @@ func DisplayModeGetRefreshRate(mode DisplayModeRef) float64 {
 		// *typing.RefType
 		unsafe.Pointer(mode),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -6912,6 +7223,7 @@ func EventSourceGetLocalEventsSuppressionInterval(source EventSourceRef) corefou
 		// *typing.RefType
 		unsafe.Pointer(source),
 	)
+	// *typing.AliasType
 	return corefoundation.TimeInterval(rv)
 }
 
@@ -6943,6 +7255,7 @@ func DataConsumerCreateWithURL(url corefoundation.URLRef) DataConsumerRef {
 		// *typing.RefType
 		unsafe.Pointer(url),
 	)
+	// *typing.RefType
 	return DataConsumerRef(rv)
 }
 
@@ -6954,6 +7267,7 @@ func LayerGetSize(layer LayerRef) Size {
 		// *typing.RefType
 		unsafe.Pointer(layer),
 	)
+	// *typing.StructType
 	return *(*Size)(unsafe.Pointer(&rv))
 }
 
@@ -6965,6 +7279,7 @@ func ContextRetain(c ContextRef) ContextRef {
 		// *typing.RefType
 		unsafe.Pointer(c),
 	)
+	// *typing.RefType
 	return ContextRef(rv)
 }
 
@@ -6977,8 +7292,9 @@ func AcquireDisplayFadeReservation(seconds DisplayReservationInterval, token *Di
 		// *typing.PrimitiveType
 		(C.float)(seconds),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(token)),
+		(*C.CGDisplayFadeReservationToken)(unsafe.Pointer(token)),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -6990,6 +7306,7 @@ func EventGetFlags(event EventRef) EventFlags {
 		// *typing.RefType
 		unsafe.Pointer(event),
 	)
+	// *typing.AliasType
 	return EventFlags(rv)
 }
 
@@ -7004,6 +7321,7 @@ func FontCopyGlyphNameForGlyph(font FontRef, glyph Glyph) corefoundation.StringR
 		// *typing.AliasType
 		(C.NSInteger)(glyph),
 	)
+	// *typing.RefType
 	return corefoundation.StringRef(rv)
 }
 
@@ -7045,6 +7363,7 @@ func PathCreateCopyByTransformingPath(path unsafe.Pointer, transform *AffineTran
 		// *typing.PointerType
 		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -7056,6 +7375,7 @@ func FontCopyFullName(font FontRef) corefoundation.StringRef {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.RefType
 	return corefoundation.StringRef(rv)
 }
 
@@ -7069,6 +7389,7 @@ func AffineTransformConcat(t1 AffineTransform, t2 AffineTransform) AffineTransfo
 		// *typing.StructType
 		*(*C.CGAffineTransform)(unsafe.Pointer(&t2)),
 	)
+	// *typing.StructType
 	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
@@ -7080,6 +7401,7 @@ func PDFPageGetPageNumber(page PDFPageRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(page),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -7113,6 +7435,7 @@ func PDFStringCopyTextString(string_ unsafe.Pointer) corefoundation.StringRef {
 		// *typing.RefType
 		unsafe.Pointer(string_),
 	)
+	// *typing.RefType
 	return corefoundation.StringRef(rv)
 }
 
@@ -7124,6 +7447,7 @@ func PDFDocumentIsEncrypted(document PDFDocumentRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(document),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -7159,6 +7483,7 @@ func ContextCopyPath(c ContextRef) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(c),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -7170,6 +7495,7 @@ func ImageGetUTType(image ImageRef) corefoundation.StringRef {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.RefType
 	return corefoundation.StringRef(rv)
 }
 
@@ -7184,6 +7510,7 @@ func FontCanCreatePostScriptSubset(font FontRef, format FontPostScriptFormat) bo
 		// *typing.PrimitiveType
 		(C.int32_t)(format),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -7195,7 +7522,8 @@ func ColorGetComponents(color ColorRef) *float64 {
 		// *typing.RefType
 		unsafe.Pointer(color),
 	)
-	return *float64(rv)
+	// *typing.PointerType
+	return *(**float64)(unsafe.Pointer(&rv))
 }
 
 // Returns the type identifier for a graphics context. [Full Topic]
@@ -7203,6 +7531,7 @@ func ColorGetComponents(color ColorRef) *float64 {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455504-cgcontextgettypeid?language=objc
 func ContextGetTypeID() corefoundation.TypeID {
 	rv := C.ContextGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -7214,6 +7543,7 @@ func DataConsumerCreateWithCFData(data unsafe.Pointer) DataConsumerRef {
 		// *typing.RefType
 		unsafe.Pointer(data),
 	)
+	// *typing.RefType
 	return DataConsumerRef(rv)
 }
 
@@ -7278,6 +7608,7 @@ func ConfigureDisplayStereoOperation(config unsafe.Pointer, display DirectDispla
 		// *typing.PrimitiveType
 		(C.NSInteger)(forceBlueLine),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -7291,6 +7622,7 @@ func ContextConvertSizeToDeviceSpace(c ContextRef, size Size) Size {
 		// *typing.StructType
 		*(*C.CGSize)(unsafe.Pointer(&size)),
 	)
+	// *typing.StructType
 	return *(*Size)(unsafe.Pointer(&rv))
 }
 
@@ -7327,6 +7659,7 @@ func DisplayIsBuiltin(display DirectDisplayID) int {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return int(rv)
 }
 
@@ -7339,6 +7672,7 @@ func DisplayHideCursor(display DirectDisplayID) Error {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -7351,6 +7685,7 @@ func DisplayUnitNumber(display DirectDisplayID) uint32 {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.PrimitiveType
 	return uint32(rv)
 }
 
@@ -7367,6 +7702,7 @@ func DisplaySetDisplayMode(display DirectDisplayID, mode DisplayModeRef, options
 		// *typing.RefType
 		unsafe.Pointer(options),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -7378,7 +7714,7 @@ func ContextShowGlyphsAtPositions(c ContextRef, glyphs *Glyph, Lpositions *Point
 		// *typing.RefType
 		unsafe.Pointer(c),
 		// *typing.PointerType
-		(*C.NSInteger)(unsafe.Pointer(glyphs)),
+		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
 		// *typing.PointerType
 		(*C.CGPoint)(unsafe.Pointer(Lpositions)),
 		// *typing.PrimitiveType
@@ -7406,6 +7742,7 @@ func FontGetLeading(font FontRef) int {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.PrimitiveType
 	return int(rv)
 }
 
@@ -7414,6 +7751,7 @@ func FontGetLeading(font FontRef) int {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454188-cgpsconvertergettypeid?language=objc
 func PSConverterGetTypeID() corefoundation.TypeID {
 	rv := C.PSConverterGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -7429,6 +7767,7 @@ func GradientCreateWithColors(space ColorSpaceRef, colors corefoundation.ArrayRe
 		// *typing.PointerType
 		(*C.float)(unsafe.Pointer(locations)),
 	)
+	// *typing.RefType
 	return GradientRef(rv)
 }
 
@@ -7441,6 +7780,7 @@ func DisplayIsAlwaysInMirrorSet(display DirectDisplayID) int {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return int(rv)
 }
 
@@ -7460,6 +7800,7 @@ func PathCreateCopyByDashingPath(path unsafe.Pointer, transform *AffineTransform
 		// *typing.PrimitiveType
 		C.NSUInteger(count),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -7491,6 +7832,7 @@ func CancelDisplayConfiguration(config unsafe.Pointer) Error {
 		// *typing.RefType
 		unsafe.Pointer(config),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -7546,6 +7888,7 @@ func SetDisplayTransferByFormula(display DirectDisplayID, redMin GammaValue, red
 		// *typing.PrimitiveType
 		(C.float)(blueGamma),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -7558,6 +7901,7 @@ func DisplayIsAsleep(display DirectDisplayID) int {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return int(rv)
 }
 
@@ -7569,6 +7913,7 @@ func ImageGetBitmapInfo(image ImageRef) BitmapInfo {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.AliasType
 	return BitmapInfo(rv)
 }
 
@@ -7585,6 +7930,7 @@ func WindowListCreateImageFromArray(screenBounds Rect, windowArray corefoundatio
 		// *typing.PrimitiveType
 		(C.uint32_t)(imageOption),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -7596,6 +7942,7 @@ func BitmapContextGetWidth(context ContextRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(context),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -7617,6 +7964,7 @@ func AffineTransformMake(a float64, b float64, c float64, d float64, tx float64,
 		// *typing.PrimitiveType
 		C.float(ty),
 	)
+	// *typing.StructType
 	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
@@ -7630,6 +7978,7 @@ func PathCreateWithEllipseInRect(rect Rect, transform *AffineTransform) unsafe.P
 		// *typing.PointerType
 		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -7643,6 +7992,7 @@ func RectIntersectsRect(rect1 Rect, rect2 Rect) bool {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect2)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -7655,6 +8005,7 @@ func DisplayCreateImage(displayID DirectDisplayID) ImageRef {
 		// *typing.PrimitiveType
 		(C.uint32_t)(displayID),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -7679,6 +8030,7 @@ func EnableEventStateCombining(combineState int) Error {
 		// *typing.PrimitiveType
 		(C.NSInteger)(combineState),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -7690,6 +8042,7 @@ func ColorSpaceCreateWithICCProfile(data corefoundation.DataRef) ColorSpaceRef {
 		// *typing.RefType
 		unsafe.Pointer(data),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -7721,6 +8074,7 @@ func ColorSpaceCreateExtended(space ColorSpaceRef) ColorSpaceRef {
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -7746,6 +8100,7 @@ func ContextConvertPointToUserSpace(c ContextRef, point Point) Point {
 		// *typing.StructType
 		*(*C.CGPoint)(unsafe.Pointer(&point)),
 	)
+	// *typing.StructType
 	return *(*Point)(unsafe.Pointer(&rv))
 }
 
@@ -7757,6 +8112,7 @@ func DataConsumerRetain(consumer DataConsumerRef) DataConsumerRef {
 		// *typing.RefType
 		unsafe.Pointer(consumer),
 	)
+	// *typing.RefType
 	return DataConsumerRef(rv)
 }
 
@@ -7785,6 +8141,7 @@ func DisplayCurrentMode(display DirectDisplayID) corefoundation.DictionaryRef {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.RefType
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -7797,7 +8154,7 @@ func WaitForScreenUpdateRects(requestedOperations ScreenUpdateOperation, current
 		// *typing.PrimitiveType
 		(C.uint32_t)(requestedOperations),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(currentOperation)),
+		(*C.CGScreenUpdateOperation)(unsafe.Pointer(currentOperation)),
 		// *typing.PointerType
 		(*C.CGRect)(unsafe.Pointer(rects)),
 		// *typing.PointerType
@@ -7805,6 +8162,7 @@ func WaitForScreenUpdateRects(requestedOperations ScreenUpdateOperation, current
 		// *typing.PointerType
 		(*C.CGScreenUpdateMoveDelta)(unsafe.Pointer(delta)),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -7831,6 +8189,7 @@ func DisplayVendorNumber(display DirectDisplayID) uint32 {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.PrimitiveType
 	return uint32(rv)
 }
 
@@ -7844,6 +8203,7 @@ func RectContainsPoint(rect Rect, point Point) bool {
 		// *typing.StructType
 		*(*C.CGPoint)(unsafe.Pointer(&point)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -7852,6 +8212,7 @@ func RectContainsPoint(rect Rect, point Point) bool {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396369-cgfontgettypeid?language=objc
 func FontGetTypeID() corefoundation.TypeID {
 	rv := C.FontGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -7864,6 +8225,7 @@ func DisplayGetDrawingContext(display DirectDisplayID) ContextRef {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.RefType
 	return ContextRef(rv)
 }
 
@@ -7877,6 +8239,7 @@ func PDFScannerPopName(scanner unsafe.Pointer, value *uint8) bool {
 		// *typing.PointerType
 		(*C.uint8_t)(unsafe.Pointer(value)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -7900,6 +8263,7 @@ func EventCreate(source EventSourceRef) EventRef {
 		// *typing.RefType
 		unsafe.Pointer(source),
 	)
+	// *typing.RefType
 	return EventRef(rv)
 }
 
@@ -7912,6 +8276,7 @@ func DisplayMirrorsDisplay(display DirectDisplayID) DirectDisplayID {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return DirectDisplayID(rv)
 }
 
@@ -7923,6 +8288,7 @@ func AffineTransformIsIdentity(t AffineTransform) bool {
 		// *typing.StructType
 		*(*C.CGAffineTransform)(unsafe.Pointer(&t)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -7946,6 +8312,7 @@ func RectGetWidth(rect Rect) float64 {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.PrimitiveType
 	return float64(rv)
 }
 
@@ -7959,6 +8326,7 @@ func PointMake(x float64, y float64) Point {
 		// *typing.PrimitiveType
 		C.float(y),
 	)
+	// *typing.StructType
 	return *(*Point)(unsafe.Pointer(&rv))
 }
 
@@ -7977,6 +8345,7 @@ func EventCreateScrollWheelEvent(source EventSourceRef, units ScrollEventUnit, w
 		// *typing.PrimitiveType
 		C.int32_t(wheel1),
 	)
+	// *typing.RefType
 	return EventRef(rv)
 }
 
@@ -7988,6 +8357,7 @@ func ColorGetConstantColor(colorName corefoundation.StringRef) ColorRef {
 		// *typing.RefType
 		unsafe.Pointer(colorName),
 	)
+	// *typing.RefType
 	return ColorRef(rv)
 }
 
@@ -8000,6 +8370,7 @@ func SetLocalEventsSuppressionInterval(seconds corefoundation.TimeInterval) Erro
 		// *typing.PrimitiveType
 		(C.double)(seconds),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -8011,6 +8382,7 @@ func EventCreateSourceFromEvent(event EventRef) EventSourceRef {
 		// *typing.RefType
 		unsafe.Pointer(event),
 	)
+	// *typing.RefType
 	return EventSourceRef(rv)
 }
 
@@ -8022,6 +8394,7 @@ func FontGetXHeight(font FontRef) int {
 		// *typing.RefType
 		unsafe.Pointer(font),
 	)
+	// *typing.PrimitiveType
 	return int(rv)
 }
 
@@ -8033,6 +8406,7 @@ func DisplayStreamStart(displayStream DisplayStreamRef) Error {
 		// *typing.RefType
 		unsafe.Pointer(displayStream),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -8044,6 +8418,7 @@ func EventGetUnflippedLocation(event EventRef) Point {
 		// *typing.RefType
 		unsafe.Pointer(event),
 	)
+	// *typing.StructType
 	return *(*Point)(unsafe.Pointer(&rv))
 }
 
@@ -8057,6 +8432,7 @@ func ImageCreateWithMask(image ImageRef, mask ImageRef) ImageRef {
 		// *typing.RefType
 		unsafe.Pointer(mask),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -8082,6 +8458,7 @@ func ColorSpaceCreateLinearized(space ColorSpaceRef) ColorSpaceRef {
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.RefType
 	return ColorSpaceRef(rv)
 }
 
@@ -8093,6 +8470,7 @@ func ColorSpaceGetColorTableCount(space ColorSpaceRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -8114,8 +8492,9 @@ func DisplayBestModeForParametersAndRefreshRate(display DirectDisplayID, bitsPer
 		// *typing.PrimitiveType
 		(C.double)(refreshRate),
 		// *typing.PointerType
-		(*C.NSInteger)(unsafe.Pointer(exactMatch)),
+		(*C.boolean_t)(unsafe.Pointer(exactMatch)),
 	)
+	// *typing.RefType
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -8128,6 +8507,7 @@ func OpenGLDisplayMaskToDisplayID(mask OpenGLDisplayMask) DirectDisplayID {
 		// *typing.PrimitiveType
 		(C.uint32_t)(mask),
 	)
+	// *typing.AliasType
 	return DirectDisplayID(rv)
 }
 
@@ -8139,6 +8519,7 @@ func DisplayStreamUpdateGetDropCount(updateRef DisplayStreamUpdateRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(updateRef),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -8152,6 +8533,7 @@ func PointEqualToPoint(point1 Point, point2 Point) bool {
 		// *typing.StructType
 		*(*C.CGPoint)(unsafe.Pointer(&point2)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -8175,6 +8557,7 @@ func VectorMake(dx float64, dy float64) Vector {
 		// *typing.PrimitiveType
 		C.float(dy),
 	)
+	// *typing.StructType
 	return *(*Vector)(unsafe.Pointer(&rv))
 }
 
@@ -8186,6 +8569,7 @@ func DisplayModeGetHeight(mode DisplayModeRef) uint {
 		// *typing.RefType
 		unsafe.Pointer(mode),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -8199,6 +8583,7 @@ func RectUnion(r1 Rect, r2 Rect) Rect {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&r2)),
 	)
+	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
@@ -8210,6 +8595,7 @@ func PDFScannerScan(scanner unsafe.Pointer) bool {
 		// *typing.RefType
 		unsafe.Pointer(scanner),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -8247,6 +8633,7 @@ func PDFStreamGetDictionary(stream unsafe.Pointer) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(stream),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -8258,6 +8645,7 @@ func PDFStringGetLength(string_ unsafe.Pointer) uint {
 		// *typing.RefType
 		unsafe.Pointer(string_),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -8276,6 +8664,7 @@ func ContextClip(c ContextRef) {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454901-cgreleasealldisplays?language=objc
 func ReleaseAllDisplays() Error {
 	rv := C.ReleaseAllDisplays()
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -8284,6 +8673,7 @@ func ReleaseAllDisplays() Error {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541804-cgcursorisdrawninframebuffer?language=objc
 func CursorIsDrawnInFramebuffer() int {
 	rv := C.CursorIsDrawnInFramebuffer()
+	// *typing.AliasType
 	return int(rv)
 }
 
@@ -8296,6 +8686,7 @@ func DisplaySerialNumber(display DirectDisplayID) uint32 {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.PrimitiveType
 	return uint32(rv)
 }
 
@@ -8311,6 +8702,7 @@ func PDFArrayGetArray(array unsafe.Pointer, index uint, value unsafe.Pointer) bo
 		// *typing.RefType
 		unsafe.Pointer(value),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -8322,6 +8714,7 @@ func ColorSpaceCopyName(space ColorSpaceRef) corefoundation.StringRef {
 		// *typing.RefType
 		unsafe.Pointer(space),
 	)
+	// *typing.RefType
 	return corefoundation.StringRef(rv)
 }
 
@@ -8356,6 +8749,7 @@ func PDFOperatorTableRetain(table unsafe.Pointer) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(table),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -8368,6 +8762,7 @@ func DisplayModelNumber(display DirectDisplayID) uint32 {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.PrimitiveType
 	return uint32(rv)
 }
 
@@ -8398,6 +8793,7 @@ func GradientRelease(gradient GradientRef) {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3656521-cgrequestlisteneventaccess?language=objc
 func RequestListenEventAccess() bool {
 	rv := C.RequestListenEventAccess()
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -8423,6 +8819,7 @@ func AffineTransformInvert(t AffineTransform) AffineTransform {
 		// *typing.StructType
 		*(*C.CGAffineTransform)(unsafe.Pointer(&t)),
 	)
+	// *typing.StructType
 	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
@@ -8434,6 +8831,7 @@ func PDFScannerRetain(scanner unsafe.Pointer) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(scanner),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -8445,6 +8843,7 @@ func PathIsEmpty(path unsafe.Pointer) bool {
 		// *typing.RefType
 		unsafe.Pointer(path),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -8470,6 +8869,7 @@ func ImageRetain(image ImageRef) ImageRef {
 		// *typing.RefType
 		unsafe.Pointer(image),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -8483,6 +8883,7 @@ func ImageCreateWithImageInRect(image ImageRef, rect Rect) ImageRef {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
+	// *typing.RefType
 	return ImageRef(rv)
 }
 
@@ -8494,6 +8895,7 @@ func PDFPageGetRotationAngle(page PDFPageRef) int {
 		// *typing.RefType
 		unsafe.Pointer(page),
 	)
+	// *typing.PrimitiveType
 	return int(rv)
 }
 
@@ -8510,6 +8912,7 @@ func ConfigureDisplayMode(config unsafe.Pointer, display DirectDisplayID, mode c
 		// *typing.RefType
 		unsafe.Pointer(mode),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -8535,8 +8938,9 @@ func PDFScannerPopBoolean(scanner unsafe.Pointer, value *PDFBoolean) bool {
 		// *typing.RefType
 		unsafe.Pointer(scanner),
 		// *typing.PointerType
-		(*C.uint8_t)(unsafe.Pointer(value)),
+		(*C.CGPDFBoolean)(unsafe.Pointer(value)),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -8548,6 +8952,7 @@ func FontCreateWithFontName(name corefoundation.StringRef) FontRef {
 		// *typing.RefType
 		unsafe.Pointer(name),
 	)
+	// *typing.RefType
 	return FontRef(rv)
 }
 
@@ -8572,6 +8977,7 @@ func PDFDocumentGetCatalog(document PDFDocumentRef) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(document),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -8590,6 +8996,7 @@ func LayerRelease(layer LayerRef) {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1450888-cglayergettypeid?language=objc
 func LayerGetTypeID() corefoundation.TypeID {
 	rv := C.LayerGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -8598,6 +9005,7 @@ func LayerGetTypeID() corefoundation.TypeID {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1390879-cgfunctiongettypeid?language=objc
 func FunctionGetTypeID() corefoundation.TypeID {
 	rv := C.FunctionGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -8609,6 +9017,7 @@ func PDFContentStreamGetStreams(cs unsafe.Pointer) corefoundation.ArrayRef {
 		// *typing.RefType
 		unsafe.Pointer(cs),
 	)
+	// *typing.RefType
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -8620,6 +9029,7 @@ func PDFDictionaryGetCount(dict unsafe.Pointer) uint {
 		// *typing.RefType
 		unsafe.Pointer(dict),
 	)
+	// *typing.PrimitiveType
 	return uint(rv)
 }
 
@@ -8632,6 +9042,7 @@ func DisplayShowCursor(display DirectDisplayID) Error {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return Error(rv)
 }
 
@@ -8643,6 +9054,7 @@ func BitmapContextGetBitmapInfo(context ContextRef) BitmapInfo {
 		// *typing.RefType
 		unsafe.Pointer(context),
 	)
+	// *typing.AliasType
 	return BitmapInfo(rv)
 }
 
@@ -8658,6 +9070,7 @@ func AffineTransformScale(t AffineTransform, sx float64, sy float64) AffineTrans
 		// *typing.PrimitiveType
 		C.float(sy),
 	)
+	// *typing.StructType
 	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
@@ -8674,12 +9087,13 @@ func FontCreatePostScriptSubset(font FontRef, subsetName corefoundation.StringRe
 		// *typing.PrimitiveType
 		(C.int32_t)(format),
 		// *typing.PointerType
-		(*C.NSInteger)(unsafe.Pointer(glyphs)),
+		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
 		// *typing.PrimitiveType
 		C.NSUInteger(count),
 		// *typing.PointerType
-		(*C.NSInteger)(unsafe.Pointer(encoding)),
+		(*C.CGGlyph)(unsafe.Pointer(encoding)),
 	)
+	// *typing.RefType
 	return corefoundation.DataRef(rv)
 }
 
@@ -8692,6 +9106,7 @@ func DisplayIsMain(display DirectDisplayID) int {
 		// *typing.PrimitiveType
 		(C.uint32_t)(display),
 	)
+	// *typing.AliasType
 	return int(rv)
 }
 
@@ -8700,6 +9115,7 @@ func DisplayIsMain(display DirectDisplayID) int {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411209-cgpathcreatemutable?language=objc
 func PathCreateMutable() MutablePathRef {
 	rv := C.PathCreateMutable()
+	// *typing.RefType
 	return MutablePathRef(rv)
 }
 
@@ -8721,7 +9137,7 @@ func ContextShowGlyphs(c ContextRef, g *Glyph, count uint) {
 		// *typing.RefType
 		unsafe.Pointer(c),
 		// *typing.PointerType
-		(*C.NSInteger)(unsafe.Pointer(g)),
+		(*C.CGGlyph)(unsafe.Pointer(g)),
 		// *typing.PrimitiveType
 		C.NSUInteger(count),
 	)
@@ -8755,6 +9171,7 @@ func ContextSetLineDash(c ContextRef, phase float64, lengths *float64, count uin
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456191-cgdisplaymodegettypeid?language=objc
 func DisplayModeGetTypeID() corefoundation.TypeID {
 	rv := C.DisplayModeGetTypeID()
+	// *typing.AliasType
 	return corefoundation.TypeID(rv)
 }
 
@@ -8767,6 +9184,7 @@ func EventSourceFlagsState(stateID EventSourceStateID) EventFlags {
 		// *typing.PrimitiveType
 		(C.int32_t)(stateID),
 	)
+	// *typing.AliasType
 	return EventFlags(rv)
 }
 
@@ -8775,6 +9193,7 @@ func EventSourceFlagsState(stateID EventSourceStateID) EventFlags {
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3656522-cgrequestposteventaccess?language=objc
 func RequestPostEventAccess() bool {
 	rv := C.RequestPostEventAccess()
+	// *typing.PrimitiveType
 	return bool(rv)
 }
 
@@ -8798,6 +9217,7 @@ func PathRetain(path unsafe.Pointer) unsafe.Pointer {
 		// *typing.RefType
 		unsafe.Pointer(path),
 	)
+	// *typing.RefType
 	return unsafe.Pointer(rv)
 }
 
@@ -8809,5 +9229,6 @@ func PDFDocumentIsUnlocked(document PDFDocumentRef) bool {
 		// *typing.RefType
 		unsafe.Pointer(document),
 	)
+	// *typing.PrimitiveType
 	return bool(rv)
 }

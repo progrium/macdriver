@@ -355,9 +355,6 @@ void ContextSetShadow(void * c, CGSize offset, float blur) {
 BOOL PointMakeWithDictionaryRepresentation(void * dict, CGPoint* point) {
 	return CGPointMakeWithDictionaryRepresentation(dict, point);
 }
-void EventPostToPid(NSObject* pid, void * event) {
-	return CGEventPostToPid(pid, event);
-}
 CGPoint ContextGetTextPosition(void * c) {
 	return CGContextGetTextPosition(c);
 }
@@ -592,9 +589,6 @@ BOOL ColorSpaceIsPQBased(void * s) {
 void ContextClearRect(void * c, CGRect rect) {
 	return CGContextClearRect(c, rect);
 }
-void EventKeyboardSetUnicodeString(void * event, NSObject* stringLength, UniChar* unicodeString) {
-	return CGEventKeyboardSetUnicodeString(event, stringLength, unicodeString);
-}
 int32_t DisplayRelease(uint32_t display) {
 	return CGDisplayRelease(display);
 }
@@ -771,9 +765,6 @@ uint8_t* PDFStringGetBytePtr(void * string_) {
 }
 CGRect ContextGetPathBoundingBox(void * c) {
 	return CGContextGetPathBoundingBox(c);
-}
-void EventKeyboardGetUnicodeString(void * event, NSObject* maxStringLength, NSObject* actualStringLength, UniChar* unicodeString) {
-	return CGEventKeyboardGetUnicodeString(event, maxStringLength, actualStringLength, unicodeString);
 }
 void * LayerRetain(void * layer) {
 	return CGLayerRetain(layer);

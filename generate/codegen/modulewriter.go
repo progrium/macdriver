@@ -152,6 +152,9 @@ func shouldSkipFunction(f *Function) bool {
 		"CGDisplayIOServicePort":                           true,
 		"CGGetEventTapList":                                true,
 		"CGColorConversionInfoCreateFromListWithArguments": true,
+		"CGEventKeyboardSetUnicodeString":                  true,
+		"CGEventPostToPid":                                 true,
+		"CGEventKeyboardGetUnicodeString":                  true,
 	}[f.Name]; ok {
 		return true
 	}
