@@ -5,12 +5,12 @@ import (
 	"github.com/progrium/macdriver/internal/set"
 )
 
-var Bool = &PrimitiveType{GoName_: "bool", ObjcName_: "BOOL"}
+var Bool = &PrimitiveType{GoName_: "bool", ObjcName_: "BOOL", CName_: "bool"}
 
-var Int = &PrimitiveType{GoName_: "int", ObjcName_: "NSInteger"}
-var UInt = &PrimitiveType{GoName_: "uint", ObjcName_: "NSUInteger"}
+var Int = &PrimitiveType{GoName_: "int", ObjcName_: "NSInteger", CName_: "long"}
+var UInt = &PrimitiveType{GoName_: "uint", ObjcName_: "NSUInteger", CName_: "uint"}
 
-var Float = &PrimitiveType{GoName_: "float64", ObjcName_: "CGFloat"}
+var Float = &PrimitiveType{GoName_: "float64", ObjcName_: "CGFloat", CName_: "float"}
 var Double = &PrimitiveType{GoName_: "float64", ObjcName_: "double"}
 
 var Int8 = &PrimitiveType{GoName_: "int8", ObjcName_: "int8_t"}
@@ -65,6 +65,7 @@ func GetPrimitiveType(typeName string) (*PrimitiveType, bool) {
 type PrimitiveType struct {
 	GoName_   string // go type name
 	ObjcName_ string // objc type name
+	CName_    string
 }
 
 func (p *PrimitiveType) GoImports() set.Set[string] {
@@ -80,7 +81,11 @@ func (p *PrimitiveType) ObjcName() string {
 }
 
 func (p *PrimitiveType) CName() string {
-	return p.ObjcName_
+	n := p.CName_
+	if n == "" {
+		return p.ObjcName_
+	}
+	return n
 }
 
 func (p *PrimitiveType) DeclareModule() *modules.Module {
