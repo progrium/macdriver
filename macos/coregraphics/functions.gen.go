@@ -128,7 +128,7 @@ package coregraphics
 // CGPoint ContextGetTextPosition(void * c);
 // uint BitmapContextGetBitsPerPixel(void * context);
 // void ContextAddArc(void * c, float x, float y, float radius, float startAngle, float endAngle, NSInteger clockwise);
-// void EventSetType(void * event, uint32_t type);
+// void EventSetType(void * event, uint32_t type_);
 // void * EventCreateScrollWheelEvent2(void * source, uint32_t units, uint32_t wheelCount, int32_t wheel1, int32_t wheel2, int32_t wheel3);
 // int32_t ColorSpaceGetModel(void * space);
 // void * ImageCreateWithPNGDataProvider(void * source, float* decode, BOOL shouldInterpolate, int32_t intent);
@@ -148,7 +148,7 @@ package coregraphics
 // bool EventSourceButtonState(int32_t stateID, uint32_t button);
 // void EventTapEnable(void * tap, BOOL enable);
 // CGAffineTransform AffineTransformMakeRotation(float angle);
-// void * ColorSpaceCreateICCBased(NSUInteger nComponents, float* range, void * profile, void * alternate);
+// void * ColorSpaceCreateICCBased(NSUInteger nComponents, float* range_, void * profile, void * alternate);
 // int32_t AssociateMouseAndMouseCursorPosition(NSInteger connected);
 // void * PDFDocumentRetain(void * document);
 // CGPoint PathGetCurrentPoint(void * path);
@@ -172,7 +172,7 @@ package coregraphics
 // void * FontCreatePostScriptEncoding(void * font, CGGlyph* encoding);
 // void ContextDrawLayerAtPoint(void * context, CGPoint point, void * layer);
 // bool PDFArrayGetStream(void * array, NSUInteger index, void * value);
-// void ContextShowTextAtPoint(void * c, float x, float y, uint8_t* string, NSUInteger length);
+// void ContextShowTextAtPoint(void * c, float x, float y, uint8_t* string_, NSUInteger length);
 // void EventSourceSetPixelsPerLine(void * source, double pixelsPerLine);
 // void * EventCreateKeyboardEvent(void * source, uint16_t virtualKey, BOOL keyDown);
 // uint32_t EventSourceCounterForEventType(int32_t stateID, uint32_t eventType);
@@ -213,7 +213,7 @@ package coregraphics
 // bool PreflightListenEventAccess();
 // uint32_t EventGetType(void * event);
 // bool PDFScannerPopNumber(void * scanner, CGPDFReal* value);
-// void * ColorSpaceCreateLab(float* whitePoint, float* blackPoint, float* range);
+// void * ColorSpaceCreateLab(float* whitePoint, float* blackPoint, float* range_);
 // void PDFContextEndPage(void * context);
 // CGRect ContextGetClipBoundingBox(void * c);
 // void * PDFOperatorTableCreate();
@@ -233,7 +233,7 @@ package coregraphics
 // void * WindowListCreateDescriptionFromArray(void * windowArray);
 // void * PDFContentStreamCreateWithStream(void * stream, void * streamResources, void * parent);
 // void ContextDrawRadialGradient(void * c, void * gradient, CGPoint startCenter, float startRadius, CGPoint endCenter, float endRadius, uint32_t options);
-// void * PDFStringCopyDate(void * string);
+// void * PDFStringCopyDate(void * string_);
 // void * WindowServerCFMachPort();
 // int32_t GetOnlineDisplayList(uint32_t maxDisplays, CGDirectDisplayID* onlineDisplays, uint32_t* displayCount);
 // CGPoint ContextConvertPointToDeviceSpace(void * c, CGPoint point);
@@ -261,7 +261,7 @@ package coregraphics
 // int DisplayIsInHWMirrorSet(uint32_t display);
 // uint32_t EventSourceGetLocalEventsFilterDuringSuppressionState(void * source, uint32_t state);
 // void * FontCopyTableForTag(void * font, uint32_t tag);
-// uint8_t* PDFStringGetBytePtr(void * string);
+// uint8_t* PDFStringGetBytePtr(void * string_);
 // CGRect ContextGetPathBoundingBox(void * c);
 // void EventKeyboardGetUnicodeString(void * event, NSObject* maxStringLength, NSObject* actualStringLength, UniChar* unicodeString);
 // void * LayerRetain(void * layer);
@@ -463,7 +463,7 @@ package coregraphics
 // void ContextFillPath(void * c);
 // int32_t PDFDocumentGetTypeID();
 // bool PDFArrayGetString(void * array, NSUInteger index, void * value);
-// void ContextShowText(void * c, uint8_t* string, NSUInteger length);
+// void ContextShowText(void * c, uint8_t* string_, NSUInteger length);
 // int32_t ImageGetRenderingIntent(void * image);
 // void EventPost(uint32_t tap, void * event);
 // float FontGetStemV(void * font);
@@ -509,7 +509,7 @@ package coregraphics
 // uint PDFPageGetPageNumber(void * page);
 // void EventSetLocation(void * event, CGPoint location);
 // void FontRelease(void * font);
-// void * PDFStringCopyTextString(void * string);
+// void * PDFStringCopyTextString(void * string_);
 // bool PDFDocumentIsEncrypted(void * document);
 // void ContextStrokeRect(void * c, CGRect rect);
 // void ContextSetShouldSubpixelPositionFonts(void * c, BOOL shouldSubpixelPositionFonts);
@@ -596,7 +596,7 @@ package coregraphics
 // void ContextAddLines(void * c, CGPoint* points, NSUInteger count);
 // void ContextSetMiterLimit(void * c, float limit);
 // void * PDFStreamGetDictionary(void * stream);
-// uint PDFStringGetLength(void * string);
+// uint PDFStringGetLength(void * string_);
 // void ContextClip(void * c);
 // int32_t ReleaseAllDisplays();
 // int CursorIsDrawnInFramebuffer();
@@ -657,7 +657,17 @@ import (
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541792-cgpostkeyboardevent?language=objc
 func PostKeyboardEvent(keyChar CharCode, virtualKey KeyCode, keyDown int) Error {
-	rv := C.PostKeyboardEvent(C.uint16_t(keyChar), C.uint16_t(virtualKey), C.NSInteger(keyDown))
+	rv := C.PostKeyboardEvent(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint16_t)(keyChar),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint16_t)(virtualKey),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.NSInteger)(keyDown),
+	)
 	return Error(rv)
 }
 
@@ -665,51 +675,86 @@ func PostKeyboardEvent(keyChar CharCode, virtualKey KeyCode, keyDown int) Error 
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455774-cgcontextstrokeellipseinrect?language=objc
 func ContextStrokeEllipseInRect(c ContextRef, rect Rect) {
-	C.ContextStrokeEllipseInRect(c, C.CGRect(rect))
+	C.ContextStrokeEllipseInRect(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 }
 
 // Returns a rectangle that is transformed from user space coordinate to device space coordinates. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456017-cgcontextconvertrecttodevicespac?language=objc
 func ContextConvertRectToDeviceSpace(c ContextRef, rect Rect) Rect {
-	rv := C.ContextConvertRectToDeviceSpace(c, rect)
-	return Rect(rv)
+	rv := C.ContextConvertRectToDeviceSpace(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Sets the event source of a Quartz event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455500-cgeventsetsource?language=objc
 func EventSetSource(event EventRef, source EventSourceRef) {
-	C.EventSetSource(event, source)
+	C.EventSetSource(
+		// *typing.RefType
+		unsafe.Pointer(event),
+		// *typing.RefType
+		unsafe.Pointer(source),
+	)
 }
 
 // Sets the current font size. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456426-cgcontextsetfontsize?language=objc
 func ContextSetFontSize(c ContextRef, size float64) {
-	C.ContextSetFontSize(c, size)
+	C.ContextSetFontSize(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(size),
+	)
 }
 
 // Sets the clipping path to the intersection of the current clipping path with the region defined by an array of rectangles. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454626-cgcontextcliptorects?language=objc
 func ContextClipToRects(c ContextRef, rects *Rect, count uint) {
-	C.ContextClipToRects(c, rects, count)
+	C.ContextClipToRects(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(rects)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+	)
 }
 
 // Applies an affine transform to a rectangle. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455875-cgrectapplyaffinetransform?language=objc
 func RectApplyAffineTransform(rect Rect, t AffineTransform) Rect {
-	rv := C.RectApplyAffineTransform(rect, t)
-	return Rect(rv)
+	rv := C.RectApplyAffineTransform(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.StructType
+		*(*C.CGAffineTransform)(unsafe.Pointer(&t)),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Returns the 64-bit user-specified data for a Quartz event source. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408777-cgeventsourcegetuserdata?language=objc
 func EventSourceGetUserData(source EventSourceRef) int64 {
-	rv := C.EventSourceGetUserData(source)
+	rv := C.EventSourceGetUserData(
+		// *typing.RefType
+		unsafe.Pointer(source),
+	)
 	return int64(rv)
 }
 
@@ -717,7 +762,10 @@ func EventSourceGetUserData(source EventSourceRef) int64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455401-cgimagegetalphainfo?language=objc
 func ImageGetAlphaInfo(image ImageRef) ImageAlphaInfo {
-	rv := C.ImageGetAlphaInfo(image)
+	rv := C.ImageGetAlphaInfo(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return ImageAlphaInfo(rv)
 }
 
@@ -725,7 +773,11 @@ func ImageGetAlphaInfo(image ImageRef) ImageAlphaInfo {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454476-cgdisplayisonline?language=objc
 func DisplayIsOnline(display DirectDisplayID) int {
-	rv := C.DisplayIsOnline(C.uint32_t(display))
+	rv := C.DisplayIsOnline(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return int(rv)
 }
 
@@ -733,7 +785,11 @@ func DisplayIsOnline(display DirectDisplayID) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455230-cgreleasedisplayfadereservation?language=objc
 func ReleaseDisplayFadeReservation(token DisplayFadeReservationToken) Error {
-	rv := C.ReleaseDisplayFadeReservation(C.uint32_t(token))
+	rv := C.ReleaseDisplayFadeReservation(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(token),
+	)
 	return Error(rv)
 }
 
@@ -741,7 +797,10 @@ func ReleaseDisplayFadeReservation(token DisplayFadeReservationToken) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3579522-cgcolorspaceusesextendedrange?language=objc
 func ColorSpaceUsesExtendedRange(space ColorSpaceRef) bool {
-	rv := C.ColorSpaceUsesExtendedRange(space)
+	rv := C.ColorSpaceUsesExtendedRange(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return bool(rv)
 }
 
@@ -749,7 +808,10 @@ func ColorSpaceUsesExtendedRange(space ColorSpaceRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455383-cgbitmapcontextgetbitspercompone?language=objc
 func BitmapContextGetBitsPerComponent(context ContextRef) uint {
-	rv := C.BitmapContextGetBitsPerComponent(context)
+	rv := C.BitmapContextGetBitsPerComponent(
+		// *typing.RefType
+		unsafe.Pointer(context),
+	)
 	return uint(rv)
 }
 
@@ -757,7 +819,14 @@ func BitmapContextGetBitsPerComponent(context ContextRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454204-cgpdfcontextcreate?language=objc
 func PDFContextCreate(consumer DataConsumerRef, mediaBox *Rect, auxiliaryInfo corefoundation.DictionaryRef) ContextRef {
-	rv := C.PDFContextCreate(consumer, mediaBox, auxiliaryInfo)
+	rv := C.PDFContextCreate(
+		// *typing.RefType
+		unsafe.Pointer(consumer),
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(mediaBox)),
+		// *typing.RefType
+		unsafe.Pointer(auxiliaryInfo),
+	)
 	return ContextRef(rv)
 }
 
@@ -765,7 +834,10 @@ func PDFContextCreate(consumer DataConsumerRef, mediaBox *Rect, auxiliaryInfo co
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2923324-cgcolorspacegetname?language=objc
 func ColorSpaceGetName(space ColorSpaceRef) corefoundation.StringRef {
-	rv := C.ColorSpaceGetName(space)
+	rv := C.ColorSpaceGetName(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return corefoundation.StringRef(rv)
 }
 
@@ -773,14 +845,22 @@ func ColorSpaceGetName(space ColorSpaceRef) corefoundation.StringRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456011-cgcontextbegintransparencylayer?language=objc
 func ContextBeginTransparencyLayer(c ContextRef, auxiliaryInfo corefoundation.DictionaryRef) {
-	C.ContextBeginTransparencyLayer(c, auxiliaryInfo)
+	C.ContextBeginTransparencyLayer(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.RefType
+		unsafe.Pointer(auxiliaryInfo),
+	)
 }
 
 // Returns the color space associated with a color. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455744-cgcolorgetcolorspace?language=objc
 func ColorGetColorSpace(color ColorRef) ColorSpaceRef {
-	rv := C.ColorGetColorSpace(color)
+	rv := C.ColorGetColorSpace(
+		// *typing.RefType
+		unsafe.Pointer(color),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -788,7 +868,13 @@ func ColorGetColorSpace(color ColorRef) ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455885-cgeventgetintegervaluefield?language=objc
 func EventGetIntegerValueField(event EventRef, field EventField) int64 {
-	rv := C.EventGetIntegerValueField(event, C.uint32_t(field))
+	rv := C.EventGetIntegerValueField(
+		// *typing.RefType
+		unsafe.Pointer(event),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(field),
+	)
 	return int64(rv)
 }
 
@@ -796,14 +882,24 @@ func EventGetIntegerValueField(event EventRef, field EventField) int64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456069-cgcontextsettextposition?language=objc
 func ContextSetTextPosition(c ContextRef, x float64, y float64) {
-	C.ContextSetTextPosition(c, x, y)
+	C.ContextSetTextPosition(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+	)
 }
 
 // Returns a copy of the ICC profile data of the provided color space. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1644732-cgcolorspacecopyiccdata?language=objc
 func ColorSpaceCopyICCData(space ColorSpaceRef) corefoundation.DataRef {
-	rv := C.ColorSpaceCopyICCData(space)
+	rv := C.ColorSpaceCopyICCData(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return corefoundation.DataRef(rv)
 }
 
@@ -811,29 +907,51 @@ func ColorSpaceCopyICCData(space ColorSpaceRef) corefoundation.DataRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454950-cgcontextsetfont?language=objc
 func ContextSetFont(c ContextRef, font FontRef) {
-	C.ContextSetFont(c, font)
+	C.ContextSetFont(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 }
 
 //	[Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586508-cgcontextdrawpdfdocument?language=objc
 func ContextDrawPDFDocument(c ContextRef, rect Rect, document PDFDocumentRef, page int) {
-	C.ContextDrawPDFDocument(c, rect, document, page)
+	C.ContextDrawPDFDocument(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.RefType
+		unsafe.Pointer(document),
+		// *typing.PrimitiveType
+		C.NSInteger(page),
+	)
 }
 
 // Returns a rectangle that is transformed from device space coordinate to user space coordinates. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454165-cgcontextconvertrecttouserspace?language=objc
 func ContextConvertRectToUserSpace(c ContextRef, rect Rect) Rect {
-	rv := C.ContextConvertRectToUserSpace(c, rect)
-	return Rect(rv)
+	rv := C.ContextConvertRectToUserSpace(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Increments the retain count of a color. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586339-cgcolorretain?language=objc
 func ColorRetain(color ColorRef) ColorRef {
-	rv := C.ColorRetain(color)
+	rv := C.ColorRetain(
+		// *typing.RefType
+		unsafe.Pointer(color),
+	)
 	return ColorRef(rv)
 }
 
@@ -841,14 +959,20 @@ func ColorRetain(color ColorRef) ColorRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456635-cgcontextbeginpath?language=objc
 func ContextBeginPath(c ContextRef) {
-	C.ContextBeginPath(c)
+	C.ContextBeginPath(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 //	[Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3861799-cgcolorspaceishlgbased?language=objc
 func ColorSpaceIsHLGBased(s ColorSpaceRef) bool {
-	rv := C.ColorSpaceIsHLGBased(s)
+	rv := C.ColorSpaceIsHLGBased(
+		// *typing.RefType
+		unsafe.Pointer(s),
+	)
 	return bool(rv)
 }
 
@@ -856,7 +980,12 @@ func ColorSpaceIsHLGBased(s ColorSpaceRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456453-cgcolorcreategenericgray?language=objc
 func ColorCreateGenericGray(gray float64, alpha float64) ColorRef {
-	rv := C.ColorCreateGenericGray(gray, alpha)
+	rv := C.ColorCreateGenericGray(
+		// *typing.PrimitiveType
+		C.float(gray),
+		// *typing.PrimitiveType
+		C.float(alpha),
+	)
 	return ColorRef(rv)
 }
 
@@ -864,14 +993,34 @@ func ColorCreateGenericGray(gray float64, alpha float64) ColorRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408304-cgdataproviderrelease?language=objc
 func DataProviderRelease(provider DataProviderRef) {
-	C.DataProviderRelease(provider)
+	C.DataProviderRelease(
+		// *typing.RefType
+		unsafe.Pointer(provider),
+	)
 }
 
 // Appends an arc to a mutable graphics path, possibly preceded by a straight line segment. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411147-cgpathaddarc?language=objc
 func PathAddArc(path MutablePathRef, m *AffineTransform, x float64, y float64, radius float64, startAngle float64, endAngle float64, clockwise bool) {
-	C.PathAddArc(path, m, x, y, radius, startAngle, endAngle, clockwise)
+	C.PathAddArc(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+		// *typing.PrimitiveType
+		C.float(radius),
+		// *typing.PrimitiveType
+		C.float(startAngle),
+		// *typing.PrimitiveType
+		C.float(endAngle),
+		// *typing.PrimitiveType
+		C.BOOL(clockwise),
+	)
 }
 
 // Returns the type identifier for the opaque type CGEventRef. [Full Topic]
@@ -886,22 +1035,47 @@ func EventGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454782-cgcontextdrawlineargradient?language=objc
 func ContextDrawLinearGradient(c ContextRef, gradient GradientRef, startPoint Point, endPoint Point, options GradientDrawingOptions) {
-	C.ContextDrawLinearGradient(c, gradient, startPoint, endPoint, C.uint32_t(options))
+	C.ContextDrawLinearGradient(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.RefType
+		unsafe.Pointer(gradient),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&startPoint)),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&endPoint)),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(options),
+	)
 }
 
 // Returns the rectangle that represents a type of box for a content region or page dimensions of a PDF page. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456114-cgpdfpagegetboxrect?language=objc
 func PDFPageGetBoxRect(page PDFPageRef, box PDFBox) Rect {
-	rv := C.PDFPageGetBoxRect(page, C.int32_t(box))
-	return Rect(rv)
+	rv := C.PDFPageGetBoxRect(
+		// *typing.RefType
+		unsafe.Pointer(page),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(box),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Paints a rectangular path, using the specified line width. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454679-cgcontextstrokerectwithwidth?language=objc
 func ContextStrokeRectWithWidth(c ContextRef, rect Rect, width float64) {
-	C.ContextStrokeRectWithWidth(c, rect, width)
+	C.ContextStrokeRectWithWidth(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.PrimitiveType
+		C.float(width),
+	)
 }
 
 // Returns information about the caller’s window server session. [Full Topic]
@@ -924,7 +1098,10 @@ func ShadingGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408869-cgcolorspacecreatepattern?language=objc
 func ColorSpaceCreatePattern(baseSpace ColorSpaceRef) ColorSpaceRef {
-	rv := C.ColorSpaceCreatePattern(baseSpace)
+	rv := C.ColorSpaceCreatePattern(
+		// *typing.RefType
+		unsafe.Pointer(baseSpace),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -932,15 +1109,25 @@ func ColorSpaceCreatePattern(baseSpace ColorSpaceRef) ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456395-cgdisplaybounds?language=objc
 func DisplayBounds(display DirectDisplayID) Rect {
-	rv := C.DisplayBounds(C.uint32_t(display))
-	return Rect(rv)
+	rv := C.DisplayBounds(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Sets the current text drawing mode. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454253-cgcontextsettextdrawingmode?language=objc
 func ContextSetTextDrawingMode(c ContextRef, mode TextDrawingMode) {
-	C.ContextSetTextDrawingMode(c, C.int32_t(mode))
+	C.ContextSetTextDrawingMode(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(mode),
+	)
 }
 
 // Creates a device-dependent grayscale color space. [Full Topic]
@@ -955,7 +1142,14 @@ func ColorSpaceCreateDeviceGray() ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408887-cgcolorspacecreatecalibratedgray?language=objc
 func ColorSpaceCreateCalibratedGray(whitePoint *float64, blackPoint *float64, gamma float64) ColorSpaceRef {
-	rv := C.ColorSpaceCreateCalibratedGray(whitePoint, blackPoint, gamma)
+	rv := C.ColorSpaceCreateCalibratedGray(
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(whitePoint)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(blackPoint)),
+		// *typing.PrimitiveType
+		C.float(gamma),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -963,7 +1157,22 @@ func ColorSpaceCreateCalibratedGray(whitePoint *float64, blackPoint *float64, ga
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411128-cgpathcreatecopybystrokingpath?language=objc
 func PathCreateCopyByStrokingPath(path unsafe.Pointer, transform *AffineTransform, lineWidth float64, lineCap LineCap, lineJoin LineJoin, miterLimit float64) unsafe.Pointer {
-	rv := C.PathCreateCopyByStrokingPath(path, transform, lineWidth, C.int32_t(lineCap), C.int32_t(lineJoin), miterLimit)
+	rv := C.PathCreateCopyByStrokingPath(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+		// *typing.PrimitiveType
+		C.float(lineWidth),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(lineCap),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(lineJoin),
+		// *typing.PrimitiveType
+		C.float(miterLimit),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -971,7 +1180,12 @@ func PathCreateCopyByStrokingPath(path unsafe.Pointer, transform *AffineTransfor
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455217-cgcolorequaltocolor?language=objc
 func ColorEqualToColor(color1 ColorRef, color2 ColorRef) bool {
-	rv := C.ColorEqualToColor(color1, color2)
+	rv := C.ColorEqualToColor(
+		// *typing.RefType
+		unsafe.Pointer(color1),
+		// *typing.RefType
+		unsafe.Pointer(color2),
+	)
 	return bool(rv)
 }
 
@@ -979,7 +1193,16 @@ func ColorEqualToColor(color1 ColorRef, color2 ColorRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411175-cgpathcontainspoint?language=objc
 func PathContainsPoint(path unsafe.Pointer, m *AffineTransform, point Point, eoFill bool) bool {
-	rv := C.PathContainsPoint(path, m, point, eoFill)
+	rv := C.PathContainsPoint(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&point)),
+		// *typing.PrimitiveType
+		C.BOOL(eoFill),
+	)
 	return bool(rv)
 }
 
@@ -987,7 +1210,10 @@ func PathContainsPoint(path unsafe.Pointer, m *AffineTransform, point Point, eoF
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396355-cgfontcopyvariations?language=objc
 func FontCopyVariations(font FontRef) corefoundation.DictionaryRef {
-	rv := C.FontCopyVariations(font)
+	rv := C.FontCopyVariations(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -995,7 +1221,10 @@ func FontCopyVariations(font FontRef) corefoundation.DictionaryRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396384-cgfontretain?language=objc
 func FontRetain(font FontRef) FontRef {
-	rv := C.FontRetain(font)
+	rv := C.FontRetain(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return FontRef(rv)
 }
 
@@ -1003,7 +1232,11 @@ func FontRetain(font FontRef) FontRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454190-cgdisplaycopycolorspace?language=objc
 func DisplayCopyColorSpace(display DirectDisplayID) ColorSpaceRef {
-	rv := C.DisplayCopyColorSpace(C.uint32_t(display))
+	rv := C.DisplayCopyColorSpace(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -1011,7 +1244,10 @@ func DisplayCopyColorSpace(display DirectDisplayID) ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456148-cgimagegetwidth?language=objc
 func ImageGetWidth(image ImageRef) uint {
-	rv := C.ImageGetWidth(image)
+	rv := C.ImageGetWidth(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return uint(rv)
 }
 
@@ -1019,7 +1255,10 @@ func ImageGetWidth(image ImageRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402585-cgpdfdocumentcreatewithurl?language=objc
 func PDFDocumentCreateWithURL(url corefoundation.URLRef) PDFDocumentRef {
-	rv := C.PDFDocumentCreateWithURL(url)
+	rv := C.PDFDocumentCreateWithURL(
+		// *typing.RefType
+		unsafe.Pointer(url),
+	)
 	return PDFDocumentRef(rv)
 }
 
@@ -1027,22 +1266,40 @@ func PDFDocumentCreateWithURL(url corefoundation.URLRef) PDFDocumentRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455044-cgeventsetflags?language=objc
 func EventSetFlags(event EventRef, flags EventFlags) {
-	C.EventSetFlags(event, C.uint64_t(flags))
+	C.EventSetFlags(
+		// *typing.RefType
+		unsafe.Pointer(event),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint64_t)(flags),
+	)
 }
 
 // Returns a rectangle with the specified coordinate and size values. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455245-cgrectmake?language=objc
 func RectMake(x float64, y float64, width float64, height float64) Rect {
-	rv := C.RectMake(x, y, width, height)
-	return Rect(rv)
+	rv := C.RectMake(
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+		// *typing.PrimitiveType
+		C.float(width),
+		// *typing.PrimitiveType
+		C.float(height),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Returns the number of color components (including alpha) associated with a color. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454130-cgcolorgetnumberofcomponents?language=objc
 func ColorGetNumberOfComponents(color ColorRef) uint {
-	rv := C.ColorGetNumberOfComponents(color)
+	rv := C.ColorGetNumberOfComponents(
+		// *typing.RefType
+		unsafe.Pointer(color),
+	)
 	return uint(rv)
 }
 
@@ -1050,7 +1307,12 @@ func ColorGetNumberOfComponents(color ColorRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411155-cgpathcreatewithrect?language=objc
 func PathCreateWithRect(rect Rect, transform *AffineTransform) unsafe.Pointer {
-	rv := C.PathCreateWithRect(rect, transform)
+	rv := C.PathCreateWithRect(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -1058,22 +1320,35 @@ func PathCreateWithRect(rect Rect, transform *AffineTransform) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454788-cgcontextgetpathcurrentpoint?language=objc
 func ContextGetPathCurrentPoint(c ContextRef) Point {
-	rv := C.ContextGetPathCurrentPoint(c)
-	return Point(rv)
+	rv := C.ContextGetPathCurrentPoint(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
+	return *(*Point)(unsafe.Pointer(&rv))
 }
 
 // Closes and completes a subpath in a mutable graphics path. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411188-cgpathclosesubpath?language=objc
 func PathCloseSubpath(path MutablePathRef) {
-	C.PathCloseSubpath(path)
+	C.PathCloseSubpath(
+		// *typing.RefType
+		unsafe.Pointer(path),
+	)
 }
 
 // Appends a path to onto a mutable graphics path. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411201-cgpathaddpath?language=objc
 func PathAddPath(path1 MutablePathRef, m *AffineTransform, path2 unsafe.Pointer) {
-	C.PathAddPath(path1, m, path2)
+	C.PathAddPath(
+		// *typing.RefType
+		unsafe.Pointer(path1),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		// *typing.RefType
+		unsafe.Pointer(path2),
+	)
 }
 
 //	[Full Topic]
@@ -1096,7 +1371,12 @@ func DisplayStreamGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454318-cgsizemakewithdictionaryrepresen?language=objc
 func SizeMakeWithDictionaryRepresentation(dict corefoundation.DictionaryRef, size *Size) bool {
-	rv := C.SizeMakeWithDictionaryRepresentation(dict, size)
+	rv := C.SizeMakeWithDictionaryRepresentation(
+		// *typing.RefType
+		unsafe.Pointer(dict),
+		// *typing.PointerType
+		(*C.CGSize)(unsafe.Pointer(size)),
+	)
 	return bool(rv)
 }
 
@@ -1104,7 +1384,10 @@ func SizeMakeWithDictionaryRepresentation(dict corefoundation.DictionaryRef, siz
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1644737-cgcolorspaceiswidegamutrgb?language=objc
 func ColorSpaceIsWideGamutRGB(arg0 ColorSpaceRef) bool {
-	rv := C.ColorSpaceIsWideGamutRGB(arg0)
+	rv := C.ColorSpaceIsWideGamutRGB(
+		// *typing.RefType
+		unsafe.Pointer(arg0),
+	)
 	return bool(rv)
 }
 
@@ -1112,14 +1395,20 @@ func ColorSpaceIsWideGamutRGB(arg0 ColorSpaceRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455277-cgpdfoperatortablerelease?language=objc
 func PDFOperatorTableRelease(table unsafe.Pointer) {
-	C.PDFOperatorTableRelease(table)
+	C.PDFOperatorTableRelease(
+		// *typing.RefType
+		unsafe.Pointer(table),
+	)
 }
 
 // Returns the number of glyph space units per em for the provided font. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396344-cgfontgetunitsperem?language=objc
 func FontGetUnitsPerEm(font FontRef) int {
-	rv := C.FontGetUnitsPerEm(font)
+	rv := C.FontGetUnitsPerEm(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return int(rv)
 }
 
@@ -1127,7 +1416,10 @@ func FontGetUnitsPerEm(font FontRef) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1410049-cgpdfcontentstreamretain?language=objc
 func PDFContentStreamRetain(cs unsafe.Pointer) unsafe.Pointer {
-	rv := C.PDFContentStreamRetain(cs)
+	rv := C.PDFContentStreamRetain(
+		// *typing.RefType
+		unsafe.Pointer(cs),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -1135,21 +1427,52 @@ func PDFContentStreamRetain(cs unsafe.Pointer) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456404-cgcontextsetalpha?language=objc
 func ContextSetAlpha(c ContextRef, alpha float64) {
-	C.ContextSetAlpha(c, alpha)
+	C.ContextSetAlpha(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(alpha),
+	)
 }
 
 // Appends a cubic Bézier curve from the current point, using the provided control points and end point . [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456393-cgcontextaddcurvetopoint?language=objc
 func ContextAddCurveToPoint(c ContextRef, cp1x float64, cp1y float64, cp2x float64, cp2y float64, x float64, y float64) {
-	C.ContextAddCurveToPoint(c, cp1x, cp1y, cp2x, cp2y, x, y)
+	C.ContextAddCurveToPoint(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(cp1x),
+		// *typing.PrimitiveType
+		C.float(cp1y),
+		// *typing.PrimitiveType
+		C.float(cp2x),
+		// *typing.PrimitiveType
+		C.float(cp2y),
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+	)
 }
 
 // Creates a color in the Generic CMYK color space. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454222-cgcolorcreategenericcmyk?language=objc
 func ColorCreateGenericCMYK(cyan float64, magenta float64, yellow float64, black float64, alpha float64) ColorRef {
-	rv := C.ColorCreateGenericCMYK(cyan, magenta, yellow, black, alpha)
+	rv := C.ColorCreateGenericCMYK(
+		// *typing.PrimitiveType
+		C.float(cyan),
+		// *typing.PrimitiveType
+		C.float(magenta),
+		// *typing.PrimitiveType
+		C.float(yellow),
+		// *typing.PrimitiveType
+		C.float(black),
+		// *typing.PrimitiveType
+		C.float(alpha),
+	)
 	return ColorRef(rv)
 }
 
@@ -1157,7 +1480,10 @@ func ColorCreateGenericCMYK(cyan float64, magenta float64, yellow float64, black
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3684558-cgcolorspacecreateextendedlinear?language=objc
 func ColorSpaceCreateExtendedLinearized(space ColorSpaceRef) ColorSpaceRef {
-	rv := C.ColorSpaceCreateExtendedLinearized(space)
+	rv := C.ColorSpaceCreateExtendedLinearized(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -1165,7 +1491,11 @@ func ColorSpaceCreateExtendedLinearized(space ColorSpaceRef) ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2866135-cgcolorspacecreatewithiccdata?language=objc
 func ColorSpaceCreateWithICCData(data corefoundation.TypeRef) ColorSpaceRef {
-	rv := C.ColorSpaceCreateWithICCData(C.void * (data))
+	rv := C.ColorSpaceCreateWithICCData(
+		// *typing.AliasType
+		// *typing.VoidPointerType
+		unsafe.Pointer(data),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -1173,7 +1503,16 @@ func ColorSpaceCreateWithICCData(data corefoundation.TypeRef) ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456071-cggetdisplayswithrect?language=objc
 func GetDisplaysWithRect(rect Rect, maxDisplays uint32, displays *DirectDisplayID, matchingDisplayCount *uint32) Error {
-	rv := C.GetDisplaysWithRect(rect, maxDisplays, displays, matchingDisplayCount)
+	rv := C.GetDisplaysWithRect(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.PrimitiveType
+		C.uint32_t(maxDisplays),
+		// *typing.PointerType
+		(*C.uint32_t)(unsafe.Pointer(displays)),
+		// *typing.PointerType
+		(*C.uint32_t)(unsafe.Pointer(matchingDisplayCount)),
+	)
 	return Error(rv)
 }
 
@@ -1181,7 +1520,19 @@ func GetDisplaysWithRect(rect Rect, maxDisplays uint32, displays *DirectDisplayI
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541785-cgpostmouseevent?language=objc
 func PostMouseEvent(mouseCursorPosition Point, updateMouseCursorPosition int, buttonCount ButtonCount, mouseButtonDown int) Error {
-	rv := C.PostMouseEvent(mouseCursorPosition, C.NSInteger(updateMouseCursorPosition), C.uint32_t(buttonCount), C.NSInteger(mouseButtonDown))
+	rv := C.PostMouseEvent(
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&mouseCursorPosition)),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.NSInteger)(updateMouseCursorPosition),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(buttonCount),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.NSInteger)(mouseButtonDown),
+	)
 	return Error(rv)
 }
 
@@ -1189,7 +1540,10 @@ func PostMouseEvent(mouseCursorPosition Point, updateMouseCursorPosition int, bu
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454442-cgdisplaymodegetwidth?language=objc
 func DisplayModeGetWidth(mode DisplayModeRef) uint {
-	rv := C.DisplayModeGetWidth(mode)
+	rv := C.DisplayModeGetWidth(
+		// *typing.RefType
+		unsafe.Pointer(mode),
+	)
 	return uint(rv)
 }
 
@@ -1197,14 +1551,20 @@ func DisplayModeGetWidth(mode DisplayModeRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456156-cgcontextsavegstate?language=objc
 func ContextSaveGState(c ContextRef) {
-	C.ContextSaveGState(c)
+	C.ContextSaveGState(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 // Returns the cap height of a font. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396338-cgfontgetcapheight?language=objc
 func FontGetCapHeight(font FontRef) int {
-	rv := C.FontGetCapHeight(font)
+	rv := C.FontGetCapHeight(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return int(rv)
 }
 
@@ -1212,7 +1572,10 @@ func FontGetCapHeight(font FontRef) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455207-cgpdfarraygetcount?language=objc
 func PDFArrayGetCount(array unsafe.Pointer) uint {
-	rv := C.PDFArrayGetCount(array)
+	rv := C.PDFArrayGetCount(
+		// *typing.RefType
+		unsafe.Pointer(array),
+	)
 	return uint(rv)
 }
 
@@ -1220,14 +1583,22 @@ func PDFArrayGetCount(array unsafe.Pointer) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1390864-cgfunctionrelease?language=objc
 func FunctionRelease(function FunctionRef) {
-	C.FunctionRelease(function)
+	C.FunctionRelease(
+		// *typing.RefType
+		unsafe.Pointer(function),
+	)
 }
 
 // Unlocks an encrypted PDF document when a valid password is supplied. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402599-cgpdfdocumentunlockwithpassword?language=objc
 func PDFDocumentUnlockWithPassword(document PDFDocumentRef, password *uint8) bool {
-	rv := C.PDFDocumentUnlockWithPassword(document, password)
+	rv := C.PDFDocumentUnlockWithPassword(
+		// *typing.RefType
+		unsafe.Pointer(document),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(password)),
+	)
 	return bool(rv)
 }
 
@@ -1235,7 +1606,11 @@ func PDFDocumentUnlockWithPassword(document PDFDocumentRef, password *uint8) boo
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455299-cgdisplayrotation?language=objc
 func DisplayRotation(display DirectDisplayID) float64 {
-	rv := C.DisplayRotation(C.uint32_t(display))
+	rv := C.DisplayRotation(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return float64(rv)
 }
 
@@ -1243,22 +1618,37 @@ func DisplayRotation(display DirectDisplayID) float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455016-cgaffinetransformmakescale?language=objc
 func AffineTransformMakeScale(sx float64, sy float64) AffineTransform {
-	rv := C.AffineTransformMakeScale(sx, sy)
-	return AffineTransform(rv)
+	rv := C.AffineTransformMakeScale(
+		// *typing.PrimitiveType
+		C.float(sx),
+		// *typing.PrimitiveType
+		C.float(sy),
+	)
+	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
 // Draws the contents of a layer object into the specified rectangle. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1450896-cgcontextdrawlayerinrect?language=objc
 func ContextDrawLayerInRect(context ContextRef, rect Rect, layer LayerRef) {
-	C.ContextDrawLayerInRect(context, rect, layer)
+	C.ContextDrawLayerInRect(
+		// *typing.RefType
+		unsafe.Pointer(context),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.RefType
+		unsafe.Pointer(layer),
+	)
 }
 
 // Returns whether a rectangle is infinite. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455008-cgrectisinfinite?language=objc
 func RectIsInfinite(rect Rect) bool {
-	rv := C.RectIsInfinite(rect)
+	rv := C.RectIsInfinite(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 	return bool(rv)
 }
 
@@ -1266,14 +1656,28 @@ func RectIsInfinite(rect Rect) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586503-cgcontextshowglyphswithadvances?language=objc
 func ContextShowGlyphsWithAdvances(c ContextRef, glyphs *Glyph, advances *Size, count uint) {
-	C.ContextShowGlyphsWithAdvances(c, glyphs, advances, count)
+	C.ContextShowGlyphsWithAdvances(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PointerType
+		(*C.NSInteger)(unsafe.Pointer(glyphs)),
+		// *typing.PointerType
+		(*C.CGSize)(unsafe.Pointer(advances)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+	)
 }
 
 // Creates a copy of a bitmap image, replacing its colorspace. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455355-cgimagecreatecopywithcolorspace?language=objc
 func ImageCreateCopyWithColorSpace(image ImageRef, space ColorSpaceRef) ImageRef {
-	rv := C.ImageCreateCopyWithColorSpace(image, space)
+	rv := C.ImageCreateCopyWithColorSpace(
+		// *typing.RefType
+		unsafe.Pointer(image),
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return ImageRef(rv)
 }
 
@@ -1289,7 +1693,10 @@ func PreflightPostEventAccess() bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586509-cgcontextrelease?language=objc
 func ContextRelease(c ContextRef) {
-	C.ContextRelease(c)
+	C.ContextRelease(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 // Returns the Core Foundation type identifier for Core Graphics data consumers. [Full Topic]
@@ -1304,7 +1711,13 @@ func DataConsumerGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454488-cgcompletedisplayconfiguration?language=objc
 func CompleteDisplayConfiguration(config unsafe.Pointer, option ConfigureOption) Error {
-	rv := C.CompleteDisplayConfiguration(config, C.uint32_t(option))
+	rv := C.CompleteDisplayConfiguration(
+		// *typing.RefType
+		unsafe.Pointer(config),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(option),
+	)
 	return Error(rv)
 }
 
@@ -1312,14 +1725,20 @@ func CompleteDisplayConfiguration(config unsafe.Pointer, option ConfigureOption)
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3042357-cgpdfcontextendtag?language=objc
 func PDFContextEndTag(context ContextRef) {
-	C.PDFContextEndTag(context)
+	C.PDFContextEndTag(
+		// *typing.RefType
+		unsafe.Pointer(context),
+	)
 }
 
 // Returns a copy of the ICC profile of the provided color space. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408889-cgcolorspacecopyiccprofile?language=objc
 func ColorSpaceCopyICCProfile(space ColorSpaceRef) corefoundation.DataRef {
-	rv := C.ColorSpaceCopyICCProfile(space)
+	rv := C.ColorSpaceCopyICCProfile(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return corefoundation.DataRef(rv)
 }
 
@@ -1327,7 +1746,12 @@ func ColorSpaceCopyICCProfile(space ColorSpaceRef) corefoundation.DataRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3042354-cgcolorcreategenericgraygamma2_2?language=objc
 func ColorCreateGenericGrayGamma2_2(gray float64, alpha float64) ColorRef {
-	rv := C.ColorCreateGenericGrayGamma2_2(gray, alpha)
+	rv := C.ColorCreateGenericGrayGamma2_2(
+		// *typing.PrimitiveType
+		C.float(gray),
+		// *typing.PrimitiveType
+		C.float(alpha),
+	)
 	return ColorRef(rv)
 }
 
@@ -1335,29 +1759,54 @@ func ColorCreateGenericGrayGamma2_2(gray float64, alpha float64) ColorRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411165-cgpathgetboundingbox?language=objc
 func PathGetBoundingBox(path unsafe.Pointer) Rect {
-	rv := C.PathGetBoundingBox(path)
-	return Rect(rv)
+	rv := C.PathGetBoundingBox(
+		// *typing.RefType
+		unsafe.Pointer(path),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Returns the major and minor version numbers of a Core Graphics PDF document. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402604-cgpdfdocumentgetversion?language=objc
 func PDFDocumentGetVersion(document PDFDocumentRef, majorVersion *int, minorVersion *int) {
-	C.PDFDocumentGetVersion(document, majorVersion, minorVersion)
+	C.PDFDocumentGetVersion(
+		// *typing.RefType
+		unsafe.Pointer(document),
+		// *typing.PointerType
+		(*C.NSInteger)(unsafe.Pointer(majorVersion)),
+		// *typing.PointerType
+		(*C.NSInteger)(unsafe.Pointer(minorVersion)),
+	)
 }
 
 // Appends a rounded rectangle to a mutable graphics path. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411124-cgpathaddroundedrect?language=objc
 func PathAddRoundedRect(path MutablePathRef, transform *AffineTransform, rect Rect, cornerWidth float64, cornerHeight float64) {
-	C.PathAddRoundedRect(path, transform, rect, cornerWidth, cornerHeight)
+	C.PathAddRoundedRect(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.PrimitiveType
+		C.float(cornerWidth),
+		// *typing.PrimitiveType
+		C.float(cornerHeight),
+	)
 }
 
 // Returns information about the currently available display modes. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562068-cgdisplayavailablemodes?language=objc
 func DisplayAvailableModes(dsp DirectDisplayID) corefoundation.ArrayRef {
-	rv := C.DisplayAvailableModes(C.uint32_t(dsp))
+	rv := C.DisplayAvailableModes(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(dsp),
+	)
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -1365,7 +1814,11 @@ func DisplayAvailableModes(dsp DirectDisplayID) corefoundation.ArrayRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454084-cgwindowlevelforkey?language=objc
 func WindowLevelForKey(key WindowLevelKey) WindowLevel {
-	rv := C.WindowLevelForKey(C.int32_t(key))
+	rv := C.WindowLevelForKey(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(key),
+	)
 	return WindowLevel(rv)
 }
 
@@ -1373,14 +1826,29 @@ func WindowLevelForKey(key WindowLevelKey) WindowLevel {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455544-cgcontextsetrenderingintent?language=objc
 func ContextSetRenderingIntent(c ContextRef, intent ColorRenderingIntent) {
-	C.ContextSetRenderingIntent(c, C.int32_t(intent))
+	C.ContextSetRenderingIntent(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(intent),
+	)
 }
 
 // Enables shadowing with color a graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455205-cgcontextsetshadowwithcolor?language=objc
 func ContextSetShadowWithColor(c ContextRef, offset Size, blur float64, color ColorRef) {
-	C.ContextSetShadowWithColor(c, offset, blur, color)
+	C.ContextSetShadowWithColor(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGSize)(unsafe.Pointer(&offset)),
+		// *typing.PrimitiveType
+		C.float(blur),
+		// *typing.RefType
+		unsafe.Pointer(color),
+	)
 }
 
 // Returns the type identifier for Core Graphics patterns. [Full Topic]
@@ -1395,7 +1863,10 @@ func PatternGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562059-cgdisplaymoderetain?language=objc
 func DisplayModeRetain(mode DisplayModeRef) DisplayModeRef {
-	rv := C.DisplayModeRetain(mode)
+	rv := C.DisplayModeRetain(
+		// *typing.RefType
+		unsafe.Pointer(mode),
+	)
 	return DisplayModeRef(rv)
 }
 
@@ -1403,7 +1874,10 @@ func DisplayModeRetain(mode DisplayModeRef) DisplayModeRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455481-cgeventgettimestamp?language=objc
 func EventGetTimestamp(event EventRef) EventTimestamp {
-	rv := C.EventGetTimestamp(event)
+	rv := C.EventGetTimestamp(
+		// *typing.RefType
+		unsafe.Pointer(event),
+	)
 	return EventTimestamp(rv)
 }
 
@@ -1411,7 +1885,10 @@ func EventGetTimestamp(event EventRef) EventTimestamp {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411196-cgpathcreatemutablecopy?language=objc
 func PathCreateMutableCopy(path unsafe.Pointer) MutablePathRef {
-	rv := C.PathCreateMutableCopy(path)
+	rv := C.PathCreateMutableCopy(
+		// *typing.RefType
+		unsafe.Pointer(path),
+	)
 	return MutablePathRef(rv)
 }
 
@@ -1419,7 +1896,12 @@ func PathCreateMutableCopy(path unsafe.Pointer) MutablePathRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402602-cgpdfdocumentgetrotationangle?language=objc
 func PDFDocumentGetRotationAngle(document PDFDocumentRef, page int) int {
-	rv := C.PDFDocumentGetRotationAngle(document, page)
+	rv := C.PDFDocumentGetRotationAngle(
+		// *typing.RefType
+		unsafe.Pointer(document),
+		// *typing.PrimitiveType
+		C.NSInteger(page),
+	)
 	return int(rv)
 }
 
@@ -1427,15 +1909,23 @@ func PDFDocumentGetRotationAngle(document PDFDocumentRef, page int) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454691-cgcontextgetctm?language=objc
 func ContextGetCTM(c ContextRef) AffineTransform {
-	rv := C.ContextGetCTM(c)
-	return AffineTransform(rv)
+	rv := C.ContextGetCTM(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
+	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
 // Returns a flattened data representation of a Quartz event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454381-cgeventcreatedata?language=objc
 func EventCreateData(allocator corefoundation.AllocatorRef, event EventRef) corefoundation.DataRef {
-	rv := C.EventCreateData(allocator, event)
+	rv := C.EventCreateData(
+		// *typing.RefType
+		unsafe.Pointer(allocator),
+		// *typing.RefType
+		unsafe.Pointer(event),
+	)
 	return corefoundation.DataRef(rv)
 }
 
@@ -1443,7 +1933,11 @@ func EventCreateData(allocator corefoundation.AllocatorRef, event EventRef) core
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455025-cgdisplayisstereo?language=objc
 func DisplayIsStereo(display DirectDisplayID) int {
-	rv := C.DisplayIsStereo(C.uint32_t(display))
+	rv := C.DisplayIsStereo(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return int(rv)
 }
 
@@ -1451,22 +1945,37 @@ func DisplayIsStereo(display DirectDisplayID) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454897-cgcontextconcatctm?language=objc
 func ContextConcatCTM(c ContextRef, transform AffineTransform) {
-	C.ContextConcatCTM(c, transform)
+	C.ContextConcatCTM(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGAffineTransform)(unsafe.Pointer(&transform)),
+	)
 }
 
 // Returns a size that is transformed from device space coordinates to user space coordinates. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456510-cgcontextconvertsizetouserspace?language=objc
 func ContextConvertSizeToUserSpace(c ContextRef, size Size) Size {
-	rv := C.ContextConvertSizeToUserSpace(c, size)
-	return Size(rv)
+	rv := C.ContextConvertSizeToUserSpace(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGSize)(unsafe.Pointer(&size)),
+	)
+	return *(*Size)(unsafe.Pointer(&rv))
 }
 
 // Retrieves an integer object from the scanner stack. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454399-cgpdfscannerpopinteger?language=objc
 func PDFScannerPopInteger(scanner unsafe.Pointer, value *PDFInteger) bool {
-	rv := C.PDFScannerPopInteger(scanner, value)
+	rv := C.PDFScannerPopInteger(
+		// *typing.RefType
+		unsafe.Pointer(scanner),
+		// *typing.PointerType
+		(*C.int32_t)(unsafe.Pointer(value)),
+	)
 	return bool(rv)
 }
 
@@ -1474,29 +1983,46 @@ func PDFScannerPopInteger(scanner unsafe.Pointer, value *PDFInteger) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456026-cgpdfcontextadddocumentmetadata?language=objc
 func PDFContextAddDocumentMetadata(context ContextRef, metadata corefoundation.DataRef) {
-	C.PDFContextAddDocumentMetadata(context, metadata)
+	C.PDFContextAddDocumentMetadata(
+		// *typing.RefType
+		unsafe.Pointer(context),
+		// *typing.RefType
+		unsafe.Pointer(metadata),
+	)
 }
 
 // Returns the width and height of a display in millimeters. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456599-cgdisplayscreensize?language=objc
 func DisplayScreenSize(display DirectDisplayID) Size {
-	rv := C.DisplayScreenSize(C.uint32_t(display))
-	return Size(rv)
+	rv := C.DisplayScreenSize(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
+	return *(*Size)(unsafe.Pointer(&rv))
 }
 
 // Copies the entries in the color table of an indexed color space. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408853-cgcolorspacegetcolortable?language=objc
 func ColorSpaceGetColorTable(space ColorSpaceRef, table *uint8) {
-	C.ColorSpaceGetColorTable(space, table)
+	C.ColorSpaceGetColorTable(
+		// *typing.RefType
+		unsafe.Pointer(space),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(table)),
+	)
 }
 
 // Increments the retain count of a PDF page. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1571723-cgpdfpageretain?language=objc
 func PDFPageRetain(page PDFPageRef) PDFPageRef {
-	rv := C.PDFPageRetain(page)
+	rv := C.PDFPageRetain(
+		// *typing.RefType
+		unsafe.Pointer(page),
+	)
 	return PDFPageRef(rv)
 }
 
@@ -1504,14 +2030,23 @@ func PDFPageRetain(page PDFPageRef) PDFPageRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454371-cgcontextfillellipseinrect?language=objc
 func ContextFillEllipseInRect(c ContextRef, rect Rect) {
-	C.ContextFillEllipseInRect(c, rect)
+	C.ContextFillEllipseInRect(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 }
 
 // Returns information about a display’s current configuration. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454099-cgdisplaycopydisplaymode?language=objc
 func DisplayCopyDisplayMode(display DirectDisplayID) DisplayModeRef {
-	rv := C.DisplayCopyDisplayMode(C.uint32_t(display))
+	rv := C.DisplayCopyDisplayMode(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return DisplayModeRef(rv)
 }
 
@@ -1519,14 +2054,31 @@ func DisplayCopyDisplayMode(display DirectDisplayID) DisplayModeRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456459-cgpdfcontextsetdestinationforrec?language=objc
 func PDFContextSetDestinationForRect(context ContextRef, name corefoundation.StringRef, rect Rect) {
-	C.PDFContextSetDestinationForRect(context, name, rect)
+	C.PDFContextSetDestinationForRect(
+		// *typing.RefType
+		unsafe.Pointer(context),
+		// *typing.RefType
+		unsafe.Pointer(name),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 }
 
 // Provides a list of displays that corresponds to the bits set in an OpenGL display mask. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454234-cggetdisplayswithopengldisplayma?language=objc
 func GetDisplaysWithOpenGLDisplayMask(mask OpenGLDisplayMask, maxDisplays uint32, displays *DirectDisplayID, matchingDisplayCount *uint32) Error {
-	rv := C.GetDisplaysWithOpenGLDisplayMask(C.uint32_t(mask), maxDisplays, displays, matchingDisplayCount)
+	rv := C.GetDisplaysWithOpenGLDisplayMask(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(mask),
+		// *typing.PrimitiveType
+		C.uint32_t(maxDisplays),
+		// *typing.PointerType
+		(*C.uint32_t)(unsafe.Pointer(displays)),
+		// *typing.PointerType
+		(*C.uint32_t)(unsafe.Pointer(matchingDisplayCount)),
+	)
 	return Error(rv)
 }
 
@@ -1534,7 +2086,14 @@ func GetDisplaysWithOpenGLDisplayMask(mask OpenGLDisplayMask, maxDisplays uint32
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1430229-cgpdfdictionarygetarray?language=objc
 func PDFDictionaryGetArray(dict unsafe.Pointer, key *uint8, value unsafe.Pointer) bool {
-	rv := C.PDFDictionaryGetArray(dict, key, value)
+	rv := C.PDFDictionaryGetArray(
+		// *typing.RefType
+		unsafe.Pointer(dict),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(key)),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
@@ -1542,7 +2101,20 @@ func PDFDictionaryGetArray(dict unsafe.Pointer, key *uint8, value unsafe.Pointer
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455224-cgshadingcreateaxial?language=objc
 func ShadingCreateAxial(space ColorSpaceRef, start Point, end Point, function FunctionRef, extendStart bool, extendEnd bool) ShadingRef {
-	rv := C.ShadingCreateAxial(space, start, end, function, extendStart, extendEnd)
+	rv := C.ShadingCreateAxial(
+		// *typing.RefType
+		unsafe.Pointer(space),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&start)),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&end)),
+		// *typing.RefType
+		unsafe.Pointer(function),
+		// *typing.PrimitiveType
+		C.BOOL(extendStart),
+		// *typing.PrimitiveType
+		C.BOOL(extendEnd),
+	)
 	return ShadingRef(rv)
 }
 
@@ -1550,14 +2122,26 @@ func ShadingCreateAxial(space ColorSpaceRef, start Point, end Point, function Fu
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456082-cgcontextsetshadow?language=objc
 func ContextSetShadow(c ContextRef, offset Size, blur float64) {
-	C.ContextSetShadow(c, offset, blur)
+	C.ContextSetShadow(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGSize)(unsafe.Pointer(&offset)),
+		// *typing.PrimitiveType
+		C.float(blur),
+	)
 }
 
 // Fills in a point using the contents of the specified dictionary. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455338-cgpointmakewithdictionaryreprese?language=objc
 func PointMakeWithDictionaryRepresentation(dict corefoundation.DictionaryRef, point *Point) bool {
-	rv := C.PointMakeWithDictionaryRepresentation(dict, point)
+	rv := C.PointMakeWithDictionaryRepresentation(
+		// *typing.RefType
+		unsafe.Pointer(dict),
+		// *typing.PointerType
+		(*C.CGPoint)(unsafe.Pointer(point)),
+	)
 	return bool(rv)
 }
 
@@ -1565,22 +2149,34 @@ func PointMakeWithDictionaryRepresentation(dict corefoundation.DictionaryRef, po
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454804-cgeventposttopid?language=objc
 func EventPostToPid(pid int32, event EventRef) {
-	C.EventPostToPid(C.NSObject*(pid), event)
+	C.EventPostToPid(
+		// *typing.AliasType
+		// *typing.ClassType
+		unsafe.Pointer(pid),
+		// *typing.RefType
+		unsafe.Pointer(event),
+	)
 }
 
 // Returns the location at which text is drawn. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454687-cgcontextgettextposition?language=objc
 func ContextGetTextPosition(c ContextRef) Point {
-	rv := C.ContextGetTextPosition(c)
-	return Point(rv)
+	rv := C.ContextGetTextPosition(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
+	return *(*Point)(unsafe.Pointer(&rv))
 }
 
 // Returns the bits per pixel of a bitmap context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455946-cgbitmapcontextgetbitsperpixel?language=objc
 func BitmapContextGetBitsPerPixel(context ContextRef) uint {
-	rv := C.BitmapContextGetBitsPerPixel(context)
+	rv := C.BitmapContextGetBitsPerPixel(
+		// *typing.RefType
+		unsafe.Pointer(context),
+	)
 	return uint(rv)
 }
 
@@ -1588,21 +2184,56 @@ func BitmapContextGetBitsPerPixel(context ContextRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455756-cgcontextaddarc?language=objc
 func ContextAddArc(c ContextRef, x float64, y float64, radius float64, startAngle float64, endAngle float64, clockwise int) {
-	C.ContextAddArc(c, x, y, radius, startAngle, endAngle, clockwise)
+	C.ContextAddArc(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+		// *typing.PrimitiveType
+		C.float(radius),
+		// *typing.PrimitiveType
+		C.float(startAngle),
+		// *typing.PrimitiveType
+		C.float(endAngle),
+		// *typing.PrimitiveType
+		C.NSInteger(clockwise),
+	)
 }
 
 // Sets the event type of a Quartz event (left mouse down, for example). [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454300-cgeventsettype?language=objc
 func EventSetType(event EventRef, type_ EventType) {
-	C.EventSetType(event, C.uint32_t(type_))
+	C.EventSetType(
+		// *typing.RefType
+		unsafe.Pointer(event),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(type_),
+	)
 }
 
 //	[Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2919739-cgeventcreatescrollwheelevent2?language=objc
 func EventCreateScrollWheelEvent2(source EventSourceRef, units ScrollEventUnit, wheelCount uint32, wheel1 int32, wheel2 int32, wheel3 int32) EventRef {
-	rv := C.EventCreateScrollWheelEvent2(source, C.uint32_t(units), wheelCount, wheel1, wheel2, wheel3)
+	rv := C.EventCreateScrollWheelEvent2(
+		// *typing.RefType
+		unsafe.Pointer(source),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(units),
+		// *typing.PrimitiveType
+		C.uint32_t(wheelCount),
+		// *typing.PrimitiveType
+		C.int32_t(wheel1),
+		// *typing.PrimitiveType
+		C.int32_t(wheel2),
+		// *typing.PrimitiveType
+		C.int32_t(wheel3),
+	)
 	return EventRef(rv)
 }
 
@@ -1610,7 +2241,10 @@ func EventCreateScrollWheelEvent2(source EventSourceRef, units ScrollEventUnit, 
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408854-cgcolorspacegetmodel?language=objc
 func ColorSpaceGetModel(space ColorSpaceRef) ColorSpaceModel {
-	rv := C.ColorSpaceGetModel(space)
+	rv := C.ColorSpaceGetModel(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return ColorSpaceModel(rv)
 }
 
@@ -1618,7 +2252,17 @@ func ColorSpaceGetModel(space ColorSpaceRef) ColorSpaceModel {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454993-cgimagecreatewithpngdataprovider?language=objc
 func ImageCreateWithPNGDataProvider(source DataProviderRef, decode *float64, shouldInterpolate bool, intent ColorRenderingIntent) ImageRef {
-	rv := C.ImageCreateWithPNGDataProvider(source, decode, shouldInterpolate, C.int32_t(intent))
+	rv := C.ImageCreateWithPNGDataProvider(
+		// *typing.RefType
+		unsafe.Pointer(source),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(decode)),
+		// *typing.PrimitiveType
+		C.BOOL(shouldInterpolate),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(intent),
+	)
 	return ImageRef(rv)
 }
 
@@ -1626,14 +2270,26 @@ func ImageCreateWithPNGDataProvider(source DataProviderRef, decode *float64, sho
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411222-cgpathaddellipseinrect?language=objc
 func PathAddEllipseInRect(path MutablePathRef, m *AffineTransform, rect Rect) {
-	C.PathAddEllipseInRect(path, m, rect)
+	C.PathAddEllipseInRect(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 }
 
 // Returns a Quartz event created from a flattened data representation of the event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454249-cgeventcreatefromdata?language=objc
 func EventCreateFromData(allocator corefoundation.AllocatorRef, data corefoundation.DataRef) EventRef {
-	rv := C.EventCreateFromData(allocator, data)
+	rv := C.EventCreateFromData(
+		// *typing.RefType
+		unsafe.Pointer(allocator),
+		// *typing.RefType
+		unsafe.Pointer(data),
+	)
 	return EventRef(rv)
 }
 
@@ -1641,8 +2297,13 @@ func EventCreateFromData(allocator corefoundation.AllocatorRef, data corefoundat
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402601-cgpdfdocumentgetartbox?language=objc
 func PDFDocumentGetArtBox(document PDFDocumentRef, page int) Rect {
-	rv := C.PDFDocumentGetArtBox(document, page)
-	return Rect(rv)
+	rv := C.PDFDocumentGetArtBox(
+		// *typing.RefType
+		unsafe.Pointer(document),
+		// *typing.PrimitiveType
+		C.NSInteger(page),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Creates a device-dependent CMYK color space. [Full Topic]
@@ -1657,7 +2318,22 @@ func ColorSpaceCreateDeviceCMYK() ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454103-cgconfiguredisplayfadeeffect?language=objc
 func ConfigureDisplayFadeEffect(config unsafe.Pointer, fadeOutSeconds DisplayFadeInterval, fadeInSeconds DisplayFadeInterval, fadeRed float64, fadeGreen float64, fadeBlue float64) Error {
-	rv := C.ConfigureDisplayFadeEffect(config, C.float(fadeOutSeconds), C.float(fadeInSeconds), fadeRed, fadeGreen, fadeBlue)
+	rv := C.ConfigureDisplayFadeEffect(
+		// *typing.RefType
+		unsafe.Pointer(config),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(fadeOutSeconds),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(fadeInSeconds),
+		// *typing.PrimitiveType
+		C.float(fadeRed),
+		// *typing.PrimitiveType
+		C.float(fadeGreen),
+		// *typing.PrimitiveType
+		C.float(fadeBlue),
+	)
 	return Error(rv)
 }
 
@@ -1665,7 +2341,29 @@ func ConfigureDisplayFadeEffect(config unsafe.Pointer, fadeOutSeconds DisplayFad
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456189-cgdisplayfade?language=objc
 func DisplayFade(token DisplayFadeReservationToken, duration DisplayFadeInterval, startBlend DisplayBlendFraction, endBlend DisplayBlendFraction, redBlend float64, greenBlend float64, blueBlend float64, synchronous int) Error {
-	rv := C.DisplayFade(C.uint32_t(token), C.float(duration), C.float(startBlend), C.float(endBlend), redBlend, greenBlend, blueBlend, C.NSInteger(synchronous))
+	rv := C.DisplayFade(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(token),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(duration),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(startBlend),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(endBlend),
+		// *typing.PrimitiveType
+		C.float(redBlend),
+		// *typing.PrimitiveType
+		C.float(greenBlend),
+		// *typing.PrimitiveType
+		C.float(blueBlend),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.NSInteger)(synchronous),
+	)
 	return Error(rv)
 }
 
@@ -1673,7 +2371,12 @@ func DisplayFade(token DisplayFadeReservationToken, duration DisplayFadeInterval
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455176-cgsizeequaltosize?language=objc
 func SizeEqualToSize(size1 Size, size2 Size) bool {
-	rv := C.SizeEqualToSize(size1, size2)
+	rv := C.SizeEqualToSize(
+		// *typing.StructType
+		*(*C.CGSize)(unsafe.Pointer(&size1)),
+		// *typing.StructType
+		*(*C.CGSize)(unsafe.Pointer(&size2)),
+	)
 	return bool(rv)
 }
 
@@ -1681,22 +2384,33 @@ func SizeEqualToSize(size1 Size, size2 Size) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455766-cgcontextsetshouldsubpixelquanti?language=objc
 func ContextSetShouldSubpixelQuantizeFonts(c ContextRef, shouldSubpixelQuantizeFonts bool) {
-	C.ContextSetShouldSubpixelQuantizeFonts(c, shouldSubpixelQuantizeFonts)
+	C.ContextSetShouldSubpixelQuantizeFonts(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.BOOL(shouldSubpixelQuantizeFonts),
+	)
 }
 
 // Returns the location of a Quartz mouse event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455788-cgeventgetlocation?language=objc
 func EventGetLocation(event EventRef) Point {
-	rv := C.EventGetLocation(event)
-	return Point(rv)
+	rv := C.EventGetLocation(
+		// *typing.RefType
+		unsafe.Pointer(event),
+	)
+	return *(*Point)(unsafe.Pointer(&rv))
 }
 
 // Tells a PostScript converter to abort a conversion at the next available opportunity. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455046-cgpsconverterabort?language=objc
 func PSConverterAbort(converter PSConverterRef) bool {
-	rv := C.PSConverterAbort(converter)
+	rv := C.PSConverterAbort(
+		// *typing.RefType
+		unsafe.Pointer(converter),
+	)
 	return bool(rv)
 }
 
@@ -1712,14 +2426,24 @@ func DisplayStreamUpdateGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454659-cgcontextscalectm?language=objc
 func ContextScaleCTM(c ContextRef, sx float64, sy float64) {
-	C.ContextScaleCTM(c, sx, sy)
+	C.ContextScaleCTM(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(sx),
+		// *typing.PrimitiveType
+		C.float(sy),
+	)
 }
 
 // Returns a dictionary representation of the specified size. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455274-cgsizecreatedictionaryrepresenta?language=objc
 func SizeCreateDictionaryRepresentation(size Size) corefoundation.DictionaryRef {
-	rv := C.SizeCreateDictionaryRepresentation(size)
+	rv := C.SizeCreateDictionaryRepresentation(
+		// *typing.StructType
+		*(*C.CGSize)(unsafe.Pointer(&size)),
+	)
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -1727,7 +2451,14 @@ func SizeCreateDictionaryRepresentation(size Size) corefoundation.DictionaryRef 
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408781-cgeventsourcebuttonstate?language=objc
 func EventSourceButtonState(stateID EventSourceStateID, button MouseButton) bool {
-	rv := C.EventSourceButtonState(C.int32_t(stateID), C.uint32_t(button))
+	rv := C.EventSourceButtonState(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(stateID),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(button),
+	)
 	return bool(rv)
 }
 
@@ -1735,22 +2466,39 @@ func EventSourceButtonState(stateID EventSourceStateID, button MouseButton) bool
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455445-cgeventtapenable?language=objc
 func EventTapEnable(tap corefoundation.MachPortRef, enable bool) {
-	C.EventTapEnable(tap, enable)
+	C.EventTapEnable(
+		// *typing.RefType
+		unsafe.Pointer(tap),
+		// *typing.PrimitiveType
+		C.BOOL(enable),
+	)
 }
 
 // Returns an affine transformation matrix constructed from a rotation value you provide. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455666-cgaffinetransformmakerotation?language=objc
 func AffineTransformMakeRotation(angle float64) AffineTransform {
-	rv := C.AffineTransformMakeRotation(angle)
-	return AffineTransform(rv)
+	rv := C.AffineTransformMakeRotation(
+		// *typing.PrimitiveType
+		C.float(angle),
+	)
+	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
 // Creates a device-independent color space that is defined according to the ICC color profile specification. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408881-cgcolorspacecreateiccbased?language=objc
 func ColorSpaceCreateICCBased(nComponents uint, range_ *float64, profile DataProviderRef, alternate ColorSpaceRef) ColorSpaceRef {
-	rv := C.ColorSpaceCreateICCBased(nComponents, range_, profile, alternate)
+	rv := C.ColorSpaceCreateICCBased(
+		// *typing.PrimitiveType
+		C.NSUInteger(nComponents),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(range_)),
+		// *typing.RefType
+		unsafe.Pointer(profile),
+		// *typing.RefType
+		unsafe.Pointer(alternate),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -1758,7 +2506,11 @@ func ColorSpaceCreateICCBased(nComponents uint, range_ *float64, profile DataPro
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454486-cgassociatemouseandmousecursorpo?language=objc
 func AssociateMouseAndMouseCursorPosition(connected int) Error {
-	rv := C.AssociateMouseAndMouseCursorPosition(C.NSInteger(connected))
+	rv := C.AssociateMouseAndMouseCursorPosition(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.NSInteger)(connected),
+	)
 	return Error(rv)
 }
 
@@ -1766,7 +2518,10 @@ func AssociateMouseAndMouseCursorPosition(connected int) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402587-cgpdfdocumentretain?language=objc
 func PDFDocumentRetain(document PDFDocumentRef) PDFDocumentRef {
-	rv := C.PDFDocumentRetain(document)
+	rv := C.PDFDocumentRetain(
+		// *typing.RefType
+		unsafe.Pointer(document),
+	)
 	return PDFDocumentRef(rv)
 }
 
@@ -1774,15 +2529,29 @@ func PDFDocumentRetain(document PDFDocumentRef) PDFDocumentRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411132-cgpathgetcurrentpoint?language=objc
 func PathGetCurrentPoint(path unsafe.Pointer) Point {
-	rv := C.PathGetCurrentPoint(path)
-	return Point(rv)
+	rv := C.PathGetCurrentPoint(
+		// *typing.RefType
+		unsafe.Pointer(path),
+	)
+	return *(*Point)(unsafe.Pointer(&rv))
 }
 
 // Sets the current stroke color to a value in the DeviceRGB color space. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456378-cgcontextsetrgbstrokecolor?language=objc
 func ContextSetRGBStrokeColor(c ContextRef, red float64, green float64, blue float64, alpha float64) {
-	C.ContextSetRGBStrokeColor(c, red, green, blue, alpha)
+	C.ContextSetRGBStrokeColor(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(red),
+		// *typing.PrimitiveType
+		C.float(green),
+		// *typing.PrimitiveType
+		C.float(blue),
+		// *typing.PrimitiveType
+		C.float(alpha),
+	)
 }
 
 //	[Full Topic]
@@ -1797,7 +2566,19 @@ func PreflightScreenCaptureAccess() bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456604-cgsetdisplaytransferbytable?language=objc
 func SetDisplayTransferByTable(display DirectDisplayID, tableSize uint32, redTable *GammaValue, greenTable *GammaValue, blueTable *GammaValue) Error {
-	rv := C.SetDisplayTransferByTable(C.uint32_t(display), tableSize, redTable, greenTable, blueTable)
+	rv := C.SetDisplayTransferByTable(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.PrimitiveType
+		C.uint32_t(tableSize),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(redTable)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(greenTable)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(blueTable)),
+	)
 	return Error(rv)
 }
 
@@ -1805,14 +2586,23 @@ func SetDisplayTransferByTable(display DirectDisplayID, tableSize uint32, redTab
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455798-cgcontextsetflatness?language=objc
 func ContextSetFlatness(c ContextRef, flatness float64) {
-	C.ContextSetFlatness(c, flatness)
+	C.ContextSetFlatness(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(flatness),
+	)
 }
 
 // Returns a Boolean value indicating whether a display is active. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455222-cgdisplayisactive?language=objc
 func DisplayIsActive(display DirectDisplayID) int {
-	rv := C.DisplayIsActive(C.uint32_t(display))
+	rv := C.DisplayIsActive(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return int(rv)
 }
 
@@ -1820,28 +2610,45 @@ func DisplayIsActive(display DirectDisplayID) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455334-cgcontextsetpatternphase?language=objc
 func ContextSetPatternPhase(c ContextRef, phase Size) {
-	C.ContextSetPatternPhase(c, phase)
+	C.ContextSetPatternPhase(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGSize)(unsafe.Pointer(&phase)),
+	)
 }
 
 // Decrements the retain count of a scanner object. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454962-cgpdfscannerrelease?language=objc
 func PDFScannerRelease(scanner unsafe.Pointer) {
-	C.PDFScannerRelease(scanner)
+	C.PDFScannerRelease(
+		// *typing.RefType
+		unsafe.Pointer(scanner),
+	)
 }
 
 // Sets the style for the joins of connected lines in a graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455973-cgcontextsetlinejoin?language=objc
 func ContextSetLineJoin(c ContextRef, join LineJoin) {
-	C.ContextSetLineJoin(c, C.int32_t(join))
+	C.ContextSetLineJoin(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(join),
+	)
 }
 
 // Returns an array of tags that correspond to the font tables for a font. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396392-cgfontcopytabletags?language=objc
 func FontCopyTableTags(font FontRef) corefoundation.ArrayRef {
-	rv := C.FontCopyTableTags(font)
+	rv := C.FontCopyTableTags(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -1849,7 +2656,14 @@ func FontCopyTableTags(font FontRef) corefoundation.ArrayRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454603-cggetactivedisplaylist?language=objc
 func GetActiveDisplayList(maxDisplays uint32, activeDisplays *DirectDisplayID, displayCount *uint32) Error {
-	rv := C.GetActiveDisplayList(maxDisplays, activeDisplays, displayCount)
+	rv := C.GetActiveDisplayList(
+		// *typing.PrimitiveType
+		C.uint32_t(maxDisplays),
+		// *typing.PointerType
+		(*C.uint32_t)(unsafe.Pointer(activeDisplays)),
+		// *typing.PointerType
+		(*C.uint32_t)(unsafe.Pointer(displayCount)),
+	)
 	return Error(rv)
 }
 
@@ -1857,7 +2671,12 @@ func GetActiveDisplayList(maxDisplays uint32, activeDisplays *DirectDisplayID, d
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411163-cgpathisrect?language=objc
 func PathIsRect(path unsafe.Pointer, rect *Rect) bool {
-	rv := C.PathIsRect(path, rect)
+	rv := C.PathIsRect(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(rect)),
+	)
 	return bool(rv)
 }
 
@@ -1865,7 +2684,10 @@ func PathIsRect(path unsafe.Pointer, rect *Rect) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408327-cgdataprovidercreatewithurl?language=objc
 func DataProviderCreateWithURL(url corefoundation.URLRef) DataProviderRef {
-	rv := C.DataProviderCreateWithURL(url)
+	rv := C.DataProviderCreateWithURL(
+		// *typing.RefType
+		unsafe.Pointer(url),
+	)
 	return DataProviderRef(rv)
 }
 
@@ -1873,7 +2695,11 @@ func DataProviderCreateWithURL(url corefoundation.URLRef) DataProviderRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408776-cgeventsourcecreate?language=objc
 func EventSourceCreate(stateID EventSourceStateID) EventSourceRef {
-	rv := C.EventSourceCreate(C.int32_t(stateID))
+	rv := C.EventSourceCreate(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(stateID),
+	)
 	return EventSourceRef(rv)
 }
 
@@ -1881,7 +2707,10 @@ func EventSourceCreate(stateID EventSourceStateID) EventSourceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454940-cgcontextgetinterpolationquality?language=objc
 func ContextGetInterpolationQuality(c ContextRef) InterpolationQuality {
-	rv := C.ContextGetInterpolationQuality(c)
+	rv := C.ContextGetInterpolationQuality(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 	return InterpolationQuality(rv)
 }
 
@@ -1889,7 +2718,12 @@ func ContextGetInterpolationQuality(c ContextRef) InterpolationQuality {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2113677-cgcolorconversioninfocreate?language=objc
 func ColorConversionInfoCreate(src ColorSpaceRef, dst ColorSpaceRef) ColorConversionInfoRef {
-	rv := C.ColorConversionInfoCreate(src, dst)
+	rv := C.ColorConversionInfoCreate(
+		// *typing.RefType
+		unsafe.Pointer(src),
+		// *typing.RefType
+		unsafe.Pointer(dst),
+	)
 	return ColorConversionInfoRef(rv)
 }
 
@@ -1897,15 +2731,25 @@ func ColorConversionInfoCreate(src ColorSpaceRef, dst ColorSpaceRef) ColorConver
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402590-cgpdfdocumentgettrimbox?language=objc
 func PDFDocumentGetTrimBox(document PDFDocumentRef, page int) Rect {
-	rv := C.PDFDocumentGetTrimBox(document, page)
-	return Rect(rv)
+	rv := C.PDFDocumentGetTrimBox(
+		// *typing.RefType
+		unsafe.Pointer(document),
+		// *typing.PrimitiveType
+		C.NSInteger(page),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Returns whether the first rectangle contains the second rectangle. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454186-cgrectcontainsrect?language=objc
 func RectContainsRect(rect1 Rect, rect2 Rect) bool {
-	rv := C.RectContainsRect(rect1, rect2)
+	rv := C.RectContainsRect(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect1)),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect2)),
+	)
 	return bool(rv)
 }
 
@@ -1913,7 +2757,12 @@ func RectContainsRect(rect1 Rect, rect2 Rect) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396348-cgfontcreatepostscriptencoding?language=objc
 func FontCreatePostScriptEncoding(font FontRef, encoding *Glyph) corefoundation.DataRef {
-	rv := C.FontCreatePostScriptEncoding(font, encoding)
+	rv := C.FontCreatePostScriptEncoding(
+		// *typing.RefType
+		unsafe.Pointer(font),
+		// *typing.PointerType
+		(*C.NSInteger)(unsafe.Pointer(encoding)),
+	)
 	return corefoundation.DataRef(rv)
 }
 
@@ -1921,36 +2770,74 @@ func FontCreatePostScriptEncoding(font FontRef, encoding *Glyph) corefoundation.
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1450894-cgcontextdrawlayeratpoint?language=objc
 func ContextDrawLayerAtPoint(context ContextRef, point Point, layer LayerRef) {
-	C.ContextDrawLayerAtPoint(context, point, layer)
+	C.ContextDrawLayerAtPoint(
+		// *typing.RefType
+		unsafe.Pointer(context),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&point)),
+		// *typing.RefType
+		unsafe.Pointer(layer),
+	)
 }
 
 // Returns whether an object at a given index in a PDF array is a PDF stream and, if so, retrieves that stream. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454424-cgpdfarraygetstream?language=objc
 func PDFArrayGetStream(array unsafe.Pointer, index uint, value unsafe.Pointer) bool {
-	rv := C.PDFArrayGetStream(array, index, value)
+	rv := C.PDFArrayGetStream(
+		// *typing.RefType
+		unsafe.Pointer(array),
+		// *typing.PrimitiveType
+		C.NSUInteger(index),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
 // Displays a character string at a position you specify. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586505-cgcontextshowtextatpoint?language=objc
-func ContextShowTextAtPoint(c ContextRef, x float64, y float64, string *uint8, length uint) {
-	C.ContextShowTextAtPoint(c, x, y, string_, length)
+func ContextShowTextAtPoint(c ContextRef, x float64, y float64, string_ *uint8, length uint) {
+	C.ContextShowTextAtPoint(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(string_)),
+		// *typing.PrimitiveType
+		C.NSUInteger(length),
+	)
 }
 
 // Sets the scale of pixels per line in a scrolling event source. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408766-cgeventsourcesetpixelsperline?language=objc
 func EventSourceSetPixelsPerLine(source EventSourceRef, pixelsPerLine float64) {
-	C.EventSourceSetPixelsPerLine(source, pixelsPerLine)
+	C.EventSourceSetPixelsPerLine(
+		// *typing.RefType
+		unsafe.Pointer(source),
+		// *typing.PrimitiveType
+		C.double(pixelsPerLine),
+	)
 }
 
 // Returns a new Quartz keyboard event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456564-cgeventcreatekeyboardevent?language=objc
 func EventCreateKeyboardEvent(source EventSourceRef, virtualKey KeyCode, keyDown bool) EventRef {
-	rv := C.EventCreateKeyboardEvent(source, C.uint16_t(virtualKey), keyDown)
+	rv := C.EventCreateKeyboardEvent(
+		// *typing.RefType
+		unsafe.Pointer(source),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint16_t)(virtualKey),
+		// *typing.PrimitiveType
+		C.BOOL(keyDown),
+	)
 	return EventRef(rv)
 }
 
@@ -1958,7 +2845,14 @@ func EventCreateKeyboardEvent(source EventSourceRef, virtualKey KeyCode, keyDown
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408794-cgeventsourcecounterforeventtype?language=objc
 func EventSourceCounterForEventType(stateID EventSourceStateID, eventType EventType) uint32 {
-	rv := C.EventSourceCounterForEventType(C.int32_t(stateID), C.uint32_t(eventType))
+	rv := C.EventSourceCounterForEventType(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(stateID),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(eventType),
+	)
 	return uint32(rv)
 }
 
@@ -1966,21 +2860,43 @@ func EventSourceCounterForEventType(stateID EventSourceStateID, eventType EventT
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411153-cgpathaddrects?language=objc
 func PathAddRects(path MutablePathRef, m *AffineTransform, rects *Rect, count uint) {
-	C.PathAddRects(path, m, rects, count)
+	C.PathAddRects(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(rects)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+	)
 }
 
 // Sets the timestamp of a Quartz event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456611-cgeventsettimestamp?language=objc
 func EventSetTimestamp(event EventRef, timestamp EventTimestamp) {
-	C.EventSetTimestamp(event, C.uint64_t(timestamp))
+	C.EventSetTimestamp(
+		// *typing.RefType
+		unsafe.Pointer(event),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint64_t)(timestamp),
+	)
 }
 
 // Returns a Boolean value indicating the current keyboard state of a Quartz event source. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408768-cgeventsourcekeystate?language=objc
 func EventSourceKeyState(stateID EventSourceStateID, key KeyCode) bool {
-	rv := C.EventSourceKeyState(C.int32_t(stateID), C.uint16_t(key))
+	rv := C.EventSourceKeyState(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(stateID),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint16_t)(key),
+	)
 	return bool(rv)
 }
 
@@ -1988,7 +2904,10 @@ func EventSourceKeyState(stateID EventSourceStateID, key KeyCode) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455645-cgrectgetheight?language=objc
 func RectGetHeight(rect Rect) float64 {
-	rv := C.RectGetHeight(rect)
+	rv := C.RectGetHeight(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 	return float64(rv)
 }
 
@@ -1996,14 +2915,32 @@ func RectGetHeight(rect Rect) float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586502-cgcontextshowglyphsatpoint?language=objc
 func ContextShowGlyphsAtPoint(c ContextRef, x float64, y float64, glyphs *Glyph, count uint) {
-	C.ContextShowGlyphsAtPoint(c, x, y, glyphs, count)
+	C.ContextShowGlyphsAtPoint(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+		// *typing.PointerType
+		(*C.NSInteger)(unsafe.Pointer(glyphs)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+	)
 }
 
 // Returns whether there is a PDF integer associated with a specified key in a PDF dictionary and, if so, retrieves that integer. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1430231-cgpdfdictionarygetinteger?language=objc
 func PDFDictionaryGetInteger(dict unsafe.Pointer, key *uint8, value *PDFInteger) bool {
-	rv := C.PDFDictionaryGetInteger(dict, key, value)
+	rv := C.PDFDictionaryGetInteger(
+		// *typing.RefType
+		unsafe.Pointer(dict),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(key)),
+		// *typing.PointerType
+		(*C.int32_t)(unsafe.Pointer(value)),
+	)
 	return bool(rv)
 }
 
@@ -2011,7 +2948,14 @@ func PDFDictionaryGetInteger(dict unsafe.Pointer, key *uint8, value *PDFInteger)
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408790-cgeventsourcesecondssincelasteve?language=objc
 func EventSourceSecondsSinceLastEventType(stateID EventSourceStateID, eventType EventType) corefoundation.TimeInterval {
-	rv := C.EventSourceSecondsSinceLastEventType(C.int32_t(stateID), C.uint32_t(eventType))
+	rv := C.EventSourceSecondsSinceLastEventType(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(stateID),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(eventType),
+	)
 	return corefoundation.TimeInterval(rv)
 }
 
@@ -2019,22 +2963,37 @@ func EventSourceSecondsSinceLastEventType(stateID EventSourceStateID, eventType 
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456348-cgrectintegral?language=objc
 func RectIntegral(rect Rect) Rect {
-	rv := C.RectIntegral(rect)
-	return Rect(rv)
+	rv := C.RectIntegral(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Sets the fill color space in a graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455151-cgcontextsetfillcolorspace?language=objc
 func ContextSetFillColorSpace(c ContextRef, space ColorSpaceRef) {
-	C.ContextSetFillColorSpace(c, space)
+	C.ContextSetFillColorSpace(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 }
 
 // Returns whether an object at a given index in a PDF array is a PDF number and, if so, retrieves that object. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455374-cgpdfarraygetnumber?language=objc
 func PDFArrayGetNumber(array unsafe.Pointer, index uint, value *PDFReal) bool {
-	rv := C.PDFArrayGetNumber(array, index, value)
+	rv := C.PDFArrayGetNumber(
+		// *typing.RefType
+		unsafe.Pointer(array),
+		// *typing.PrimitiveType
+		C.NSUInteger(index),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(value)),
+	)
 	return bool(rv)
 }
 
@@ -2042,7 +3001,14 @@ func PDFArrayGetNumber(array unsafe.Pointer, index uint, value *PDFReal) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455687-cgcolorcreatewithpattern?language=objc
 func ColorCreateWithPattern(space ColorSpaceRef, pattern PatternRef, components *float64) ColorRef {
-	rv := C.ColorCreateWithPattern(space, pattern, components)
+	rv := C.ColorCreateWithPattern(
+		// *typing.RefType
+		unsafe.Pointer(space),
+		// *typing.RefType
+		unsafe.Pointer(pattern),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(components)),
+	)
 	return ColorRef(rv)
 }
 
@@ -2050,14 +3016,25 @@ func ColorCreateWithPattern(space ColorSpaceRef, pattern PatternRef, components 
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455286-cgcontexttranslatectm?language=objc
 func ContextTranslateCTM(c ContextRef, tx float64, ty float64) {
-	C.ContextTranslateCTM(c, tx, ty)
+	C.ContextTranslateCTM(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(tx),
+		// *typing.PrimitiveType
+		C.float(ty),
+	)
 }
 
 // Returns a Boolean value indicating whether Quartz is using OpenGL-based window acceleration (Quartz Extreme) to render in a display. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455721-cgdisplayusesopenglacceleration?language=objc
 func DisplayUsesOpenGLAcceleration(display DirectDisplayID) int {
-	rv := C.DisplayUsesOpenGLAcceleration(C.uint32_t(display))
+	rv := C.DisplayUsesOpenGLAcceleration(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return int(rv)
 }
 
@@ -2065,21 +3042,41 @@ func DisplayUsesOpenGLAcceleration(display DirectDisplayID) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455994-cgcontextsetblendmode?language=objc
 func ContextSetBlendMode(c ContextRef, mode BlendMode) {
-	C.ContextSetBlendMode(c, C.int32_t(mode))
+	C.ContextSetBlendMode(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(mode),
+	)
 }
 
 // Reports the change in mouse position since the last mouse movement event received by the application. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456484-cggetlastmousedelta?language=objc
 func GetLastMouseDelta(deltaX *int32, deltaY *int32) {
-	C.GetLastMouseDelta(deltaX, deltaY)
+	C.GetLastMouseDelta(
+		// *typing.PointerType
+		(*C.int32_t)(unsafe.Pointer(deltaX)),
+		// *typing.PointerType
+		(*C.int32_t)(unsafe.Pointer(deltaY)),
+	)
 }
 
 // Get the bounding box of each glyph in an array. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396342-cgfontgetglyphbboxes?language=objc
 func FontGetGlyphBBoxes(font FontRef, glyphs *Glyph, count uint, bboxes *Rect) bool {
-	rv := C.FontGetGlyphBBoxes(font, glyphs, count, bboxes)
+	rv := C.FontGetGlyphBBoxes(
+		// *typing.RefType
+		unsafe.Pointer(font),
+		// *typing.PointerType
+		(*C.NSInteger)(unsafe.Pointer(glyphs)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(bboxes)),
+	)
 	return bool(rv)
 }
 
@@ -2087,7 +3084,16 @@ func FontGetGlyphBBoxes(font FontRef, glyphs *Glyph, count uint, bboxes *Rect) b
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454385-cggetdisplayswithpoint?language=objc
 func GetDisplaysWithPoint(point Point, maxDisplays uint32, displays *DirectDisplayID, matchingDisplayCount *uint32) Error {
-	rv := C.GetDisplaysWithPoint(point, maxDisplays, displays, matchingDisplayCount)
+	rv := C.GetDisplaysWithPoint(
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&point)),
+		// *typing.PrimitiveType
+		C.uint32_t(maxDisplays),
+		// *typing.PointerType
+		(*C.uint32_t)(unsafe.Pointer(displays)),
+		// *typing.PointerType
+		(*C.uint32_t)(unsafe.Pointer(matchingDisplayCount)),
+	)
 	return Error(rv)
 }
 
@@ -2095,14 +3101,20 @@ func GetDisplaysWithPoint(point Point, maxDisplays uint32, displays *DirectDispl
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1556742-cgimagerelease?language=objc
 func ImageRelease(image ImageRef) {
-	C.ImageRelease(image)
+	C.ImageRelease(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 }
 
 // Returns the smallest value for the x-coordinate of the rectangle. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455948-cgrectgetminx?language=objc
 func RectGetMinX(rect Rect) float64 {
-	rv := C.RectGetMinX(rect)
+	rv := C.RectGetMinX(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 	return float64(rv)
 }
 
@@ -2110,14 +3122,20 @@ func RectGetMinX(rect Rect) float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454517-cgcontextreplacepathwithstrokedp?language=objc
 func ContextReplacePathWithStrokedPath(c ContextRef) {
-	C.ContextReplacePathWithStrokedPath(c)
+	C.ContextReplacePathWithStrokedPath(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 // Returns the bytes per row of a bitmap context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456129-cgbitmapcontextgetbytesperrow?language=objc
 func BitmapContextGetBytesPerRow(context ContextRef) uint {
-	rv := C.BitmapContextGetBytesPerRow(context)
+	rv := C.BitmapContextGetBytesPerRow(
+		// *typing.RefType
+		unsafe.Pointer(context),
+	)
 	return uint(rv)
 }
 
@@ -2125,7 +3143,14 @@ func BitmapContextGetBytesPerRow(context ContextRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1552209-cgwindowlistcreate?language=objc
 func WindowListCreate(option WindowListOption, relativeToWindow WindowID) corefoundation.ArrayRef {
-	rv := C.WindowListCreate(C.uint32_t(option), C.uint32_t(relativeToWindow))
+	rv := C.WindowListCreate(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(option),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(relativeToWindow),
+	)
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -2133,22 +3158,36 @@ func WindowListCreate(option WindowListOption, relativeToWindow WindowID) corefo
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454806-cgsizeapplyaffinetransform?language=objc
 func SizeApplyAffineTransform(size Size, t AffineTransform) Size {
-	rv := C.SizeApplyAffineTransform(size, t)
-	return Size(rv)
+	rv := C.SizeApplyAffineTransform(
+		// *typing.StructType
+		*(*C.CGSize)(unsafe.Pointer(&size)),
+		// *typing.StructType
+		*(*C.CGAffineTransform)(unsafe.Pointer(&t)),
+	)
+	return *(*Size)(unsafe.Pointer(&rv))
 }
 
 // Posts a Quartz event from an event tap into the event stream. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455172-cgeventtappostevent?language=objc
 func EventTapPostEvent(proxy unsafe.Pointer, event EventRef) {
-	C.EventTapPostEvent(proxy, event)
+	C.EventTapPostEvent(
+		// *typing.RefType
+		unsafe.Pointer(proxy),
+		// *typing.RefType
+		unsafe.Pointer(event),
+	)
 }
 
 // Returns a Boolean value indicating whether a display is in a mirroring set. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455558-cgdisplayisinmirrorset?language=objc
 func DisplayIsInMirrorSet(display DirectDisplayID) int {
-	rv := C.DisplayIsInMirrorSet(C.uint32_t(display))
+	rv := C.DisplayIsInMirrorSet(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return int(rv)
 }
 
@@ -2156,7 +3195,10 @@ func DisplayIsInMirrorSet(display DirectDisplayID) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3861800-cgcolorspaceispqbased?language=objc
 func ColorSpaceIsPQBased(s ColorSpaceRef) bool {
-	rv := C.ColorSpaceIsPQBased(s)
+	rv := C.ColorSpaceIsPQBased(
+		// *typing.RefType
+		unsafe.Pointer(s),
+	)
 	return bool(rv)
 }
 
@@ -2164,21 +3206,37 @@ func ColorSpaceIsPQBased(s ColorSpaceRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456457-cgcontextclearrect?language=objc
 func ContextClearRect(c ContextRef, rect Rect) {
-	C.ContextClearRect(c, rect)
+	C.ContextClearRect(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 }
 
 // Sets the Unicode string associated with a Quartz keyboard event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456028-cgeventkeyboardsetunicodestring?language=objc
 func EventKeyboardSetUnicodeString(event EventRef, stringLength objc.IObject, unicodeString *uint16) {
-	C.EventKeyboardSetUnicodeString(event, stringLength, unicodeString)
+	C.EventKeyboardSetUnicodeString(
+		// *typing.RefType
+		unsafe.Pointer(event),
+		// *typing.ClassType
+		stringLength,
+		// *typing.PointerType
+		(*C.uint16_t)(unsafe.Pointer(unicodeString)),
+	)
 }
 
 // Releases a captured display. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455685-cgdisplayrelease?language=objc
 func DisplayRelease(display DirectDisplayID) Error {
-	rv := C.DisplayRelease(C.uint32_t(display))
+	rv := C.DisplayRelease(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return Error(rv)
 }
 
@@ -2186,7 +3244,10 @@ func DisplayRelease(display DirectDisplayID) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456166-cgpdfpagegetdocument?language=objc
 func PDFPageGetDocument(page PDFPageRef) PDFDocumentRef {
-	rv := C.PDFPageGetDocument(page)
+	rv := C.PDFPageGetDocument(
+		// *typing.RefType
+		unsafe.Pointer(page),
+	)
 	return PDFDocumentRef(rv)
 }
 
@@ -2194,7 +3255,21 @@ func PDFPageGetDocument(page PDFPageRef) PDFDocumentRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454974-cggetdisplaytransferbytable?language=objc
 func GetDisplayTransferByTable(display DirectDisplayID, capacity uint32, redTable *GammaValue, greenTable *GammaValue, blueTable *GammaValue, sampleCount *uint32) Error {
-	rv := C.GetDisplayTransferByTable(C.uint32_t(display), capacity, redTable, greenTable, blueTable, sampleCount)
+	rv := C.GetDisplayTransferByTable(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.PrimitiveType
+		C.uint32_t(capacity),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(redTable)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(greenTable)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(blueTable)),
+		// *typing.PointerType
+		(*C.uint32_t)(unsafe.Pointer(sampleCount)),
+	)
 	return Error(rv)
 }
 
@@ -2202,7 +3277,12 @@ func GetDisplayTransferByTable(display DirectDisplayID, capacity uint32, redTabl
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455732-cgaffinetransformequaltotransfor?language=objc
 func AffineTransformEqualToTransform(t1 AffineTransform, t2 AffineTransform) bool {
-	rv := C.AffineTransformEqualToTransform(t1, t2)
+	rv := C.AffineTransformEqualToTransform(
+		// *typing.StructType
+		*(*C.CGAffineTransform)(unsafe.Pointer(&t1)),
+		// *typing.StructType
+		*(*C.CGAffineTransform)(unsafe.Pointer(&t2)),
+	)
 	return bool(rv)
 }
 
@@ -2210,7 +3290,10 @@ func AffineTransformEqualToTransform(t1 AffineTransform, t2 AffineTransform) boo
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454724-cgpdfscannergetcontentstream?language=objc
 func PDFScannerGetContentStream(scanner unsafe.Pointer) unsafe.Pointer {
-	rv := C.PDFScannerGetContentStream(scanner)
+	rv := C.PDFScannerGetContentStream(
+		// *typing.RefType
+		unsafe.Pointer(scanner),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -2218,7 +3301,16 @@ func PDFScannerGetContentStream(scanner unsafe.Pointer) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411138-cgpathaddlinetopoint?language=objc
 func PathAddLineToPoint(path MutablePathRef, m *AffineTransform, x float64, y float64) {
-	C.PathAddLineToPoint(path, m, x, y)
+	C.PathAddLineToPoint(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+	)
 }
 
 //	[Full Topic]
@@ -2233,7 +3325,10 @@ func PreflightListenEventAccess() bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455634-cgeventgettype?language=objc
 func EventGetType(event EventRef) EventType {
-	rv := C.EventGetType(event)
+	rv := C.EventGetType(
+		// *typing.RefType
+		unsafe.Pointer(event),
+	)
 	return EventType(rv)
 }
 
@@ -2241,7 +3336,12 @@ func EventGetType(event EventRef) EventType {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456297-cgpdfscannerpopnumber?language=objc
 func PDFScannerPopNumber(scanner unsafe.Pointer, value *PDFReal) bool {
-	rv := C.PDFScannerPopNumber(scanner, value)
+	rv := C.PDFScannerPopNumber(
+		// *typing.RefType
+		unsafe.Pointer(scanner),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(value)),
+	)
 	return bool(rv)
 }
 
@@ -2249,7 +3349,14 @@ func PDFScannerPopNumber(scanner unsafe.Pointer, value *PDFReal) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408879-cgcolorspacecreatelab?language=objc
 func ColorSpaceCreateLab(whitePoint *float64, blackPoint *float64, range_ *float64) ColorSpaceRef {
-	rv := C.ColorSpaceCreateLab(whitePoint, blackPoint, range_)
+	rv := C.ColorSpaceCreateLab(
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(whitePoint)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(blackPoint)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(range_)),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -2257,15 +3364,21 @@ func ColorSpaceCreateLab(whitePoint *float64, blackPoint *float64, range_ *float
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456122-cgpdfcontextendpage?language=objc
 func PDFContextEndPage(context ContextRef) {
-	C.PDFContextEndPage(context)
+	C.PDFContextEndPage(
+		// *typing.RefType
+		unsafe.Pointer(context),
+	)
 }
 
 // Returns the bounding box of a clipping path. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455387-cgcontextgetclipboundingbox?language=objc
 func ContextGetClipBoundingBox(c ContextRef) Rect {
-	rv := C.ContextGetClipBoundingBox(c)
-	return Rect(rv)
+	rv := C.ContextGetClipBoundingBox(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Creates an empty PDF operator table. [Full Topic]
@@ -2280,22 +3393,44 @@ func PDFOperatorTableCreate() unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411144-cgpathaddrect?language=objc
 func PathAddRect(path MutablePathRef, m *AffineTransform, rect Rect) {
-	C.PathAddRect(path, m, rect)
+	C.PathAddRect(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 }
 
 // Returns the point resulting from an affine transformation of an existing point. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454251-cgpointapplyaffinetransform?language=objc
 func PointApplyAffineTransform(point Point, t AffineTransform) Point {
-	rv := C.PointApplyAffineTransform(point, t)
-	return Point(rv)
+	rv := C.PointApplyAffineTransform(
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&point)),
+		// *typing.StructType
+		*(*C.CGAffineTransform)(unsafe.Pointer(&t)),
+	)
+	return *(*Point)(unsafe.Pointer(&rv))
 }
 
 // Creates a bitmap image using JPEG-encoded data supplied by a data provider. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454920-cgimagecreatewithjpegdataprovide?language=objc
 func ImageCreateWithJPEGDataProvider(source DataProviderRef, decode *float64, shouldInterpolate bool, intent ColorRenderingIntent) ImageRef {
-	rv := C.ImageCreateWithJPEGDataProvider(source, decode, shouldInterpolate, C.int32_t(intent))
+	rv := C.ImageCreateWithJPEGDataProvider(
+		// *typing.RefType
+		unsafe.Pointer(source),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(decode)),
+		// *typing.PrimitiveType
+		C.BOOL(shouldInterpolate),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(intent),
+	)
 	return ImageRef(rv)
 }
 
@@ -2311,7 +3446,32 @@ func EventSourceGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455149-cgimagecreate?language=objc
 func ImageCreate(width uint, height uint, bitsPerComponent uint, bitsPerPixel uint, bytesPerRow uint, space ColorSpaceRef, bitmapInfo BitmapInfo, provider DataProviderRef, decode *float64, shouldInterpolate bool, intent ColorRenderingIntent) ImageRef {
-	rv := C.ImageCreate(width, height, bitsPerComponent, bitsPerPixel, bytesPerRow, space, C.uint32_t(bitmapInfo), provider, decode, shouldInterpolate, C.int32_t(intent))
+	rv := C.ImageCreate(
+		// *typing.PrimitiveType
+		C.NSUInteger(width),
+		// *typing.PrimitiveType
+		C.NSUInteger(height),
+		// *typing.PrimitiveType
+		C.NSUInteger(bitsPerComponent),
+		// *typing.PrimitiveType
+		C.NSUInteger(bitsPerPixel),
+		// *typing.PrimitiveType
+		C.NSUInteger(bytesPerRow),
+		// *typing.RefType
+		unsafe.Pointer(space),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(bitmapInfo),
+		// *typing.RefType
+		unsafe.Pointer(provider),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(decode)),
+		// *typing.PrimitiveType
+		C.BOOL(shouldInterpolate),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(intent),
+	)
 	return ImageRef(rv)
 }
 
@@ -2319,7 +3479,10 @@ func ImageCreate(width uint, height uint, bitsPerComponent uint, bitsPerPixel ui
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455471-cgrectisnull?language=objc
 func RectIsNull(rect Rect) bool {
-	rv := C.RectIsNull(rect)
+	rv := C.RectIsNull(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 	return bool(rv)
 }
 
@@ -2327,7 +3490,10 @@ func RectIsNull(rect Rect) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408772-cgeventsourcegetsourcestateid?language=objc
 func EventSourceGetSourceStateID(source EventSourceRef) EventSourceStateID {
-	rv := C.EventSourceGetSourceStateID(source)
+	rv := C.EventSourceGetSourceStateID(
+		// *typing.RefType
+		unsafe.Pointer(source),
+	)
 	return EventSourceStateID(rv)
 }
 
@@ -2335,7 +3501,10 @@ func EventSourceGetSourceStateID(source EventSourceRef) EventSourceStateID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1398456-cggradientretain?language=objc
 func GradientRetain(gradient GradientRef) GradientRef {
-	rv := C.GradientRetain(gradient)
+	rv := C.GradientRetain(
+		// *typing.RefType
+		unsafe.Pointer(gradient),
+	)
 	return GradientRef(rv)
 }
 
@@ -2343,7 +3512,14 @@ func GradientRetain(gradient GradientRef) GradientRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454504-cgpdfarraygetboolean?language=objc
 func PDFArrayGetBoolean(array unsafe.Pointer, index uint, value *PDFBoolean) bool {
-	rv := C.PDFArrayGetBoolean(array, index, value)
+	rv := C.PDFArrayGetBoolean(
+		// *typing.RefType
+		unsafe.Pointer(array),
+		// *typing.PrimitiveType
+		C.NSUInteger(index),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(value)),
+	)
 	return bool(rv)
 }
 
@@ -2351,14 +3527,22 @@ func PDFArrayGetBoolean(array unsafe.Pointer, index uint, value *PDFBoolean) boo
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455296-cgcontextsetfillcolor?language=objc
 func ContextSetFillColor(c ContextRef, components *float64) {
-	C.ContextSetFillColor(c, components)
+	C.ContextSetFillColor(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(components)),
+	)
 }
 
 // Returns the pattern associated with a color in a pattern color space. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455937-cgcolorgetpattern?language=objc
 func ColorGetPattern(color ColorRef) PatternRef {
-	rv := C.ColorGetPattern(color)
+	rv := C.ColorGetPattern(
+		// *typing.RefType
+		unsafe.Pointer(color),
+	)
 	return PatternRef(rv)
 }
 
@@ -2366,15 +3550,22 @@ func ColorGetPattern(color ColorRef) PatternRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411200-cgpathgetpathboundingbox?language=objc
 func PathGetPathBoundingBox(path unsafe.Pointer) Rect {
-	rv := C.PathGetPathBoundingBox(path)
-	return Rect(rv)
+	rv := C.PathGetPathBoundingBox(
+		// *typing.RefType
+		unsafe.Pointer(path),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Captures all attached displays, using the specified options. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456514-cgcapturealldisplayswithoptions?language=objc
 func CaptureAllDisplaysWithOptions(options CaptureOptions) Error {
-	rv := C.CaptureAllDisplaysWithOptions(C.uint32_t(options))
+	rv := C.CaptureAllDisplaysWithOptions(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(options),
+	)
 	return Error(rv)
 }
 
@@ -2382,7 +3573,10 @@ func CaptureAllDisplaysWithOptions(options CaptureOptions) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455215-cgwindowlistcreatedescriptionfro?language=objc
 func WindowListCreateDescriptionFromArray(windowArray corefoundation.ArrayRef) corefoundation.ArrayRef {
-	rv := C.WindowListCreateDescriptionFromArray(windowArray)
+	rv := C.WindowListCreateDescriptionFromArray(
+		// *typing.RefType
+		unsafe.Pointer(windowArray),
+	)
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -2390,7 +3584,14 @@ func WindowListCreateDescriptionFromArray(windowArray corefoundation.ArrayRef) c
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1410041-cgpdfcontentstreamcreatewithstre?language=objc
 func PDFContentStreamCreateWithStream(stream unsafe.Pointer, streamResources unsafe.Pointer, parent unsafe.Pointer) unsafe.Pointer {
-	rv := C.PDFContentStreamCreateWithStream(stream, streamResources, parent)
+	rv := C.PDFContentStreamCreateWithStream(
+		// *typing.RefType
+		unsafe.Pointer(stream),
+		// *typing.RefType
+		unsafe.Pointer(streamResources),
+		// *typing.RefType
+		unsafe.Pointer(parent),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -2398,14 +3599,33 @@ func PDFContentStreamCreateWithStream(stream unsafe.Pointer, streamResources uns
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455923-cgcontextdrawradialgradient?language=objc
 func ContextDrawRadialGradient(c ContextRef, gradient GradientRef, startCenter Point, startRadius float64, endCenter Point, endRadius float64, options GradientDrawingOptions) {
-	C.ContextDrawRadialGradient(c, gradient, startCenter, startRadius, endCenter, endRadius, C.uint32_t(options))
+	C.ContextDrawRadialGradient(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.RefType
+		unsafe.Pointer(gradient),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&startCenter)),
+		// *typing.PrimitiveType
+		C.float(startRadius),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&endCenter)),
+		// *typing.PrimitiveType
+		C.float(endRadius),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(options),
+	)
 }
 
 // Converts a string to a date. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454295-cgpdfstringcopydate?language=objc
-func PDFStringCopyDate(string unsafe.Pointer) corefoundation.DateRef {
-	rv := C.PDFStringCopyDate(string_)
+func PDFStringCopyDate(string_ unsafe.Pointer) corefoundation.DateRef {
+	rv := C.PDFStringCopyDate(
+		// *typing.RefType
+		unsafe.Pointer(string_),
+	)
 	return corefoundation.DateRef(rv)
 }
 
@@ -2421,7 +3641,14 @@ func WindowServerCFMachPort() corefoundation.MachPortRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454964-cggetonlinedisplaylist?language=objc
 func GetOnlineDisplayList(maxDisplays uint32, onlineDisplays *DirectDisplayID, displayCount *uint32) Error {
-	rv := C.GetOnlineDisplayList(maxDisplays, onlineDisplays, displayCount)
+	rv := C.GetOnlineDisplayList(
+		// *typing.PrimitiveType
+		C.uint32_t(maxDisplays),
+		// *typing.PointerType
+		(*C.uint32_t)(unsafe.Pointer(onlineDisplays)),
+		// *typing.PointerType
+		(*C.uint32_t)(unsafe.Pointer(displayCount)),
+	)
 	return Error(rv)
 }
 
@@ -2429,15 +3656,23 @@ func GetOnlineDisplayList(maxDisplays uint32, onlineDisplays *DirectDisplayID, d
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455916-cgcontextconvertpointtodevicespa?language=objc
 func ContextConvertPointToDeviceSpace(c ContextRef, point Point) Point {
-	rv := C.ContextConvertPointToDeviceSpace(c, point)
-	return Point(rv)
+	rv := C.ContextConvertPointToDeviceSpace(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&point)),
+	)
+	return *(*Point)(unsafe.Pointer(&rv))
 }
 
 // Creates an immutable copy of a graphics path. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411211-cgpathcreatecopy?language=objc
 func PathCreateCopy(path unsafe.Pointer) unsafe.Pointer {
-	rv := C.PathCreateCopy(path)
+	rv := C.PathCreateCopy(
+		// *typing.RefType
+		unsafe.Pointer(path),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -2445,7 +3680,10 @@ func PathCreateCopy(path unsafe.Pointer) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454225-cgbitmapcontextcreateimage?language=objc
 func BitmapContextCreateImage(context ContextRef) ImageRef {
-	rv := C.BitmapContextCreateImage(context)
+	rv := C.BitmapContextCreateImage(
+		// *typing.RefType
+		unsafe.Pointer(context),
+	)
 	return ImageRef(rv)
 }
 
@@ -2453,7 +3691,10 @@ func BitmapContextCreateImage(context ContextRef) ImageRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408848-cgcolorspacegetnumberofcomponent?language=objc
 func ColorSpaceGetNumberOfComponents(space ColorSpaceRef) uint {
-	rv := C.ColorSpaceGetNumberOfComponents(space)
+	rv := C.ColorSpaceGetNumberOfComponents(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return uint(rv)
 }
 
@@ -2461,7 +3702,10 @@ func ColorSpaceGetNumberOfComponents(space ColorSpaceRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1390869-cgfunctionretain?language=objc
 func FunctionRetain(function FunctionRef) FunctionRef {
-	rv := C.FunctionRetain(function)
+	rv := C.FunctionRetain(
+		// *typing.RefType
+		unsafe.Pointer(function),
+	)
 	return FunctionRef(rv)
 }
 
@@ -2469,7 +3713,29 @@ func FunctionRetain(function FunctionRef) FunctionRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456330-cggetdisplaytransferbyformula?language=objc
 func GetDisplayTransferByFormula(display DirectDisplayID, redMin *GammaValue, redMax *GammaValue, redGamma *GammaValue, greenMin *GammaValue, greenMax *GammaValue, greenGamma *GammaValue, blueMin *GammaValue, blueMax *GammaValue, blueGamma *GammaValue) Error {
-	rv := C.GetDisplayTransferByFormula(C.uint32_t(display), redMin, redMax, redGamma, greenMin, greenMax, greenGamma, blueMin, blueMax, blueGamma)
+	rv := C.GetDisplayTransferByFormula(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(redMin)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(redMax)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(redGamma)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(greenMin)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(greenMax)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(greenGamma)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(blueMin)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(blueMax)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(blueGamma)),
+	)
 	return Error(rv)
 }
 
@@ -2477,7 +3743,12 @@ func GetDisplayTransferByFormula(display DirectDisplayID, redMin *GammaValue, re
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454561-cgpdfscannerpopstream?language=objc
 func PDFScannerPopStream(scanner unsafe.Pointer, value unsafe.Pointer) bool {
-	rv := C.PDFScannerPopStream(scanner, value)
+	rv := C.PDFScannerPopStream(
+		// *typing.RefType
+		unsafe.Pointer(scanner),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
@@ -2485,7 +3756,10 @@ func PDFScannerPopStream(scanner unsafe.Pointer, value unsafe.Pointer) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408885-cgcolorspaceretain?language=objc
 func ColorSpaceRetain(space ColorSpaceRef) ColorSpaceRef {
-	rv := C.ColorSpaceRetain(space)
+	rv := C.ColorSpaceRetain(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -2493,7 +3767,16 @@ func ColorSpaceRetain(space ColorSpaceRef) ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3042355-cgcolorcreatesrgb?language=objc
 func ColorCreateSRGB(red float64, green float64, blue float64, alpha float64) ColorRef {
-	rv := C.ColorCreateSRGB(red, green, blue, alpha)
+	rv := C.ColorCreateSRGB(
+		// *typing.PrimitiveType
+		C.float(red),
+		// *typing.PrimitiveType
+		C.float(green),
+		// *typing.PrimitiveType
+		C.float(blue),
+		// *typing.PrimitiveType
+		C.float(alpha),
+	)
 	return ColorRef(rv)
 }
 
@@ -2501,7 +3784,15 @@ func ColorCreateSRGB(red float64, green float64, blue float64, alpha float64) Co
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455530-cgdisplaystreamupdategetrects?language=objc
 func DisplayStreamUpdateGetRects(updateRef DisplayStreamUpdateRef, rectType DisplayStreamUpdateRectType, rectCount *uint) *Rect {
-	rv := C.DisplayStreamUpdateGetRects(updateRef, C.int32_t(rectType), rectCount)
+	rv := C.DisplayStreamUpdateGetRects(
+		// *typing.RefType
+		unsafe.Pointer(updateRef),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(rectType),
+		// *typing.PointerType
+		(*C.NSUInteger)(unsafe.Pointer(rectCount)),
+	)
 	return *Rect(rv)
 }
 
@@ -2509,7 +3800,10 @@ func DisplayStreamUpdateGetRects(updateRef DisplayStreamUpdateRef, rectType Disp
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454858-cgimagegetcolorspace?language=objc
 func ImageGetColorSpace(image ImageRef) ColorSpaceRef {
-	rv := C.ImageGetColorSpace(image)
+	rv := C.ImageGetColorSpace(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -2517,7 +3811,14 @@ func ImageGetColorSpace(image ImageRef) ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541776-cgsetlocaleventsfilterduringsupp?language=objc
 func SetLocalEventsFilterDuringSuppressionState(filter EventFilterMask, state EventSuppressionState) Error {
-	rv := C.SetLocalEventsFilterDuringSuppressionState(C.uint32_t(filter), C.uint32_t(state))
+	rv := C.SetLocalEventsFilterDuringSuppressionState(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(filter),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(state),
+	)
 	return Error(rv)
 }
 
@@ -2525,7 +3826,24 @@ func SetLocalEventsFilterDuringSuppressionState(filter EventFilterMask, state Ev
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456399-cgshadingcreateradial?language=objc
 func ShadingCreateRadial(space ColorSpaceRef, start Point, startRadius float64, end Point, endRadius float64, function FunctionRef, extendStart bool, extendEnd bool) ShadingRef {
-	rv := C.ShadingCreateRadial(space, start, startRadius, end, endRadius, function, extendStart, extendEnd)
+	rv := C.ShadingCreateRadial(
+		// *typing.RefType
+		unsafe.Pointer(space),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&start)),
+		// *typing.PrimitiveType
+		C.float(startRadius),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&end)),
+		// *typing.PrimitiveType
+		C.float(endRadius),
+		// *typing.RefType
+		unsafe.Pointer(function),
+		// *typing.PrimitiveType
+		C.BOOL(extendStart),
+		// *typing.PrimitiveType
+		C.BOOL(extendEnd),
+	)
 	return ShadingRef(rv)
 }
 
@@ -2533,21 +3851,41 @@ func ShadingCreateRadial(space ColorSpaceRef, start Point, startRadius float64, 
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455925-cgrectdivide?language=objc
 func RectDivide(rect Rect, slice *Rect, remainder *Rect, amount float64, edge RectEdge) {
-	C.RectDivide(rect, slice, remainder, amount, C.uint32_t(edge))
+	C.RectDivide(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(slice)),
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(remainder)),
+		// *typing.PrimitiveType
+		C.float(amount),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(edge),
+	)
 }
 
 // Sets whether or not to allow antialiasing for a graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456310-cgcontextsetallowsantialiasing?language=objc
 func ContextSetAllowsAntialiasing(c ContextRef, allowsAntialiasing bool) {
-	C.ContextSetAllowsAntialiasing(c, allowsAntialiasing)
+	C.ContextSetAllowsAntialiasing(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.BOOL(allowsAntialiasing),
+	)
 }
 
 // Returns the height in pixels of a bitmap context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454681-cgbitmapcontextgetheight?language=objc
 func BitmapContextGetHeight(context ContextRef) uint {
-	rv := C.BitmapContextGetHeight(context)
+	rv := C.BitmapContextGetHeight(
+		// *typing.RefType
+		unsafe.Pointer(context),
+	)
 	return uint(rv)
 }
 
@@ -2555,7 +3893,10 @@ func BitmapContextGetHeight(context ContextRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456637-cgcolorgetalpha?language=objc
 func ColorGetAlpha(color ColorRef) float64 {
-	rv := C.ColorGetAlpha(color)
+	rv := C.ColorGetAlpha(
+		// *typing.RefType
+		unsafe.Pointer(color),
+	)
 	return float64(rv)
 }
 
@@ -2563,7 +3904,10 @@ func ColorGetAlpha(color ColorRef) float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455829-cgimagegetheight?language=objc
 func ImageGetHeight(image ImageRef) uint {
-	rv := C.ImageGetHeight(image)
+	rv := C.ImageGetHeight(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return uint(rv)
 }
 
@@ -2571,7 +3915,10 @@ func ImageGetHeight(image ImageRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408921-cgcolorspacecreatewithname?language=objc
 func ColorSpaceCreateWithName(name corefoundation.StringRef) ColorSpaceRef {
-	rv := C.ColorSpaceCreateWithName(name)
+	rv := C.ColorSpaceCreateWithName(
+		// *typing.RefType
+		unsafe.Pointer(name),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -2579,14 +3926,35 @@ func ColorSpaceCreateWithName(name corefoundation.StringRef) ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454268-cgcontextaddquadcurvetopoint?language=objc
 func ContextAddQuadCurveToPoint(c ContextRef, cpx float64, cpy float64, x float64, y float64) {
-	C.ContextAddQuadCurveToPoint(c, cpx, cpy, x, y)
+	C.ContextAddQuadCurveToPoint(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(cpx),
+		// *typing.PrimitiveType
+		C.float(cpy),
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+	)
 }
 
 // Configures the display mode of a display. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454273-cgconfiguredisplaywithdisplaymod?language=objc
 func ConfigureDisplayWithDisplayMode(config unsafe.Pointer, display DirectDisplayID, mode DisplayModeRef, options corefoundation.DictionaryRef) Error {
-	rv := C.ConfigureDisplayWithDisplayMode(config, C.uint32_t(display), mode, options)
+	rv := C.ConfigureDisplayWithDisplayMode(
+		// *typing.RefType
+		unsafe.Pointer(config),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.RefType
+		unsafe.Pointer(mode),
+		// *typing.RefType
+		unsafe.Pointer(options),
+	)
 	return Error(rv)
 }
 
@@ -2594,7 +3962,10 @@ func ConfigureDisplayWithDisplayMode(config unsafe.Pointer, display DirectDispla
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408309-cgdataprovidercopydata?language=objc
 func DataProviderCopyData(provider DataProviderRef) corefoundation.DataRef {
-	rv := C.DataProviderCopyData(provider)
+	rv := C.DataProviderCopyData(
+		// *typing.RefType
+		unsafe.Pointer(provider),
+	)
 	return corefoundation.DataRef(rv)
 }
 
@@ -2602,7 +3973,11 @@ func DataProviderCopyData(provider DataProviderRef) corefoundation.DataRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454506-cgdisplayisinhwmirrorset?language=objc
 func DisplayIsInHWMirrorSet(display DirectDisplayID) int {
-	rv := C.DisplayIsInHWMirrorSet(C.uint32_t(display))
+	rv := C.DisplayIsInHWMirrorSet(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return int(rv)
 }
 
@@ -2610,7 +3985,13 @@ func DisplayIsInHWMirrorSet(display DirectDisplayID) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408785-cgeventsourcegetlocaleventsfilte?language=objc
 func EventSourceGetLocalEventsFilterDuringSuppressionState(source EventSourceRef, state EventSuppressionState) EventFilterMask {
-	rv := C.EventSourceGetLocalEventsFilterDuringSuppressionState(source, C.uint32_t(state))
+	rv := C.EventSourceGetLocalEventsFilterDuringSuppressionState(
+		// *typing.RefType
+		unsafe.Pointer(source),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(state),
+	)
 	return EventFilterMask(rv)
 }
 
@@ -2618,15 +3999,23 @@ func EventSourceGetLocalEventsFilterDuringSuppressionState(source EventSourceRef
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396402-cgfontcopytablefortag?language=objc
 func FontCopyTableForTag(font FontRef, tag uint32) corefoundation.DataRef {
-	rv := C.FontCopyTableForTag(font, tag)
+	rv := C.FontCopyTableForTag(
+		// *typing.RefType
+		unsafe.Pointer(font),
+		// *typing.PrimitiveType
+		C.uint32_t(tag),
+	)
 	return corefoundation.DataRef(rv)
 }
 
 // Returns a pointer to the bytes of a PDF string. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455978-cgpdfstringgetbyteptr?language=objc
-func PDFStringGetBytePtr(string unsafe.Pointer) *uint8 {
-	rv := C.PDFStringGetBytePtr(string_)
+func PDFStringGetBytePtr(string_ unsafe.Pointer) *uint8 {
+	rv := C.PDFStringGetBytePtr(
+		// *typing.RefType
+		unsafe.Pointer(string_),
+	)
 	return *uint8(rv)
 }
 
@@ -2634,22 +4023,37 @@ func PDFStringGetBytePtr(string unsafe.Pointer) *uint8 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454577-cgcontextgetpathboundingbox?language=objc
 func ContextGetPathBoundingBox(c ContextRef) Rect {
-	rv := C.ContextGetPathBoundingBox(c)
-	return Rect(rv)
+	rv := C.ContextGetPathBoundingBox(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Returns the Unicode string associated with a Quartz keyboard event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456120-cgeventkeyboardgetunicodestring?language=objc
 func EventKeyboardGetUnicodeString(event EventRef, maxStringLength objc.IObject, actualStringLength objc.IObject, unicodeString *uint16) {
-	C.EventKeyboardGetUnicodeString(event, maxStringLength, actualStringLength, unicodeString)
+	C.EventKeyboardGetUnicodeString(
+		// *typing.RefType
+		unsafe.Pointer(event),
+		// *typing.ClassType
+		maxStringLength,
+		// *typing.ClassType
+		actualStringLength,
+		// *typing.PointerType
+		(*C.uint16_t)(unsafe.Pointer(unicodeString)),
+	)
 }
 
 // Increments the retain count of a layer object. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1450900-cglayerretain?language=objc
 func LayerRetain(layer LayerRef) LayerRef {
-	rv := C.LayerRetain(layer)
+	rv := C.LayerRetain(
+		// *typing.RefType
+		unsafe.Pointer(layer),
+	)
 	return LayerRef(rv)
 }
 
@@ -2657,7 +4061,12 @@ func LayerRetain(layer LayerRef) LayerRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454942-cgcontextsetallowsfontsubpixelpo?language=objc
 func ContextSetAllowsFontSubpixelPositioning(c ContextRef, allowsFontSubpixelPositioning bool) {
-	C.ContextSetAllowsFontSubpixelPositioning(c, allowsFontSubpixelPositioning)
+	C.ContextSetAllowsFontSubpixelPositioning(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.BOOL(allowsFontSubpixelPositioning),
+	)
 }
 
 // Returns the Core Foundation type identifier for a color data type. [Full Topic]
@@ -2672,7 +4081,10 @@ func ColorGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2962830-cgimagegetbyteorderinfo?language=objc
 func ImageGetByteOrderInfo(image ImageRef) ImageByteOrderInfo {
-	rv := C.ImageGetByteOrderInfo(image)
+	rv := C.ImageGetByteOrderInfo(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return ImageByteOrderInfo(rv)
 }
 
@@ -2680,7 +4092,10 @@ func ImageGetByteOrderInfo(image ImageRef) ImageByteOrderInfo {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402603-cgpdfdocumentcreatewithprovider?language=objc
 func PDFDocumentCreateWithProvider(provider DataProviderRef) PDFDocumentRef {
-	rv := C.PDFDocumentCreateWithProvider(provider)
+	rv := C.PDFDocumentCreateWithProvider(
+		// *typing.RefType
+		unsafe.Pointer(provider),
+	)
 	return PDFDocumentRef(rv)
 }
 
@@ -2688,7 +4103,16 @@ func PDFDocumentCreateWithProvider(provider DataProviderRef) PDFDocumentRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396332-cgfontgetglyphadvances?language=objc
 func FontGetGlyphAdvances(font FontRef, glyphs *Glyph, count uint, advances *int) bool {
-	rv := C.FontGetGlyphAdvances(font, glyphs, count, advances)
+	rv := C.FontGetGlyphAdvances(
+		// *typing.RefType
+		unsafe.Pointer(font),
+		// *typing.PointerType
+		(*C.NSInteger)(unsafe.Pointer(glyphs)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+		// *typing.PointerType
+		(*C.NSInteger)(unsafe.Pointer(advances)),
+	)
 	return bool(rv)
 }
 
@@ -2696,7 +4120,10 @@ func FontGetGlyphAdvances(font FontRef, glyphs *Glyph, count uint, advances *int
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2962831-cgimagegetpixelformatinfo?language=objc
 func ImageGetPixelFormatInfo(image ImageRef) ImagePixelFormatInfo {
-	rv := C.ImageGetPixelFormatInfo(image)
+	rv := C.ImageGetPixelFormatInfo(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return ImagePixelFormatInfo(rv)
 }
 
@@ -2704,7 +4131,10 @@ func ImageGetPixelFormatInfo(image ImageRef) ImagePixelFormatInfo {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396376-cgfontcopyvariationaxes?language=objc
 func FontCopyVariationAxes(font FontRef) corefoundation.ArrayRef {
-	rv := C.FontCopyVariationAxes(font)
+	rv := C.FontCopyVariationAxes(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -2712,15 +4142,23 @@ func FontCopyVariationAxes(font FontRef) corefoundation.ArrayRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402592-cgpdfdocumentgetmediabox?language=objc
 func PDFDocumentGetMediaBox(document PDFDocumentRef, page int) Rect {
-	rv := C.PDFDocumentGetMediaBox(document, page)
-	return Rect(rv)
+	rv := C.PDFDocumentGetMediaBox(
+		// *typing.RefType
+		unsafe.Pointer(document),
+		// *typing.PrimitiveType
+		C.NSInteger(page),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Returns a copy of the color space's properties. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2962828-cgcolorspacecopypropertylist?language=objc
 func ColorSpaceCopyPropertyList(space ColorSpaceRef) corefoundation.PropertyListRef {
-	rv := C.ColorSpaceCopyPropertyList(space)
+	rv := C.ColorSpaceCopyPropertyList(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return corefoundation.PropertyListRef(rv)
 }
 
@@ -2728,14 +4166,33 @@ func ColorSpaceCopyPropertyList(space ColorSpaceRef) corefoundation.PropertyList
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454796-cgcontextsetstrokepattern?language=objc
 func ContextSetStrokePattern(c ContextRef, pattern PatternRef, components *float64) {
-	C.ContextSetStrokePattern(c, pattern, components)
+	C.ContextSetStrokePattern(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.RefType
+		unsafe.Pointer(pattern),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(components)),
+	)
 }
 
 // Returns information about the display mode closest to a specified depth and screen size. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562060-cgdisplaybestmodeforparameters?language=objc
 func DisplayBestModeForParameters(display DirectDisplayID, bitsPerPixel uint, width uint, height uint, exactMatch *int) corefoundation.DictionaryRef {
-	rv := C.DisplayBestModeForParameters(C.uint32_t(display), bitsPerPixel, width, height, exactMatch)
+	rv := C.DisplayBestModeForParameters(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.PrimitiveType
+		C.NSUInteger(bitsPerPixel),
+		// *typing.PrimitiveType
+		C.NSUInteger(width),
+		// *typing.PrimitiveType
+		C.NSUInteger(height),
+		// *typing.PointerType
+		(*C.NSInteger)(unsafe.Pointer(exactMatch)),
+	)
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -2743,7 +4200,14 @@ func DisplayBestModeForParameters(display DirectDisplayID, bitsPerPixel uint, wi
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1430220-cgpdfdictionarygetdictionary?language=objc
 func PDFDictionaryGetDictionary(dict unsafe.Pointer, key *uint8, value unsafe.Pointer) bool {
-	rv := C.PDFDictionaryGetDictionary(dict, key, value)
+	rv := C.PDFDictionaryGetDictionary(
+		// *typing.RefType
+		unsafe.Pointer(dict),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(key)),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
@@ -2751,21 +4215,36 @@ func PDFDictionaryGetDictionary(dict unsafe.Pointer, key *uint8, value unsafe.Po
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454716-cgcontextcliptorect?language=objc
 func ContextClipToRect(c ContextRef, rect Rect) {
-	C.ContextClipToRect(c, rect)
+	C.ContextClipToRect(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 }
 
 //	[Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2881687-cgcontextresetclip?language=objc
 func ContextResetClip(c ContextRef) {
-	C.ContextResetClip(c)
+	C.ContextResetClip(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 // Returns whether an object at a given index in a PDF array is a PDF dictionary and, if so, retrieves that dictionary. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454139-cgpdfarraygetdictionary?language=objc
 func PDFArrayGetDictionary(array unsafe.Pointer, index uint, value unsafe.Pointer) bool {
-	rv := C.PDFArrayGetDictionary(array, index, value)
+	rv := C.PDFArrayGetDictionary(
+		// *typing.RefType
+		unsafe.Pointer(array),
+		// *typing.PrimitiveType
+		C.NSUInteger(index),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
@@ -2773,14 +4252,30 @@ func PDFArrayGetDictionary(array unsafe.Pointer, index uint, value unsafe.Pointe
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411157-cgpathaddquadcurvetopoint?language=objc
 func PathAddQuadCurveToPoint(path MutablePathRef, m *AffineTransform, cpx float64, cpy float64, x float64, y float64) {
-	C.PathAddQuadCurveToPoint(path, m, cpx, cpy, x, y)
+	C.PathAddQuadCurveToPoint(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		// *typing.PrimitiveType
+		C.float(cpx),
+		// *typing.PrimitiveType
+		C.float(cpy),
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+	)
 }
 
 // Moves the mouse cursor without generating events. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456387-cgwarpmousecursorposition?language=objc
 func WarpMouseCursorPosition(newCursorPosition Point) Error {
-	rv := C.WarpMouseCursorPosition(newCursorPosition)
+	rv := C.WarpMouseCursorPosition(
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&newCursorPosition)),
+	)
 	return Error(rv)
 }
 
@@ -2788,7 +4283,13 @@ func WarpMouseCursorPosition(newCursorPosition Point) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455258-cgdisplaymovecursortopoint?language=objc
 func DisplayMoveCursorToPoint(display DirectDisplayID, point Point) Error {
-	rv := C.DisplayMoveCursorToPoint(C.uint32_t(display), point)
+	rv := C.DisplayMoveCursorToPoint(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&point)),
+	)
 	return Error(rv)
 }
 
@@ -2796,7 +4297,14 @@ func DisplayMoveCursorToPoint(display DirectDisplayID, point Point) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455137-cgwindowlistcopywindowinfo?language=objc
 func WindowListCopyWindowInfo(option WindowListOption, relativeToWindow WindowID) corefoundation.ArrayRef {
-	rv := C.WindowListCopyWindowInfo(C.uint32_t(option), C.uint32_t(relativeToWindow))
+	rv := C.WindowListCopyWindowInfo(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(option),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(relativeToWindow),
+	)
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -2804,7 +4312,11 @@ func WindowListCopyWindowInfo(option WindowListOption, relativeToWindow WindowID
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454279-cgshieldingwindowid?language=objc
 func ShieldingWindowID(display DirectDisplayID) WindowID {
-	rv := C.ShieldingWindowID(C.uint32_t(display))
+	rv := C.ShieldingWindowID(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return WindowID(rv)
 }
 
@@ -2812,21 +4324,44 @@ func ShieldingWindowID(display DirectDisplayID) WindowID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2875542-cgpdfcontextsetoutline?language=objc
 func PDFContextSetOutline(context ContextRef, outline corefoundation.DictionaryRef) {
-	C.PDFContextSetOutline(context, outline)
+	C.PDFContextSetOutline(
+		// *typing.RefType
+		unsafe.Pointer(context),
+		// *typing.RefType
+		unsafe.Pointer(outline),
+	)
 }
 
 // Appends an arc to a mutable graphics path, possibly preceded by a straight line segment. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411173-cgpathaddarctopoint?language=objc
 func PathAddArcToPoint(path MutablePathRef, m *AffineTransform, x1 float64, y1 float64, x2 float64, y2 float64, radius float64) {
-	C.PathAddArcToPoint(path, m, x1, y1, x2, y2, radius)
+	C.PathAddArcToPoint(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		// *typing.PrimitiveType
+		C.float(x1),
+		// *typing.PrimitiveType
+		C.float(y1),
+		// *typing.PrimitiveType
+		C.float(x2),
+		// *typing.PrimitiveType
+		C.float(y2),
+		// *typing.PrimitiveType
+		C.float(radius),
+	)
 }
 
 // Returns the number of bits allocated for a single color component of a bitmap image. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454980-cgimagegetbitspercomponent?language=objc
 func ImageGetBitsPerComponent(image ImageRef) uint {
-	rv := C.ImageGetBitsPerComponent(image)
+	rv := C.ImageGetBitsPerComponent(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return uint(rv)
 }
 
@@ -2842,7 +4377,10 @@ func CaptureAllDisplays() Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408775-cgeventsourcegetpixelsperline?language=objc
 func EventSourceGetPixelsPerLine(source EventSourceRef) float64 {
-	rv := C.EventSourceGetPixelsPerLine(source)
+	rv := C.EventSourceGetPixelsPerLine(
+		// *typing.RefType
+		unsafe.Pointer(source),
+	)
 	return float64(rv)
 }
 
@@ -2850,15 +4388,25 @@ func EventSourceGetPixelsPerLine(source EventSourceRef) float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454218-cgrectinset?language=objc
 func RectInset(rect Rect, dx float64, dy float64) Rect {
-	rv := C.RectInset(rect, dx, dy)
-	return Rect(rv)
+	rv := C.RectInset(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.PrimitiveType
+		C.float(dx),
+		// *typing.PrimitiveType
+		C.float(dy),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Begins a new set of display configuration changes. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455235-cgbegindisplayconfiguration?language=objc
 func BeginDisplayConfiguration(config unsafe.Pointer) Error {
-	rv := C.BeginDisplayConfiguration(config)
+	rv := C.BeginDisplayConfiguration(
+		// *typing.RefType
+		unsafe.Pointer(config),
+	)
 	return Error(rv)
 }
 
@@ -2866,7 +4414,12 @@ func BeginDisplayConfiguration(config unsafe.Pointer) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456173-cgpdfarraygetnull?language=objc
 func PDFArrayGetNull(array unsafe.Pointer, index uint) bool {
-	rv := C.PDFArrayGetNull(array, index)
+	rv := C.PDFArrayGetNull(
+		// *typing.RefType
+		unsafe.Pointer(array),
+		// *typing.PrimitiveType
+		C.NSUInteger(index),
+	)
 	return bool(rv)
 }
 
@@ -2874,7 +4427,10 @@ func PDFArrayGetNull(array unsafe.Pointer, index uint) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454575-cgimagegetdecode?language=objc
 func ImageGetDecode(image ImageRef) *float64 {
-	rv := C.ImageGetDecode(image)
+	rv := C.ImageGetDecode(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return *float64(rv)
 }
 
@@ -2882,7 +4438,10 @@ func ImageGetDecode(image ImageRef) *float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2866188-cgdataprovidergetinfo?language=objc
 func DataProviderGetInfo(provider DataProviderRef) unsafe.Pointer {
-	rv := C.DataProviderGetInfo(provider)
+	rv := C.DataProviderGetInfo(
+		// *typing.RefType
+		unsafe.Pointer(provider),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -2890,7 +4449,12 @@ func DataProviderGetInfo(provider DataProviderRef) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454341-cgdisplaystreamupdatecreatemerge?language=objc
 func DisplayStreamUpdateCreateMergedUpdate(firstUpdate DisplayStreamUpdateRef, secondUpdate DisplayStreamUpdateRef) DisplayStreamUpdateRef {
-	rv := C.DisplayStreamUpdateCreateMergedUpdate(firstUpdate, secondUpdate)
+	rv := C.DisplayStreamUpdateCreateMergedUpdate(
+		// *typing.RefType
+		unsafe.Pointer(firstUpdate),
+		// *typing.RefType
+		unsafe.Pointer(secondUpdate),
+	)
 	return DisplayStreamUpdateRef(rv)
 }
 
@@ -2898,7 +4462,12 @@ func DisplayStreamUpdateCreateMergedUpdate(firstUpdate DisplayStreamUpdateRef, s
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454657-cgpdfstreamcopydata?language=objc
 func PDFStreamCopyData(stream unsafe.Pointer, format *PDFDataFormat) corefoundation.DataRef {
-	rv := C.PDFStreamCopyData(stream, format)
+	rv := C.PDFStreamCopyData(
+		// *typing.RefType
+		unsafe.Pointer(stream),
+		// *typing.PointerType
+		(*C.int32_t)(unsafe.Pointer(format)),
+	)
 	return corefoundation.DataRef(rv)
 }
 
@@ -2906,7 +4475,10 @@ func PDFStreamCopyData(stream unsafe.Pointer, format *PDFDataFormat) corefoundat
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1552265-cgpatternretain?language=objc
 func PatternRetain(pattern PatternRef) PatternRef {
-	rv := C.PatternRetain(pattern)
+	rv := C.PatternRetain(
+		// *typing.RefType
+		unsafe.Pointer(pattern),
+	)
 	return PatternRef(rv)
 }
 
@@ -2914,7 +4486,14 @@ func PatternRetain(pattern PatternRef) PatternRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1430214-cgpdfdictionarygetobject?language=objc
 func PDFDictionaryGetObject(dict unsafe.Pointer, key *uint8, value unsafe.Pointer) bool {
-	rv := C.PDFDictionaryGetObject(dict, key, value)
+	rv := C.PDFDictionaryGetObject(
+		// *typing.RefType
+		unsafe.Pointer(dict),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(key)),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
@@ -2922,7 +4501,10 @@ func PDFDictionaryGetObject(dict unsafe.Pointer, key *uint8, value unsafe.Pointe
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454058-cgbitmapcontextgetcolorspace?language=objc
 func BitmapContextGetColorSpace(context ContextRef) ColorSpaceRef {
-	rv := C.BitmapContextGetColorSpace(context)
+	rv := C.BitmapContextGetColorSpace(
+		// *typing.RefType
+		unsafe.Pointer(context),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -2930,7 +4512,10 @@ func BitmapContextGetColorSpace(context ContextRef) ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454917-cgrectisempty?language=objc
 func RectIsEmpty(rect Rect) bool {
-	rv := C.RectIsEmpty(rect)
+	rv := C.RectIsEmpty(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 	return bool(rv)
 }
 
@@ -2938,7 +4523,10 @@ func RectIsEmpty(rect Rect) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454832-cgrectgetminy?language=objc
 func RectGetMinY(rect Rect) float64 {
-	rv := C.RectGetMinY(rect)
+	rv := C.RectGetMinY(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 	return float64(rv)
 }
 
@@ -2946,7 +4534,19 @@ func RectGetMinY(rect Rect) float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454852-cgwindowlistcreateimage?language=objc
 func WindowListCreateImage(screenBounds Rect, listOption WindowListOption, windowID WindowID, imageOption WindowImageOption) ImageRef {
-	rv := C.WindowListCreateImage(screenBounds, C.uint32_t(listOption), C.uint32_t(windowID), C.uint32_t(imageOption))
+	rv := C.WindowListCreateImage(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&screenBounds)),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(listOption),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(windowID),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(imageOption),
+	)
 	return ImageRef(rv)
 }
 
@@ -2954,7 +4554,13 @@ func WindowListCreateImage(screenBounds Rect, listOption WindowListOption, windo
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541788-cgpostscrollwheelevent?language=objc
 func PostScrollWheelEvent(wheelCount WheelCount, wheel1 int32) Error {
-	rv := C.PostScrollWheelEvent(C.uint32_t(wheelCount), wheel1)
+	rv := C.PostScrollWheelEvent(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(wheelCount),
+		// *typing.PrimitiveType
+		C.int32_t(wheel1),
+	)
 	return Error(rv)
 }
 
@@ -2970,7 +4576,10 @@ func ColorSpaceGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1573767-cgshadingretain?language=objc
 func ShadingRetain(shading ShadingRef) ShadingRef {
-	rv := C.ShadingRetain(shading)
+	rv := C.ShadingRetain(
+		// *typing.RefType
+		unsafe.Pointer(shading),
+	)
 	return ShadingRef(rv)
 }
 
@@ -2978,7 +4587,10 @@ func ShadingRetain(shading ShadingRef) ShadingRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456134-cgcolorcreatecopy?language=objc
 func ColorCreateCopy(color ColorRef) ColorRef {
-	rv := C.ColorCreateCopy(color)
+	rv := C.ColorCreateCopy(
+		// *typing.RefType
+		unsafe.Pointer(color),
+	)
 	return ColorRef(rv)
 }
 
@@ -2986,14 +4598,24 @@ func ColorCreateCopy(color ColorRef) ColorRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454368-cgcontextbegintransparencylayerw?language=objc
 func ContextBeginTransparencyLayerWithRect(c ContextRef, rect Rect, auxInfo corefoundation.DictionaryRef) {
-	C.ContextBeginTransparencyLayerWithRect(c, rect, auxInfo)
+	C.ContextBeginTransparencyLayerWithRect(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.RefType
+		unsafe.Pointer(auxInfo),
+	)
 }
 
 // Decrements the retain count of a PDF page. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1571724-cgpdfpagerelease?language=objc
 func PDFPageRelease(page PDFPageRef) {
-	C.PDFPageRelease(page)
+	C.PDFPageRelease(
+		// *typing.RefType
+		unsafe.Pointer(page),
+	)
 }
 
 // Returns the type identifier for CGImage objects. [Full Topic]
@@ -3008,7 +4630,12 @@ func ImageGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456538-cgpdfscannerpopdictionary?language=objc
 func PDFScannerPopDictionary(scanner unsafe.Pointer, value unsafe.Pointer) bool {
-	rv := C.PDFScannerPopDictionary(scanner, value)
+	rv := C.PDFScannerPopDictionary(
+		// *typing.RefType
+		unsafe.Pointer(scanner),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
@@ -3016,36 +4643,58 @@ func PDFScannerPopDictionary(scanner unsafe.Pointer, value unsafe.Pointer) bool 
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456228-cgcontextrotatectm?language=objc
 func ContextRotateCTM(c ContextRef, angle float64) {
-	C.ContextRotateCTM(c, angle)
+	C.ContextRotateCTM(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(angle),
+	)
 }
 
 // Ends a transparency layer. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456554-cgcontextendtransparencylayer?language=objc
 func ContextEndTransparencyLayer(c ContextRef) {
-	C.ContextEndTransparencyLayer(c)
+	C.ContextEndTransparencyLayer(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 // Sets the interval that local hardware events may be suppressed following the posting of a Quartz event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408783-cgeventsourcesetlocaleventssuppr?language=objc
 func EventSourceSetLocalEventsSuppressionInterval(source EventSourceRef, seconds corefoundation.TimeInterval) {
-	C.EventSourceSetLocalEventsSuppressionInterval(source, C.double(seconds))
+	C.EventSourceSetLocalEventsSuppressionInterval(
+		// *typing.RefType
+		unsafe.Pointer(source),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.double)(seconds),
+	)
 }
 
 // Returns the intersection of two rectangles. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455346-cgrectintersection?language=objc
 func RectIntersection(r1 Rect, r2 Rect) Rect {
-	rv := C.RectIntersection(r1, r2)
-	return Rect(rv)
+	rv := C.RectIntersection(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&r1)),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&r2)),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Returns the I/O Kit display mode ID of the specified display mode. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454728-cgdisplaymodegetiodisplaymodeid?language=objc
 func DisplayModeGetIODisplayModeID(mode DisplayModeRef) int32 {
-	rv := C.DisplayModeGetIODisplayModeID(mode)
+	rv := C.DisplayModeGetIODisplayModeID(
+		// *typing.RefType
+		unsafe.Pointer(mode),
+	)
 	return int32(rv)
 }
 
@@ -3053,7 +4702,11 @@ func DisplayModeGetIODisplayModeID(mode DisplayModeRef) int32 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454403-cgdisplayprimarydisplay?language=objc
 func DisplayPrimaryDisplay(display DirectDisplayID) DirectDisplayID {
-	rv := C.DisplayPrimaryDisplay(C.uint32_t(display))
+	rv := C.DisplayPrimaryDisplay(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return DirectDisplayID(rv)
 }
 
@@ -3061,14 +4714,24 @@ func DisplayPrimaryDisplay(display DirectDisplayID) DirectDisplayID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455424-cgpdfcontextadddestinationatpoin?language=objc
 func PDFContextAddDestinationAtPoint(context ContextRef, name corefoundation.StringRef, point Point) {
-	C.PDFContextAddDestinationAtPoint(context, name, point)
+	C.PDFContextAddDestinationAtPoint(
+		// *typing.RefType
+		unsafe.Pointer(context),
+		// *typing.RefType
+		unsafe.Pointer(name),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&point)),
+	)
 }
 
 // Returns the descent of a font. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396351-cgfontgetdescent?language=objc
 func FontGetDescent(font FontRef) int {
-	rv := C.FontGetDescent(font)
+	rv := C.FontGetDescent(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return int(rv)
 }
 
@@ -3076,14 +4739,26 @@ func FontGetDescent(font FontRef) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456283-cgcontextsetstrokecolor?language=objc
 func ContextSetStrokeColor(c ContextRef, components *float64) {
-	C.ContextSetStrokeColor(c, components)
+	C.ContextSetStrokeColor(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(components)),
+	)
 }
 
 // Returns whether there is a PDF string associated with a specified key in a PDF dictionary and, if so, retrieves that string. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1430224-cgpdfdictionarygetstring?language=objc
 func PDFDictionaryGetString(dict unsafe.Pointer, key *uint8, value unsafe.Pointer) bool {
-	rv := C.PDFDictionaryGetString(dict, key, value)
+	rv := C.PDFDictionaryGetString(
+		// *typing.RefType
+		unsafe.Pointer(dict),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(key)),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
@@ -3091,28 +4766,53 @@ func PDFDictionaryGetString(dict unsafe.Pointer, key *uint8, value unsafe.Pointe
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562069-cgdisplaymoderelease?language=objc
 func DisplayModeRelease(mode DisplayModeRef) {
-	C.DisplayModeRelease(mode)
+	C.DisplayModeRelease(
+		// *typing.RefType
+		unsafe.Pointer(mode),
+	)
 }
 
 // Adds a set of rectangular paths to the current path. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454734-cgcontextaddrects?language=objc
 func ContextAddRects(c ContextRef, rects *Rect, count uint) {
-	C.ContextAddRects(c, rects, count)
+	C.ContextAddRects(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(rects)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+	)
 }
 
 // Sets the font and font size in a graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586511-cgcontextselectfont?language=objc
 func ContextSelectFont(c ContextRef, name *uint8, size float64, textEncoding TextEncoding) {
-	C.ContextSelectFont(c, name, size, C.int32_t(textEncoding))
+	C.ContextSelectFont(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(name)),
+		// *typing.PrimitiveType
+		C.float(size),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(textEncoding),
+	)
 }
 
 // Creates a mutable copy of a graphics path transformed by a transformation matrix. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411150-cgpathcreatemutablecopybytransfo?language=objc
 func PathCreateMutableCopyByTransformingPath(path unsafe.Pointer, transform *AffineTransform) MutablePathRef {
-	rv := C.PathCreateMutableCopyByTransformingPath(path, transform)
+	rv := C.PathCreateMutableCopyByTransformingPath(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+	)
 	return MutablePathRef(rv)
 }
 
@@ -3120,22 +4820,35 @@ func PathCreateMutableCopyByTransformingPath(path unsafe.Pointer, transform *Aff
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454909-cgaffinetransformmaketranslation?language=objc
 func AffineTransformMakeTranslation(tx float64, ty float64) AffineTransform {
-	rv := C.AffineTransformMakeTranslation(tx, ty)
-	return AffineTransform(rv)
+	rv := C.AffineTransformMakeTranslation(
+		// *typing.PrimitiveType
+		C.float(tx),
+		// *typing.PrimitiveType
+		C.float(ty),
+	)
+	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
 // Sets the current character spacing. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454786-cgcontextsetcharacterspacing?language=objc
 func ContextSetCharacterSpacing(c ContextRef, spacing float64) {
-	C.ContextSetCharacterSpacing(c, spacing)
+	C.ContextSetCharacterSpacing(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(spacing),
+	)
 }
 
 // Returns the I/O Kit flags of the specified display mode. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454092-cgdisplaymodegetioflags?language=objc
 func DisplayModeGetIOFlags(mode DisplayModeRef) uint32 {
-	rv := C.DisplayModeGetIOFlags(mode)
+	rv := C.DisplayModeGetIOFlags(
+		// *typing.RefType
+		unsafe.Pointer(mode),
+	)
 	return uint32(rv)
 }
 
@@ -3143,14 +4856,20 @@ func DisplayModeGetIOFlags(mode DisplayModeRef) uint32 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454306-cgpdfcontextclose?language=objc
 func PDFContextClose(context ContextRef) {
-	C.PDFContextClose(context)
+	C.PDFContextClose(
+		// *typing.RefType
+		unsafe.Pointer(context),
+	)
 }
 
 // Increments the retain count of a data provider. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408276-cgdataproviderretain?language=objc
 func DataProviderRetain(provider DataProviderRef) DataProviderRef {
-	rv := C.DataProviderRetain(provider)
+	rv := C.DataProviderRetain(
+		// *typing.RefType
+		unsafe.Pointer(provider),
+	)
 	return DataProviderRef(rv)
 }
 
@@ -3158,7 +4877,10 @@ func DataProviderRetain(provider DataProviderRef) DataProviderRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1690958-cgcolorspacesupportsoutput?language=objc
 func ColorSpaceSupportsOutput(space ColorSpaceRef) bool {
-	rv := C.ColorSpaceSupportsOutput(space)
+	rv := C.ColorSpaceSupportsOutput(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return bool(rv)
 }
 
@@ -3166,21 +4888,41 @@ func ColorSpaceSupportsOutput(space ColorSpaceRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455526-cgeventsetdoublevaluefield?language=objc
 func EventSetDoubleValueField(event EventRef, field EventField, value float64) {
-	C.EventSetDoubleValueField(event, C.uint32_t(field), value)
+	C.EventSetDoubleValueField(
+		// *typing.RefType
+		unsafe.Pointer(event),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(field),
+		// *typing.PrimitiveType
+		C.double(value),
+	)
 }
 
 // Draws the content of a PDF page into the current graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456255-cgcontextdrawpdfpage?language=objc
 func ContextDrawPDFPage(c ContextRef, page PDFPageRef) {
-	C.ContextDrawPDFPage(c, page)
+	C.ContextDrawPDFPage(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.RefType
+		unsafe.Pointer(page),
+	)
 }
 
 // Creates a URL-based PDF graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456290-cgpdfcontextcreatewithurl?language=objc
 func PDFContextCreateWithURL(url corefoundation.URLRef, mediaBox *Rect, auxiliaryInfo corefoundation.DictionaryRef) ContextRef {
-	rv := C.PDFContextCreateWithURL(url, mediaBox, auxiliaryInfo)
+	rv := C.PDFContextCreateWithURL(
+		// *typing.RefType
+		unsafe.Pointer(url),
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(mediaBox)),
+		// *typing.RefType
+		unsafe.Pointer(auxiliaryInfo),
+	)
 	return ContextRef(rv)
 }
 
@@ -3196,15 +4938,23 @@ func PDFPageGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402596-cgpdfdocumentgetbleedbox?language=objc
 func PDFDocumentGetBleedBox(document PDFDocumentRef, page int) Rect {
-	rv := C.PDFDocumentGetBleedBox(document, page)
-	return Rect(rv)
+	rv := C.PDFDocumentGetBleedBox(
+		// *typing.RefType
+		unsafe.Pointer(document),
+		// *typing.PrimitiveType
+		C.NSInteger(page),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Creates a content stream object from a PDF page object. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1410047-cgpdfcontentstreamcreatewithpage?language=objc
 func PDFContentStreamCreateWithPage(page PDFPageRef) unsafe.Pointer {
-	rv := C.PDFContentStreamCreateWithPage(page)
+	rv := C.PDFContentStreamCreateWithPage(
+		// *typing.RefType
+		unsafe.Pointer(page),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -3212,7 +4962,10 @@ func PDFContentStreamCreateWithPage(page PDFPageRef) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396367-cgfontcreatewithdataprovider?language=objc
 func FontCreateWithDataProvider(provider DataProviderRef) FontRef {
-	rv := C.FontCreateWithDataProvider(provider)
+	rv := C.FontCreateWithDataProvider(
+		// *typing.RefType
+		unsafe.Pointer(provider),
+	)
 	return FontRef(rv)
 }
 
@@ -3220,7 +4973,14 @@ func FontCreateWithDataProvider(provider DataProviderRef) FontRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1430228-cgpdfdictionarygetnumber?language=objc
 func PDFDictionaryGetNumber(dict unsafe.Pointer, key *uint8, value *PDFReal) bool {
-	rv := C.PDFDictionaryGetNumber(dict, key, value)
+	rv := C.PDFDictionaryGetNumber(
+		// *typing.RefType
+		unsafe.Pointer(dict),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(key)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(value)),
+	)
 	return bool(rv)
 }
 
@@ -3228,14 +4988,20 @@ func PDFDictionaryGetNumber(dict unsafe.Pointer, key *uint8, value *PDFReal) boo
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408855-cgcolorspacerelease?language=objc
 func ColorSpaceRelease(space ColorSpaceRef) {
-	C.ColorSpaceRelease(space)
+	C.ColorSpaceRelease(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 }
 
 // Creates a copy of a bitmap image. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455615-cgimagecreatecopy?language=objc
 func ImageCreateCopy(image ImageRef) ImageRef {
-	rv := C.ImageCreateCopy(image)
+	rv := C.ImageCreateCopy(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return ImageRef(rv)
 }
 
@@ -3243,14 +5009,20 @@ func ImageCreateCopy(image ImageRef) ImageRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455027-cgcontextendpage?language=objc
 func ContextEndPage(c ContextRef) {
-	C.ContextEndPage(c)
+	C.ContextEndPage(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 //	[Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3325503-cgcolorspaceishdr?language=objc
 func ColorSpaceIsHDR(arg0 ColorSpaceRef) bool {
-	rv := C.ColorSpaceIsHDR(arg0)
+	rv := C.ColorSpaceIsHDR(
+		// *typing.RefType
+		unsafe.Pointer(arg0),
+	)
 	return bool(rv)
 }
 
@@ -3258,7 +5030,10 @@ func ColorSpaceIsHDR(arg0 ColorSpaceRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402600-cgpdfdocumentgetid?language=objc
 func PDFDocumentGetID(document PDFDocumentRef) unsafe.Pointer {
-	rv := C.PDFDocumentGetID(document)
+	rv := C.PDFDocumentGetID(
+		// *typing.RefType
+		unsafe.Pointer(document),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -3266,14 +5041,22 @@ func PDFDocumentGetID(document PDFDocumentRef) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455611-cgcontextsettextmatrix?language=objc
 func ContextSetTextMatrix(c ContextRef, t AffineTransform) {
-	C.ContextSetTextMatrix(c, t)
+	C.ContextSetTextMatrix(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGAffineTransform)(unsafe.Pointer(&t)),
+	)
 }
 
 // Returns the number of glyphs in a font. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396371-cgfontgetnumberofglyphs?language=objc
 func FontGetNumberOfGlyphs(font FontRef) uint {
-	rv := C.FontGetNumberOfGlyphs(font)
+	rv := C.FontGetNumberOfGlyphs(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return uint(rv)
 }
 
@@ -3281,14 +5064,24 @@ func FontGetNumberOfGlyphs(font FontRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456497-cgcontextcliptomask?language=objc
 func ContextClipToMask(c ContextRef, rect Rect, mask ImageRef) {
-	C.ContextClipToMask(c, rect, mask)
+	C.ContextClipToMask(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.RefType
+		unsafe.Pointer(mask),
+	)
 }
 
 // Returns the dictionary of a PDF page. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455125-cgpdfpagegetdictionary?language=objc
 func PDFPageGetDictionary(page PDFPageRef) unsafe.Pointer {
-	rv := C.PDFPageGetDictionary(page)
+	rv := C.PDFPageGetDictionary(
+		// *typing.RefType
+		unsafe.Pointer(page),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -3296,7 +5089,11 @@ func PDFPageGetDictionary(page PDFPageRef) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454310-cgdisplaygammatablecapacity?language=objc
 func DisplayGammaTableCapacity(display DirectDisplayID) uint32 {
-	rv := C.DisplayGammaTableCapacity(C.uint32_t(display))
+	rv := C.DisplayGammaTableCapacity(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return uint32(rv)
 }
 
@@ -3304,36 +5101,59 @@ func DisplayGammaTableCapacity(display DirectDisplayID) uint32 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455556-cgeventsetintegervaluefield?language=objc
 func EventSetIntegerValueField(event EventRef, field EventField, value int64) {
-	C.EventSetIntegerValueField(event, C.uint32_t(field), value)
+	C.EventSetIntegerValueField(
+		// *typing.RefType
+		unsafe.Pointer(event),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(field),
+		// *typing.PrimitiveType
+		C.int64_t(value),
+	)
 }
 
 // Adds a previously created path object to the current path in a graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456628-cgcontextaddpath?language=objc
 func ContextAddPath(c ContextRef, path unsafe.Pointer) {
-	C.ContextAddPath(c, path)
+	C.ContextAddPath(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.RefType
+		unsafe.Pointer(path),
+	)
 }
 
 // Returns the current text matrix. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456154-cgcontextgettextmatrix?language=objc
 func ContextGetTextMatrix(c ContextRef) AffineTransform {
-	rv := C.ContextGetTextMatrix(c)
-	return AffineTransform(rv)
+	rv := C.ContextGetTextMatrix(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
+	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
 // Paints a line along the current path. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454490-cgcontextstrokepath?language=objc
 func ContextStrokePath(c ContextRef) {
-	C.ContextStrokePath(c)
+	C.ContextStrokePath(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 // Returns the display width in pixel units. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456361-cgdisplaypixelswide?language=objc
 func DisplayPixelsWide(display DirectDisplayID) uint {
-	rv := C.DisplayPixelsWide(C.uint32_t(display))
+	rv := C.DisplayPixelsWide(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return uint(rv)
 }
 
@@ -3341,14 +5161,25 @@ func DisplayPixelsWide(display DirectDisplayID) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455178-cgcontextsetshouldantialias?language=objc
 func ContextSetShouldAntialias(c ContextRef, shouldAntialias bool) {
-	C.ContextSetShouldAntialias(c, shouldAntialias)
+	C.ContextSetShouldAntialias(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.BOOL(shouldAntialias),
+	)
 }
 
 // Switches a display to a different mode. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562065-cgdisplayswitchtomode?language=objc
 func DisplaySwitchToMode(display DirectDisplayID, mode corefoundation.DictionaryRef) Error {
-	rv := C.DisplaySwitchToMode(C.uint32_t(display), mode)
+	rv := C.DisplaySwitchToMode(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.RefType
+		unsafe.Pointer(mode),
+	)
 	return Error(rv)
 }
 
@@ -3356,7 +5187,10 @@ func DisplaySwitchToMode(display DirectDisplayID, mode corefoundation.Dictionary
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456102-cgeventtapisenabled?language=objc
 func EventTapIsEnabled(tap corefoundation.MachPortRef) bool {
-	rv := C.EventTapIsEnabled(tap)
+	rv := C.EventTapIsEnabled(
+		// *typing.RefType
+		unsafe.Pointer(tap),
+	)
 	return bool(rv)
 }
 
@@ -3364,7 +5198,14 @@ func EventTapIsEnabled(tap corefoundation.MachPortRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1430213-cgpdfdictionarygetstream?language=objc
 func PDFDictionaryGetStream(dict unsafe.Pointer, key *uint8, value unsafe.Pointer) bool {
-	rv := C.PDFDictionaryGetStream(dict, key, value)
+	rv := C.PDFDictionaryGetStream(
+		// *typing.RefType
+		unsafe.Pointer(dict),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(key)),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
@@ -3372,7 +5213,14 @@ func PDFDictionaryGetStream(dict unsafe.Pointer, key *uint8, value unsafe.Pointe
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408899-cgcolorspacecreateindexed?language=objc
 func ColorSpaceCreateIndexed(baseSpace ColorSpaceRef, lastIndex uint, colorTable *uint8) ColorSpaceRef {
-	rv := C.ColorSpaceCreateIndexed(baseSpace, lastIndex, colorTable)
+	rv := C.ColorSpaceCreateIndexed(
+		// *typing.RefType
+		unsafe.Pointer(baseSpace),
+		// *typing.PrimitiveType
+		C.NSUInteger(lastIndex),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(colorTable)),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -3380,7 +5228,11 @@ func ColorSpaceCreateIndexed(baseSpace ColorSpaceRef, lastIndex uint, colorTable
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3042409-cgpdftagtypegetname?language=objc
 func PDFTagTypeGetName(tagType PDFTagType) *uint8 {
-	rv := C.PDFTagTypeGetName(C.int32_t(tagType))
+	rv := C.PDFTagTypeGetName(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(tagType),
+	)
 	return *uint8(rv)
 }
 
@@ -3388,14 +5240,28 @@ func PDFTagTypeGetName(tagType PDFTagType) *uint8 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454255-cgcontextsetgrayfillcolor?language=objc
 func ContextSetGrayFillColor(c ContextRef, gray float64, alpha float64) {
-	C.ContextSetGrayFillColor(c, gray, alpha)
+	C.ContextSetGrayFillColor(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(gray),
+		// *typing.PrimitiveType
+		C.float(alpha),
+	)
 }
 
 // Gets the specified resource from a PDF content stream object. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1410044-cgpdfcontentstreamgetresource?language=objc
 func PDFContentStreamGetResource(cs unsafe.Pointer, category *uint8, name *uint8) unsafe.Pointer {
-	rv := C.PDFContentStreamGetResource(cs, category, name)
+	rv := C.PDFContentStreamGetResource(
+		// *typing.RefType
+		unsafe.Pointer(cs),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(category)),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(name)),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -3403,7 +5269,14 @@ func PDFContentStreamGetResource(cs unsafe.Pointer, category *uint8, name *uint8
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1430226-cgpdfdictionarygetboolean?language=objc
 func PDFDictionaryGetBoolean(dict unsafe.Pointer, key *uint8, value *PDFBoolean) bool {
-	rv := C.PDFDictionaryGetBoolean(dict, key, value)
+	rv := C.PDFDictionaryGetBoolean(
+		// *typing.RefType
+		unsafe.Pointer(dict),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(key)),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(value)),
+	)
 	return bool(rv)
 }
 
@@ -3411,7 +5284,16 @@ func PDFDictionaryGetBoolean(dict unsafe.Pointer, key *uint8, value *PDFBoolean)
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455368-cgpsconverterconvert?language=objc
 func PSConverterConvert(converter PSConverterRef, provider DataProviderRef, consumer DataConsumerRef, options corefoundation.DictionaryRef) bool {
-	rv := C.PSConverterConvert(converter, provider, consumer, options)
+	rv := C.PSConverterConvert(
+		// *typing.RefType
+		unsafe.Pointer(converter),
+		// *typing.RefType
+		unsafe.Pointer(provider),
+		// *typing.RefType
+		unsafe.Pointer(consumer),
+		// *typing.RefType
+		unsafe.Pointer(options),
+	)
 	return bool(rv)
 }
 
@@ -3419,22 +5301,34 @@ func PSConverterConvert(converter PSConverterRef, provider DataProviderRef, cons
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1410046-cgpdfcontentstreamrelease?language=objc
 func PDFContentStreamRelease(cs unsafe.Pointer) {
-	C.PDFContentStreamRelease(cs)
+	C.PDFContentStreamRelease(
+		// *typing.RefType
+		unsafe.Pointer(cs),
+	)
 }
 
 // Returns the crop box of a page in a PDF document. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402598-cgpdfdocumentgetcropbox?language=objc
 func PDFDocumentGetCropBox(document PDFDocumentRef, page int) Rect {
-	rv := C.PDFDocumentGetCropBox(document, page)
-	return Rect(rv)
+	rv := C.PDFDocumentGetCropBox(
+		// *typing.RefType
+		unsafe.Pointer(document),
+		// *typing.PrimitiveType
+		C.NSInteger(page),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Maps a display ID to an OpenGL display mask. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455554-cgdisplayidtoopengldisplaymask?language=objc
 func DisplayIDToOpenGLDisplayMask(display DirectDisplayID) OpenGLDisplayMask {
-	rv := C.DisplayIDToOpenGLDisplayMask(C.uint32_t(display))
+	rv := C.DisplayIDToOpenGLDisplayMask(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return OpenGLDisplayMask(rv)
 }
 
@@ -3442,7 +5336,10 @@ func DisplayIDToOpenGLDisplayMask(display DirectDisplayID) OpenGLDisplayMask {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454334-cgrectgetmaxx?language=objc
 func RectGetMaxX(rect Rect) float64 {
-	rv := C.RectGetMaxX(rect)
+	rv := C.RectGetMaxX(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 	return float64(rv)
 }
 
@@ -3450,7 +5347,10 @@ func RectGetMaxX(rect Rect) float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455772-cgcontextispathempty?language=objc
 func ContextIsPathEmpty(c ContextRef) bool {
-	rv := C.ContextIsPathEmpty(c)
+	rv := C.ContextIsPathEmpty(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 	return bool(rv)
 }
 
@@ -3466,7 +5366,10 @@ func ColorConversionInfoGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454599-cgimagegetbitsperpixel?language=objc
 func ImageGetBitsPerPixel(image ImageRef) uint {
-	rv := C.ImageGetBitsPerPixel(image)
+	rv := C.ImageGetBitsPerPixel(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return uint(rv)
 }
 
@@ -3474,7 +5377,12 @@ func ImageGetBitsPerPixel(image ImageRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456558-cgrectmakewithdictionaryrepresen?language=objc
 func RectMakeWithDictionaryRepresentation(dict corefoundation.DictionaryRef, rect *Rect) bool {
-	rv := C.RectMakeWithDictionaryRepresentation(dict, rect)
+	rv := C.RectMakeWithDictionaryRepresentation(
+		// *typing.RefType
+		unsafe.Pointer(dict),
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(rect)),
+	)
 	return bool(rv)
 }
 
@@ -3482,7 +5390,10 @@ func RectMakeWithDictionaryRepresentation(dict corefoundation.DictionaryRef, rec
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456406-cgdisplaymodegetpixelheight?language=objc
 func DisplayModeGetPixelHeight(mode DisplayModeRef) uint {
-	rv := C.DisplayModeGetPixelHeight(mode)
+	rv := C.DisplayModeGetPixelHeight(
+		// *typing.RefType
+		unsafe.Pointer(mode),
+	)
 	return uint(rv)
 }
 
@@ -3498,14 +5409,22 @@ func ColorSpaceCreateDeviceRGB() ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456196-cgcontextsetstrokecolorwithcolor?language=objc
 func ContextSetStrokeColorWithColor(c ContextRef, color ColorRef) {
-	C.ContextSetStrokeColorWithColor(c, color)
+	C.ContextSetStrokeColorWithColor(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.RefType
+		unsafe.Pointer(color),
+	)
 }
 
 // Returns the graphics context associated with a layer object. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1450902-cglayergetcontext?language=objc
 func LayerGetContext(layer LayerRef) ContextRef {
-	rv := C.LayerGetContext(layer)
+	rv := C.LayerGetContext(
+		// *typing.RefType
+		unsafe.Pointer(layer),
+	)
 	return ContextRef(rv)
 }
 
@@ -3513,7 +5432,14 @@ func LayerGetContext(layer LayerRef) ContextRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456053-cgpdfarraygetinteger?language=objc
 func PDFArrayGetInteger(array unsafe.Pointer, index uint, value *PDFInteger) bool {
-	rv := C.PDFArrayGetInteger(array, index, value)
+	rv := C.PDFArrayGetInteger(
+		// *typing.RefType
+		unsafe.Pointer(array),
+		// *typing.PrimitiveType
+		C.NSUInteger(index),
+		// *typing.PointerType
+		(*C.int32_t)(unsafe.Pointer(value)),
+	)
 	return bool(rv)
 }
 
@@ -3521,7 +5447,10 @@ func PDFArrayGetInteger(array unsafe.Pointer, index uint, value *PDFInteger) boo
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396404-cgfontgetitalicangle?language=objc
 func FontGetItalicAngle(font FontRef) float64 {
-	rv := C.FontGetItalicAngle(font)
+	rv := C.FontGetItalicAngle(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return float64(rv)
 }
 
@@ -3529,7 +5458,17 @@ func FontGetItalicAngle(font FontRef) float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454090-cgconfiguredisplayorigin?language=objc
 func ConfigureDisplayOrigin(config unsafe.Pointer, display DirectDisplayID, x int32, y int32) Error {
-	rv := C.ConfigureDisplayOrigin(config, C.uint32_t(display), x, y)
+	rv := C.ConfigureDisplayOrigin(
+		// *typing.RefType
+		unsafe.Pointer(config),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.PrimitiveType
+		C.int32_t(x),
+		// *typing.PrimitiveType
+		C.int32_t(y),
+	)
 	return Error(rv)
 }
 
@@ -3537,7 +5476,14 @@ func ConfigureDisplayOrigin(config unsafe.Pointer, display DirectDisplayID, x in
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3227891-cgcolorconversioninfocreatewitho?language=objc
 func ColorConversionInfoCreateWithOptions(src ColorSpaceRef, dst ColorSpaceRef, options corefoundation.DictionaryRef) ColorConversionInfoRef {
-	rv := C.ColorConversionInfoCreateWithOptions(src, dst, options)
+	rv := C.ColorConversionInfoCreateWithOptions(
+		// *typing.RefType
+		unsafe.Pointer(src),
+		// *typing.RefType
+		unsafe.Pointer(dst),
+		// *typing.RefType
+		unsafe.Pointer(options),
+	)
 	return ColorConversionInfoRef(rv)
 }
 
@@ -3560,7 +5506,10 @@ func RestorePermanentDisplayConfiguration() {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454960-cgbitmapcontextgetalphainfo?language=objc
 func BitmapContextGetAlphaInfo(context ContextRef) ImageAlphaInfo {
-	rv := C.BitmapContextGetAlphaInfo(context)
+	rv := C.BitmapContextGetAlphaInfo(
+		// *typing.RefType
+		unsafe.Pointer(context),
+	)
 	return ImageAlphaInfo(rv)
 }
 
@@ -3568,14 +5517,22 @@ func BitmapContextGetAlphaInfo(context ContextRef) ImageAlphaInfo {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454508-cgcontextclosepath?language=objc
 func ContextClosePath(c ContextRef) {
-	C.ContextClosePath(c)
+	C.ContextClosePath(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 // Indicates whether two graphics paths are equivalent. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411167-cgpathequaltopath?language=objc
 func PathEqualToPath(path1 unsafe.Pointer, path2 unsafe.Pointer) bool {
-	rv := C.PathEqualToPath(path1, path2)
+	rv := C.PathEqualToPath(
+		// *typing.RefType
+		unsafe.Pointer(path1),
+		// *typing.RefType
+		unsafe.Pointer(path2),
+	)
 	return bool(rv)
 }
 
@@ -3583,7 +5540,18 @@ func PathEqualToPath(path1 unsafe.Pointer, path2 unsafe.Pointer) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454356-cgeventcreatemouseevent?language=objc
 func EventCreateMouseEvent(source EventSourceRef, mouseType EventType, mouseCursorPosition Point, mouseButton MouseButton) EventRef {
-	rv := C.EventCreateMouseEvent(source, C.uint32_t(mouseType), mouseCursorPosition, C.uint32_t(mouseButton))
+	rv := C.EventCreateMouseEvent(
+		// *typing.RefType
+		unsafe.Pointer(source),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(mouseType),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&mouseCursorPosition)),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(mouseButton),
+	)
 	return EventRef(rv)
 }
 
@@ -3599,15 +5567,27 @@ func MainDisplayID() DirectDisplayID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455822-cgaffinetransformtranslate?language=objc
 func AffineTransformTranslate(t AffineTransform, tx float64, ty float64) AffineTransform {
-	rv := C.AffineTransformTranslate(t, tx, ty)
-	return AffineTransform(rv)
+	rv := C.AffineTransformTranslate(
+		// *typing.StructType
+		*(*C.CGAffineTransform)(unsafe.Pointer(&t)),
+		// *typing.PrimitiveType
+		C.float(tx),
+		// *typing.PrimitiveType
+		C.float(ty),
+	)
+	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
 // Returns a page from a Core Graphics PDF document. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402586-cgpdfdocumentgetpage?language=objc
 func PDFDocumentGetPage(document PDFDocumentRef, pageNumber uint) PDFPageRef {
-	rv := C.PDFDocumentGetPage(document, pageNumber)
+	rv := C.PDFDocumentGetPage(
+		// *typing.RefType
+		unsafe.Pointer(document),
+		// *typing.PrimitiveType
+		C.NSUInteger(pageNumber),
+	)
 	return PDFPageRef(rv)
 }
 
@@ -3615,7 +5595,10 @@ func PDFDocumentGetPage(document PDFDocumentRef, pageNumber uint) PDFPageRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456175-cgrectgetmidx?language=objc
 func RectGetMidX(rect Rect) float64 {
-	rv := C.RectGetMidX(rect)
+	rv := C.RectGetMidX(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 	return float64(rv)
 }
 
@@ -3623,7 +5606,10 @@ func RectGetMidX(rect Rect) float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408787-cgeventsourcegetkeyboardtype?language=objc
 func EventSourceGetKeyboardType(source EventSourceRef) EventSourceKeyboardType {
-	rv := C.EventSourceGetKeyboardType(source)
+	rv := C.EventSourceGetKeyboardType(
+		// *typing.RefType
+		unsafe.Pointer(source),
+	)
 	return EventSourceKeyboardType(rv)
 }
 
@@ -3631,14 +5617,24 @@ func EventSourceGetKeyboardType(source EventSourceRef) EventSourceKeyboardType {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456578-cgpdfcontextbeginpage?language=objc
 func PDFContextBeginPage(context ContextRef, pageInfo corefoundation.DictionaryRef) {
-	C.PDFContextBeginPage(context, pageInfo)
+	C.PDFContextBeginPage(
+		// *typing.RefType
+		unsafe.Pointer(context),
+		// *typing.RefType
+		unsafe.Pointer(pageInfo),
+	)
 }
 
 // Creates a copy of an existing color, substituting a new alpha value. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455986-cgcolorcreatecopywithalpha?language=objc
 func ColorCreateCopyWithAlpha(color ColorRef, alpha float64) ColorRef {
-	rv := C.ColorCreateCopyWithAlpha(color, alpha)
+	rv := C.ColorCreateCopyWithAlpha(
+		// *typing.RefType
+		unsafe.Pointer(color),
+		// *typing.PrimitiveType
+		C.float(alpha),
+	)
 	return ColorRef(rv)
 }
 
@@ -3646,7 +5642,10 @@ func ColorCreateCopyWithAlpha(color ColorRef, alpha float64) ColorRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2875137-cgpdfdocumentgetaccesspermission?language=objc
 func PDFDocumentGetAccessPermissions(document PDFDocumentRef) PDFAccessPermissions {
-	rv := C.PDFDocumentGetAccessPermissions(document)
+	rv := C.PDFDocumentGetAccessPermissions(
+		// *typing.RefType
+		unsafe.Pointer(document),
+	)
 	return PDFAccessPermissions(rv)
 }
 
@@ -3654,15 +5653,23 @@ func PDFDocumentGetAccessPermissions(document PDFDocumentRef) PDFAccessPermissio
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455962-cgaffinetransformrotate?language=objc
 func AffineTransformRotate(t AffineTransform, angle float64) AffineTransform {
-	rv := C.AffineTransformRotate(t, angle)
-	return AffineTransform(rv)
+	rv := C.AffineTransformRotate(
+		// *typing.StructType
+		*(*C.CGAffineTransform)(unsafe.Pointer(&t)),
+		// *typing.PrimitiveType
+		C.float(angle),
+	)
+	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
 // Returns a copy of an existing Quartz event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454071-cgeventcreatecopy?language=objc
 func EventCreateCopy(event EventRef) EventRef {
-	rv := C.EventCreateCopy(event)
+	rv := C.EventCreateCopy(
+		// *typing.RefType
+		unsafe.Pointer(event),
+	)
 	return EventRef(rv)
 }
 
@@ -3670,15 +5677,30 @@ func EventCreateCopy(event EventRef) EventRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455450-cgcontextsynchronize?language=objc
 func ContextSynchronize(c ContextRef) {
-	C.ContextSynchronize(c)
+	C.ContextSynchronize(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 // Returns the affine transform that maps a box to a given rectangle on a PDF page. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454893-cgpdfpagegetdrawingtransform?language=objc
 func PDFPageGetDrawingTransform(page PDFPageRef, box PDFBox, rect Rect, rotate int, preserveAspectRatio bool) AffineTransform {
-	rv := C.PDFPageGetDrawingTransform(page, C.int32_t(box), rect, rotate, preserveAspectRatio)
-	return AffineTransform(rv)
+	rv := C.PDFPageGetDrawingTransform(
+		// *typing.RefType
+		unsafe.Pointer(page),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(box),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.PrimitiveType
+		C.NSInteger(rotate),
+		// *typing.PrimitiveType
+		C.BOOL(preserveAspectRatio),
+	)
+	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
 // Returns the window level of the shield window for a captured display. [Full Topic]
@@ -3693,7 +5715,10 @@ func ShieldingWindowLevel() WindowLevel {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454928-cgdisplaymodeisusablefordesktopg?language=objc
 func DisplayModeIsUsableForDesktopGUI(mode DisplayModeRef) bool {
-	rv := C.DisplayModeIsUsableForDesktopGUI(mode)
+	rv := C.DisplayModeIsUsableForDesktopGUI(
+		// *typing.RefType
+		unsafe.Pointer(mode),
+	)
 	return bool(rv)
 }
 
@@ -3709,7 +5734,10 @@ func GradientGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455382-cgpointcreatedictionaryrepresent?language=objc
 func PointCreateDictionaryRepresentation(point Point) corefoundation.DictionaryRef {
-	rv := C.PointCreateDictionaryRepresentation(point)
+	rv := C.PointCreateDictionaryRepresentation(
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&point)),
+	)
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -3717,15 +5745,29 @@ func PointCreateDictionaryRepresentation(point Point) corefoundation.DictionaryR
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454841-cgrectoffset?language=objc
 func RectOffset(rect Rect, dx float64, dy float64) Rect {
-	rv := C.RectOffset(rect, dx, dy)
-	return Rect(rv)
+	rv := C.RectOffset(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.PrimitiveType
+		C.float(dx),
+		// *typing.PrimitiveType
+		C.float(dy),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Returns whether an object at a given index in a PDF array is a PDF name reference (represented as a constant C string) and, if so, retrieves that name. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455034-cgpdfarraygetname?language=objc
 func PDFArrayGetName(array unsafe.Pointer, index uint, value *uint8) bool {
-	rv := C.PDFArrayGetName(array, index, value)
+	rv := C.PDFArrayGetName(
+		// *typing.RefType
+		unsafe.Pointer(array),
+		// *typing.PrimitiveType
+		C.NSUInteger(index),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(value)),
+	)
 	return bool(rv)
 }
 
@@ -3733,14 +5775,30 @@ func PDFArrayGetName(array unsafe.Pointer, index uint, value *uint8) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455358-cgcontextsetcmykstrokecolor?language=objc
 func ContextSetCMYKStrokeColor(c ContextRef, cyan float64, magenta float64, yellow float64, black float64, alpha float64) {
-	C.ContextSetCMYKStrokeColor(c, cyan, magenta, yellow, black, alpha)
+	C.ContextSetCMYKStrokeColor(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(cyan),
+		// *typing.PrimitiveType
+		C.float(magenta),
+		// *typing.PrimitiveType
+		C.float(yellow),
+		// *typing.PrimitiveType
+		C.float(black),
+		// *typing.PrimitiveType
+		C.float(alpha),
+	)
 }
 
 // Returns the base color space of a pattern or indexed color space. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408839-cgcolorspacegetbasecolorspace?language=objc
 func ColorSpaceGetBaseColorSpace(space ColorSpaceRef) ColorSpaceRef {
-	rv := C.ColorSpaceGetBaseColorSpace(space)
+	rv := C.ColorSpaceGetBaseColorSpace(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -3748,7 +5806,14 @@ func ColorSpaceGetBaseColorSpace(space ColorSpaceRef) ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1450892-cglayercreatewithcontext?language=objc
 func LayerCreateWithContext(context ContextRef, size Size, auxiliaryInfo corefoundation.DictionaryRef) LayerRef {
-	rv := C.LayerCreateWithContext(context, size, auxiliaryInfo)
+	rv := C.LayerCreateWithContext(
+		// *typing.RefType
+		unsafe.Pointer(context),
+		// *typing.StructType
+		*(*C.CGSize)(unsafe.Pointer(&size)),
+		// *typing.RefType
+		unsafe.Pointer(auxiliaryInfo),
+	)
 	return LayerRef(rv)
 }
 
@@ -3756,7 +5821,10 @@ func LayerCreateWithContext(context ContextRef, size Size, auxiliaryInfo corefou
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454756-cgdisplaymodegetpixelwidth?language=objc
 func DisplayModeGetPixelWidth(mode DisplayModeRef) uint {
-	rv := C.DisplayModeGetPixelWidth(mode)
+	rv := C.DisplayModeGetPixelWidth(
+		// *typing.RefType
+		unsafe.Pointer(mode),
+	)
 	return uint(rv)
 }
 
@@ -3764,7 +5832,12 @@ func DisplayModeGetPixelWidth(mode DisplayModeRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454358-cgimagecreatewithmaskingcolors?language=objc
 func ImageCreateWithMaskingColors(image ImageRef, components *float64) ImageRef {
-	rv := C.ImageCreateWithMaskingColors(image, components)
+	rv := C.ImageCreateWithMaskingColors(
+		// *typing.RefType
+		unsafe.Pointer(image),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(components)),
+	)
 	return ImageRef(rv)
 }
 
@@ -3772,14 +5845,24 @@ func ImageCreateWithMaskingColors(image ImageRef, components *float64) ImageRef 
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454132-cgcontextfillrects?language=objc
 func ContextFillRects(c ContextRef, rects *Rect, count uint) {
-	C.ContextFillRects(c, rects, count)
+	C.ContextFillRects(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(rects)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+	)
 }
 
 // Obtains the PostScript name of a font. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396346-cgfontcopypostscriptname?language=objc
 func FontCopyPostScriptName(font FontRef) corefoundation.StringRef {
-	rv := C.FontCopyPostScriptName(font)
+	rv := C.FontCopyPostScriptName(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return corefoundation.StringRef(rv)
 }
 
@@ -3787,7 +5870,10 @@ func FontCopyPostScriptName(font FontRef) corefoundation.StringRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454229-cgimageismask?language=objc
 func ImageIsMask(image ImageRef) bool {
-	rv := C.ImageIsMask(image)
+	rv := C.ImageIsMask(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return bool(rv)
 }
 
@@ -3795,30 +5881,48 @@ func ImageIsMask(image ImageRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454396-cgcontextsetstrokecolorspace?language=objc
 func ContextSetStrokeColorSpace(c ContextRef, space ColorSpaceRef) {
-	C.ContextSetStrokeColorSpace(c, space)
+	C.ContextSetStrokeColorSpace(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 }
 
 // Returns a rectangle with a positive width and height. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456432-cgrectstandardize?language=objc
 func RectStandardize(rect Rect) Rect {
-	rv := C.RectStandardize(rect)
-	return Rect(rv)
+	rv := C.RectStandardize(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Returns the bounding box of a font. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396353-cgfontgetfontbbox?language=objc
 func FontGetFontBBox(font FontRef) Rect {
-	rv := C.FontGetFontBBox(font)
-	return Rect(rv)
+	rv := C.FontGetFontBBox(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Returns whether an object with a specified key in a PDF dictionary is a PDF name reference (represented as a constant C string) and, if so, retrieves that name. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1430230-cgpdfdictionarygetname?language=objc
 func PDFDictionaryGetName(dict unsafe.Pointer, key *uint8, value *uint8) bool {
-	rv := C.PDFDictionaryGetName(dict, key, value)
+	rv := C.PDFDictionaryGetName(
+		// *typing.RefType
+		unsafe.Pointer(dict),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(key)),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(value)),
+	)
 	return bool(rv)
 }
 
@@ -3826,7 +5930,12 @@ func PDFDictionaryGetName(dict unsafe.Pointer, key *uint8, value *uint8) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455971-cgpdfscannerpopobject?language=objc
 func PDFScannerPopObject(scanner unsafe.Pointer, value unsafe.Pointer) bool {
-	rv := C.PDFScannerPopObject(scanner, value)
+	rv := C.PDFScannerPopObject(
+		// *typing.RefType
+		unsafe.Pointer(scanner),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
@@ -3834,7 +5943,10 @@ func PDFScannerPopObject(scanner unsafe.Pointer, value unsafe.Pointer) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455403-cgdisplaystreamgetrunloopsource?language=objc
 func DisplayStreamGetRunLoopSource(displayStream DisplayStreamRef) corefoundation.RunLoopSourceRef {
-	rv := C.DisplayStreamGetRunLoopSource(displayStream)
+	rv := C.DisplayStreamGetRunLoopSource(
+		// *typing.RefType
+		unsafe.Pointer(displayStream),
+	)
 	return corefoundation.RunLoopSourceRef(rv)
 }
 
@@ -3842,7 +5954,11 @@ func DisplayStreamGetRunLoopSource(displayStream DisplayStreamRef) corefoundatio
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456259-cgdisplaycapture?language=objc
 func DisplayCapture(display DirectDisplayID) Error {
-	rv := C.DisplayCapture(C.uint32_t(display))
+	rv := C.DisplayCapture(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return Error(rv)
 }
 
@@ -3850,14 +5966,28 @@ func DisplayCapture(display DirectDisplayID) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456420-cgcontextaddellipseinrect?language=objc
 func ContextAddEllipseInRect(c ContextRef, rect Rect) {
-	C.ContextAddEllipseInRect(c, rect)
+	C.ContextAddEllipseInRect(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 }
 
 // Creates a CGGradient object from a color space and the provided color components and locations. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1398454-cggradientcreatewithcolorcompone?language=objc
 func GradientCreateWithColorComponents(space ColorSpaceRef, components *float64, locations *float64, count uint) GradientRef {
-	rv := C.GradientCreateWithColorComponents(space, components, locations, count)
+	rv := C.GradientCreateWithColorComponents(
+		// *typing.RefType
+		unsafe.Pointer(space),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(components)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(locations)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+	)
 	return GradientRef(rv)
 }
 
@@ -3865,7 +5995,12 @@ func GradientCreateWithColorComponents(space ColorSpaceRef, components *float64,
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456516-cgrectequaltorect?language=objc
 func RectEqualToRect(rect1 Rect, rect2 Rect) bool {
-	rv := C.RectEqualToRect(rect1, rect2)
+	rv := C.RectEqualToRect(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect1)),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect2)),
+	)
 	return bool(rv)
 }
 
@@ -3873,7 +6008,16 @@ func RectEqualToRect(rect1 Rect, rect2 Rect) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408861-cgcolorspacecreatecalibratedrgb?language=objc
 func ColorSpaceCreateCalibratedRGB(whitePoint *float64, blackPoint *float64, gamma *float64, matrix *float64) ColorSpaceRef {
-	rv := C.ColorSpaceCreateCalibratedRGB(whitePoint, blackPoint, gamma, matrix)
+	rv := C.ColorSpaceCreateCalibratedRGB(
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(whitePoint)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(blackPoint)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(gamma)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(matrix)),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -3881,14 +6025,22 @@ func ColorSpaceCreateCalibratedRGB(whitePoint *float64, blackPoint *float64, gam
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456643-cgcontextdrawshading?language=objc
 func ContextDrawShading(c ContextRef, shading ShadingRef) {
-	C.ContextDrawShading(c, shading)
+	C.ContextDrawShading(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.RefType
+		unsafe.Pointer(shading),
+	)
 }
 
 // Returns the y-coordinate that establishes the center of the rectangle. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456550-cgrectgetmidy?language=objc
 func RectGetMidY(rect Rect) float64 {
-	rv := C.RectGetMidY(rect)
+	rv := C.RectGetMidY(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 	return float64(rv)
 }
 
@@ -3896,7 +6048,13 @@ func RectGetMidY(rect Rect) float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454595-cgdisplaycreateimageforrect?language=objc
 func DisplayCreateImageForRect(display DirectDisplayID, rect Rect) ImageRef {
-	rv := C.DisplayCreateImageForRect(C.uint32_t(display), rect)
+	rv := C.DisplayCreateImageForRect(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 	return ImageRef(rv)
 }
 
@@ -3904,7 +6062,12 @@ func DisplayCreateImageForRect(display DirectDisplayID, rect Rect) ImageRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455927-cgcolorcreate?language=objc
 func ColorCreate(space ColorSpaceRef, components *float64) ColorRef {
-	rv := C.ColorCreate(space, components)
+	rv := C.ColorCreate(
+		// *typing.RefType
+		unsafe.Pointer(space),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(components)),
+	)
 	return ColorRef(rv)
 }
 
@@ -3912,21 +6075,36 @@ func ColorCreate(space ColorSpaceRef, components *float64) ColorRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411146-cgpathmovetopoint?language=objc
 func PathMoveToPoint(path MutablePathRef, m *AffineTransform, x float64, y float64) {
-	C.PathMoveToPoint(path, m, x, y)
+	C.PathMoveToPoint(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+	)
 }
 
 // Decrements the retain count of a color. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586340-cgcolorrelease?language=objc
 func ColorRelease(color ColorRef) {
-	C.ColorRelease(color)
+	C.ColorRelease(
+		// *typing.RefType
+		unsafe.Pointer(color),
+	)
 }
 
 // Returns the number of pages in a PDF document. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402595-cgpdfdocumentgetnumberofpages?language=objc
 func PDFDocumentGetNumberOfPages(document PDFDocumentRef) uint {
-	rv := C.PDFDocumentGetNumberOfPages(document)
+	rv := C.PDFDocumentGetNumberOfPages(
+		// *typing.RefType
+		unsafe.Pointer(document),
+	)
 	return uint(rv)
 }
 
@@ -3934,14 +6112,26 @@ func PDFDocumentGetNumberOfPages(document PDFDocumentRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408795-cgeventsourcesetkeyboardtype?language=objc
 func EventSourceSetKeyboardType(source EventSourceRef, keyboardType EventSourceKeyboardType) {
-	C.EventSourceSetKeyboardType(source, C.uint32_t(keyboardType))
+	C.EventSourceSetKeyboardType(
+		// *typing.RefType
+		unsafe.Pointer(source),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(keyboardType),
+	)
 }
 
 // Returns information about the currently available display modes. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455537-cgdisplaycopyalldisplaymodes?language=objc
 func DisplayCopyAllDisplayModes(display DirectDisplayID, options corefoundation.DictionaryRef) corefoundation.ArrayRef {
-	rv := C.DisplayCopyAllDisplayModes(C.uint32_t(display), options)
+	rv := C.DisplayCopyAllDisplayModes(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.RefType
+		unsafe.Pointer(options),
+	)
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -3949,7 +6139,11 @@ func DisplayCopyAllDisplayModes(display DirectDisplayID, options corefoundation.
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454247-cgdisplaypixelshigh?language=objc
 func DisplayPixelsHigh(display DirectDisplayID) uint {
-	rv := C.DisplayPixelsHigh(C.uint32_t(display))
+	rv := C.DisplayPixelsHigh(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return uint(rv)
 }
 
@@ -3957,14 +6151,33 @@ func DisplayPixelsHigh(display DirectDisplayID) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455469-cgdisplaystreamupdategetmovedrec?language=objc
 func DisplayStreamUpdateGetMovedRectsDelta(updateRef DisplayStreamUpdateRef, dx *float64, dy *float64) {
-	C.DisplayStreamUpdateGetMovedRectsDelta(updateRef, dx, dy)
+	C.DisplayStreamUpdateGetMovedRectsDelta(
+		// *typing.RefType
+		unsafe.Pointer(updateRef),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(dx)),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(dy)),
+	)
 }
 
 // Sets the byte values in the 8-bit RGB gamma tables for a display. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455896-cgsetdisplaytransferbybytetable?language=objc
 func SetDisplayTransferByByteTable(display DirectDisplayID, tableSize uint32, redTable *uint8, greenTable *uint8, blueTable *uint8) Error {
-	rv := C.SetDisplayTransferByByteTable(C.uint32_t(display), tableSize, redTable, greenTable, blueTable)
+	rv := C.SetDisplayTransferByByteTable(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.PrimitiveType
+		C.uint32_t(tableSize),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(redTable)),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(greenTable)),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(blueTable)),
+	)
 	return Error(rv)
 }
 
@@ -3972,7 +6185,10 @@ func SetDisplayTransferByByteTable(display DirectDisplayID, tableSize uint32, re
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455260-cgimagegetdataprovider?language=objc
 func ImageGetDataProvider(image ImageRef) DataProviderRef {
-	rv := C.ImageGetDataProvider(image)
+	rv := C.ImageGetDataProvider(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return DataProviderRef(rv)
 }
 
@@ -3980,7 +6196,11 @@ func ImageGetDataProvider(image ImageRef) DataProviderRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562061-cgdisplayiscaptured?language=objc
 func DisplayIsCaptured(display DirectDisplayID) int {
-	rv := C.DisplayIsCaptured(C.uint32_t(display))
+	rv := C.DisplayIsCaptured(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return int(rv)
 }
 
@@ -3988,14 +6208,26 @@ func DisplayIsCaptured(display DirectDisplayID) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456334-cgcontextsetfillpattern?language=objc
 func ContextSetFillPattern(c ContextRef, pattern PatternRef, components *float64) {
-	C.ContextSetFillPattern(c, pattern, components)
+	C.ContextSetFillPattern(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.RefType
+		unsafe.Pointer(pattern),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(components)),
+	)
 }
 
 // Waits for screen refresh operations. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541809-cgwaitforscreenrefreshrects?language=objc
 func WaitForScreenRefreshRects(rects *Rect, count *uint32) Error {
-	rv := C.WaitForScreenRefreshRects(rects, count)
+	rv := C.WaitForScreenRefreshRects(
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(rects)),
+		// *typing.PointerType
+		(*C.uint32_t)(unsafe.Pointer(count)),
+	)
 	return Error(rv)
 }
 
@@ -4011,7 +6243,10 @@ func DataProviderGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408294-cgdataprovidercreatewithfilename?language=objc
 func DataProviderCreateWithFilename(filename *uint8) DataProviderRef {
-	rv := C.DataProviderCreateWithFilename(filename)
+	rv := C.DataProviderCreateWithFilename(
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(filename)),
+	)
 	return DataProviderRef(rv)
 }
 
@@ -4019,7 +6254,12 @@ func DataProviderCreateWithFilename(filename *uint8) DataProviderRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455018-cgpdfscannerpopstring?language=objc
 func PDFScannerPopString(scanner unsafe.Pointer, value unsafe.Pointer) bool {
-	rv := C.PDFScannerPopString(scanner, value)
+	rv := C.PDFScannerPopString(
+		// *typing.RefType
+		unsafe.Pointer(scanner),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
@@ -4027,7 +6267,10 @@ func PDFScannerPopString(scanner unsafe.Pointer, value unsafe.Pointer) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455425-cgimagegetbytesperrow?language=objc
 func ImageGetBytesPerRow(image ImageRef) uint {
-	rv := C.ImageGetBytesPerRow(image)
+	rv := C.ImageGetBytesPerRow(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return uint(rv)
 }
 
@@ -4035,7 +6278,10 @@ func ImageGetBytesPerRow(image ImageRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408284-cgdataprovidercreatewithcfdata?language=objc
 func DataProviderCreateWithCFData(data corefoundation.DataRef) DataProviderRef {
-	rv := C.DataProviderCreateWithCFData(data)
+	rv := C.DataProviderCreateWithCFData(
+		// *typing.RefType
+		unsafe.Pointer(data),
+	)
 	return DataProviderRef(rv)
 }
 
@@ -4043,7 +6289,10 @@ func DataProviderCreateWithCFData(data corefoundation.DataRef) DataProviderRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402588-cgpdfdocumentallowscopying?language=objc
 func PDFDocumentAllowsCopying(document PDFDocumentRef) bool {
-	rv := C.PDFDocumentAllowsCopying(document)
+	rv := C.PDFDocumentAllowsCopying(
+		// *typing.RefType
+		unsafe.Pointer(document),
+	)
 	return bool(rv)
 }
 
@@ -4051,7 +6300,17 @@ func PDFDocumentAllowsCopying(document PDFDocumentRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455493-cgcolorcreatecopybymatchingtocol?language=objc
 func ColorCreateCopyByMatchingToColorSpace(arg0 ColorSpaceRef, intent ColorRenderingIntent, color ColorRef, options corefoundation.DictionaryRef) ColorRef {
-	rv := C.ColorCreateCopyByMatchingToColorSpace(arg0, C.int32_t(intent), color, options)
+	rv := C.ColorCreateCopyByMatchingToColorSpace(
+		// *typing.RefType
+		unsafe.Pointer(arg0),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(intent),
+		// *typing.RefType
+		unsafe.Pointer(color),
+		// *typing.RefType
+		unsafe.Pointer(options),
+	)
 	return ColorRef(rv)
 }
 
@@ -4059,7 +6318,11 @@ func ColorCreateCopyByMatchingToColorSpace(arg0 ColorSpaceRef, intent ColorRende
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541773-cginhibitlocalevents?language=objc
 func InhibitLocalEvents(inhibit int) Error {
-	rv := C.InhibitLocalEvents(C.NSInteger(inhibit))
+	rv := C.InhibitLocalEvents(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.NSInteger)(inhibit),
+	)
 	return Error(rv)
 }
 
@@ -4067,15 +6330,23 @@ func InhibitLocalEvents(inhibit int) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455082-cgsizemake?language=objc
 func SizeMake(width float64, height float64) Size {
-	rv := C.SizeMake(width, height)
-	return Size(rv)
+	rv := C.SizeMake(
+		// *typing.PrimitiveType
+		C.float(width),
+		// *typing.PrimitiveType
+		C.float(height),
+	)
+	return *(*Size)(unsafe.Pointer(&rv))
 }
 
 // Returns the largest value for the y-coordinate of the rectangle. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454060-cgrectgetmaxy?language=objc
 func RectGetMaxY(rect Rect) float64 {
-	rv := C.RectGetMaxY(rect)
+	rv := C.RectGetMaxY(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 	return float64(rv)
 }
 
@@ -4083,7 +6354,10 @@ func RectGetMaxY(rect Rect) float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402594-cgpdfdocumentallowsprinting?language=objc
 func PDFDocumentAllowsPrinting(document PDFDocumentRef) bool {
-	rv := C.PDFDocumentAllowsPrinting(document)
+	rv := C.PDFDocumentAllowsPrinting(
+		// *typing.RefType
+		unsafe.Pointer(document),
+	)
 	return bool(rv)
 }
 
@@ -4091,21 +6365,37 @@ func PDFDocumentAllowsPrinting(document PDFDocumentRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454767-cgcontextsetallowsfontsmoothing?language=objc
 func ContextSetAllowsFontSmoothing(c ContextRef, allowsFontSmoothing bool) {
-	C.ContextSetAllowsFontSmoothing(c, allowsFontSmoothing)
+	C.ContextSetAllowsFontSmoothing(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.BOOL(allowsFontSmoothing),
+	)
 }
 
 // Draws the current path using the provided drawing mode. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455195-cgcontextdrawpath?language=objc
 func ContextDrawPath(c ContextRef, mode PathDrawingMode) {
-	C.ContextDrawPath(c, C.int32_t(mode))
+	C.ContextDrawPath(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(mode),
+	)
 }
 
 // Returns the glyph for the glyph name associated with the specified font object. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396340-cgfontgetglyphwithglyphname?language=objc
 func FontGetGlyphWithGlyphName(font FontRef, name corefoundation.StringRef) Glyph {
-	rv := C.FontGetGlyphWithGlyphName(font, name)
+	rv := C.FontGetGlyphWithGlyphName(
+		// *typing.RefType
+		unsafe.Pointer(font),
+		// *typing.RefType
+		unsafe.Pointer(name),
+	)
 	return Glyph(rv)
 }
 
@@ -4113,7 +6403,12 @@ func FontGetGlyphWithGlyphName(font FontRef, name corefoundation.StringRef) Glyp
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454360-cgpdfscannerpoparray?language=objc
 func PDFScannerPopArray(scanner unsafe.Pointer, value unsafe.Pointer) bool {
-	rv := C.PDFScannerPopArray(scanner, value)
+	rv := C.PDFScannerPopArray(
+		// *typing.RefType
+		unsafe.Pointer(scanner),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
@@ -4121,7 +6416,10 @@ func PDFScannerPopArray(scanner unsafe.Pointer, value unsafe.Pointer) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455760-cgrectcreatedictionaryrepresenta?language=objc
 func RectCreateDictionaryRepresentation(arg0 Rect) corefoundation.DictionaryRef {
-	rv := C.RectCreateDictionaryRepresentation(arg0)
+	rv := C.RectCreateDictionaryRepresentation(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&arg0)),
+	)
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -4129,7 +6427,10 @@ func RectCreateDictionaryRepresentation(arg0 Rect) corefoundation.DictionaryRef 
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455517-cgbitmapcontextgetdata?language=objc
 func BitmapContextGetData(context ContextRef) unsafe.Pointer {
-	rv := C.BitmapContextGetData(context)
+	rv := C.BitmapContextGetData(
+		// *typing.RefType
+		unsafe.Pointer(context),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -4137,7 +6438,10 @@ func BitmapContextGetData(context ContextRef) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396359-cgfontgetascent?language=objc
 func FontGetAscent(font FontRef) int {
-	rv := C.FontGetAscent(font)
+	rv := C.FontGetAscent(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return int(rv)
 }
 
@@ -4145,7 +6449,10 @@ func FontGetAscent(font FontRef) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455067-cgdisplaymodecopypixelencoding?language=objc
 func DisplayModeCopyPixelEncoding(mode DisplayModeRef) corefoundation.StringRef {
-	rv := C.DisplayModeCopyPixelEncoding(mode)
+	rv := C.DisplayModeCopyPixelEncoding(
+		// *typing.RefType
+		unsafe.Pointer(mode),
+	)
 	return corefoundation.StringRef(rv)
 }
 
@@ -4153,7 +6460,20 @@ func DisplayModeCopyPixelEncoding(mode DisplayModeRef) corefoundation.StringRef 
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454316-cgdisplaysetstereooperation?language=objc
 func DisplaySetStereoOperation(display DirectDisplayID, stereo int, forceBlueLine int, option ConfigureOption) Error {
-	rv := C.DisplaySetStereoOperation(C.uint32_t(display), C.NSInteger(stereo), C.NSInteger(forceBlueLine), C.uint32_t(option))
+	rv := C.DisplaySetStereoOperation(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.NSInteger)(stereo),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.NSInteger)(forceBlueLine),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(option),
+	)
 	return Error(rv)
 }
 
@@ -4161,7 +6481,10 @@ func DisplaySetStereoOperation(display DirectDisplayID, stereo int, forceBlueLin
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455363-cgimagegetshouldinterpolate?language=objc
 func ImageGetShouldInterpolate(image ImageRef) bool {
-	rv := C.ImageGetShouldInterpolate(image)
+	rv := C.ImageGetShouldInterpolate(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return bool(rv)
 }
 
@@ -4169,7 +6492,10 @@ func ImageGetShouldInterpolate(image ImageRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456306-cgcontextfillpath?language=objc
 func ContextFillPath(c ContextRef) {
-	C.ContextFillPath(c)
+	C.ContextFillPath(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 // Returns the type identifier for Core Graphics PDF documents. [Full Topic]
@@ -4184,22 +6510,39 @@ func PDFDocumentGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456104-cgpdfarraygetstring?language=objc
 func PDFArrayGetString(array unsafe.Pointer, index uint, value unsafe.Pointer) bool {
-	rv := C.PDFArrayGetString(array, index, value)
+	rv := C.PDFArrayGetString(
+		// *typing.RefType
+		unsafe.Pointer(array),
+		// *typing.PrimitiveType
+		C.NSUInteger(index),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
 // Displays a character array at the current text position, a point specified by the current text matrix. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586507-cgcontextshowtext?language=objc
-func ContextShowText(c ContextRef, string *uint8, length uint) {
-	C.ContextShowText(c, string_, length)
+func ContextShowText(c ContextRef, string_ *uint8, length uint) {
+	C.ContextShowText(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(string_)),
+		// *typing.PrimitiveType
+		C.NSUInteger(length),
+	)
 }
 
 // Returns the rendering intent setting for a bitmap image. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456350-cgimagegetrenderingintent?language=objc
 func ImageGetRenderingIntent(image ImageRef) ColorRenderingIntent {
-	rv := C.ImageGetRenderingIntent(image)
+	rv := C.ImageGetRenderingIntent(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return ColorRenderingIntent(rv)
 }
 
@@ -4207,14 +6550,23 @@ func ImageGetRenderingIntent(image ImageRef) ColorRenderingIntent {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456527-cgeventpost?language=objc
 func EventPost(tap EventTapLocation, event EventRef) {
-	C.EventPost(C.uint32_t(tap), event)
+	C.EventPost(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(tap),
+		// *typing.RefType
+		unsafe.Pointer(event),
+	)
 }
 
 // Returns the thickness of the dominant vertical stems of glyphs in a font. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396380-cgfontgetstemv?language=objc
 func FontGetStemV(font FontRef) float64 {
-	rv := C.FontGetStemV(font)
+	rv := C.FontGetStemV(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return float64(rv)
 }
 
@@ -4230,21 +6582,38 @@ func CursorIsVisible() int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454389-cgcontextstrokelinesegments?language=objc
 func ContextStrokeLineSegments(c ContextRef, points *Point, count uint) {
-	C.ContextStrokeLineSegments(c, points, count)
+	C.ContextStrokeLineSegments(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PointerType
+		(*C.CGPoint)(unsafe.Pointer(points)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+	)
 }
 
 // Paints the area within the current path, using the even-odd fill rule. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454865-cgcontexteofillpath?language=objc
 func ContextEOFillPath(c ContextRef) {
-	C.ContextEOFillPath(c)
+	C.ContextEOFillPath(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 // Returns whether an object at a given index in a PDF array is a PDF object and, if so, retrieves that object. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456631-cgpdfarraygetobject?language=objc
 func PDFArrayGetObject(array unsafe.Pointer, index uint, value unsafe.Pointer) bool {
-	rv := C.PDFArrayGetObject(array, index, value)
+	rv := C.PDFArrayGetObject(
+		// *typing.RefType
+		unsafe.Pointer(array),
+		// *typing.PrimitiveType
+		C.NSUInteger(index),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
@@ -4252,7 +6621,14 @@ func PDFArrayGetObject(array unsafe.Pointer, index uint, value unsafe.Pointer) b
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454934-cgdisplaycapturewithoptions?language=objc
 func DisplayCaptureWithOptions(display DirectDisplayID, options CaptureOptions) Error {
-	rv := C.DisplayCaptureWithOptions(C.uint32_t(display), C.uint32_t(options))
+	rv := C.DisplayCaptureWithOptions(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(options),
+	)
 	return Error(rv)
 }
 
@@ -4260,7 +6636,15 @@ func DisplayCaptureWithOptions(display DirectDisplayID, options CaptureOptions) 
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454778-cgcontextpathcontainspoint?language=objc
 func ContextPathContainsPoint(c ContextRef, point Point, mode PathDrawingMode) bool {
-	rv := C.ContextPathContainsPoint(c, point, C.int32_t(mode))
+	rv := C.ContextPathContainsPoint(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&point)),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(mode),
+	)
 	return bool(rv)
 }
 
@@ -4268,7 +6652,10 @@ func ContextPathContainsPoint(c ContextRef, point Point, mode PathDrawingMode) b
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3684559-cgcolorspaceusesitur_2100tf?language=objc
 func ColorSpaceUsesITUR_2100TF(arg0 ColorSpaceRef) bool {
-	rv := C.ColorSpaceUsesITUR_2100TF(arg0)
+	rv := C.ColorSpaceUsesITUR_2100TF(
+		// *typing.RefType
+		unsafe.Pointer(arg0),
+	)
 	return bool(rv)
 }
 
@@ -4276,7 +6663,10 @@ func ColorSpaceUsesITUR_2100TF(arg0 ColorSpaceRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2875135-cgpdfdocumentgetoutline?language=objc
 func PDFDocumentGetOutline(document PDFDocumentRef) corefoundation.DictionaryRef {
-	rv := C.PDFDocumentGetOutline(document)
+	rv := C.PDFDocumentGetOutline(
+		// *typing.RefType
+		unsafe.Pointer(document),
+	)
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -4284,7 +6674,10 @@ func PDFDocumentGetOutline(document PDFDocumentRef) corefoundation.DictionaryRef
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455658-cgdisplaystreamstop?language=objc
 func DisplayStreamStop(displayStream DisplayStreamRef) Error {
-	rv := C.DisplayStreamStop(displayStream)
+	rv := C.DisplayStreamStop(
+		// *typing.RefType
+		unsafe.Pointer(displayStream),
+	)
 	return Error(rv)
 }
 
@@ -4292,7 +6685,10 @@ func DisplayStreamStop(displayStream DisplayStreamRef) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411148-cgpathrelease?language=objc
 func PathRelease(path unsafe.Pointer) {
-	C.PathRelease(path)
+	C.PathRelease(
+		// *typing.RefType
+		unsafe.Pointer(path),
+	)
 }
 
 // Returns the Core Foundation type identifier for Core Graphics paths. [Full Topic]
@@ -4307,7 +6703,10 @@ func PathGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402593-cgpdfdocumentrelease?language=objc
 func PDFDocumentRelease(document PDFDocumentRef) {
-	C.PDFDocumentRelease(document)
+	C.PDFDocumentRelease(
+		// *typing.RefType
+		unsafe.Pointer(document),
+	)
 }
 
 //	[Full Topic]
@@ -4322,22 +6721,41 @@ func WindowServerCreateServerPort() corefoundation.MachPortRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455677-cgcontextgetuserspacetodevicespa?language=objc
 func ContextGetUserSpaceToDeviceSpaceTransform(c ContextRef) AffineTransform {
-	rv := C.ContextGetUserSpaceToDeviceSpaceTransform(c)
-	return AffineTransform(rv)
+	rv := C.ContextGetUserSpaceToDeviceSpaceTransform(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
+	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
 // Draws an image into a graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454845-cgcontextdrawimage?language=objc
 func ContextDrawImage(c ContextRef, rect Rect, image ImageRef) {
-	C.ContextDrawImage(c, rect, image)
+	C.ContextDrawImage(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 }
 
 // Create an immutable path of a rounded rectangle. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411218-cgpathcreatewithroundedrect?language=objc
 func PathCreateWithRoundedRect(rect Rect, cornerWidth float64, cornerHeight float64, transform *AffineTransform) unsafe.Pointer {
-	rv := C.PathCreateWithRoundedRect(rect, cornerWidth, cornerHeight, transform)
+	rv := C.PathCreateWithRoundedRect(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.PrimitiveType
+		C.float(cornerWidth),
+		// *typing.PrimitiveType
+		C.float(cornerHeight),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -4345,14 +6763,25 @@ func PathCreateWithRoundedRect(rect Rect, cornerWidth float64, cornerHeight floa
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3042356-cgpdfcontextbegintag?language=objc
 func PDFContextBeginTag(context ContextRef, tagType PDFTagType, tagProperties corefoundation.DictionaryRef) {
-	C.PDFContextBeginTag(context, C.int32_t(tagType), tagProperties)
+	C.PDFContextBeginTag(
+		// *typing.RefType
+		unsafe.Pointer(context),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(tagType),
+		// *typing.RefType
+		unsafe.Pointer(tagProperties),
+	)
 }
 
 // Returns the PDF type identifier of an object. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455189-cgpdfobjectgettype?language=objc
 func PDFObjectGetType(object unsafe.Pointer) PDFObjectType {
-	rv := C.PDFObjectGetType(object)
+	rv := C.PDFObjectGetType(
+		// *typing.RefType
+		unsafe.Pointer(object),
+	)
 	return PDFObjectType(rv)
 }
 
@@ -4360,7 +6789,24 @@ func PDFObjectGetType(object unsafe.Pointer) PDFObjectType {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455089-cgimagemaskcreate?language=objc
 func ImageMaskCreate(width uint, height uint, bitsPerComponent uint, bitsPerPixel uint, bytesPerRow uint, provider DataProviderRef, decode *float64, shouldInterpolate bool) ImageRef {
-	rv := C.ImageMaskCreate(width, height, bitsPerComponent, bitsPerPixel, bytesPerRow, provider, decode, shouldInterpolate)
+	rv := C.ImageMaskCreate(
+		// *typing.PrimitiveType
+		C.NSUInteger(width),
+		// *typing.PrimitiveType
+		C.NSUInteger(height),
+		// *typing.PrimitiveType
+		C.NSUInteger(bitsPerComponent),
+		// *typing.PrimitiveType
+		C.NSUInteger(bitsPerPixel),
+		// *typing.PrimitiveType
+		C.NSUInteger(bytesPerRow),
+		// *typing.RefType
+		unsafe.Pointer(provider),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(decode)),
+		// *typing.PrimitiveType
+		C.BOOL(shouldInterpolate),
+	)
 	return ImageRef(rv)
 }
 
@@ -4368,7 +6814,16 @@ func ImageMaskCreate(width uint, height uint, bitsPerComponent uint, bitsPerPixe
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455631-cgcolorcreategenericrgb?language=objc
 func ColorCreateGenericRGB(red float64, green float64, blue float64, alpha float64) ColorRef {
-	rv := C.ColorCreateGenericRGB(red, green, blue, alpha)
+	rv := C.ColorCreateGenericRGB(
+		// *typing.PrimitiveType
+		C.float(red),
+		// *typing.PrimitiveType
+		C.float(green),
+		// *typing.PrimitiveType
+		C.float(blue),
+		// *typing.PrimitiveType
+		C.float(alpha),
+	)
 	return ColorRef(rv)
 }
 
@@ -4376,7 +6831,13 @@ func ColorCreateGenericRGB(red float64, green float64, blue float64, alpha float
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455506-cgeventgetdoublevaluefield?language=objc
 func EventGetDoubleValueField(event EventRef, field EventField) float64 {
-	rv := C.EventGetDoubleValueField(event, C.uint32_t(field))
+	rv := C.EventGetDoubleValueField(
+		// *typing.RefType
+		unsafe.Pointer(event),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(field),
+	)
 	return float64(rv)
 }
 
@@ -4384,7 +6845,10 @@ func EventGetDoubleValueField(event EventRef, field EventField) float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402589-cgpdfdocumentgetinfo?language=objc
 func PDFDocumentGetInfo(document PDFDocumentRef) unsafe.Pointer {
-	rv := C.PDFDocumentGetInfo(document)
+	rv := C.PDFDocumentGetInfo(
+		// *typing.RefType
+		unsafe.Pointer(document),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -4392,7 +6856,10 @@ func PDFDocumentGetInfo(document PDFDocumentRef) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454582-cgpsconverterisconverting?language=objc
 func PSConverterIsConverting(converter PSConverterRef) bool {
-	rv := C.PSConverterIsConverting(converter)
+	rv := C.PSConverterIsConverting(
+		// *typing.RefType
+		unsafe.Pointer(converter),
+	)
 	return bool(rv)
 }
 
@@ -4400,7 +6867,12 @@ func PSConverterIsConverting(converter PSConverterRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396373-cgfontcreatecopywithvariations?language=objc
 func FontCreateCopyWithVariations(font FontRef, variations corefoundation.DictionaryRef) FontRef {
-	rv := C.FontCreateCopyWithVariations(font, variations)
+	rv := C.FontCreateCopyWithVariations(
+		// *typing.RefType
+		unsafe.Pointer(font),
+		// *typing.RefType
+		unsafe.Pointer(variations),
+	)
 	return FontRef(rv)
 }
 
@@ -4408,7 +6880,16 @@ func FontCreateCopyWithVariations(font FontRef, variations corefoundation.Dictio
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454531-cgconfiguredisplaymirrorofdispla?language=objc
 func ConfigureDisplayMirrorOfDisplay(config unsafe.Pointer, display DirectDisplayID, master DirectDisplayID) Error {
-	rv := C.ConfigureDisplayMirrorOfDisplay(config, C.uint32_t(display), C.uint32_t(master))
+	rv := C.ConfigureDisplayMirrorOfDisplay(
+		// *typing.RefType
+		unsafe.Pointer(config),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(master),
+	)
 	return Error(rv)
 }
 
@@ -4416,7 +6897,10 @@ func ConfigureDisplayMirrorOfDisplay(config unsafe.Pointer, display DirectDispla
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454661-cgdisplaymodegetrefreshrate?language=objc
 func DisplayModeGetRefreshRate(mode DisplayModeRef) float64 {
-	rv := C.DisplayModeGetRefreshRate(mode)
+	rv := C.DisplayModeGetRefreshRate(
+		// *typing.RefType
+		unsafe.Pointer(mode),
+	)
 	return float64(rv)
 }
 
@@ -4424,7 +6908,10 @@ func DisplayModeGetRefreshRate(mode DisplayModeRef) float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408774-cgeventsourcegetlocaleventssuppr?language=objc
 func EventSourceGetLocalEventsSuppressionInterval(source EventSourceRef) corefoundation.TimeInterval {
-	rv := C.EventSourceGetLocalEventsSuppressionInterval(source)
+	rv := C.EventSourceGetLocalEventsSuppressionInterval(
+		// *typing.RefType
+		unsafe.Pointer(source),
+	)
 	return corefoundation.TimeInterval(rv)
 }
 
@@ -4432,14 +6919,30 @@ func EventSourceGetLocalEventsSuppressionInterval(source EventSourceRef) corefou
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456238-cgcontextaddarctopoint?language=objc
 func ContextAddArcToPoint(c ContextRef, x1 float64, y1 float64, x2 float64, y2 float64, radius float64) {
-	C.ContextAddArcToPoint(c, x1, y1, x2, y2, radius)
+	C.ContextAddArcToPoint(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(x1),
+		// *typing.PrimitiveType
+		C.float(y1),
+		// *typing.PrimitiveType
+		C.float(x2),
+		// *typing.PrimitiveType
+		C.float(y2),
+		// *typing.PrimitiveType
+		C.float(radius),
+	)
 }
 
 // Creates a data consumer that writes data to a location specified by a URL. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454474-cgdataconsumercreatewithurl?language=objc
 func DataConsumerCreateWithURL(url corefoundation.URLRef) DataConsumerRef {
-	rv := C.DataConsumerCreateWithURL(url)
+	rv := C.DataConsumerCreateWithURL(
+		// *typing.RefType
+		unsafe.Pointer(url),
+	)
 	return DataConsumerRef(rv)
 }
 
@@ -4447,15 +6950,21 @@ func DataConsumerCreateWithURL(url corefoundation.URLRef) DataConsumerRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1450890-cglayergetsize?language=objc
 func LayerGetSize(layer LayerRef) Size {
-	rv := C.LayerGetSize(layer)
-	return Size(rv)
+	rv := C.LayerGetSize(
+		// *typing.RefType
+		unsafe.Pointer(layer),
+	)
+	return *(*Size)(unsafe.Pointer(&rv))
 }
 
 // Increments the retain count of a graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586506-cgcontextretain?language=objc
 func ContextRetain(c ContextRef) ContextRef {
-	rv := C.ContextRetain(c)
+	rv := C.ContextRetain(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 	return ContextRef(rv)
 }
 
@@ -4463,7 +6972,13 @@ func ContextRetain(c ContextRef) ContextRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456391-cgacquiredisplayfadereservation?language=objc
 func AcquireDisplayFadeReservation(seconds DisplayReservationInterval, token *DisplayFadeReservationToken) Error {
-	rv := C.AcquireDisplayFadeReservation(C.float(seconds), token)
+	rv := C.AcquireDisplayFadeReservation(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(seconds),
+		// *typing.PointerType
+		(*C.uint32_t)(unsafe.Pointer(token)),
+	)
 	return Error(rv)
 }
 
@@ -4471,7 +6986,10 @@ func AcquireDisplayFadeReservation(seconds DisplayReservationInterval, token *Di
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455642-cgeventgetflags?language=objc
 func EventGetFlags(event EventRef) EventFlags {
-	rv := C.EventGetFlags(event)
+	rv := C.EventGetFlags(
+		// *typing.RefType
+		unsafe.Pointer(event),
+	)
 	return EventFlags(rv)
 }
 
@@ -4479,7 +6997,13 @@ func EventGetFlags(event EventRef) EventFlags {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396349-cgfontcopyglyphnameforglyph?language=objc
 func FontCopyGlyphNameForGlyph(font FontRef, glyph Glyph) corefoundation.StringRef {
-	rv := C.FontCopyGlyphNameForGlyph(font, C.NSInteger(glyph))
+	rv := C.FontCopyGlyphNameForGlyph(
+		// *typing.RefType
+		unsafe.Pointer(font),
+		// *typing.AliasType
+		// *typing.AliasType
+		(C.NSInteger)(glyph),
+	)
 	return corefoundation.StringRef(rv)
 }
 
@@ -4487,21 +7011,40 @@ func FontCopyGlyphNameForGlyph(font FontRef, glyph Glyph) corefoundation.StringR
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455624-cgcontextsetrgbfillcolor?language=objc
 func ContextSetRGBFillColor(c ContextRef, red float64, green float64, blue float64, alpha float64) {
-	C.ContextSetRGBFillColor(c, red, green, blue, alpha)
+	C.ContextSetRGBFillColor(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(red),
+		// *typing.PrimitiveType
+		C.float(green),
+		// *typing.PrimitiveType
+		C.float(blue),
+		// *typing.PrimitiveType
+		C.float(alpha),
+	)
 }
 
 // Sets the current graphics state to the state most recently saved. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455391-cgcontextrestoregstate?language=objc
 func ContextRestoreGState(c ContextRef) {
-	C.ContextRestoreGState(c)
+	C.ContextRestoreGState(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 // Creates an immutable copy of a graphics path transformed by a transformation matrix. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411161-cgpathcreatecopybytransformingpa?language=objc
 func PathCreateCopyByTransformingPath(path unsafe.Pointer, transform *AffineTransform) unsafe.Pointer {
-	rv := C.PathCreateCopyByTransformingPath(path, transform)
+	rv := C.PathCreateCopyByTransformingPath(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -4509,7 +7052,10 @@ func PathCreateCopyByTransformingPath(path unsafe.Pointer, transform *AffineTran
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396357-cgfontcopyfullname?language=objc
 func FontCopyFullName(font FontRef) corefoundation.StringRef {
-	rv := C.FontCopyFullName(font)
+	rv := C.FontCopyFullName(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return corefoundation.StringRef(rv)
 }
 
@@ -4517,15 +7063,23 @@ func FontCopyFullName(font FontRef) corefoundation.StringRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455996-cgaffinetransformconcat?language=objc
 func AffineTransformConcat(t1 AffineTransform, t2 AffineTransform) AffineTransform {
-	rv := C.AffineTransformConcat(t1, t2)
-	return AffineTransform(rv)
+	rv := C.AffineTransformConcat(
+		// *typing.StructType
+		*(*C.CGAffineTransform)(unsafe.Pointer(&t1)),
+		// *typing.StructType
+		*(*C.CGAffineTransform)(unsafe.Pointer(&t2)),
+	)
+	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
 // Returns the page number of the specified PDF page. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454587-cgpdfpagegetpagenumber?language=objc
 func PDFPageGetPageNumber(page PDFPageRef) uint {
-	rv := C.PDFPageGetPageNumber(page)
+	rv := C.PDFPageGetPageNumber(
+		// *typing.RefType
+		unsafe.Pointer(page),
+	)
 	return uint(rv)
 }
 
@@ -4533,21 +7087,32 @@ func PDFPageGetPageNumber(page PDFPageRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456389-cgeventsetlocation?language=objc
 func EventSetLocation(event EventRef, location Point) {
-	C.EventSetLocation(event, location)
+	C.EventSetLocation(
+		// *typing.RefType
+		unsafe.Pointer(event),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&location)),
+	)
 }
 
 // Decrements the retain count of a font. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396363-cgfontrelease?language=objc
 func FontRelease(font FontRef) {
-	C.FontRelease(font)
+	C.FontRelease(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 }
 
 // Returns a CFString object that represents a PDF string as a text string. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456234-cgpdfstringcopytextstring?language=objc
-func PDFStringCopyTextString(string unsafe.Pointer) corefoundation.StringRef {
-	rv := C.PDFStringCopyTextString(string_)
+func PDFStringCopyTextString(string_ unsafe.Pointer) corefoundation.StringRef {
+	rv := C.PDFStringCopyTextString(
+		// *typing.RefType
+		unsafe.Pointer(string_),
+	)
 	return corefoundation.StringRef(rv)
 }
 
@@ -4555,7 +7120,10 @@ func PDFStringCopyTextString(string unsafe.Pointer) corefoundation.StringRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402591-cgpdfdocumentisencrypted?language=objc
 func PDFDocumentIsEncrypted(document PDFDocumentRef) bool {
-	rv := C.PDFDocumentIsEncrypted(document)
+	rv := C.PDFDocumentIsEncrypted(
+		// *typing.RefType
+		unsafe.Pointer(document),
+	)
 	return bool(rv)
 }
 
@@ -4563,21 +7131,34 @@ func PDFDocumentIsEncrypted(document PDFDocumentRef) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454675-cgcontextstrokerect?language=objc
 func ContextStrokeRect(c ContextRef, rect Rect) {
-	C.ContextStrokeRect(c, rect)
+	C.ContextStrokeRect(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 }
 
 // Enables or disables subpixel positioning in a graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455671-cgcontextsetshouldsubpixelpositi?language=objc
 func ContextSetShouldSubpixelPositionFonts(c ContextRef, shouldSubpixelPositionFonts bool) {
-	C.ContextSetShouldSubpixelPositionFonts(c, shouldSubpixelPositionFonts)
+	C.ContextSetShouldSubpixelPositionFonts(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.BOOL(shouldSubpixelPositionFonts),
+	)
 }
 
 // Returns a path object built from the current path information in a graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455397-cgcontextcopypath?language=objc
 func ContextCopyPath(c ContextRef) unsafe.Pointer {
-	rv := C.ContextCopyPath(c)
+	rv := C.ContextCopyPath(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -4585,7 +7166,10 @@ func ContextCopyPath(c ContextRef) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456067-cgimagegetuttype?language=objc
 func ImageGetUTType(image ImageRef) corefoundation.StringRef {
-	rv := C.ImageGetUTType(image)
+	rv := C.ImageGetUTType(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return corefoundation.StringRef(rv)
 }
 
@@ -4593,7 +7177,13 @@ func ImageGetUTType(image ImageRef) corefoundation.StringRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396365-cgfontcancreatepostscriptsubset?language=objc
 func FontCanCreatePostScriptSubset(font FontRef, format FontPostScriptFormat) bool {
-	rv := C.FontCanCreatePostScriptSubset(font, C.int32_t(format))
+	rv := C.FontCanCreatePostScriptSubset(
+		// *typing.RefType
+		unsafe.Pointer(font),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(format),
+	)
 	return bool(rv)
 }
 
@@ -4601,7 +7191,10 @@ func FontCanCreatePostScriptSubset(font FontRef, format FontPostScriptFormat) bo
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455930-cgcolorgetcomponents?language=objc
 func ColorGetComponents(color ColorRef) *float64 {
-	rv := C.ColorGetComponents(color)
+	rv := C.ColorGetComponents(
+		// *typing.RefType
+		unsafe.Pointer(color),
+	)
 	return *float64(rv)
 }
 
@@ -4617,7 +7210,10 @@ func ContextGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456292-cgdataconsumercreatewithcfdata?language=objc
 func DataConsumerCreateWithCFData(data unsafe.Pointer) DataConsumerRef {
-	rv := C.DataConsumerCreateWithCFData(data)
+	rv := C.DataConsumerCreateWithCFData(
+		// *typing.RefType
+		unsafe.Pointer(data),
+	)
 	return DataConsumerRef(rv)
 }
 
@@ -4625,28 +7221,63 @@ func DataConsumerCreateWithCFData(data unsafe.Pointer) DataConsumerRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456617-cgcontextaddrect?language=objc
 func ContextAddRect(c ContextRef, rect Rect) {
-	C.ContextAddRect(c, rect)
+	C.ContextAddRect(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 }
 
 // Appends an arc to a mutable graphics path, possibly preceded by a straight line segment. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411136-cgpathaddrelativearc?language=objc
 func PathAddRelativeArc(path MutablePathRef, matrix *AffineTransform, x float64, y float64, radius float64, startAngle float64, delta float64) {
-	C.PathAddRelativeArc(path, matrix, x, y, radius, startAngle, delta)
+	C.PathAddRelativeArc(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(matrix)),
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+		// *typing.PrimitiveType
+		C.float(radius),
+		// *typing.PrimitiveType
+		C.float(startAngle),
+		// *typing.PrimitiveType
+		C.float(delta),
+	)
 }
 
 // Decrements the retain count of a data consumer. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1508424-cgdataconsumerrelease?language=objc
 func DataConsumerRelease(consumer DataConsumerRef) {
-	C.DataConsumerRelease(consumer)
+	C.DataConsumerRelease(
+		// *typing.RefType
+		unsafe.Pointer(consumer),
+	)
 }
 
 // Enables or disables stereo operation for a display, as part of a display configuration. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456308-cgconfiguredisplaystereooperatio?language=objc
 func ConfigureDisplayStereoOperation(config unsafe.Pointer, display DirectDisplayID, stereo int, forceBlueLine int) Error {
-	rv := C.ConfigureDisplayStereoOperation(config, C.uint32_t(display), C.NSInteger(stereo), C.NSInteger(forceBlueLine))
+	rv := C.ConfigureDisplayStereoOperation(
+		// *typing.RefType
+		unsafe.Pointer(config),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.NSInteger)(stereo),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.NSInteger)(forceBlueLine),
+	)
 	return Error(rv)
 }
 
@@ -4654,22 +7285,48 @@ func ConfigureDisplayStereoOperation(config unsafe.Pointer, display DirectDispla
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456619-cgcontextconvertsizetodevicespac?language=objc
 func ContextConvertSizeToDeviceSpace(c ContextRef, size Size) Size {
-	rv := C.ContextConvertSizeToDeviceSpace(c, size)
-	return Size(rv)
+	rv := C.ContextConvertSizeToDeviceSpace(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGSize)(unsafe.Pointer(&size)),
+	)
+	return *(*Size)(unsafe.Pointer(&rv))
 }
 
 // Appends a cubic Bézier curve to a mutable graphics path. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411212-cgpathaddcurvetopoint?language=objc
 func PathAddCurveToPoint(path MutablePathRef, m *AffineTransform, cp1x float64, cp1y float64, cp2x float64, cp2y float64, x float64, y float64) {
-	C.PathAddCurveToPoint(path, m, cp1x, cp1y, cp2x, cp2y, x, y)
+	C.PathAddCurveToPoint(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		// *typing.PrimitiveType
+		C.float(cp1x),
+		// *typing.PrimitiveType
+		C.float(cp1y),
+		// *typing.PrimitiveType
+		C.float(cp2x),
+		// *typing.PrimitiveType
+		C.float(cp2y),
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+	)
 }
 
 // Returns a Boolean value indicating whether a display is built-in, such as the internal display in portable systems. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454566-cgdisplayisbuiltin?language=objc
 func DisplayIsBuiltin(display DirectDisplayID) int {
-	rv := C.DisplayIsBuiltin(C.uint32_t(display))
+	rv := C.DisplayIsBuiltin(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return int(rv)
 }
 
@@ -4677,7 +7334,11 @@ func DisplayIsBuiltin(display DirectDisplayID) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456534-cgdisplayhidecursor?language=objc
 func DisplayHideCursor(display DirectDisplayID) Error {
-	rv := C.DisplayHideCursor(C.uint32_t(display))
+	rv := C.DisplayHideCursor(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return Error(rv)
 }
 
@@ -4685,7 +7346,11 @@ func DisplayHideCursor(display DirectDisplayID) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456489-cgdisplayunitnumber?language=objc
 func DisplayUnitNumber(display DirectDisplayID) uint32 {
-	rv := C.DisplayUnitNumber(C.uint32_t(display))
+	rv := C.DisplayUnitNumber(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return uint32(rv)
 }
 
@@ -4693,7 +7358,15 @@ func DisplayUnitNumber(display DirectDisplayID) uint32 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454760-cgdisplaysetdisplaymode?language=objc
 func DisplaySetDisplayMode(display DirectDisplayID, mode DisplayModeRef, options corefoundation.DictionaryRef) Error {
-	rv := C.DisplaySetDisplayMode(C.uint32_t(display), mode, options)
+	rv := C.DisplaySetDisplayMode(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.RefType
+		unsafe.Pointer(mode),
+		// *typing.RefType
+		unsafe.Pointer(options),
+	)
 	return Error(rv)
 }
 
@@ -4701,21 +7374,38 @@ func DisplaySetDisplayMode(display DirectDisplayID, mode DisplayModeRef, options
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456200-cgcontextshowglyphsatpositions?language=objc
 func ContextShowGlyphsAtPositions(c ContextRef, glyphs *Glyph, Lpositions *Point, count uint) {
-	C.ContextShowGlyphsAtPositions(c, glyphs, Lpositions, count)
+	C.ContextShowGlyphsAtPositions(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PointerType
+		(*C.NSInteger)(unsafe.Pointer(glyphs)),
+		// *typing.PointerType
+		(*C.CGPoint)(unsafe.Pointer(Lpositions)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+	)
 }
 
 // Sets the current fill color in a graphics context, using a CGColor. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454079-cgcontextsetfillcolorwithcolor?language=objc
 func ContextSetFillColorWithColor(c ContextRef, color ColorRef) {
-	C.ContextSetFillColorWithColor(c, color)
+	C.ContextSetFillColorWithColor(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.RefType
+		unsafe.Pointer(color),
+	)
 }
 
 // Returns the leading of a font. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396390-cgfontgetleading?language=objc
 func FontGetLeading(font FontRef) int {
-	rv := C.FontGetLeading(font)
+	rv := C.FontGetLeading(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return int(rv)
 }
 
@@ -4731,7 +7421,14 @@ func PSConverterGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1398458-cggradientcreatewithcolors?language=objc
 func GradientCreateWithColors(space ColorSpaceRef, colors corefoundation.ArrayRef, locations *float64) GradientRef {
-	rv := C.GradientCreateWithColors(space, colors, locations)
+	rv := C.GradientCreateWithColors(
+		// *typing.RefType
+		unsafe.Pointer(space),
+		// *typing.RefType
+		unsafe.Pointer(colors),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(locations)),
+	)
 	return GradientRef(rv)
 }
 
@@ -4739,7 +7436,11 @@ func GradientCreateWithColors(space ColorSpaceRef, colors corefoundation.ArrayRe
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456110-cgdisplayisalwaysinmirrorset?language=objc
 func DisplayIsAlwaysInMirrorSet(display DirectDisplayID) int {
-	rv := C.DisplayIsAlwaysInMirrorSet(C.uint32_t(display))
+	rv := C.DisplayIsAlwaysInMirrorSet(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return int(rv)
 }
 
@@ -4747,7 +7448,18 @@ func DisplayIsAlwaysInMirrorSet(display DirectDisplayID) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411134-cgpathcreatecopybydashingpath?language=objc
 func PathCreateCopyByDashingPath(path unsafe.Pointer, transform *AffineTransform, phase float64, lengths *float64, count uint) unsafe.Pointer {
-	rv := C.PathCreateCopyByDashingPath(path, transform, phase, lengths, count)
+	rv := C.PathCreateCopyByDashingPath(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+		// *typing.PrimitiveType
+		C.float(phase),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(lengths)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -4755,14 +7467,30 @@ func PathCreateCopyByDashingPath(path unsafe.Pointer, transform *AffineTransform
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454214-cgcontextsetcmykfillcolor?language=objc
 func ContextSetCMYKFillColor(c ContextRef, cyan float64, magenta float64, yellow float64, black float64, alpha float64) {
-	C.ContextSetCMYKFillColor(c, cyan, magenta, yellow, black, alpha)
+	C.ContextSetCMYKFillColor(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(cyan),
+		// *typing.PrimitiveType
+		C.float(magenta),
+		// *typing.PrimitiveType
+		C.float(yellow),
+		// *typing.PrimitiveType
+		C.float(black),
+		// *typing.PrimitiveType
+		C.float(alpha),
+	)
 }
 
 // Cancels a set of display configuration changes. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455522-cgcanceldisplayconfiguration?language=objc
 func CancelDisplayConfiguration(config unsafe.Pointer) Error {
-	rv := C.CancelDisplayConfiguration(config)
+	rv := C.CancelDisplayConfiguration(
+		// *typing.RefType
+		unsafe.Pointer(config),
+	)
 	return Error(rv)
 }
 
@@ -4770,14 +7498,54 @@ func CancelDisplayConfiguration(config unsafe.Pointer) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411171-cgpathaddlines?language=objc
 func PathAddLines(path MutablePathRef, m *AffineTransform, points *Point, count uint) {
-	C.PathAddLines(path, m, points, count)
+	C.PathAddLines(
+		// *typing.RefType
+		unsafe.Pointer(path),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		// *typing.PointerType
+		(*C.CGPoint)(unsafe.Pointer(points)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+	)
 }
 
 // Sets the gamma function for a display by specifying the coefficients of the gamma transfer formula. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454126-cgsetdisplaytransferbyformula?language=objc
 func SetDisplayTransferByFormula(display DirectDisplayID, redMin GammaValue, redMax GammaValue, redGamma GammaValue, greenMin GammaValue, greenMax GammaValue, greenGamma GammaValue, blueMin GammaValue, blueMax GammaValue, blueGamma GammaValue) Error {
-	rv := C.SetDisplayTransferByFormula(C.uint32_t(display), C.float(redMin), C.float(redMax), C.float(redGamma), C.float(greenMin), C.float(greenMax), C.float(greenGamma), C.float(blueMin), C.float(blueMax), C.float(blueGamma))
+	rv := C.SetDisplayTransferByFormula(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(redMin),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(redMax),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(redGamma),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(greenMin),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(greenMax),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(greenGamma),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(blueMin),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(blueMax),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.float)(blueGamma),
+	)
 	return Error(rv)
 }
 
@@ -4785,7 +7553,11 @@ func SetDisplayTransferByFormula(display DirectDisplayID, redMin GammaValue, red
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454260-cgdisplayisasleep?language=objc
 func DisplayIsAsleep(display DirectDisplayID) int {
-	rv := C.DisplayIsAsleep(C.uint32_t(display))
+	rv := C.DisplayIsAsleep(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return int(rv)
 }
 
@@ -4793,7 +7565,10 @@ func DisplayIsAsleep(display DirectDisplayID) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454200-cgimagegetbitmapinfo?language=objc
 func ImageGetBitmapInfo(image ImageRef) BitmapInfo {
-	rv := C.ImageGetBitmapInfo(image)
+	rv := C.ImageGetBitmapInfo(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return BitmapInfo(rv)
 }
 
@@ -4801,7 +7576,15 @@ func ImageGetBitmapInfo(image ImageRef) BitmapInfo {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455730-cgwindowlistcreateimagefromarray?language=objc
 func WindowListCreateImageFromArray(screenBounds Rect, windowArray corefoundation.ArrayRef, imageOption WindowImageOption) ImageRef {
-	rv := C.WindowListCreateImageFromArray(screenBounds, windowArray, C.uint32_t(imageOption))
+	rv := C.WindowListCreateImageFromArray(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&screenBounds)),
+		// *typing.RefType
+		unsafe.Pointer(windowArray),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(imageOption),
+	)
 	return ImageRef(rv)
 }
 
@@ -4809,7 +7592,10 @@ func WindowListCreateImageFromArray(screenBounds Rect, windowArray corefoundatio
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455607-cgbitmapcontextgetwidth?language=objc
 func BitmapContextGetWidth(context ContextRef) uint {
-	rv := C.BitmapContextGetWidth(context)
+	rv := C.BitmapContextGetWidth(
+		// *typing.RefType
+		unsafe.Pointer(context),
+	)
 	return uint(rv)
 }
 
@@ -4817,15 +7603,33 @@ func BitmapContextGetWidth(context ContextRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455865-cgaffinetransformmake?language=objc
 func AffineTransformMake(a float64, b float64, c float64, d float64, tx float64, ty float64) AffineTransform {
-	rv := C.AffineTransformMake(a, b, c, d, tx, ty)
-	return AffineTransform(rv)
+	rv := C.AffineTransformMake(
+		// *typing.PrimitiveType
+		C.float(a),
+		// *typing.PrimitiveType
+		C.float(b),
+		// *typing.PrimitiveType
+		C.float(c),
+		// *typing.PrimitiveType
+		C.float(d),
+		// *typing.PrimitiveType
+		C.float(tx),
+		// *typing.PrimitiveType
+		C.float(ty),
+	)
+	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
 // Create an immutable path of an ellipse. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411177-cgpathcreatewithellipseinrect?language=objc
 func PathCreateWithEllipseInRect(rect Rect, transform *AffineTransform) unsafe.Pointer {
-	rv := C.PathCreateWithEllipseInRect(rect, transform)
+	rv := C.PathCreateWithEllipseInRect(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.PointerType
+		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -4833,7 +7637,12 @@ func PathCreateWithEllipseInRect(rect Rect, transform *AffineTransform) unsafe.P
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454747-cgrectintersectsrect?language=objc
 func RectIntersectsRect(rect1 Rect, rect2 Rect) bool {
-	rv := C.RectIntersectsRect(rect1, rect2)
+	rv := C.RectIntersectsRect(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect1)),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect2)),
+	)
 	return bool(rv)
 }
 
@@ -4841,7 +7650,11 @@ func RectIntersectsRect(rect1 Rect, rect2 Rect) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455691-cgdisplaycreateimage?language=objc
 func DisplayCreateImage(displayID DirectDisplayID) ImageRef {
-	rv := C.DisplayCreateImage(C.uint32_t(displayID))
+	rv := C.DisplayCreateImage(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(displayID),
+	)
 	return ImageRef(rv)
 }
 
@@ -4849,14 +7662,23 @@ func DisplayCreateImage(displayID DirectDisplayID) ImageRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455270-cgcontextsetlinewidth?language=objc
 func ContextSetLineWidth(c ContextRef, width float64) {
-	C.ContextSetLineWidth(c, width)
+	C.ContextSetLineWidth(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(width),
+	)
 }
 
 // Enables or disables the merging of actual key and mouse state with the application-specified state in a synthetic event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541787-cgenableeventstatecombining?language=objc
 func EnableEventStateCombining(combineState int) Error {
-	rv := C.EnableEventStateCombining(C.NSInteger(combineState))
+	rv := C.EnableEventStateCombining(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.NSInteger)(combineState),
+	)
 	return Error(rv)
 }
 
@@ -4864,7 +7686,10 @@ func EnableEventStateCombining(combineState int) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408895-cgcolorspacecreatewithiccprofile?language=objc
 func ColorSpaceCreateWithICCProfile(data corefoundation.DataRef) ColorSpaceRef {
-	rv := C.ColorSpaceCreateWithICCProfile(data)
+	rv := C.ColorSpaceCreateWithICCProfile(
+		// *typing.RefType
+		unsafe.Pointer(data),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -4872,21 +7697,30 @@ func ColorSpaceCreateWithICCProfile(data corefoundation.DataRef) ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1552266-cgpatternrelease?language=objc
 func PatternRelease(pattern PatternRef) {
-	C.PatternRelease(pattern)
+	C.PatternRelease(
+		// *typing.RefType
+		unsafe.Pointer(pattern),
+	)
 }
 
 // Modifies the current clipping path, using the even-odd rule. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455944-cgcontexteoclip?language=objc
 func ContextEOClip(c ContextRef) {
-	C.ContextEOClip(c)
+	C.ContextEOClip(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 //	[Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/3684557-cgcolorspacecreateextended?language=objc
 func ColorSpaceCreateExtended(space ColorSpaceRef) ColorSpaceRef {
-	rv := C.ColorSpaceCreateExtended(space)
+	rv := C.ColorSpaceCreateExtended(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -4894,22 +7728,35 @@ func ColorSpaceCreateExtended(space ColorSpaceRef) ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456263-cgcontextsetallowsfontsubpixelqu?language=objc
 func ContextSetAllowsFontSubpixelQuantization(c ContextRef, allowsFontSubpixelQuantization bool) {
-	C.ContextSetAllowsFontSubpixelQuantization(c, allowsFontSubpixelQuantization)
+	C.ContextSetAllowsFontSubpixelQuantization(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.BOOL(allowsFontSubpixelQuantization),
+	)
 }
 
 // Returns a point that is transformed from device space coordinates to user space coordinates. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456451-cgcontextconvertpointtouserspace?language=objc
 func ContextConvertPointToUserSpace(c ContextRef, point Point) Point {
-	rv := C.ContextConvertPointToUserSpace(c, point)
-	return Point(rv)
+	rv := C.ContextConvertPointToUserSpace(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&point)),
+	)
+	return *(*Point)(unsafe.Pointer(&rv))
 }
 
 // Increments the retain count of a data consumer. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1508422-cgdataconsumerretain?language=objc
 func DataConsumerRetain(consumer DataConsumerRef) DataConsumerRef {
-	rv := C.DataConsumerRetain(consumer)
+	rv := C.DataConsumerRetain(
+		// *typing.RefType
+		unsafe.Pointer(consumer),
+	)
 	return DataConsumerRef(rv)
 }
 
@@ -4917,14 +7764,27 @@ func DataConsumerRetain(consumer DataConsumerRef) DataConsumerRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408770-cgeventsourcesetlocaleventsfilte?language=objc
 func EventSourceSetLocalEventsFilterDuringSuppressionState(source EventSourceRef, filter EventFilterMask, state EventSuppressionState) {
-	C.EventSourceSetLocalEventsFilterDuringSuppressionState(source, C.uint32_t(filter), C.uint32_t(state))
+	C.EventSourceSetLocalEventsFilterDuringSuppressionState(
+		// *typing.RefType
+		unsafe.Pointer(source),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(filter),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(state),
+	)
 }
 
 // Returns information about the current display mode. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562062-cgdisplaycurrentmode?language=objc
 func DisplayCurrentMode(display DirectDisplayID) corefoundation.DictionaryRef {
-	rv := C.DisplayCurrentMode(C.uint32_t(display))
+	rv := C.DisplayCurrentMode(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -4932,7 +7792,19 @@ func DisplayCurrentMode(display DirectDisplayID) corefoundation.DictionaryRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541790-cgwaitforscreenupdaterects?language=objc
 func WaitForScreenUpdateRects(requestedOperations ScreenUpdateOperation, currentOperation *ScreenUpdateOperation, rects *Rect, rectCount *uint, delta *ScreenUpdateMoveDelta) Error {
-	rv := C.WaitForScreenUpdateRects(C.uint32_t(requestedOperations), currentOperation, rects, rectCount, delta)
+	rv := C.WaitForScreenUpdateRects(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(requestedOperations),
+		// *typing.PointerType
+		(*C.uint32_t)(unsafe.Pointer(currentOperation)),
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(rects)),
+		// *typing.PointerType
+		(*C.NSUInteger)(unsafe.Pointer(rectCount)),
+		// *typing.PointerType
+		(*C.CGScreenUpdateMoveDelta)(unsafe.Pointer(delta)),
+	)
 	return Error(rv)
 }
 
@@ -4940,14 +7812,25 @@ func WaitForScreenUpdateRects(requestedOperations ScreenUpdateOperation, current
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455209-cgcontextsetgraystrokecolor?language=objc
 func ContextSetGrayStrokeColor(c ContextRef, gray float64, alpha float64) {
-	C.ContextSetGrayStrokeColor(c, gray, alpha)
+	C.ContextSetGrayStrokeColor(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(gray),
+		// *typing.PrimitiveType
+		C.float(alpha),
+	)
 }
 
 // Returns the vendor number of the specified display’s monitor. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455233-cgdisplayvendornumber?language=objc
 func DisplayVendorNumber(display DirectDisplayID) uint32 {
-	rv := C.DisplayVendorNumber(C.uint32_t(display))
+	rv := C.DisplayVendorNumber(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return uint32(rv)
 }
 
@@ -4955,7 +7838,12 @@ func DisplayVendorNumber(display DirectDisplayID) uint32 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456316-cgrectcontainspoint?language=objc
 func RectContainsPoint(rect Rect, point Point) bool {
-	rv := C.RectContainsPoint(rect, point)
+	rv := C.RectContainsPoint(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&point)),
+	)
 	return bool(rv)
 }
 
@@ -4971,7 +7859,11 @@ func FontGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456576-cgdisplaygetdrawingcontext?language=objc
 func DisplayGetDrawingContext(display DirectDisplayID) ContextRef {
-	rv := C.DisplayGetDrawingContext(C.uint32_t(display))
+	rv := C.DisplayGetDrawingContext(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return ContextRef(rv)
 }
 
@@ -4979,7 +7871,12 @@ func DisplayGetDrawingContext(display DirectDisplayID) ContextRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454584-cgpdfscannerpopname?language=objc
 func PDFScannerPopName(scanner unsafe.Pointer, value *uint8) bool {
-	rv := C.PDFScannerPopName(scanner, value)
+	rv := C.PDFScannerPopName(
+		// *typing.RefType
+		unsafe.Pointer(scanner),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(value)),
+	)
 	return bool(rv)
 }
 
@@ -4987,14 +7884,22 @@ func PDFScannerPopName(scanner unsafe.Pointer, value *uint8) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455816-cgcontextsetshouldsmoothfonts?language=objc
 func ContextSetShouldSmoothFonts(c ContextRef, shouldSmoothFonts bool) {
-	C.ContextSetShouldSmoothFonts(c, shouldSmoothFonts)
+	C.ContextSetShouldSmoothFonts(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.BOOL(shouldSmoothFonts),
+	)
 }
 
 // Returns a new Quartz event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454913-cgeventcreate?language=objc
 func EventCreate(source EventSourceRef) EventRef {
-	rv := C.EventCreate(source)
+	rv := C.EventCreate(
+		// *typing.RefType
+		unsafe.Pointer(source),
+	)
 	return EventRef(rv)
 }
 
@@ -5002,7 +7907,11 @@ func EventCreate(source EventSourceRef) EventRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454556-cgdisplaymirrorsdisplay?language=objc
 func DisplayMirrorsDisplay(display DirectDisplayID) DirectDisplayID {
-	rv := C.DisplayMirrorsDisplay(C.uint32_t(display))
+	rv := C.DisplayMirrorsDisplay(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return DirectDisplayID(rv)
 }
 
@@ -5010,7 +7919,10 @@ func DisplayMirrorsDisplay(display DirectDisplayID) DirectDisplayID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455754-cgaffinetransformisidentity?language=objc
 func AffineTransformIsIdentity(t AffineTransform) bool {
-	rv := C.AffineTransformIsIdentity(t)
+	rv := C.AffineTransformIsIdentity(
+		// *typing.StructType
+		*(*C.CGAffineTransform)(unsafe.Pointer(&t)),
+	)
 	return bool(rv)
 }
 
@@ -5018,14 +7930,22 @@ func AffineTransformIsIdentity(t AffineTransform) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454794-cgcontextbeginpage?language=objc
 func ContextBeginPage(c ContextRef, mediaBox *Rect) {
-	C.ContextBeginPage(c, mediaBox)
+	C.ContextBeginPage(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(mediaBox)),
+	)
 }
 
 // Returns the width of a rectangle. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454758-cgrectgetwidth?language=objc
 func RectGetWidth(rect Rect) float64 {
-	rv := C.RectGetWidth(rect)
+	rv := C.RectGetWidth(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 	return float64(rv)
 }
 
@@ -5033,15 +7953,30 @@ func RectGetWidth(rect Rect) float64 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455746-cgpointmake?language=objc
 func PointMake(x float64, y float64) Point {
-	rv := C.PointMake(x, y)
-	return Point(rv)
+	rv := C.PointMake(
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+	)
+	return *(*Point)(unsafe.Pointer(&rv))
 }
 
 // Returns a new Quartz scrolling event. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541327-cgeventcreatescrollwheelevent?language=objc
 func EventCreateScrollWheelEvent(source EventSourceRef, units ScrollEventUnit, wheelCount uint32, wheel1 int32) EventRef {
-	rv := C.EventCreateScrollWheelEvent(source, C.uint32_t(units), wheelCount, wheel1)
+	rv := C.EventCreateScrollWheelEvent(
+		// *typing.RefType
+		unsafe.Pointer(source),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(units),
+		// *typing.PrimitiveType
+		C.uint32_t(wheelCount),
+		// *typing.PrimitiveType
+		C.int32_t(wheel1),
+	)
 	return EventRef(rv)
 }
 
@@ -5049,7 +7984,10 @@ func EventCreateScrollWheelEvent(source EventSourceRef, units ScrollEventUnit, w
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454283-cgcolorgetconstantcolor?language=objc
 func ColorGetConstantColor(colorName corefoundation.StringRef) ColorRef {
-	rv := C.ColorGetConstantColor(colorName)
+	rv := C.ColorGetConstantColor(
+		// *typing.RefType
+		unsafe.Pointer(colorName),
+	)
 	return ColorRef(rv)
 }
 
@@ -5057,7 +7995,11 @@ func ColorGetConstantColor(colorName corefoundation.StringRef) ColorRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541800-cgsetlocaleventssuppressioninter?language=objc
 func SetLocalEventsSuppressionInterval(seconds corefoundation.TimeInterval) Error {
-	rv := C.SetLocalEventsSuppressionInterval(C.double(seconds))
+	rv := C.SetLocalEventsSuppressionInterval(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.double)(seconds),
+	)
 	return Error(rv)
 }
 
@@ -5065,7 +8007,10 @@ func SetLocalEventsSuppressionInterval(seconds corefoundation.TimeInterval) Erro
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455393-cgeventcreatesourcefromevent?language=objc
 func EventCreateSourceFromEvent(event EventRef) EventSourceRef {
-	rv := C.EventCreateSourceFromEvent(event)
+	rv := C.EventCreateSourceFromEvent(
+		// *typing.RefType
+		unsafe.Pointer(event),
+	)
 	return EventSourceRef(rv)
 }
 
@@ -5073,7 +8018,10 @@ func EventCreateSourceFromEvent(event EventRef) EventSourceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396410-cgfontgetxheight?language=objc
 func FontGetXHeight(font FontRef) int {
-	rv := C.FontGetXHeight(font)
+	rv := C.FontGetXHeight(
+		// *typing.RefType
+		unsafe.Pointer(font),
+	)
 	return int(rv)
 }
 
@@ -5081,7 +8029,10 @@ func FontGetXHeight(font FontRef) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454870-cgdisplaystreamstart?language=objc
 func DisplayStreamStart(displayStream DisplayStreamRef) Error {
-	rv := C.DisplayStreamStart(displayStream)
+	rv := C.DisplayStreamStart(
+		// *typing.RefType
+		unsafe.Pointer(displayStream),
+	)
 	return Error(rv)
 }
 
@@ -5089,15 +8040,23 @@ func DisplayStreamStart(displayStream DisplayStreamRef) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455589-cgeventgetunflippedlocation?language=objc
 func EventGetUnflippedLocation(event EventRef) Point {
-	rv := C.EventGetUnflippedLocation(event)
-	return Point(rv)
+	rv := C.EventGetUnflippedLocation(
+		// *typing.RefType
+		unsafe.Pointer(event),
+	)
+	return *(*Point)(unsafe.Pointer(&rv))
 }
 
 // Creates a bitmap image from an existing image and an image mask. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456337-cgimagecreatewithmask?language=objc
 func ImageCreateWithMask(image ImageRef, mask ImageRef) ImageRef {
-	rv := C.ImageCreateWithMask(image, mask)
+	rv := C.ImageCreateWithMask(
+		// *typing.RefType
+		unsafe.Pointer(image),
+		// *typing.RefType
+		unsafe.Pointer(mask),
+	)
 	return ImageRef(rv)
 }
 
@@ -5105,14 +8064,24 @@ func ImageCreateWithMask(image ImageRef, mask ImageRef) ImageRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455622-cgpdfcontextseturlforrect?language=objc
 func PDFContextSetURLForRect(context ContextRef, url corefoundation.URLRef, rect Rect) {
-	C.PDFContextSetURLForRect(context, url, rect)
+	C.PDFContextSetURLForRect(
+		// *typing.RefType
+		unsafe.Pointer(context),
+		// *typing.RefType
+		unsafe.Pointer(url),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 }
 
 //	[Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/2091882-cgcolorspacecreatelinearized?language=objc
 func ColorSpaceCreateLinearized(space ColorSpaceRef) ColorSpaceRef {
-	rv := C.ColorSpaceCreateLinearized(space)
+	rv := C.ColorSpaceCreateLinearized(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return ColorSpaceRef(rv)
 }
 
@@ -5120,7 +8089,10 @@ func ColorSpaceCreateLinearized(space ColorSpaceRef) ColorSpaceRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408883-cgcolorspacegetcolortablecount?language=objc
 func ColorSpaceGetColorTableCount(space ColorSpaceRef) uint {
-	rv := C.ColorSpaceGetColorTableCount(space)
+	rv := C.ColorSpaceGetColorTableCount(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return uint(rv)
 }
 
@@ -5128,7 +8100,22 @@ func ColorSpaceGetColorTableCount(space ColorSpaceRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1562066-cgdisplaybestmodeforparametersan?language=objc
 func DisplayBestModeForParametersAndRefreshRate(display DirectDisplayID, bitsPerPixel uint, width uint, height uint, refreshRate RefreshRate, exactMatch *int) corefoundation.DictionaryRef {
-	rv := C.DisplayBestModeForParametersAndRefreshRate(C.uint32_t(display), bitsPerPixel, width, height, C.double(refreshRate), exactMatch)
+	rv := C.DisplayBestModeForParametersAndRefreshRate(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.PrimitiveType
+		C.NSUInteger(bitsPerPixel),
+		// *typing.PrimitiveType
+		C.NSUInteger(width),
+		// *typing.PrimitiveType
+		C.NSUInteger(height),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.double)(refreshRate),
+		// *typing.PointerType
+		(*C.NSInteger)(unsafe.Pointer(exactMatch)),
+	)
 	return corefoundation.DictionaryRef(rv)
 }
 
@@ -5136,7 +8123,11 @@ func DisplayBestModeForParametersAndRefreshRate(display DirectDisplayID, bitsPer
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455386-cgopengldisplaymasktodisplayid?language=objc
 func OpenGLDisplayMaskToDisplayID(mask OpenGLDisplayMask) DirectDisplayID {
-	rv := C.OpenGLDisplayMaskToDisplayID(C.uint32_t(mask))
+	rv := C.OpenGLDisplayMaskToDisplayID(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(mask),
+	)
 	return DirectDisplayID(rv)
 }
 
@@ -5144,7 +8135,10 @@ func OpenGLDisplayMaskToDisplayID(mask OpenGLDisplayMask) DirectDisplayID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456212-cgdisplaystreamupdategetdropcoun?language=objc
 func DisplayStreamUpdateGetDropCount(updateRef DisplayStreamUpdateRef) uint {
-	rv := C.DisplayStreamUpdateGetDropCount(updateRef)
+	rv := C.DisplayStreamUpdateGetDropCount(
+		// *typing.RefType
+		unsafe.Pointer(updateRef),
+	)
 	return uint(rv)
 }
 
@@ -5152,7 +8146,12 @@ func DisplayStreamUpdateGetDropCount(updateRef DisplayStreamUpdateRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456179-cgpointequaltopoint?language=objc
 func PointEqualToPoint(point1 Point, point2 Point) bool {
-	rv := C.PointEqualToPoint(point1, point2)
+	rv := C.PointEqualToPoint(
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&point1)),
+		// *typing.StructType
+		*(*C.CGPoint)(unsafe.Pointer(&point2)),
+	)
 	return bool(rv)
 }
 
@@ -5160,22 +8159,33 @@ func PointEqualToPoint(point1 Point, point2 Point) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454895-cgcontextflush?language=objc
 func ContextFlush(c ContextRef) {
-	C.ContextFlush(c)
+	C.ContextFlush(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 // Returns a vector with the specified dimension values. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454811-cgvectormake?language=objc
 func VectorMake(dx float64, dy float64) Vector {
-	rv := C.VectorMake(dx, dy)
-	return Vector(rv)
+	rv := C.VectorMake(
+		// *typing.PrimitiveType
+		C.float(dx),
+		// *typing.PrimitiveType
+		C.float(dy),
+	)
+	return *(*Vector)(unsafe.Pointer(&rv))
 }
 
 // Returns the height of the specified display mode. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455380-cgdisplaymodegetheight?language=objc
 func DisplayModeGetHeight(mode DisplayModeRef) uint {
-	rv := C.DisplayModeGetHeight(mode)
+	rv := C.DisplayModeGetHeight(
+		// *typing.RefType
+		unsafe.Pointer(mode),
+	)
 	return uint(rv)
 }
 
@@ -5183,15 +8193,23 @@ func DisplayModeGetHeight(mode DisplayModeRef) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455837-cgrectunion?language=objc
 func RectUnion(r1 Rect, r2 Rect) Rect {
-	rv := C.RectUnion(r1, r2)
-	return Rect(rv)
+	rv := C.RectUnion(
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&r1)),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&r2)),
+	)
+	return *(*Rect)(unsafe.Pointer(&rv))
 }
 
 // Parses the content stream of a PDF scanner object. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454698-cgpdfscannerscan?language=objc
 func PDFScannerScan(scanner unsafe.Pointer) bool {
-	rv := C.PDFScannerScan(scanner)
+	rv := C.PDFScannerScan(
+		// *typing.RefType
+		unsafe.Pointer(scanner),
+	)
 	return bool(rv)
 }
 
@@ -5199,29 +8217,47 @@ func PDFScannerScan(scanner unsafe.Pointer) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455461-cgcontextaddlines?language=objc
 func ContextAddLines(c ContextRef, points *Point, count uint) {
-	C.ContextAddLines(c, points, count)
+	C.ContextAddLines(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PointerType
+		(*C.CGPoint)(unsafe.Pointer(points)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+	)
 }
 
 // Sets the miter limit for the joins of connected lines in a graphics context. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456499-cgcontextsetmiterlimit?language=objc
 func ContextSetMiterLimit(c ContextRef, limit float64) {
-	C.ContextSetMiterLimit(c, limit)
+	C.ContextSetMiterLimit(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(limit),
+	)
 }
 
 // Returns the dictionary associated with a PDF stream. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456118-cgpdfstreamgetdictionary?language=objc
 func PDFStreamGetDictionary(stream unsafe.Pointer) unsafe.Pointer {
-	rv := C.PDFStreamGetDictionary(stream)
+	rv := C.PDFStreamGetDictionary(
+		// *typing.RefType
+		unsafe.Pointer(stream),
+	)
 	return unsafe.Pointer(rv)
 }
 
 // Returns the number of bytes in a PDF string. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454095-cgpdfstringgetlength?language=objc
-func PDFStringGetLength(string unsafe.Pointer) uint {
-	rv := C.PDFStringGetLength(string_)
+func PDFStringGetLength(string_ unsafe.Pointer) uint {
+	rv := C.PDFStringGetLength(
+		// *typing.RefType
+		unsafe.Pointer(string_),
+	)
 	return uint(rv)
 }
 
@@ -5229,7 +8265,10 @@ func PDFStringGetLength(string unsafe.Pointer) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455262-cgcontextclip?language=objc
 func ContextClip(c ContextRef) {
-	C.ContextClip(c)
+	C.ContextClip(
+		// *typing.RefType
+		unsafe.Pointer(c),
+	)
 }
 
 // Releases all captured displays. [Full Topic]
@@ -5252,7 +8291,11 @@ func CursorIsDrawnInFramebuffer() int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455409-cgdisplayserialnumber?language=objc
 func DisplaySerialNumber(display DirectDisplayID) uint32 {
-	rv := C.DisplaySerialNumber(C.uint32_t(display))
+	rv := C.DisplaySerialNumber(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return uint32(rv)
 }
 
@@ -5260,7 +8303,14 @@ func DisplaySerialNumber(display DirectDisplayID) uint32 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454834-cgpdfarraygetarray?language=objc
 func PDFArrayGetArray(array unsafe.Pointer, index uint, value unsafe.Pointer) bool {
-	rv := C.PDFArrayGetArray(array, index, value)
+	rv := C.PDFArrayGetArray(
+		// *typing.RefType
+		unsafe.Pointer(array),
+		// *typing.PrimitiveType
+		C.NSUInteger(index),
+		// *typing.RefType
+		unsafe.Pointer(value),
+	)
 	return bool(rv)
 }
 
@@ -5268,7 +8318,10 @@ func PDFArrayGetArray(array unsafe.Pointer, index uint, value unsafe.Pointer) bo
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408903-cgcolorspacecopyname?language=objc
 func ColorSpaceCopyName(space ColorSpaceRef) corefoundation.StringRef {
-	rv := C.ColorSpaceCopyName(space)
+	rv := C.ColorSpaceCopyName(
+		// *typing.RefType
+		unsafe.Pointer(space),
+	)
 	return corefoundation.StringRef(rv)
 }
 
@@ -5276,21 +8329,33 @@ func ColorSpaceCopyName(space ColorSpaceRef) corefoundation.StringRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454326-cgcontextsetlinecap?language=objc
 func ContextSetLineCap(c ContextRef, cap LineCap) {
-	C.ContextSetLineCap(c, C.int32_t(cap))
+	C.ContextSetLineCap(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(cap),
+	)
 }
 
 // Decrements the retain count of a shading object. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1573766-cgshadingrelease?language=objc
 func ShadingRelease(shading ShadingRef) {
-	C.ShadingRelease(shading)
+	C.ShadingRelease(
+		// *typing.RefType
+		unsafe.Pointer(shading),
+	)
 }
 
 // Increments the retain count of a CGPDFOperatorTable object. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454547-cgpdfoperatortableretain?language=objc
 func PDFOperatorTableRetain(table unsafe.Pointer) unsafe.Pointer {
-	rv := C.PDFOperatorTableRetain(table)
+	rv := C.PDFOperatorTableRetain(
+		// *typing.RefType
+		unsafe.Pointer(table),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -5298,7 +8363,11 @@ func PDFOperatorTableRetain(table unsafe.Pointer) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454149-cgdisplaymodelnumber?language=objc
 func DisplayModelNumber(display DirectDisplayID) uint32 {
-	rv := C.DisplayModelNumber(C.uint32_t(display))
+	rv := C.DisplayModelNumber(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return uint32(rv)
 }
 
@@ -5306,14 +8375,22 @@ func DisplayModelNumber(display DirectDisplayID) uint32 {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408779-cgeventsourcesetuserdata?language=objc
 func EventSourceSetUserData(source EventSourceRef, userData int64) {
-	C.EventSourceSetUserData(source, userData)
+	C.EventSourceSetUserData(
+		// *typing.RefType
+		unsafe.Pointer(source),
+		// *typing.PrimitiveType
+		C.int64_t(userData),
+	)
 }
 
 // Decrements the retain count of a CGGradient object. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1398460-cggradientrelease?language=objc
 func GradientRelease(gradient GradientRef) {
-	C.GradientRelease(gradient)
+	C.GradientRelease(
+		// *typing.RefType
+		unsafe.Pointer(gradient),
+	)
 }
 
 //	[Full Topic]
@@ -5328,22 +8405,35 @@ func RequestListenEventAccess() bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454738-cgcontextmovetopoint?language=objc
 func ContextMoveToPoint(c ContextRef, x float64, y float64) {
-	C.ContextMoveToPoint(c, x, y)
+	C.ContextMoveToPoint(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+	)
 }
 
 // Returns an affine transformation matrix constructed by inverting an existing affine transform. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455264-cgaffinetransforminvert?language=objc
 func AffineTransformInvert(t AffineTransform) AffineTransform {
-	rv := C.AffineTransformInvert(t)
-	return AffineTransform(rv)
+	rv := C.AffineTransformInvert(
+		// *typing.StructType
+		*(*C.CGAffineTransform)(unsafe.Pointer(&t)),
+	)
+	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
 // Increments the retain count of a scanner object. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455810-cgpdfscannerretain?language=objc
 func PDFScannerRetain(scanner unsafe.Pointer) unsafe.Pointer {
-	rv := C.PDFScannerRetain(scanner)
+	rv := C.PDFScannerRetain(
+		// *typing.RefType
+		unsafe.Pointer(scanner),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -5351,7 +8441,10 @@ func PDFScannerRetain(scanner unsafe.Pointer) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411149-cgpathisempty?language=objc
 func PathIsEmpty(path unsafe.Pointer) bool {
-	rv := C.PathIsEmpty(path)
+	rv := C.PathIsEmpty(
+		// *typing.RefType
+		unsafe.Pointer(path),
+	)
 	return bool(rv)
 }
 
@@ -5359,14 +8452,24 @@ func PathIsEmpty(path unsafe.Pointer) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1456240-cgcontextdrawtiledimage?language=objc
 func ContextDrawTiledImage(c ContextRef, rect Rect, image ImageRef) {
-	C.ContextDrawTiledImage(c, rect, image)
+	C.ContextDrawTiledImage(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 }
 
 // Increments the retain count of a bitmap image. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1556741-cgimageretain?language=objc
 func ImageRetain(image ImageRef) ImageRef {
-	rv := C.ImageRetain(image)
+	rv := C.ImageRetain(
+		// *typing.RefType
+		unsafe.Pointer(image),
+	)
 	return ImageRef(rv)
 }
 
@@ -5374,7 +8477,12 @@ func ImageRetain(image ImageRef) ImageRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454683-cgimagecreatewithimageinrect?language=objc
 func ImageCreateWithImageInRect(image ImageRef, rect Rect) ImageRef {
-	rv := C.ImageCreateWithImageInRect(image, rect)
+	rv := C.ImageCreateWithImageInRect(
+		// *typing.RefType
+		unsafe.Pointer(image),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 	return ImageRef(rv)
 }
 
@@ -5382,7 +8490,10 @@ func ImageCreateWithImageInRect(image ImageRef, rect Rect) ImageRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455550-cgpdfpagegetrotationangle?language=objc
 func PDFPageGetRotationAngle(page PDFPageRef) int {
-	rv := C.PDFPageGetRotationAngle(page)
+	rv := C.PDFPageGetRotationAngle(
+		// *typing.RefType
+		unsafe.Pointer(page),
+	)
 	return int(rv)
 }
 
@@ -5390,7 +8501,15 @@ func PDFPageGetRotationAngle(page PDFPageRef) int {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1543535-cgconfiguredisplaymode?language=objc
 func ConfigureDisplayMode(config unsafe.Pointer, display DirectDisplayID, mode corefoundation.DictionaryRef) Error {
-	rv := C.ConfigureDisplayMode(config, C.uint32_t(display), mode)
+	rv := C.ConfigureDisplayMode(
+		// *typing.RefType
+		unsafe.Pointer(config),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+		// *typing.RefType
+		unsafe.Pointer(mode),
+	)
 	return Error(rv)
 }
 
@@ -5398,14 +8517,26 @@ func ConfigureDisplayMode(config unsafe.Pointer, display DirectDisplayID, mode c
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455213-cgcontextaddlinetopoint?language=objc
 func ContextAddLineToPoint(c ContextRef, x float64, y float64) {
-	C.ContextAddLineToPoint(c, x, y)
+	C.ContextAddLineToPoint(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(x),
+		// *typing.PrimitiveType
+		C.float(y),
+	)
 }
 
 // Retrieves a Boolean object from the scanner stack. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454663-cgpdfscannerpopboolean?language=objc
 func PDFScannerPopBoolean(scanner unsafe.Pointer, value *PDFBoolean) bool {
-	rv := C.PDFScannerPopBoolean(scanner, value)
+	rv := C.PDFScannerPopBoolean(
+		// *typing.RefType
+		unsafe.Pointer(scanner),
+		// *typing.PointerType
+		(*C.uint8_t)(unsafe.Pointer(value)),
+	)
 	return bool(rv)
 }
 
@@ -5413,7 +8544,10 @@ func PDFScannerPopBoolean(scanner unsafe.Pointer, value *PDFBoolean) bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396330-cgfontcreatewithfontname?language=objc
 func FontCreateWithFontName(name corefoundation.StringRef) FontRef {
-	rv := C.FontCreateWithFontName(name)
+	rv := C.FontCreateWithFontName(
+		// *typing.RefType
+		unsafe.Pointer(name),
+	)
 	return FontRef(rv)
 }
 
@@ -5421,14 +8555,23 @@ func FontCreateWithFontName(name corefoundation.StringRef) FontRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455656-cgcontextsetinterpolationquality?language=objc
 func ContextSetInterpolationQuality(c ContextRef, quality InterpolationQuality) {
-	C.ContextSetInterpolationQuality(c, C.int32_t(quality))
+	C.ContextSetInterpolationQuality(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(quality),
+	)
 }
 
 // Returns the document catalog of a Core Graphics PDF document. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402606-cgpdfdocumentgetcatalog?language=objc
 func PDFDocumentGetCatalog(document PDFDocumentRef) unsafe.Pointer {
-	rv := C.PDFDocumentGetCatalog(document)
+	rv := C.PDFDocumentGetCatalog(
+		// *typing.RefType
+		unsafe.Pointer(document),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -5436,7 +8579,10 @@ func PDFDocumentGetCatalog(document PDFDocumentRef) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1450898-cglayerrelease?language=objc
 func LayerRelease(layer LayerRef) {
-	C.LayerRelease(layer)
+	C.LayerRelease(
+		// *typing.RefType
+		unsafe.Pointer(layer),
+	)
 }
 
 // Returns the unique type identifier used for CGLayerRef objects. [Full Topic]
@@ -5459,7 +8605,10 @@ func FunctionGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1410048-cgpdfcontentstreamgetstreams?language=objc
 func PDFContentStreamGetStreams(cs unsafe.Pointer) corefoundation.ArrayRef {
-	rv := C.PDFContentStreamGetStreams(cs)
+	rv := C.PDFContentStreamGetStreams(
+		// *typing.RefType
+		unsafe.Pointer(cs),
+	)
 	return corefoundation.ArrayRef(rv)
 }
 
@@ -5467,7 +8616,10 @@ func PDFContentStreamGetStreams(cs unsafe.Pointer) corefoundation.ArrayRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1430218-cgpdfdictionarygetcount?language=objc
 func PDFDictionaryGetCount(dict unsafe.Pointer) uint {
-	rv := C.PDFDictionaryGetCount(dict)
+	rv := C.PDFDictionaryGetCount(
+		// *typing.RefType
+		unsafe.Pointer(dict),
+	)
 	return uint(rv)
 }
 
@@ -5475,7 +8627,11 @@ func PDFDictionaryGetCount(dict unsafe.Pointer) uint {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455867-cgdisplayshowcursor?language=objc
 func DisplayShowCursor(display DirectDisplayID) Error {
-	rv := C.DisplayShowCursor(C.uint32_t(display))
+	rv := C.DisplayShowCursor(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return Error(rv)
 }
 
@@ -5483,7 +8639,10 @@ func DisplayShowCursor(display DirectDisplayID) Error {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455839-cgbitmapcontextgetbitmapinfo?language=objc
 func BitmapContextGetBitmapInfo(context ContextRef) BitmapInfo {
-	rv := C.BitmapContextGetBitmapInfo(context)
+	rv := C.BitmapContextGetBitmapInfo(
+		// *typing.RefType
+		unsafe.Pointer(context),
+	)
 	return BitmapInfo(rv)
 }
 
@@ -5491,15 +8650,36 @@ func BitmapContextGetBitmapInfo(context ContextRef) BitmapInfo {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455882-cgaffinetransformscale?language=objc
 func AffineTransformScale(t AffineTransform, sx float64, sy float64) AffineTransform {
-	rv := C.AffineTransformScale(t, sx, sy)
-	return AffineTransform(rv)
+	rv := C.AffineTransformScale(
+		// *typing.StructType
+		*(*C.CGAffineTransform)(unsafe.Pointer(&t)),
+		// *typing.PrimitiveType
+		C.float(sx),
+		// *typing.PrimitiveType
+		C.float(sy),
+	)
+	return *(*AffineTransform)(unsafe.Pointer(&rv))
 }
 
 // Creates a subset of the font in the specified PostScript format. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1396324-cgfontcreatepostscriptsubset?language=objc
 func FontCreatePostScriptSubset(font FontRef, subsetName corefoundation.StringRef, format FontPostScriptFormat, glyphs *Glyph, count uint, encoding *Glyph) corefoundation.DataRef {
-	rv := C.FontCreatePostScriptSubset(font, subsetName, C.int32_t(format), glyphs, count, encoding)
+	rv := C.FontCreatePostScriptSubset(
+		// *typing.RefType
+		unsafe.Pointer(font),
+		// *typing.RefType
+		unsafe.Pointer(subsetName),
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(format),
+		// *typing.PointerType
+		(*C.NSInteger)(unsafe.Pointer(glyphs)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+		// *typing.PointerType
+		(*C.NSInteger)(unsafe.Pointer(encoding)),
+	)
 	return corefoundation.DataRef(rv)
 }
 
@@ -5507,7 +8687,11 @@ func FontCreatePostScriptSubset(font FontRef, subsetName corefoundation.StringRe
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455448-cgdisplayismain?language=objc
 func DisplayIsMain(display DirectDisplayID) int {
-	rv := C.DisplayIsMain(C.uint32_t(display))
+	rv := C.DisplayIsMain(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.uint32_t)(display),
+	)
 	return int(rv)
 }
 
@@ -5523,14 +8707,24 @@ func PathCreateMutable() MutablePathRef {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1541780-cgreleasescreenrefreshrects?language=objc
 func ReleaseScreenRefreshRects(rects *Rect) {
-	C.ReleaseScreenRefreshRects(rects)
+	C.ReleaseScreenRefreshRects(
+		// *typing.PointerType
+		(*C.CGRect)(unsafe.Pointer(rects)),
+	)
 }
 
 // Displays an array of glyphs at the current text position. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1586500-cgcontextshowglyphs?language=objc
 func ContextShowGlyphs(c ContextRef, g *Glyph, count uint) {
-	C.ContextShowGlyphs(c, g, count)
+	C.ContextShowGlyphs(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PointerType
+		(*C.NSInteger)(unsafe.Pointer(g)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+	)
 }
 
 // Restores the gamma tables to the values in the user’s ColorSync display profile. [Full Topic]
@@ -5544,7 +8738,16 @@ func DisplayRestoreColorSyncSettings() {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455911-cgcontextsetlinedash?language=objc
 func ContextSetLineDash(c ContextRef, phase float64, lengths *float64, count uint) {
-	C.ContextSetLineDash(c, phase, lengths, count)
+	C.ContextSetLineDash(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.PrimitiveType
+		C.float(phase),
+		// *typing.PointerType
+		(*C.float)(unsafe.Pointer(lengths)),
+		// *typing.PrimitiveType
+		C.NSUInteger(count),
+	)
 }
 
 // Returns the type identifier of Quartz display modes. [Full Topic]
@@ -5559,7 +8762,11 @@ func DisplayModeGetTypeID() corefoundation.TypeID {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1408792-cgeventsourceflagsstate?language=objc
 func EventSourceFlagsState(stateID EventSourceStateID) EventFlags {
-	rv := C.EventSourceFlagsState(C.int32_t(stateID))
+	rv := C.EventSourceFlagsState(
+		// *typing.AliasType
+		// *typing.PrimitiveType
+		(C.int32_t)(stateID),
+	)
 	return EventFlags(rv)
 }
 
@@ -5575,14 +8782,22 @@ func RequestPostEventAccess() bool {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1454700-cgcontextfillrect?language=objc
 func ContextFillRect(c ContextRef, rect Rect) {
-	C.ContextFillRect(c, rect)
+	C.ContextFillRect(
+		// *typing.RefType
+		unsafe.Pointer(c),
+		// *typing.StructType
+		*(*C.CGRect)(unsafe.Pointer(&rect)),
+	)
 }
 
 // Increments the retain count of a graphics path. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1411181-cgpathretain?language=objc
 func PathRetain(path unsafe.Pointer) unsafe.Pointer {
-	rv := C.PathRetain(path)
+	rv := C.PathRetain(
+		// *typing.RefType
+		unsafe.Pointer(path),
+	)
 	return unsafe.Pointer(rv)
 }
 
@@ -5590,6 +8805,9 @@ func PathRetain(path unsafe.Pointer) unsafe.Pointer {
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1402607-cgpdfdocumentisunlocked?language=objc
 func PDFDocumentIsUnlocked(document PDFDocumentRef) bool {
-	rv := C.PDFDocumentIsUnlocked(document)
+	rv := C.PDFDocumentIsUnlocked(
+		// *typing.RefType
+		unsafe.Pointer(document),
+	)
 	return bool(rv)
 }

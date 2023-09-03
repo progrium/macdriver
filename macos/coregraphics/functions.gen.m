@@ -499,8 +499,8 @@ void ContextDrawLayerAtPoint(void * context, CGPoint point, void * layer) {
 BOOL PDFArrayGetStream(void * array, NSUInteger index, void * value) {
 	return CGPDFArrayGetStream(array, index, value);
 }
-void ContextShowTextAtPoint(void * c, float x, float y, uint8_t* string, NSUInteger length) {
-	return CGContextShowTextAtPoint(c, x, y, string, length);
+void ContextShowTextAtPoint(void * c, float x, float y, uint8_t* string_, NSUInteger length) {
+	return CGContextShowTextAtPoint(c, x, y, string_, length);
 }
 void EventSourceSetPixelsPerLine(void * source, double pixelsPerLine) {
 	return CGEventSourceSetPixelsPerLine(source, pixelsPerLine);
@@ -682,8 +682,8 @@ void * PDFContentStreamCreateWithStream(void * stream, void * streamResources, v
 void ContextDrawRadialGradient(void * c, void * gradient, CGPoint startCenter, float startRadius, CGPoint endCenter, float endRadius, uint32_t options) {
 	return CGContextDrawRadialGradient(c, gradient, startCenter, startRadius, endCenter, endRadius, options);
 }
-void * PDFStringCopyDate(void * string) {
-	return CGPDFStringCopyDate(string);
+void * PDFStringCopyDate(void * string_) {
+	return CGPDFStringCopyDate(string_);
 }
 void * WindowServerCFMachPort() {
 	return CGWindowServerCFMachPort();
@@ -766,8 +766,8 @@ uint32_t EventSourceGetLocalEventsFilterDuringSuppressionState(void * source, ui
 void * FontCopyTableForTag(void * font, uint32_t tag) {
 	return CGFontCopyTableForTag(font, tag);
 }
-uint8_t* PDFStringGetBytePtr(void * string) {
-	return CGPDFStringGetBytePtr(string);
+uint8_t* PDFStringGetBytePtr(void * string_) {
+	return CGPDFStringGetBytePtr(string_);
 }
 CGRect ContextGetPathBoundingBox(void * c) {
 	return CGContextGetPathBoundingBox(c);
@@ -1372,8 +1372,8 @@ int32_t PDFDocumentGetTypeID() {
 BOOL PDFArrayGetString(void * array, NSUInteger index, void * value) {
 	return CGPDFArrayGetString(array, index, value);
 }
-void ContextShowText(void * c, uint8_t* string, NSUInteger length) {
-	return CGContextShowText(c, string, length);
+void ContextShowText(void * c, uint8_t* string_, NSUInteger length) {
+	return CGContextShowText(c, string_, length);
 }
 int32_t ImageGetRenderingIntent(void * image) {
 	return CGImageGetRenderingIntent(image);
@@ -1510,8 +1510,8 @@ void EventSetLocation(void * event, CGPoint location) {
 void FontRelease(void * font) {
 	return CGFontRelease(font);
 }
-void * PDFStringCopyTextString(void * string) {
-	return CGPDFStringCopyTextString(string);
+void * PDFStringCopyTextString(void * string_) {
+	return CGPDFStringCopyTextString(string_);
 }
 BOOL PDFDocumentIsEncrypted(void * document) {
 	return CGPDFDocumentIsEncrypted(document);
@@ -1771,8 +1771,8 @@ void ContextSetMiterLimit(void * c, float limit) {
 void * PDFStreamGetDictionary(void * stream) {
 	return CGPDFStreamGetDictionary(stream);
 }
-NSUInteger PDFStringGetLength(void * string) {
-	return CGPDFStringGetLength(string);
+NSUInteger PDFStringGetLength(void * string_) {
+	return CGPDFStringGetLength(string_);
 }
 void ContextClip(void * c) {
 	return CGContextClip(c);
