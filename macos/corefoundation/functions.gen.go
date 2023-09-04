@@ -122,7 +122,7 @@ package corefoundation
 // void * ReadStreamCopyError(void * stream);
 // void TreePrependChild(void * tree, void * newChild);
 // void * LocaleCopyISOCurrencyCodes();
-// void* AllocatorAllocate(void * allocator, CFIndex size, CFOptionFlags hint);
+// void * AllocatorAllocate(void * allocator, CFIndex size, CFOptionFlags hint);
 // CFIndex DataGetLength(void * theData);
 // bool PreferencesAppValueIsForced(void * key, void * applicationID);
 // CFStringEncoding StringGetFastestEncoding(void * theString);
@@ -186,10 +186,10 @@ package corefoundation
 // CFTypeID BagGetTypeID();
 // bool BooleanGetValue(void * boolean);
 // void * ErrorCopyDescription(void * err);
-// void* PlugInInstanceGetInstanceData(void * instance);
+// void * PlugInInstanceGetInstanceData(void * instance);
 // CFNumberFormatterStyle NumberFormatterGetStyle(void * formatter);
 // void StringCapitalize(void * theString, void * locale);
-// uint8_t DataGetBytePtr(void * theData);
+// const uint8_t* DataGetBytePtr(void * theData);
 // bool FileSecuritySetMode(void * fileSec, mode_t mode);
 // CFOptionFlags UserNotificationCheckBoxChecked(CFIndex i);
 // void * URLCopyLastPathComponent(void * url);
@@ -298,7 +298,7 @@ package corefoundation
 // bool StringHasPrefix(void * theString, void * prefix);
 // void * DateFormatterCreateDateFormatFromTemplate(void * allocator, void * tmplate, CFOptionFlags options, void * locale);
 // bool FileSecurityClearProperties(void * fileSec, CFFileSecurityClearOptions clearPropertyMask);
-// uint8_t DataGetMutableBytePtr(void * theData);
+// uint8_t* DataGetMutableBytePtr(void * theData);
 // CFIndex BitVectorGetCount(void * bv);
 // void RunLoopStop(void * rl);
 // bool CharacterSetHasMemberInPlane(void * theSet, CFIndex thePlane);
@@ -310,7 +310,7 @@ package corefoundation
 // void * ReadStreamCreateWithBytesNoCopy(void * alloc, const uint8_t* bytes, CFIndex length, void * bytesDeallocator);
 // int32_t UserNotificationDisplayAlert(CFTimeInterval timeout, CFOptionFlags flags, void * iconURL, void * soundURL, void * localizationURL, void * alertHeader, void * alertMessage, void * defaultButtonTitle, void * alternateButtonTitle, void * otherButtonTitle, CFOptionFlags* responseFlags);
 // void * URLCopyHostName(void * anURL);
-// void* ArrayGetValueAtIndex(void * theArray, CFIndex idx);
+// void * ArrayGetValueAtIndex(void * theArray, CFIndex idx);
 // void PlugInSetLoadOnDemand(void * plugIn, bool flag);
 // void * TimeZoneCreateWithTimeIntervalFromGMT(void * allocator, CFTimeInterval ti);
 // uint32_t BundleGetVersionNumber(void * bundle);
@@ -419,15 +419,15 @@ package corefoundation
 // bool TimeZoneIsDaylightSavingTime(void * tz, CFAbsoluteTime at);
 // void URLClearResourcePropertyCache(void * url);
 // bool SocketIsValid(void * s);
-// void* BundleGetDataPointerForName(void * bundle, void * symbolName);
+// void * BundleGetDataPointerForName(void * bundle, void * symbolName);
 // int32_t StringConvertEncodingToNSStringEncoding(CFStringEncoding encoding);
 // void * SocketCopyAddress(void * s);
 // void * BitVectorCreateMutable(void * allocator, CFIndex capacity);
-// uint8_t ReadStreamGetBuffer(void * stream, CFIndex maxBytesToRead, CFIndex* numBytesRead);
+// const uint8_t* ReadStreamGetBuffer(void * stream, CFIndex maxBytesToRead, CFIndex* numBytesRead);
 // bool PreferencesAppSynchronize(void * applicationID);
 // bool RunLoopIsWaiting(void * rl);
 // void * URLCreateCopyDeletingLastPathComponent(void * allocator, void * url);
-// CFStringEncoding StringGetListOfAvailableEncodings();
+// const CFStringEncoding* StringGetListOfAvailableEncodings();
 // void * CharacterSetCreateWithCharactersInString(void * alloc, void * theString);
 // void TimeZoneSetAbbreviationDictionary(void * dict);
 // void * URLCreateCopyAppendingPathExtension(void * allocator, void * url, void * extension);
@@ -435,7 +435,7 @@ package corefoundation
 // CFPropertyListRef PreferencesCopyValue(void * key, void * applicationID, void * userName, void * hostName);
 // CFTypeID PlugInGetTypeID();
 // void * StringCreateArrayBySeparatingStrings(void * alloc, void * theString, void * separatorString);
-// void* PlugInInstanceCreate(void * allocator, void * factoryUUID, void * typeUUID);
+// void * PlugInInstanceCreate(void * allocator, void * factoryUUID, void * typeUUID);
 // void * DateFormatterGetLocale(void * formatter);
 // uint32_t SwapInt32LittleToHost(uint32_t arg);
 // void * CharacterSetGetPredefined(CFCharacterSetPredefinedSet theSetIdentifier);
@@ -490,7 +490,7 @@ package corefoundation
 // bool RunLoopObserverDoesRepeat(void * observer);
 // void RunLoopTimerInvalidate(void * timer);
 // CFAbsoluteTime TimeZoneGetNextDaylightSavingTimeTransition(void * tz, CFAbsoluteTime at);
-// void* BinaryHeapGetMinimum(void * heap);
+// void * BinaryHeapGetMinimum(void * heap);
 // void * BundleCopyPreferredLocalizationsFromArray(void * locArray);
 // void * MessagePortCreateRunLoopSource(void * allocator, void * local, CFIndex order);
 // CFTypeID LocaleGetTypeID();
@@ -508,7 +508,7 @@ package corefoundation
 // void * WriteStreamCreateWithFile(void * alloc, void * fileURL);
 // void CharacterSetInvert(void * theSet);
 // CFTypeID ErrorGetTypeID();
-// void* BundleGetFunctionPointerForName(void * bundle, void * functionName);
+// void * BundleGetFunctionPointerForName(void * bundle, void * functionName);
 // void StringFold(void * theString, CFStringCompareFlags theFlags, void * theLocale);
 // bool URLStartAccessingSecurityScopedResource(void * url);
 // void * StringCreateExternalRepresentation(void * alloc, void * theString, CFStringEncoding encoding, uint8_t lossByte);

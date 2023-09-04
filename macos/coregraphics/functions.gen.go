@@ -265,8 +265,8 @@ package coregraphics
 // double EventSourceGetPixelsPerLine(void * source);
 // CGRect RectInset(CGRect rect, float dx, float dy);
 // bool PDFArrayGetNull(void * array, uint index);
-// float ImageGetDecode(void * image);
-// void* DataProviderGetInfo(void * provider);
+// const float* ImageGetDecode(void * image);
+// void * DataProviderGetInfo(void * provider);
 // void * PDFStreamCopyData(void * stream, CGPDFDataFormat* format);
 // void * PatternRetain(void * pattern);
 // void * BitmapContextGetColorSpace(void * context);
@@ -402,7 +402,7 @@ package coregraphics
 // void ContextDrawPath(void * c, CGPathDrawingMode mode);
 // CGGlyph FontGetGlyphWithGlyphName(void * font, void * name);
 // void * RectCreateDictionaryRepresentation(CGRect );
-// void* BitmapContextGetData(void * context);
+// void * BitmapContextGetData(void * context);
 // int FontGetAscent(void * font);
 // CGError DisplaySetStereoOperation(CGDirectDisplayID display, boolean_t stereo, boolean_t forceBlueLine, CGConfigureOption option);
 // bool ImageGetShouldInterpolate(void * image);
@@ -457,7 +457,7 @@ package coregraphics
 // void * ContextCopyPath(void * c);
 // void * ImageGetUTType(void * image);
 // bool FontCanCreatePostScriptSubset(void * font, CGFontPostScriptFormat format);
-// float ColorGetComponents(void * color);
+// const float* ColorGetComponents(void * color);
 // CFTypeID ContextGetTypeID();
 // void * DataConsumerCreateWithCFData(void * data);
 // void ContextAddRect(void * c, CGRect rect);
