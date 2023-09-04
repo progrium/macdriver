@@ -13,16 +13,16 @@ package coregraphics
 // void ContextClipToRects(void * c, const CGRect* rects, uint count);
 // CGRect RectApplyAffineTransform(CGRect rect, CGAffineTransform t);
 // int64_t EventSourceGetUserData(void * source);
-// uint32_t ImageGetAlphaInfo(void * image);
-// int DisplayIsOnline(uint32_t display);
-// int32_t ReleaseDisplayFadeReservation(uint32_t token);
+// CGImageAlphaInfo ImageGetAlphaInfo(void * image);
+// boolean_t DisplayIsOnline(CGDirectDisplayID display);
+// CGError ReleaseDisplayFadeReservation(CGDisplayFadeReservationToken token);
 // bool ColorSpaceUsesExtendedRange(void * space);
 // uint BitmapContextGetBitsPerComponent(void * context);
 // void * PDFContextCreate(void * consumer, const CGRect* mediaBox, void * auxiliaryInfo);
 // void * ColorSpaceGetName(void * space);
 // void ContextBeginTransparencyLayer(void * c, void * auxiliaryInfo);
 // void * ColorGetColorSpace(void * color);
-// int64_t EventGetIntegerValueField(void * event, uint32_t field);
+// int64_t EventGetIntegerValueField(void * event, CGEventField field);
 // void ContextSetTextPosition(void * c, float x, float y);
 // void * ColorSpaceCopyICCData(void * space);
 // void ContextSetFont(void * c, void * font);
@@ -33,26 +33,26 @@ package coregraphics
 // void * ColorCreateGenericGray(float gray, float alpha);
 // void DataProviderRelease(void * provider);
 // void PathAddArc(void * path, const CGAffineTransform* m, float x, float y, float radius, float startAngle, float endAngle, bool clockwise);
-// int32_t EventGetTypeID();
-// void ContextDrawLinearGradient(void * c, void * gradient, CGPoint startPoint, CGPoint endPoint, uint32_t options);
-// CGRect PDFPageGetBoxRect(void * page, int32_t box);
+// CFTypeID EventGetTypeID();
+// void ContextDrawLinearGradient(void * c, void * gradient, CGPoint startPoint, CGPoint endPoint, CGGradientDrawingOptions options);
+// CGRect PDFPageGetBoxRect(void * page, CGPDFBox box);
 // void ContextStrokeRectWithWidth(void * c, CGRect rect, float width);
 // void * SessionCopyCurrentDictionary();
-// int32_t ShadingGetTypeID();
+// CFTypeID ShadingGetTypeID();
 // void * ColorSpaceCreatePattern(void * baseSpace);
-// CGRect DisplayBounds(uint32_t display);
-// void ContextSetTextDrawingMode(void * c, int32_t mode);
+// CGRect DisplayBounds(CGDirectDisplayID display);
+// void ContextSetTextDrawingMode(void * c, CGTextDrawingMode mode);
 // void * ColorSpaceCreateDeviceGray();
 // void * ColorSpaceCreateCalibratedGray(const float* whitePoint, const float* blackPoint, float gamma);
-// void * PathCreateCopyByStrokingPath(void * path, const CGAffineTransform* transform, float lineWidth, int32_t lineCap, int32_t lineJoin, float miterLimit);
+// void * PathCreateCopyByStrokingPath(void * path, const CGAffineTransform* transform, float lineWidth, CGLineCap lineCap, CGLineJoin lineJoin, float miterLimit);
 // bool ColorEqualToColor(void * color1, void * color2);
 // bool PathContainsPoint(void * path, const CGAffineTransform* m, CGPoint point, bool eoFill);
 // void * FontCopyVariations(void * font);
 // void * FontRetain(void * font);
-// void * DisplayCopyColorSpace(uint32_t display);
+// void * DisplayCopyColorSpace(CGDirectDisplayID display);
 // uint ImageGetWidth(void * image);
 // void * PDFDocumentCreateWithURL(void * url);
-// void EventSetFlags(void * event, uint64_t flags);
+// void EventSetFlags(void * event, CGEventFlags flags);
 // CGRect RectMake(float x, float y, float width, float height);
 // uint ColorGetNumberOfComponents(void * color);
 // void * PathCreateWithRect(CGRect rect, const CGAffineTransform* transform);
@@ -69,220 +69,221 @@ package coregraphics
 // void ContextAddCurveToPoint(void * c, float cp1x, float cp1y, float cp2x, float cp2y, float x, float y);
 // void * ColorCreateGenericCMYK(float cyan, float magenta, float yellow, float black, float alpha);
 // void * ColorSpaceCreateExtendedLinearized(void * space);
-// void * ColorSpaceCreateWithICCData(void* data);
-// int32_t GetDisplaysWithRect(CGRect rect, uint32_t maxDisplays, uint32_t* displays, uint32_t* matchingDisplayCount);
+// void * ColorSpaceCreateWithICCData(CFTypeRef data);
+// CGError GetDisplaysWithRect(CGRect rect, uint32_t maxDisplays, CGDirectDisplayID* displays, uint32_t* matchingDisplayCount);
 // uint DisplayModeGetWidth(void * mode);
 // void ContextSaveGState(void * c);
 // int FontGetCapHeight(void * font);
 // uint PDFArrayGetCount(void * array);
 // void FunctionRelease(void * function);
 // bool PDFDocumentUnlockWithPassword(void * document, char* password);
-// double DisplayRotation(uint32_t display);
+// double DisplayRotation(CGDirectDisplayID display);
 // CGAffineTransform AffineTransformMakeScale(float sx, float sy);
 // void ContextDrawLayerInRect(void * context, CGRect rect, void * layer);
 // bool RectIsInfinite(CGRect rect);
 // void * ImageCreateCopyWithColorSpace(void * image, void * space);
 // bool PreflightPostEventAccess();
 // void ContextRelease(void * c);
-// int32_t DataConsumerGetTypeID();
-// int32_t CompleteDisplayConfiguration(void * config, uint32_t option);
+// CFTypeID DataConsumerGetTypeID();
+// CGError CompleteDisplayConfiguration(void * config, CGConfigureOption option);
 // void PDFContextEndTag(void * context);
 // void * ColorCreateGenericGrayGamma2_2(float gray, float alpha);
 // CGRect PathGetBoundingBox(void * path);
 // void PDFDocumentGetVersion(void * document, int* majorVersion, int* minorVersion);
 // void PathAddRoundedRect(void * path, const CGAffineTransform* transform, CGRect rect, float cornerWidth, float cornerHeight);
-// int32_t WindowLevelForKey(int32_t key);
-// void ContextSetRenderingIntent(void * c, int32_t intent);
+// CGWindowLevel WindowLevelForKey(CGWindowLevelKey key);
+// void ContextSetRenderingIntent(void * c, CGColorRenderingIntent intent);
 // void ContextSetShadowWithColor(void * c, CGSize offset, float blur, void * color);
-// int32_t PatternGetTypeID();
+// CFTypeID PatternGetTypeID();
 // void * DisplayModeRetain(void * mode);
-// uint64_t EventGetTimestamp(void * event);
+// CGEventTimestamp EventGetTimestamp(void * event);
 // void * PathCreateMutableCopy(void * path);
 // CGAffineTransform ContextGetCTM(void * c);
 // void * EventCreateData(void * allocator, void * event);
-// int DisplayIsStereo(uint32_t display);
+// boolean_t DisplayIsStereo(CGDirectDisplayID display);
 // void ContextConcatCTM(void * c, CGAffineTransform transform);
 // CGSize ContextConvertSizeToUserSpace(void * c, CGSize size);
-// bool PDFScannerPopInteger(void * scanner, int32_t* value);
+// bool PDFScannerPopInteger(void * scanner, CGPDFInteger* value);
 // void PDFContextAddDocumentMetadata(void * context, void * metadata);
-// CGSize DisplayScreenSize(uint32_t display);
+// CGSize DisplayScreenSize(CGDirectDisplayID display);
 // void ColorSpaceGetColorTable(void * space, uint8_t* table);
 // void * PDFPageRetain(void * page);
 // void ContextFillEllipseInRect(void * c, CGRect rect);
-// void * DisplayCopyDisplayMode(uint32_t display);
+// void * DisplayCopyDisplayMode(CGDirectDisplayID display);
 // void PDFContextSetDestinationForRect(void * context, void * name, CGRect rect);
-// int32_t GetDisplaysWithOpenGLDisplayMask(uint32_t mask, uint32_t maxDisplays, uint32_t* displays, uint32_t* matchingDisplayCount);
+// CGError GetDisplaysWithOpenGLDisplayMask(CGOpenGLDisplayMask mask, uint32_t maxDisplays, CGDirectDisplayID* displays, uint32_t* matchingDisplayCount);
 // void * ShadingCreateAxial(void * space, CGPoint start, CGPoint end, void * function, bool extendStart, bool extendEnd);
 // void ContextSetShadow(void * c, CGSize offset, float blur);
 // bool PointMakeWithDictionaryRepresentation(void * dict, CGPoint* point);
 // CGPoint ContextGetTextPosition(void * c);
 // uint BitmapContextGetBitsPerPixel(void * context);
 // void ContextAddArc(void * c, float x, float y, float radius, float startAngle, float endAngle, int clockwise);
-// void EventSetType(void * event, uint32_t type_);
-// void * EventCreateScrollWheelEvent2(void * source, uint32_t units, uint32_t wheelCount, int32_t wheel1, int32_t wheel2, int32_t wheel3);
-// int32_t ColorSpaceGetModel(void * space);
-// void * ImageCreateWithPNGDataProvider(void * source, const float* decode, bool shouldInterpolate, int32_t intent);
+// void EventSetType(void * event, CGEventType type_);
+// void * EventCreateScrollWheelEvent2(void * source, CGScrollEventUnit units, uint32_t wheelCount, int32_t wheel1, int32_t wheel2, int32_t wheel3);
+// CGColorSpaceModel ColorSpaceGetModel(void * space);
+// void * ImageCreateWithPNGDataProvider(void * source, const float* decode, bool shouldInterpolate, CGColorRenderingIntent intent);
 // void PathAddEllipseInRect(void * path, const CGAffineTransform* m, CGRect rect);
 // void * EventCreateFromData(void * allocator, void * data);
 // void * ColorSpaceCreateDeviceCMYK();
-// int32_t ConfigureDisplayFadeEffect(void * config, float fadeOutSeconds, float fadeInSeconds, float fadeRed, float fadeGreen, float fadeBlue);
-// int32_t DisplayFade(uint32_t token, float duration, float startBlend, float endBlend, float redBlend, float greenBlend, float blueBlend, int synchronous);
+// CGError ConfigureDisplayFadeEffect(void * config, CGDisplayFadeInterval fadeOutSeconds, CGDisplayFadeInterval fadeInSeconds, float fadeRed, float fadeGreen, float fadeBlue);
+// CGError DisplayFade(CGDisplayFadeReservationToken token, CGDisplayFadeInterval duration, CGDisplayBlendFraction startBlend, CGDisplayBlendFraction endBlend, float redBlend, float greenBlend, float blueBlend, boolean_t synchronous);
 // void ContextSetShouldSubpixelQuantizeFonts(void * c, bool shouldSubpixelQuantizeFonts);
 // CGPoint EventGetLocation(void * event);
 // bool PSConverterAbort(void * converter);
 // void ContextScaleCTM(void * c, float sx, float sy);
 // void * SizeCreateDictionaryRepresentation(CGSize size);
-// bool EventSourceButtonState(int32_t stateID, uint32_t button);
+// bool EventSourceButtonState(CGEventSourceStateID stateID, CGMouseButton button);
 // void EventTapEnable(void * tap, bool enable);
 // CGAffineTransform AffineTransformMakeRotation(float angle);
 // void * ColorSpaceCreateICCBased(uint nComponents, const float* range_, void * profile, void * alternate);
-// int32_t AssociateMouseAndMouseCursorPosition(int connected);
+// CGError AssociateMouseAndMouseCursorPosition(boolean_t connected);
 // void * PDFDocumentRetain(void * document);
 // CGPoint PathGetCurrentPoint(void * path);
 // void ContextSetRGBStrokeColor(void * c, float red, float green, float blue, float alpha);
 // bool PreflightScreenCaptureAccess();
-// int32_t SetDisplayTransferByTable(uint32_t display, uint32_t tableSize, const float* redTable, const float* greenTable, const float* blueTable);
+// CGError SetDisplayTransferByTable(CGDirectDisplayID display, uint32_t tableSize, const CGGammaValue* redTable, const CGGammaValue* greenTable, const CGGammaValue* blueTable);
 // void ContextSetFlatness(void * c, float flatness);
-// int DisplayIsActive(uint32_t display);
+// boolean_t DisplayIsActive(CGDirectDisplayID display);
 // void ContextSetPatternPhase(void * c, CGSize phase);
 // void PDFScannerRelease(void * scanner);
-// void ContextSetLineJoin(void * c, int32_t join);
+// void ContextSetLineJoin(void * c, CGLineJoin join);
 // void * FontCopyTableTags(void * font);
-// int32_t GetActiveDisplayList(uint32_t maxDisplays, uint32_t* activeDisplays, uint32_t* displayCount);
+// CGError GetActiveDisplayList(uint32_t maxDisplays, CGDirectDisplayID* activeDisplays, uint32_t* displayCount);
 // bool PathIsRect(void * path, CGRect* rect);
 // void * DataProviderCreateWithURL(void * url);
-// void * EventSourceCreate(int32_t stateID);
-// int32_t ContextGetInterpolationQuality(void * c);
+// void * EventSourceCreate(CGEventSourceStateID stateID);
+// CGInterpolationQuality ContextGetInterpolationQuality(void * c);
 // void * ColorConversionInfoCreate(void * src, void * dst);
 // bool RectContainsRect(CGRect rect1, CGRect rect2);
-// void * FontCreatePostScriptEncoding(void * font, const long* encoding);
+// void * FontCreatePostScriptEncoding(void * font, const CGGlyph* encoding);
 // void ContextDrawLayerAtPoint(void * context, CGPoint point, void * layer);
 // void EventSourceSetPixelsPerLine(void * source, double pixelsPerLine);
-// void * EventCreateKeyboardEvent(void * source, uint16_t virtualKey, bool keyDown);
-// uint32_t EventSourceCounterForEventType(int32_t stateID, uint32_t eventType);
+// void * EventCreateKeyboardEvent(void * source, CGKeyCode virtualKey, bool keyDown);
+// uint32_t EventSourceCounterForEventType(CGEventSourceStateID stateID, CGEventType eventType);
 // void PathAddRects(void * path, const CGAffineTransform* m, const CGRect* rects, uint count);
-// void EventSetTimestamp(void * event, uint64_t timestamp);
-// bool EventSourceKeyState(int32_t stateID, uint16_t key);
+// void EventSetTimestamp(void * event, CGEventTimestamp timestamp);
+// bool EventSourceKeyState(CGEventSourceStateID stateID, CGKeyCode key);
 // float RectGetHeight(CGRect rect);
-// bool PDFDictionaryGetInteger(void * dict, char* key, int32_t* value);
-// double EventSourceSecondsSinceLastEventType(int32_t stateID, uint32_t eventType);
+// bool PDFDictionaryGetInteger(void * dict, char* key, CGPDFInteger* value);
+// CFTimeInterval EventSourceSecondsSinceLastEventType(CGEventSourceStateID stateID, CGEventType eventType);
 // CGRect RectIntegral(CGRect rect);
 // void ContextSetFillColorSpace(void * c, void * space);
-// bool PDFArrayGetNumber(void * array, uint index, float* value);
+// bool PDFArrayGetNumber(void * array, uint index, CGPDFReal* value);
 // void * ColorCreateWithPattern(void * space, void * pattern, const float* components);
 // void ContextTranslateCTM(void * c, float tx, float ty);
-// int DisplayUsesOpenGLAcceleration(uint32_t display);
-// void ContextSetBlendMode(void * c, int32_t mode);
+// boolean_t DisplayUsesOpenGLAcceleration(CGDirectDisplayID display);
+// void ContextSetBlendMode(void * c, CGBlendMode mode);
 // void GetLastMouseDelta(int32_t* deltaX, int32_t* deltaY);
-// bool FontGetGlyphBBoxes(void * font, const long* glyphs, uint count, CGRect* bboxes);
-// int32_t GetDisplaysWithPoint(CGPoint point, uint32_t maxDisplays, uint32_t* displays, uint32_t* matchingDisplayCount);
+// bool FontGetGlyphBBoxes(void * font, const CGGlyph* glyphs, uint count, CGRect* bboxes);
+// CGError GetDisplaysWithPoint(CGPoint point, uint32_t maxDisplays, CGDirectDisplayID* displays, uint32_t* matchingDisplayCount);
 // void ImageRelease(void * image);
 // float RectGetMinX(CGRect rect);
 // void ContextReplacePathWithStrokedPath(void * c);
 // uint BitmapContextGetBytesPerRow(void * context);
-// void * WindowListCreate(uint32_t option, uint32_t relativeToWindow);
+// void * WindowListCreate(CGWindowListOption option, CGWindowID relativeToWindow);
 // CGSize SizeApplyAffineTransform(CGSize size, CGAffineTransform t);
-// int DisplayIsInMirrorSet(uint32_t display);
+// void EventTapPostEvent(CGEventTapProxy proxy, void * event);
+// boolean_t DisplayIsInMirrorSet(CGDirectDisplayID display);
 // bool ColorSpaceIsPQBased(void * s);
 // void ContextClearRect(void * c, CGRect rect);
-// int32_t DisplayRelease(uint32_t display);
+// CGError DisplayRelease(CGDirectDisplayID display);
 // void * PDFPageGetDocument(void * page);
-// int32_t GetDisplayTransferByTable(uint32_t display, uint32_t capacity, float* redTable, float* greenTable, float* blueTable, uint32_t* sampleCount);
+// CGError GetDisplayTransferByTable(CGDirectDisplayID display, uint32_t capacity, CGGammaValue* redTable, CGGammaValue* greenTable, CGGammaValue* blueTable, uint32_t* sampleCount);
 // bool AffineTransformEqualToTransform(CGAffineTransform t1, CGAffineTransform t2);
 // void * PDFScannerGetContentStream(void * scanner);
 // void PathAddLineToPoint(void * path, const CGAffineTransform* m, float x, float y);
 // bool PreflightListenEventAccess();
-// uint32_t EventGetType(void * event);
-// bool PDFScannerPopNumber(void * scanner, float* value);
+// CGEventType EventGetType(void * event);
+// bool PDFScannerPopNumber(void * scanner, CGPDFReal* value);
 // void * ColorSpaceCreateLab(const float* whitePoint, const float* blackPoint, const float* range_);
 // void PDFContextEndPage(void * context);
 // CGRect ContextGetClipBoundingBox(void * c);
 // void * PDFOperatorTableCreate();
 // void PathAddRect(void * path, const CGAffineTransform* m, CGRect rect);
 // CGPoint PointApplyAffineTransform(CGPoint point, CGAffineTransform t);
-// void * ImageCreateWithJPEGDataProvider(void * source, const float* decode, bool shouldInterpolate, int32_t intent);
-// int32_t EventSourceGetTypeID();
-// void * ImageCreate(uint width, uint height, uint bitsPerComponent, uint bitsPerPixel, uint bytesPerRow, void * space, uint32_t bitmapInfo, void * provider, const float* decode, bool shouldInterpolate, int32_t intent);
+// void * ImageCreateWithJPEGDataProvider(void * source, const float* decode, bool shouldInterpolate, CGColorRenderingIntent intent);
+// CFTypeID EventSourceGetTypeID();
+// void * ImageCreate(uint width, uint height, uint bitsPerComponent, uint bitsPerPixel, uint bytesPerRow, void * space, CGBitmapInfo bitmapInfo, void * provider, const float* decode, bool shouldInterpolate, CGColorRenderingIntent intent);
 // bool RectIsNull(CGRect rect);
-// int32_t EventSourceGetSourceStateID(void * source);
+// CGEventSourceStateID EventSourceGetSourceStateID(void * source);
 // void * GradientRetain(void * gradient);
-// bool PDFArrayGetBoolean(void * array, uint index, char* value);
+// bool PDFArrayGetBoolean(void * array, uint index, CGPDFBoolean* value);
 // void ContextSetFillColor(void * c, const float* components);
 // void * ColorGetPattern(void * color);
 // CGRect PathGetPathBoundingBox(void * path);
-// int32_t CaptureAllDisplaysWithOptions(uint32_t options);
+// CGError CaptureAllDisplaysWithOptions(CGCaptureOptions options);
 // void * WindowListCreateDescriptionFromArray(void * windowArray);
 // void * PDFContentStreamCreateWithStream(void * stream, void * streamResources, void * parent);
-// void ContextDrawRadialGradient(void * c, void * gradient, CGPoint startCenter, float startRadius, CGPoint endCenter, float endRadius, uint32_t options);
+// void ContextDrawRadialGradient(void * c, void * gradient, CGPoint startCenter, float startRadius, CGPoint endCenter, float endRadius, CGGradientDrawingOptions options);
 // void * PDFStringCopyDate(void * string_);
-// int32_t GetOnlineDisplayList(uint32_t maxDisplays, uint32_t* onlineDisplays, uint32_t* displayCount);
+// CGError GetOnlineDisplayList(uint32_t maxDisplays, CGDirectDisplayID* onlineDisplays, uint32_t* displayCount);
 // CGPoint ContextConvertPointToDeviceSpace(void * c, CGPoint point);
 // void * PathCreateCopy(void * path);
 // void * BitmapContextCreateImage(void * context);
 // uint ColorSpaceGetNumberOfComponents(void * space);
 // void * FunctionRetain(void * function);
-// int32_t GetDisplayTransferByFormula(uint32_t display, float* redMin, float* redMax, float* redGamma, float* greenMin, float* greenMax, float* greenGamma, float* blueMin, float* blueMax, float* blueGamma);
+// CGError GetDisplayTransferByFormula(CGDirectDisplayID display, CGGammaValue* redMin, CGGammaValue* redMax, CGGammaValue* redGamma, CGGammaValue* greenMin, CGGammaValue* greenMax, CGGammaValue* greenGamma, CGGammaValue* blueMin, CGGammaValue* blueMax, CGGammaValue* blueGamma);
 // void * ColorSpaceRetain(void * space);
 // void * ColorCreateSRGB(float red, float green, float blue, float alpha);
 // void * ImageGetColorSpace(void * image);
 // void * ShadingCreateRadial(void * space, CGPoint start, float startRadius, CGPoint end, float endRadius, void * function, bool extendStart, bool extendEnd);
-// void RectDivide(CGRect rect, CGRect* slice, CGRect* remainder, float amount, uint32_t edge);
+// void RectDivide(CGRect rect, CGRect* slice, CGRect* remainder, float amount, CGRectEdge edge);
 // void ContextSetAllowsAntialiasing(void * c, bool allowsAntialiasing);
 // uint BitmapContextGetHeight(void * context);
 // float ColorGetAlpha(void * color);
 // uint ImageGetHeight(void * image);
 // void * ColorSpaceCreateWithName(void * name);
 // void ContextAddQuadCurveToPoint(void * c, float cpx, float cpy, float x, float y);
-// int32_t ConfigureDisplayWithDisplayMode(void * config, uint32_t display, void * mode, void * options);
+// CGError ConfigureDisplayWithDisplayMode(void * config, CGDirectDisplayID display, void * mode, void * options);
 // void * DataProviderCopyData(void * provider);
-// int DisplayIsInHWMirrorSet(uint32_t display);
-// uint32_t EventSourceGetLocalEventsFilterDuringSuppressionState(void * source, uint32_t state);
+// boolean_t DisplayIsInHWMirrorSet(CGDirectDisplayID display);
+// CGEventFilterMask EventSourceGetLocalEventsFilterDuringSuppressionState(void * source, CGEventSuppressionState state);
 // void * FontCopyTableForTag(void * font, uint32_t tag);
 // char* PDFStringGetBytePtr(void * string_);
 // CGRect ContextGetPathBoundingBox(void * c);
 // void * LayerRetain(void * layer);
 // void ContextSetAllowsFontSubpixelPositioning(void * c, bool allowsFontSubpixelPositioning);
-// int32_t ColorGetTypeID();
-// uint32_t ImageGetByteOrderInfo(void * image);
+// CFTypeID ColorGetTypeID();
+// CGImageByteOrderInfo ImageGetByteOrderInfo(void * image);
 // void * PDFDocumentCreateWithProvider(void * provider);
-// bool FontGetGlyphAdvances(void * font, const long* glyphs, uint count, int* advances);
-// uint32_t ImageGetPixelFormatInfo(void * image);
+// bool FontGetGlyphAdvances(void * font, const CGGlyph* glyphs, uint count, int* advances);
+// CGImagePixelFormatInfo ImageGetPixelFormatInfo(void * image);
 // void * FontCopyVariationAxes(void * font);
-// void* ColorSpaceCopyPropertyList(void * space);
+// CFPropertyListRef ColorSpaceCopyPropertyList(void * space);
 // void ContextSetStrokePattern(void * c, void * pattern, const float* components);
 // void ContextClipToRect(void * c, CGRect rect);
 // void ContextResetClip(void * c);
 // void PathAddQuadCurveToPoint(void * path, const CGAffineTransform* m, float cpx, float cpy, float x, float y);
-// int32_t WarpMouseCursorPosition(CGPoint newCursorPosition);
-// int32_t DisplayMoveCursorToPoint(uint32_t display, CGPoint point);
-// void * WindowListCopyWindowInfo(uint32_t option, uint32_t relativeToWindow);
-// uint32_t ShieldingWindowID(uint32_t display);
+// CGError WarpMouseCursorPosition(CGPoint newCursorPosition);
+// CGError DisplayMoveCursorToPoint(CGDirectDisplayID display, CGPoint point);
+// void * WindowListCopyWindowInfo(CGWindowListOption option, CGWindowID relativeToWindow);
+// CGWindowID ShieldingWindowID(CGDirectDisplayID display);
 // void PDFContextSetOutline(void * context, void * outline);
 // void PathAddArcToPoint(void * path, const CGAffineTransform* m, float x1, float y1, float x2, float y2, float radius);
 // uint ImageGetBitsPerComponent(void * image);
-// int32_t CaptureAllDisplays();
+// CGError CaptureAllDisplays();
 // double EventSourceGetPixelsPerLine(void * source);
 // CGRect RectInset(CGRect rect, float dx, float dy);
 // bool PDFArrayGetNull(void * array, uint index);
 // float* ImageGetDecode(void * image);
 // void* DataProviderGetInfo(void * provider);
-// void * PDFStreamCopyData(void * stream, int32_t* format);
+// void * PDFStreamCopyData(void * stream, CGPDFDataFormat* format);
 // void * PatternRetain(void * pattern);
 // void * BitmapContextGetColorSpace(void * context);
 // bool RectIsEmpty(CGRect rect);
 // float RectGetMinY(CGRect rect);
-// int32_t ColorSpaceGetTypeID();
+// CFTypeID ColorSpaceGetTypeID();
 // void * ShadingRetain(void * shading);
 // void * ColorCreateCopy(void * color);
 // void ContextBeginTransparencyLayerWithRect(void * c, CGRect rect, void * auxInfo);
 // void PDFPageRelease(void * page);
-// int32_t ImageGetTypeID();
+// CFTypeID ImageGetTypeID();
 // void ContextRotateCTM(void * c, float angle);
 // void ContextEndTransparencyLayer(void * c);
-// void EventSourceSetLocalEventsSuppressionInterval(void * source, double seconds);
+// void EventSourceSetLocalEventsSuppressionInterval(void * source, CFTimeInterval seconds);
 // CGRect RectIntersection(CGRect r1, CGRect r2);
 // int32_t DisplayModeGetIODisplayModeID(void * mode);
-// uint32_t DisplayPrimaryDisplay(uint32_t display);
+// CGDirectDisplayID DisplayPrimaryDisplay(CGDirectDisplayID display);
 // void PDFContextAddDestinationAtPoint(void * context, void * name, CGPoint point);
 // int FontGetDescent(void * font);
 // void ContextSetStrokeColor(void * c, const float* components);
@@ -295,13 +296,13 @@ package coregraphics
 // void PDFContextClose(void * context);
 // void * DataProviderRetain(void * provider);
 // bool ColorSpaceSupportsOutput(void * space);
-// void EventSetDoubleValueField(void * event, uint32_t field, double value);
+// void EventSetDoubleValueField(void * event, CGEventField field, double value);
 // void ContextDrawPDFPage(void * c, void * page);
 // void * PDFContextCreateWithURL(void * url, const CGRect* mediaBox, void * auxiliaryInfo);
-// int32_t PDFPageGetTypeID();
+// CFTypeID PDFPageGetTypeID();
 // void * PDFContentStreamCreateWithPage(void * page);
 // void * FontCreateWithDataProvider(void * provider);
-// bool PDFDictionaryGetNumber(void * dict, char* key, float* value);
+// bool PDFDictionaryGetNumber(void * dict, char* key, CGPDFReal* value);
 // void ColorSpaceRelease(void * space);
 // void * ImageCreateCopy(void * image);
 // void ContextEndPage(void * c);
@@ -310,54 +311,54 @@ package coregraphics
 // uint FontGetNumberOfGlyphs(void * font);
 // void ContextClipToMask(void * c, CGRect rect, void * mask);
 // void * PDFPageGetDictionary(void * page);
-// uint32_t DisplayGammaTableCapacity(uint32_t display);
-// void EventSetIntegerValueField(void * event, uint32_t field, int64_t value);
+// uint32_t DisplayGammaTableCapacity(CGDirectDisplayID display);
+// void EventSetIntegerValueField(void * event, CGEventField field, int64_t value);
 // void ContextAddPath(void * c, void * path);
 // CGAffineTransform ContextGetTextMatrix(void * c);
 // void ContextStrokePath(void * c);
-// uint DisplayPixelsWide(uint32_t display);
+// uint DisplayPixelsWide(CGDirectDisplayID display);
 // void ContextSetShouldAntialias(void * c, bool shouldAntialias);
 // bool EventTapIsEnabled(void * tap);
-// char* PDFTagTypeGetName(int32_t tagType);
+// char* PDFTagTypeGetName(CGPDFTagType tagType);
 // void ContextSetGrayFillColor(void * c, float gray, float alpha);
 // void * PDFContentStreamGetResource(void * cs, char* category, char* name);
-// bool PDFDictionaryGetBoolean(void * dict, char* key, char* value);
+// bool PDFDictionaryGetBoolean(void * dict, char* key, CGPDFBoolean* value);
 // bool PSConverterConvert(void * converter, void * provider, void * consumer, void * options);
 // void PDFContentStreamRelease(void * cs);
-// uint32_t DisplayIDToOpenGLDisplayMask(uint32_t display);
+// CGOpenGLDisplayMask DisplayIDToOpenGLDisplayMask(CGDirectDisplayID display);
 // float RectGetMaxX(CGRect rect);
 // bool ContextIsPathEmpty(void * c);
-// int32_t ColorConversionInfoGetTypeID();
+// CFTypeID ColorConversionInfoGetTypeID();
 // uint ImageGetBitsPerPixel(void * image);
 // bool RectMakeWithDictionaryRepresentation(void * dict, CGRect* rect);
 // uint DisplayModeGetPixelHeight(void * mode);
 // void * ColorSpaceCreateDeviceRGB();
 // void ContextSetStrokeColorWithColor(void * c, void * color);
 // void * LayerGetContext(void * layer);
-// bool PDFArrayGetInteger(void * array, uint index, int32_t* value);
+// bool PDFArrayGetInteger(void * array, uint index, CGPDFInteger* value);
 // float FontGetItalicAngle(void * font);
-// int32_t ConfigureDisplayOrigin(void * config, uint32_t display, int32_t x, int32_t y);
+// CGError ConfigureDisplayOrigin(void * config, CGDirectDisplayID display, int32_t x, int32_t y);
 // void * ColorConversionInfoCreateWithOptions(void * src, void * dst, void * options);
 // void RestorePermanentDisplayConfiguration();
-// uint32_t BitmapContextGetAlphaInfo(void * context);
+// CGImageAlphaInfo BitmapContextGetAlphaInfo(void * context);
 // void ContextClosePath(void * c);
 // bool PathEqualToPath(void * path1, void * path2);
-// void * EventCreateMouseEvent(void * source, uint32_t mouseType, CGPoint mouseCursorPosition, uint32_t mouseButton);
-// uint32_t MainDisplayID();
+// void * EventCreateMouseEvent(void * source, CGEventType mouseType, CGPoint mouseCursorPosition, CGMouseButton mouseButton);
+// CGDirectDisplayID MainDisplayID();
 // CGAffineTransform AffineTransformTranslate(CGAffineTransform t, float tx, float ty);
 // void * PDFDocumentGetPage(void * document, uint pageNumber);
 // float RectGetMidX(CGRect rect);
-// uint32_t EventSourceGetKeyboardType(void * source);
+// CGEventSourceKeyboardType EventSourceGetKeyboardType(void * source);
 // void PDFContextBeginPage(void * context, void * pageInfo);
 // void * ColorCreateCopyWithAlpha(void * color, float alpha);
-// uint32_t PDFDocumentGetAccessPermissions(void * document);
+// CGPDFAccessPermissions PDFDocumentGetAccessPermissions(void * document);
 // CGAffineTransform AffineTransformRotate(CGAffineTransform t, float angle);
 // void * EventCreateCopy(void * event);
 // void ContextSynchronize(void * c);
-// CGAffineTransform PDFPageGetDrawingTransform(void * page, int32_t box, CGRect rect, int rotate, bool preserveAspectRatio);
-// int32_t ShieldingWindowLevel();
+// CGAffineTransform PDFPageGetDrawingTransform(void * page, CGPDFBox box, CGRect rect, int rotate, bool preserveAspectRatio);
+// CGWindowLevel ShieldingWindowLevel();
 // bool DisplayModeIsUsableForDesktopGUI(void * mode);
-// int32_t GradientGetTypeID();
+// CFTypeID GradientGetTypeID();
 // void * PointCreateDictionaryRepresentation(CGPoint point);
 // CGRect RectOffset(CGRect rect, float dx, float dy);
 // void ContextSetCMYKStrokeColor(void * c, float cyan, float magenta, float yellow, float black, float alpha);
@@ -371,76 +372,76 @@ package coregraphics
 // void ContextSetStrokeColorSpace(void * c, void * space);
 // CGRect RectStandardize(CGRect rect);
 // CGRect FontGetFontBBox(void * font);
-// int32_t DisplayCapture(uint32_t display);
+// CGError DisplayCapture(CGDirectDisplayID display);
 // void ContextAddEllipseInRect(void * c, CGRect rect);
 // void * GradientCreateWithColorComponents(void * space, const float* components, const float* locations, uint count);
 // void * ColorSpaceCreateCalibratedRGB(const float* whitePoint, const float* blackPoint, const float* gamma, const float* matrix);
 // void ContextDrawShading(void * c, void * shading);
 // float RectGetMidY(CGRect rect);
-// void * DisplayCreateImageForRect(uint32_t display, CGRect rect);
+// void * DisplayCreateImageForRect(CGDirectDisplayID display, CGRect rect);
 // void * ColorCreate(void * space, const float* components);
 // void PathMoveToPoint(void * path, const CGAffineTransform* m, float x, float y);
 // void ColorRelease(void * color);
 // uint PDFDocumentGetNumberOfPages(void * document);
-// void EventSourceSetKeyboardType(void * source, uint32_t keyboardType);
-// void * DisplayCopyAllDisplayModes(uint32_t display, void * options);
-// uint DisplayPixelsHigh(uint32_t display);
-// int32_t SetDisplayTransferByByteTable(uint32_t display, uint32_t tableSize, const uint8_t* redTable, const uint8_t* greenTable, const uint8_t* blueTable);
+// void EventSourceSetKeyboardType(void * source, CGEventSourceKeyboardType keyboardType);
+// void * DisplayCopyAllDisplayModes(CGDirectDisplayID display, void * options);
+// uint DisplayPixelsHigh(CGDirectDisplayID display);
+// CGError SetDisplayTransferByByteTable(CGDirectDisplayID display, uint32_t tableSize, const uint8_t* redTable, const uint8_t* greenTable, const uint8_t* blueTable);
 // void * ImageGetDataProvider(void * image);
 // void ContextSetFillPattern(void * c, void * pattern, const float* components);
-// int32_t DataProviderGetTypeID();
+// CFTypeID DataProviderGetTypeID();
 // void * DataProviderCreateWithFilename(char* filename);
 // uint ImageGetBytesPerRow(void * image);
 // void * DataProviderCreateWithCFData(void * data);
 // bool PDFDocumentAllowsCopying(void * document);
-// void * ColorCreateCopyByMatchingToColorSpace(void * , int32_t intent, void * color, void * options);
+// void * ColorCreateCopyByMatchingToColorSpace(void * , CGColorRenderingIntent intent, void * color, void * options);
 // CGSize SizeMake(float width, float height);
 // float RectGetMaxY(CGRect rect);
 // bool PDFDocumentAllowsPrinting(void * document);
 // void ContextSetAllowsFontSmoothing(void * c, bool allowsFontSmoothing);
-// void ContextDrawPath(void * c, int32_t mode);
-// long FontGetGlyphWithGlyphName(void * font, void * name);
+// void ContextDrawPath(void * c, CGPathDrawingMode mode);
+// CGGlyph FontGetGlyphWithGlyphName(void * font, void * name);
 // void * RectCreateDictionaryRepresentation(CGRect );
 // void* BitmapContextGetData(void * context);
 // int FontGetAscent(void * font);
-// int32_t DisplaySetStereoOperation(uint32_t display, int stereo, int forceBlueLine, uint32_t option);
+// CGError DisplaySetStereoOperation(CGDirectDisplayID display, boolean_t stereo, boolean_t forceBlueLine, CGConfigureOption option);
 // bool ImageGetShouldInterpolate(void * image);
 // void ContextFillPath(void * c);
-// int32_t PDFDocumentGetTypeID();
-// int32_t ImageGetRenderingIntent(void * image);
-// void EventPost(uint32_t tap, void * event);
+// CFTypeID PDFDocumentGetTypeID();
+// CGColorRenderingIntent ImageGetRenderingIntent(void * image);
+// void EventPost(CGEventTapLocation tap, void * event);
 // float FontGetStemV(void * font);
 // void ContextStrokeLineSegments(void * c, const CGPoint* points, uint count);
 // void ContextEOFillPath(void * c);
-// int32_t DisplayCaptureWithOptions(uint32_t display, uint32_t options);
-// bool ContextPathContainsPoint(void * c, CGPoint point, int32_t mode);
+// CGError DisplayCaptureWithOptions(CGDirectDisplayID display, CGCaptureOptions options);
+// bool ContextPathContainsPoint(void * c, CGPoint point, CGPathDrawingMode mode);
 // bool ColorSpaceUsesITUR_2100TF(void * );
 // void * PDFDocumentGetOutline(void * document);
 // void PathRelease(void * path);
-// int32_t PathGetTypeID();
+// CFTypeID PathGetTypeID();
 // void PDFDocumentRelease(void * document);
 // void * WindowServerCreateServerPort();
 // CGAffineTransform ContextGetUserSpaceToDeviceSpaceTransform(void * c);
 // void ContextDrawImage(void * c, CGRect rect, void * image);
 // void * PathCreateWithRoundedRect(CGRect rect, float cornerWidth, float cornerHeight, const CGAffineTransform* transform);
-// void PDFContextBeginTag(void * context, int32_t tagType, void * tagProperties);
-// int32_t PDFObjectGetType(void * object);
+// void PDFContextBeginTag(void * context, CGPDFTagType tagType, void * tagProperties);
+// CGPDFObjectType PDFObjectGetType(void * object);
 // void * ImageMaskCreate(uint width, uint height, uint bitsPerComponent, uint bitsPerPixel, uint bytesPerRow, void * provider, const float* decode, bool shouldInterpolate);
 // void * ColorCreateGenericRGB(float red, float green, float blue, float alpha);
-// double EventGetDoubleValueField(void * event, uint32_t field);
+// double EventGetDoubleValueField(void * event, CGEventField field);
 // void * PDFDocumentGetInfo(void * document);
 // bool PSConverterIsConverting(void * converter);
 // void * FontCreateCopyWithVariations(void * font, void * variations);
-// int32_t ConfigureDisplayMirrorOfDisplay(void * config, uint32_t display, uint32_t master);
+// CGError ConfigureDisplayMirrorOfDisplay(void * config, CGDirectDisplayID display, CGDirectDisplayID master);
 // double DisplayModeGetRefreshRate(void * mode);
-// double EventSourceGetLocalEventsSuppressionInterval(void * source);
+// CFTimeInterval EventSourceGetLocalEventsSuppressionInterval(void * source);
 // void ContextAddArcToPoint(void * c, float x1, float y1, float x2, float y2, float radius);
 // void * DataConsumerCreateWithURL(void * url);
 // CGSize LayerGetSize(void * layer);
 // void * ContextRetain(void * c);
-// int32_t AcquireDisplayFadeReservation(float seconds, uint32_t* token);
-// uint64_t EventGetFlags(void * event);
-// void * FontCopyGlyphNameForGlyph(void * font, long glyph);
+// CGError AcquireDisplayFadeReservation(CGDisplayReservationInterval seconds, CGDisplayFadeReservationToken* token);
+// CGEventFlags EventGetFlags(void * event);
+// void * FontCopyGlyphNameForGlyph(void * font, CGGlyph glyph);
 // void ContextSetRGBFillColor(void * c, float red, float green, float blue, float alpha);
 // void ContextRestoreGState(void * c);
 // void * PathCreateCopyByTransformingPath(void * path, const CGAffineTransform* transform);
@@ -455,38 +456,38 @@ package coregraphics
 // void ContextSetShouldSubpixelPositionFonts(void * c, bool shouldSubpixelPositionFonts);
 // void * ContextCopyPath(void * c);
 // void * ImageGetUTType(void * image);
-// bool FontCanCreatePostScriptSubset(void * font, int32_t format);
+// bool FontCanCreatePostScriptSubset(void * font, CGFontPostScriptFormat format);
 // float* ColorGetComponents(void * color);
-// int32_t ContextGetTypeID();
+// CFTypeID ContextGetTypeID();
 // void * DataConsumerCreateWithCFData(void * data);
 // void ContextAddRect(void * c, CGRect rect);
 // void PathAddRelativeArc(void * path, const CGAffineTransform* matrix, float x, float y, float radius, float startAngle, float delta);
 // void DataConsumerRelease(void * consumer);
-// int32_t ConfigureDisplayStereoOperation(void * config, uint32_t display, int stereo, int forceBlueLine);
+// CGError ConfigureDisplayStereoOperation(void * config, CGDirectDisplayID display, boolean_t stereo, boolean_t forceBlueLine);
 // CGSize ContextConvertSizeToDeviceSpace(void * c, CGSize size);
 // void PathAddCurveToPoint(void * path, const CGAffineTransform* m, float cp1x, float cp1y, float cp2x, float cp2y, float x, float y);
-// int DisplayIsBuiltin(uint32_t display);
-// int32_t DisplayHideCursor(uint32_t display);
-// uint32_t DisplayUnitNumber(uint32_t display);
-// int32_t DisplaySetDisplayMode(uint32_t display, void * mode, void * options);
-// void ContextShowGlyphsAtPositions(void * c, const long* glyphs, const CGPoint* Lpositions, uint count);
+// boolean_t DisplayIsBuiltin(CGDirectDisplayID display);
+// CGError DisplayHideCursor(CGDirectDisplayID display);
+// uint32_t DisplayUnitNumber(CGDirectDisplayID display);
+// CGError DisplaySetDisplayMode(CGDirectDisplayID display, void * mode, void * options);
+// void ContextShowGlyphsAtPositions(void * c, const CGGlyph* glyphs, const CGPoint* Lpositions, uint count);
 // void ContextSetFillColorWithColor(void * c, void * color);
 // int FontGetLeading(void * font);
-// int32_t PSConverterGetTypeID();
+// CFTypeID PSConverterGetTypeID();
 // void * GradientCreateWithColors(void * space, void * colors, const float* locations);
-// int DisplayIsAlwaysInMirrorSet(uint32_t display);
+// boolean_t DisplayIsAlwaysInMirrorSet(CGDirectDisplayID display);
 // void * PathCreateCopyByDashingPath(void * path, const CGAffineTransform* transform, float phase, const float* lengths, uint count);
 // void ContextSetCMYKFillColor(void * c, float cyan, float magenta, float yellow, float black, float alpha);
-// int32_t CancelDisplayConfiguration(void * config);
+// CGError CancelDisplayConfiguration(void * config);
 // void PathAddLines(void * path, const CGAffineTransform* m, const CGPoint* points, uint count);
-// int32_t SetDisplayTransferByFormula(uint32_t display, float redMin, float redMax, float redGamma, float greenMin, float greenMax, float greenGamma, float blueMin, float blueMax, float blueGamma);
-// int DisplayIsAsleep(uint32_t display);
-// uint32_t ImageGetBitmapInfo(void * image);
+// CGError SetDisplayTransferByFormula(CGDirectDisplayID display, CGGammaValue redMin, CGGammaValue redMax, CGGammaValue redGamma, CGGammaValue greenMin, CGGammaValue greenMax, CGGammaValue greenGamma, CGGammaValue blueMin, CGGammaValue blueMax, CGGammaValue blueGamma);
+// boolean_t DisplayIsAsleep(CGDirectDisplayID display);
+// CGBitmapInfo ImageGetBitmapInfo(void * image);
 // uint BitmapContextGetWidth(void * context);
 // CGAffineTransform AffineTransformMake(float a, float b, float c, float d, float tx, float ty);
 // void * PathCreateWithEllipseInRect(CGRect rect, const CGAffineTransform* transform);
 // bool RectIntersectsRect(CGRect rect1, CGRect rect2);
-// void * DisplayCreateImage(uint32_t displayID);
+// void * DisplayCreateImage(CGDirectDisplayID displayID);
 // void ContextSetLineWidth(void * c, float width);
 // void PatternRelease(void * pattern);
 // void ContextEOClip(void * c);
@@ -494,20 +495,20 @@ package coregraphics
 // void ContextSetAllowsFontSubpixelQuantization(void * c, bool allowsFontSubpixelQuantization);
 // CGPoint ContextConvertPointToUserSpace(void * c, CGPoint point);
 // void * DataConsumerRetain(void * consumer);
-// void EventSourceSetLocalEventsFilterDuringSuppressionState(void * source, uint32_t filter, uint32_t state);
+// void EventSourceSetLocalEventsFilterDuringSuppressionState(void * source, CGEventFilterMask filter, CGEventSuppressionState state);
 // void ContextSetGrayStrokeColor(void * c, float gray, float alpha);
-// uint32_t DisplayVendorNumber(uint32_t display);
+// uint32_t DisplayVendorNumber(CGDirectDisplayID display);
 // bool RectContainsPoint(CGRect rect, CGPoint point);
-// int32_t FontGetTypeID();
-// void * DisplayGetDrawingContext(uint32_t display);
+// CFTypeID FontGetTypeID();
+// void * DisplayGetDrawingContext(CGDirectDisplayID display);
 // void ContextSetShouldSmoothFonts(void * c, bool shouldSmoothFonts);
 // void * EventCreate(void * source);
-// uint32_t DisplayMirrorsDisplay(uint32_t display);
+// CGDirectDisplayID DisplayMirrorsDisplay(CGDirectDisplayID display);
 // bool AffineTransformIsIdentity(CGAffineTransform t);
 // void ContextBeginPage(void * c, const CGRect* mediaBox);
 // float RectGetWidth(CGRect rect);
 // CGPoint PointMake(float x, float y);
-// void * EventCreateScrollWheelEvent(void * source, uint32_t units, uint32_t wheelCount, int32_t wheel1);
+// void * EventCreateScrollWheelEvent(void * source, CGScrollEventUnit units, uint32_t wheelCount, int32_t wheel1);
 // void * ColorGetConstantColor(void * colorName);
 // void * EventCreateSourceFromEvent(void * event);
 // int FontGetXHeight(void * font);
@@ -516,7 +517,7 @@ package coregraphics
 // void PDFContextSetURLForRect(void * context, void * url, CGRect rect);
 // void * ColorSpaceCreateLinearized(void * space);
 // uint ColorSpaceGetColorTableCount(void * space);
-// uint32_t OpenGLDisplayMaskToDisplayID(uint32_t mask);
+// CGDirectDisplayID OpenGLDisplayMaskToDisplayID(CGOpenGLDisplayMask mask);
 // void ContextFlush(void * c);
 // CGVector VectorMake(float dx, float dy);
 // uint DisplayModeGetHeight(void * mode);
@@ -527,13 +528,13 @@ package coregraphics
 // void * PDFStreamGetDictionary(void * stream);
 // uint PDFStringGetLength(void * string_);
 // void ContextClip(void * c);
-// int32_t ReleaseAllDisplays();
-// uint32_t DisplaySerialNumber(uint32_t display);
+// CGError ReleaseAllDisplays();
+// uint32_t DisplaySerialNumber(CGDirectDisplayID display);
 // void * ColorSpaceCopyName(void * space);
-// void ContextSetLineCap(void * c, int32_t cap);
+// void ContextSetLineCap(void * c, CGLineCap cap);
 // void ShadingRelease(void * shading);
 // void * PDFOperatorTableRetain(void * table);
-// uint32_t DisplayModelNumber(uint32_t display);
+// uint32_t DisplayModelNumber(CGDirectDisplayID display);
 // void EventSourceSetUserData(void * source, int64_t userData);
 // void GradientRelease(void * gradient);
 // bool RequestListenEventAccess();
@@ -546,25 +547,25 @@ package coregraphics
 // void * ImageCreateWithImageInRect(void * image, CGRect rect);
 // int PDFPageGetRotationAngle(void * page);
 // void ContextAddLineToPoint(void * c, float x, float y);
-// bool PDFScannerPopBoolean(void * scanner, char* value);
+// bool PDFScannerPopBoolean(void * scanner, CGPDFBoolean* value);
 // void * FontCreateWithFontName(void * name);
-// void ContextSetInterpolationQuality(void * c, int32_t quality);
+// void ContextSetInterpolationQuality(void * c, CGInterpolationQuality quality);
 // void * PDFDocumentGetCatalog(void * document);
 // void LayerRelease(void * layer);
-// int32_t LayerGetTypeID();
-// int32_t FunctionGetTypeID();
+// CFTypeID LayerGetTypeID();
+// CFTypeID FunctionGetTypeID();
 // void * PDFContentStreamGetStreams(void * cs);
 // uint PDFDictionaryGetCount(void * dict);
-// int32_t DisplayShowCursor(uint32_t display);
-// uint32_t BitmapContextGetBitmapInfo(void * context);
+// CGError DisplayShowCursor(CGDirectDisplayID display);
+// CGBitmapInfo BitmapContextGetBitmapInfo(void * context);
 // CGAffineTransform AffineTransformScale(CGAffineTransform t, float sx, float sy);
-// void * FontCreatePostScriptSubset(void * font, void * subsetName, int32_t format, const long* glyphs, uint count, const long* encoding);
-// int DisplayIsMain(uint32_t display);
+// void * FontCreatePostScriptSubset(void * font, void * subsetName, CGFontPostScriptFormat format, const CGGlyph* glyphs, uint count, const CGGlyph* encoding);
+// boolean_t DisplayIsMain(CGDirectDisplayID display);
 // void * PathCreateMutable();
 // void DisplayRestoreColorSyncSettings();
 // void ContextSetLineDash(void * c, float phase, const float* lengths, uint count);
-// int32_t DisplayModeGetTypeID();
-// uint64_t EventSourceFlagsState(int32_t stateID);
+// CFTypeID DisplayModeGetTypeID();
+// CGEventFlags EventSourceFlagsState(CGEventSourceStateID stateID);
 // bool RequestPostEventAccess();
 // void ContextFillRect(void * c, CGRect rect);
 // void * PathRetain(void * path);
@@ -685,7 +686,7 @@ func DisplayIsOnline(display DirectDisplayID) int {
 	rv := C.DisplayIsOnline(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return int(rv)
@@ -698,7 +699,7 @@ func ReleaseDisplayFadeReservation(token DisplayFadeReservationToken) Error {
 	rv := C.ReleaseDisplayFadeReservation(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(token),
+		(C.CGDisplayFadeReservationToken)(token),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -789,7 +790,7 @@ func EventGetIntegerValueField(event EventRef, field EventField) int64 {
 		unsafe.Pointer(event),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(field),
+		(C.CGEventField)(field),
 	)
 	// *typing.PrimitiveType
 	return int64(rv)
@@ -953,7 +954,7 @@ func ContextDrawLinearGradient(c ContextRef, gradient GradientRef, startPoint Po
 		*(*C.CGPoint)(unsafe.Pointer(&endPoint)),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(options),
+		(C.CGGradientDrawingOptions)(options),
 	)
 }
 
@@ -966,7 +967,7 @@ func PDFPageGetBoxRect(page PDFPageRef, box PDFBox) Rect {
 		unsafe.Pointer(page),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(box),
+		(C.CGPDFBox)(box),
 	)
 	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
@@ -1023,7 +1024,7 @@ func DisplayBounds(display DirectDisplayID) Rect {
 	rv := C.DisplayBounds(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.StructType
 	return *(*Rect)(unsafe.Pointer(&rv))
@@ -1038,7 +1039,7 @@ func ContextSetTextDrawingMode(c ContextRef, mode TextDrawingMode) {
 		unsafe.Pointer(c),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(mode),
+		(C.CGTextDrawingMode)(mode),
 	)
 }
 
@@ -1080,10 +1081,10 @@ func PathCreateCopyByStrokingPath(path unsafe.Pointer, transform *AffineTransfor
 		C.float(lineWidth),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(lineCap),
+		(C.CGLineCap)(lineCap),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(lineJoin),
+		(C.CGLineJoin)(lineJoin),
 		// *typing.PrimitiveType
 		C.float(miterLimit),
 	)
@@ -1154,7 +1155,7 @@ func DisplayCopyColorSpace(display DirectDisplayID) ColorSpaceRef {
 	rv := C.DisplayCopyColorSpace(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.RefType
 	return ColorSpaceRef(rv)
@@ -1193,7 +1194,7 @@ func EventSetFlags(event EventRef, flags EventFlags) {
 		unsafe.Pointer(event),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint64_t)(flags),
+		(C.CGEventFlags)(flags),
 	)
 }
 
@@ -1419,7 +1420,7 @@ func ColorSpaceCreateWithICCData(data corefoundation.TypeRef) ColorSpaceRef {
 	rv := C.ColorSpaceCreateWithICCData(
 		// *typing.AliasType
 		// *typing.VoidPointerType
-		unsafe.Pointer(data),
+		(C.CFTypeRef)(data),
 	)
 	// *typing.RefType
 	return ColorSpaceRef(rv)
@@ -1435,7 +1436,7 @@ func GetDisplaysWithRect(rect Rect, maxDisplays uint32, displays *DirectDisplayI
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(displays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(displays)),
 		// *typing.PointerType
 		(*C.uint32_t)(unsafe.Pointer(matchingDisplayCount)),
 	)
@@ -1522,7 +1523,7 @@ func DisplayRotation(display DirectDisplayID) float64 {
 	rv := C.DisplayRotation(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.PrimitiveType
 	return float64(rv)
@@ -1619,7 +1620,7 @@ func CompleteDisplayConfiguration(config unsafe.Pointer, option ConfigureOption)
 		unsafe.Pointer(config),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(option),
+		(C.CGConfigureOption)(option),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -1700,7 +1701,7 @@ func WindowLevelForKey(key WindowLevelKey) WindowLevel {
 	rv := C.WindowLevelForKey(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(key),
+		(C.CGWindowLevelKey)(key),
 	)
 	// *typing.AliasType
 	return WindowLevel(rv)
@@ -1715,7 +1716,7 @@ func ContextSetRenderingIntent(c ContextRef, intent ColorRenderingIntent) {
 		unsafe.Pointer(c),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(intent),
+		(C.CGColorRenderingIntent)(intent),
 	)
 }
 
@@ -1813,7 +1814,7 @@ func DisplayIsStereo(display DirectDisplayID) int {
 	rv := C.DisplayIsStereo(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return int(rv)
@@ -1853,7 +1854,7 @@ func PDFScannerPopInteger(scanner unsafe.Pointer, value *PDFInteger) bool {
 		// *typing.RefType
 		unsafe.Pointer(scanner),
 		// *typing.PointerType
-		(*C.int32_t)(unsafe.Pointer(value)),
+		(*C.CGPDFInteger)(unsafe.Pointer(value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -1878,7 +1879,7 @@ func DisplayScreenSize(display DirectDisplayID) Size {
 	rv := C.DisplayScreenSize(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.StructType
 	return *(*Size)(unsafe.Pointer(&rv))
@@ -1927,7 +1928,7 @@ func DisplayCopyDisplayMode(display DirectDisplayID) DisplayModeRef {
 	rv := C.DisplayCopyDisplayMode(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.RefType
 	return DisplayModeRef(rv)
@@ -1954,11 +1955,11 @@ func GetDisplaysWithOpenGLDisplayMask(mask OpenGLDisplayMask, maxDisplays uint32
 	rv := C.GetDisplaysWithOpenGLDisplayMask(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(mask),
+		(C.CGOpenGLDisplayMask)(mask),
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(displays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(displays)),
 		// *typing.PointerType
 		(*C.uint32_t)(unsafe.Pointer(matchingDisplayCount)),
 	)
@@ -2071,7 +2072,7 @@ func EventSetType(event EventRef, type_ EventType) {
 		unsafe.Pointer(event),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(type_),
+		(C.CGEventType)(type_),
 	)
 }
 
@@ -2084,7 +2085,7 @@ func EventCreateScrollWheelEvent2(source EventSourceRef, units ScrollEventUnit, 
 		unsafe.Pointer(source),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(units),
+		(C.CGScrollEventUnit)(units),
 		// *typing.PrimitiveType
 		C.uint32_t(wheelCount),
 		// *typing.PrimitiveType
@@ -2123,7 +2124,7 @@ func ImageCreateWithPNGDataProvider(source DataProviderRef, decode *float64, sho
 		C.bool(shouldInterpolate),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(intent),
+		(C.CGColorRenderingIntent)(intent),
 	)
 	// *typing.RefType
 	return ImageRef(rv)
@@ -2175,10 +2176,10 @@ func ConfigureDisplayFadeEffect(config unsafe.Pointer, fadeOutSeconds DisplayFad
 		unsafe.Pointer(config),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(fadeOutSeconds),
+		(C.CGDisplayFadeInterval)(fadeOutSeconds),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(fadeInSeconds),
+		(C.CGDisplayFadeInterval)(fadeInSeconds),
 		// *typing.PrimitiveType
 		C.float(fadeRed),
 		// *typing.PrimitiveType
@@ -2197,16 +2198,16 @@ func DisplayFade(token DisplayFadeReservationToken, duration DisplayFadeInterval
 	rv := C.DisplayFade(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(token),
+		(C.CGDisplayFadeReservationToken)(token),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(duration),
+		(C.CGDisplayFadeInterval)(duration),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(startBlend),
+		(C.CGDisplayBlendFraction)(startBlend),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(endBlend),
+		(C.CGDisplayBlendFraction)(endBlend),
 		// *typing.PrimitiveType
 		C.float(redBlend),
 		// *typing.PrimitiveType
@@ -2215,7 +2216,7 @@ func DisplayFade(token DisplayFadeReservationToken, duration DisplayFadeInterval
 		C.float(blueBlend),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int)(synchronous),
+		(C.boolean_t)(synchronous),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -2290,10 +2291,10 @@ func EventSourceButtonState(stateID EventSourceStateID, button MouseButton) bool
 	rv := C.EventSourceButtonState(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(stateID),
+		(C.CGEventSourceStateID)(stateID),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(button),
+		(C.CGMouseButton)(button),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -2348,7 +2349,7 @@ func AssociateMouseAndMouseCursorPosition(connected int) Error {
 	rv := C.AssociateMouseAndMouseCursorPosition(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int)(connected),
+		(C.boolean_t)(connected),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -2412,15 +2413,15 @@ func SetDisplayTransferByTable(display DirectDisplayID, tableSize uint32, redTab
 	rv := C.SetDisplayTransferByTable(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.PrimitiveType
 		C.uint32_t(tableSize),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(redTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(redTable)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(greenTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(greenTable)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(blueTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(blueTable)),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -2445,7 +2446,7 @@ func DisplayIsActive(display DirectDisplayID) int {
 	rv := C.DisplayIsActive(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return int(rv)
@@ -2482,7 +2483,7 @@ func ContextSetLineJoin(c ContextRef, join LineJoin) {
 		unsafe.Pointer(c),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(join),
+		(C.CGLineJoin)(join),
 	)
 }
 
@@ -2506,7 +2507,7 @@ func GetActiveDisplayList(maxDisplays uint32, activeDisplays *DirectDisplayID, d
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(activeDisplays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(activeDisplays)),
 		// *typing.PointerType
 		(*C.uint32_t)(unsafe.Pointer(displayCount)),
 	)
@@ -2547,7 +2548,7 @@ func EventSourceCreate(stateID EventSourceStateID) EventSourceRef {
 	rv := C.EventSourceCreate(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(stateID),
+		(C.CGEventSourceStateID)(stateID),
 	)
 	// *typing.RefType
 	return EventSourceRef(rv)
@@ -2601,7 +2602,7 @@ func FontCreatePostScriptEncoding(font FontRef, encoding *Glyph) corefoundation.
 		// *typing.RefType
 		unsafe.Pointer(font),
 		// *typing.PointerType
-		(*C.long)(unsafe.Pointer(encoding)),
+		(*C.CGGlyph)(unsafe.Pointer(encoding)),
 	)
 	// *typing.RefType
 	return corefoundation.DataRef(rv)
@@ -2642,7 +2643,7 @@ func EventCreateKeyboardEvent(source EventSourceRef, virtualKey KeyCode, keyDown
 		unsafe.Pointer(source),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint16_t)(virtualKey),
+		(C.CGKeyCode)(virtualKey),
 		// *typing.PrimitiveType
 		C.bool(keyDown),
 	)
@@ -2657,10 +2658,10 @@ func EventSourceCounterForEventType(stateID EventSourceStateID, eventType EventT
 	rv := C.EventSourceCounterForEventType(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(stateID),
+		(C.CGEventSourceStateID)(stateID),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(eventType),
+		(C.CGEventType)(eventType),
 	)
 	// *typing.PrimitiveType
 	return uint32(rv)
@@ -2691,7 +2692,7 @@ func EventSetTimestamp(event EventRef, timestamp EventTimestamp) {
 		unsafe.Pointer(event),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint64_t)(timestamp),
+		(C.CGEventTimestamp)(timestamp),
 	)
 }
 
@@ -2702,10 +2703,10 @@ func EventSourceKeyState(stateID EventSourceStateID, key KeyCode) bool {
 	rv := C.EventSourceKeyState(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(stateID),
+		(C.CGEventSourceStateID)(stateID),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint16_t)(key),
+		(C.CGKeyCode)(key),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -2735,7 +2736,7 @@ func PDFDictionaryGetInteger(dict unsafe.Pointer, key string, value *PDFInteger)
 		// *typing.CStringType
 		keyVal,
 		// *typing.PointerType
-		(*C.int32_t)(unsafe.Pointer(value)),
+		(*C.CGPDFInteger)(unsafe.Pointer(value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -2748,10 +2749,10 @@ func EventSourceSecondsSinceLastEventType(stateID EventSourceStateID, eventType 
 	rv := C.EventSourceSecondsSinceLastEventType(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(stateID),
+		(C.CGEventSourceStateID)(stateID),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(eventType),
+		(C.CGEventType)(eventType),
 	)
 	// *typing.AliasType
 	return corefoundation.TimeInterval(rv)
@@ -2791,7 +2792,7 @@ func PDFArrayGetNumber(array unsafe.Pointer, index uint, value *PDFReal) bool {
 		// *typing.PrimitiveType
 		C.uint(index),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(value)),
+		(*C.CGPDFReal)(unsafe.Pointer(value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -2834,7 +2835,7 @@ func DisplayUsesOpenGLAcceleration(display DirectDisplayID) int {
 	rv := C.DisplayUsesOpenGLAcceleration(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return int(rv)
@@ -2849,7 +2850,7 @@ func ContextSetBlendMode(c ContextRef, mode BlendMode) {
 		unsafe.Pointer(c),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(mode),
+		(C.CGBlendMode)(mode),
 	)
 }
 
@@ -2873,7 +2874,7 @@ func FontGetGlyphBBoxes(font FontRef, glyphs *Glyph, count uint, bboxes *Rect) b
 		// *typing.RefType
 		unsafe.Pointer(font),
 		// *typing.PointerType
-		(*C.long)(unsafe.Pointer(glyphs)),
+		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
 		// *typing.PrimitiveType
 		C.uint(count),
 		// *typing.PointerType
@@ -2893,7 +2894,7 @@ func GetDisplaysWithPoint(point Point, maxDisplays uint32, displays *DirectDispl
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(displays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(displays)),
 		// *typing.PointerType
 		(*C.uint32_t)(unsafe.Pointer(matchingDisplayCount)),
 	)
@@ -2952,10 +2953,10 @@ func WindowListCreate(option WindowListOption, relativeToWindow WindowID) corefo
 	rv := C.WindowListCreate(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(option),
+		(C.CGWindowListOption)(option),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(relativeToWindow),
+		(C.CGWindowID)(relativeToWindow),
 	)
 	// *typing.RefType
 	return corefoundation.ArrayRef(rv)
@@ -2975,6 +2976,19 @@ func SizeApplyAffineTransform(size Size, t AffineTransform) Size {
 	return *(*Size)(unsafe.Pointer(&rv))
 }
 
+// Posts a Quartz event from an event tap into the event stream. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455172-cgeventtappostevent?language=objc
+func EventTapPostEvent(proxy EventTapProxy, event EventRef) {
+	C.EventTapPostEvent(
+		// *typing.AliasType
+		// *typing.PointerType
+		(C.CGEventTapProxy)(proxy),
+		// *typing.RefType
+		unsafe.Pointer(event),
+	)
+}
+
 // Returns a Boolean value indicating whether a display is in a mirroring set. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/1455558-cgdisplayisinmirrorset?language=objc
@@ -2982,7 +2996,7 @@ func DisplayIsInMirrorSet(display DirectDisplayID) int {
 	rv := C.DisplayIsInMirrorSet(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return int(rv)
@@ -3019,7 +3033,7 @@ func DisplayRelease(display DirectDisplayID) Error {
 	rv := C.DisplayRelease(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -3044,15 +3058,15 @@ func GetDisplayTransferByTable(display DirectDisplayID, capacity uint32, redTabl
 	rv := C.GetDisplayTransferByTable(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.PrimitiveType
 		C.uint32_t(capacity),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(redTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(redTable)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(greenTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(greenTable)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(blueTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(blueTable)),
 		// *typing.PointerType
 		(*C.uint32_t)(unsafe.Pointer(sampleCount)),
 	)
@@ -3131,7 +3145,7 @@ func PDFScannerPopNumber(scanner unsafe.Pointer, value *PDFReal) bool {
 		// *typing.RefType
 		unsafe.Pointer(scanner),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(value)),
+		(*C.CGPDFReal)(unsafe.Pointer(value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -3225,7 +3239,7 @@ func ImageCreateWithJPEGDataProvider(source DataProviderRef, decode *float64, sh
 		C.bool(shouldInterpolate),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(intent),
+		(C.CGColorRenderingIntent)(intent),
 	)
 	// *typing.RefType
 	return ImageRef(rv)
@@ -3259,7 +3273,7 @@ func ImageCreate(width uint, height uint, bitsPerComponent uint, bitsPerPixel ui
 		unsafe.Pointer(space),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(bitmapInfo),
+		(C.CGBitmapInfo)(bitmapInfo),
 		// *typing.RefType
 		unsafe.Pointer(provider),
 		// *typing.PointerType
@@ -3268,7 +3282,7 @@ func ImageCreate(width uint, height uint, bitsPerComponent uint, bitsPerPixel ui
 		C.bool(shouldInterpolate),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(intent),
+		(C.CGColorRenderingIntent)(intent),
 	)
 	// *typing.RefType
 	return ImageRef(rv)
@@ -3320,7 +3334,7 @@ func PDFArrayGetBoolean(array unsafe.Pointer, index uint, value *PDFBoolean) boo
 		// *typing.PrimitiveType
 		C.uint(index),
 		// *typing.PointerType
-		(*C.char)(unsafe.Pointer(value)),
+		(*C.CGPDFBoolean)(unsafe.Pointer(value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -3369,7 +3383,7 @@ func CaptureAllDisplaysWithOptions(options CaptureOptions) Error {
 	rv := C.CaptureAllDisplaysWithOptions(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(options),
+		(C.CGCaptureOptions)(options),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -3422,7 +3436,7 @@ func ContextDrawRadialGradient(c ContextRef, gradient GradientRef, startCenter P
 		C.float(endRadius),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(options),
+		(C.CGGradientDrawingOptions)(options),
 	)
 }
 
@@ -3446,7 +3460,7 @@ func GetOnlineDisplayList(maxDisplays uint32, onlineDisplays *DirectDisplayID, d
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(onlineDisplays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(onlineDisplays)),
 		// *typing.PointerType
 		(*C.uint32_t)(unsafe.Pointer(displayCount)),
 	)
@@ -3523,25 +3537,25 @@ func GetDisplayTransferByFormula(display DirectDisplayID, redMin *GammaValue, re
 	rv := C.GetDisplayTransferByFormula(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(redMin)),
+		(*C.CGGammaValue)(unsafe.Pointer(redMin)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(redMax)),
+		(*C.CGGammaValue)(unsafe.Pointer(redMax)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(redGamma)),
+		(*C.CGGammaValue)(unsafe.Pointer(redGamma)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(greenMin)),
+		(*C.CGGammaValue)(unsafe.Pointer(greenMin)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(greenMax)),
+		(*C.CGGammaValue)(unsafe.Pointer(greenMax)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(greenGamma)),
+		(*C.CGGammaValue)(unsafe.Pointer(greenGamma)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(blueMin)),
+		(*C.CGGammaValue)(unsafe.Pointer(blueMin)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(blueMax)),
+		(*C.CGGammaValue)(unsafe.Pointer(blueMax)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(blueGamma)),
+		(*C.CGGammaValue)(unsafe.Pointer(blueGamma)),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -3630,7 +3644,7 @@ func RectDivide(rect Rect, slice *Rect, remainder *Rect, amount float64, edge Re
 		C.float(amount),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(edge),
+		(C.CGRectEdge)(edge),
 	)
 }
 
@@ -3721,7 +3735,7 @@ func ConfigureDisplayWithDisplayMode(config unsafe.Pointer, display DirectDispla
 		unsafe.Pointer(config),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.RefType
 		unsafe.Pointer(mode),
 		// *typing.RefType
@@ -3750,7 +3764,7 @@ func DisplayIsInHWMirrorSet(display DirectDisplayID) int {
 	rv := C.DisplayIsInHWMirrorSet(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return int(rv)
@@ -3765,7 +3779,7 @@ func EventSourceGetLocalEventsFilterDuringSuppressionState(source EventSourceRef
 		unsafe.Pointer(source),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(state),
+		(C.CGEventSuppressionState)(state),
 	)
 	// *typing.AliasType
 	return EventFilterMask(rv)
@@ -3874,7 +3888,7 @@ func FontGetGlyphAdvances(font FontRef, glyphs *Glyph, count uint, advances *int
 		// *typing.RefType
 		unsafe.Pointer(font),
 		// *typing.PointerType
-		(*C.long)(unsafe.Pointer(glyphs)),
+		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
 		// *typing.PrimitiveType
 		C.uint(count),
 		// *typing.PointerType
@@ -3995,7 +4009,7 @@ func DisplayMoveCursorToPoint(display DirectDisplayID, point Point) Error {
 	rv := C.DisplayMoveCursorToPoint(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.StructType
 		*(*C.CGPoint)(unsafe.Pointer(&point)),
 	)
@@ -4010,10 +4024,10 @@ func WindowListCopyWindowInfo(option WindowListOption, relativeToWindow WindowID
 	rv := C.WindowListCopyWindowInfo(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(option),
+		(C.CGWindowListOption)(option),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(relativeToWindow),
+		(C.CGWindowID)(relativeToWindow),
 	)
 	// *typing.RefType
 	return corefoundation.ArrayRef(rv)
@@ -4026,7 +4040,7 @@ func ShieldingWindowID(display DirectDisplayID) WindowID {
 	rv := C.ShieldingWindowID(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return WindowID(rv)
@@ -4161,7 +4175,7 @@ func PDFStreamCopyData(stream unsafe.Pointer, format *PDFDataFormat) corefoundat
 		// *typing.RefType
 		unsafe.Pointer(stream),
 		// *typing.PointerType
-		(*C.int32_t)(unsafe.Pointer(format)),
+		(*C.CGPDFDataFormat)(unsafe.Pointer(format)),
 	)
 	// *typing.RefType
 	return corefoundation.DataRef(rv)
@@ -4312,7 +4326,7 @@ func EventSourceSetLocalEventsSuppressionInterval(source EventSourceRef, seconds
 		unsafe.Pointer(source),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.double)(seconds),
+		(C.CFTimeInterval)(seconds),
 	)
 }
 
@@ -4349,7 +4363,7 @@ func DisplayPrimaryDisplay(display DirectDisplayID) DirectDisplayID {
 	rv := C.DisplayPrimaryDisplay(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return DirectDisplayID(rv)
@@ -4512,7 +4526,7 @@ func EventSetDoubleValueField(event EventRef, field EventField, value float64) {
 		unsafe.Pointer(event),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(field),
+		(C.CGEventField)(field),
 		// *typing.PrimitiveType
 		C.double(value),
 	)
@@ -4591,7 +4605,7 @@ func PDFDictionaryGetNumber(dict unsafe.Pointer, key string, value *PDFReal) boo
 		// *typing.CStringType
 		keyVal,
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(value)),
+		(*C.CGPDFReal)(unsafe.Pointer(value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -4698,7 +4712,7 @@ func DisplayGammaTableCapacity(display DirectDisplayID) uint32 {
 	rv := C.DisplayGammaTableCapacity(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.PrimitiveType
 	return uint32(rv)
@@ -4713,7 +4727,7 @@ func EventSetIntegerValueField(event EventRef, field EventField, value int64) {
 		unsafe.Pointer(event),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(field),
+		(C.CGEventField)(field),
 		// *typing.PrimitiveType
 		C.int64_t(value),
 	)
@@ -4760,7 +4774,7 @@ func DisplayPixelsWide(display DirectDisplayID) uint {
 	rv := C.DisplayPixelsWide(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.PrimitiveType
 	return uint(rv)
@@ -4797,7 +4811,7 @@ func PDFTagTypeGetName(tagType PDFTagType) string {
 	rv := C.PDFTagTypeGetName(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(tagType),
+		(C.CGPDFTagType)(tagType),
 	)
 	// *typing.CStringType
 	return C.GoString(rv)
@@ -4849,7 +4863,7 @@ func PDFDictionaryGetBoolean(dict unsafe.Pointer, key string, value *PDFBoolean)
 		// *typing.CStringType
 		keyVal,
 		// *typing.PointerType
-		(*C.char)(unsafe.Pointer(value)),
+		(*C.CGPDFBoolean)(unsafe.Pointer(value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -4890,7 +4904,7 @@ func DisplayIDToOpenGLDisplayMask(display DirectDisplayID) OpenGLDisplayMask {
 	rv := C.DisplayIDToOpenGLDisplayMask(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return OpenGLDisplayMask(rv)
@@ -5010,7 +5024,7 @@ func PDFArrayGetInteger(array unsafe.Pointer, index uint, value *PDFInteger) boo
 		// *typing.PrimitiveType
 		C.uint(index),
 		// *typing.PointerType
-		(*C.int32_t)(unsafe.Pointer(value)),
+		(*C.CGPDFInteger)(unsafe.Pointer(value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -5037,7 +5051,7 @@ func ConfigureDisplayOrigin(config unsafe.Pointer, display DirectDisplayID, x in
 		unsafe.Pointer(config),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.PrimitiveType
 		C.int32_t(x),
 		// *typing.PrimitiveType
@@ -5115,12 +5129,12 @@ func EventCreateMouseEvent(source EventSourceRef, mouseType EventType, mouseCurs
 		unsafe.Pointer(source),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(mouseType),
+		(C.CGEventType)(mouseType),
 		// *typing.StructType
 		*(*C.CGPoint)(unsafe.Pointer(&mouseCursorPosition)),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(mouseButton),
+		(C.CGMouseButton)(mouseButton),
 	)
 	// *typing.RefType
 	return EventRef(rv)
@@ -5272,7 +5286,7 @@ func PDFPageGetDrawingTransform(page PDFPageRef, box PDFBox, rect Rect, rotate i
 		unsafe.Pointer(page),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(box),
+		(C.CGPDFBox)(box),
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 		// *typing.PrimitiveType
@@ -5497,7 +5511,7 @@ func DisplayCapture(display DirectDisplayID) Error {
 	rv := C.DisplayCapture(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -5582,7 +5596,7 @@ func DisplayCreateImageForRect(display DirectDisplayID, rect Rect) ImageRef {
 	rv := C.DisplayCreateImageForRect(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
@@ -5651,7 +5665,7 @@ func EventSourceSetKeyboardType(source EventSourceRef, keyboardType EventSourceK
 		unsafe.Pointer(source),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(keyboardType),
+		(C.CGEventSourceKeyboardType)(keyboardType),
 	)
 }
 
@@ -5662,7 +5676,7 @@ func DisplayCopyAllDisplayModes(display DirectDisplayID, options corefoundation.
 	rv := C.DisplayCopyAllDisplayModes(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.RefType
 		unsafe.Pointer(options),
 	)
@@ -5677,7 +5691,7 @@ func DisplayPixelsHigh(display DirectDisplayID) uint {
 	rv := C.DisplayPixelsHigh(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.PrimitiveType
 	return uint(rv)
@@ -5690,7 +5704,7 @@ func SetDisplayTransferByByteTable(display DirectDisplayID, tableSize uint32, re
 	rv := C.SetDisplayTransferByByteTable(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.PrimitiveType
 		C.uint32_t(tableSize),
 		// *typing.PointerType
@@ -5798,7 +5812,7 @@ func ColorCreateCopyByMatchingToColorSpace(arg0 ColorSpaceRef, intent ColorRende
 		unsafe.Pointer(arg0),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(intent),
+		(C.CGColorRenderingIntent)(intent),
 		// *typing.RefType
 		unsafe.Pointer(color),
 		// *typing.RefType
@@ -5867,7 +5881,7 @@ func ContextDrawPath(c ContextRef, mode PathDrawingMode) {
 		unsafe.Pointer(c),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(mode),
+		(C.CGPathDrawingMode)(mode),
 	)
 }
 
@@ -5928,16 +5942,16 @@ func DisplaySetStereoOperation(display DirectDisplayID, stereo int, forceBlueLin
 	rv := C.DisplaySetStereoOperation(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int)(stereo),
+		(C.boolean_t)(stereo),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int)(forceBlueLine),
+		(C.boolean_t)(forceBlueLine),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(option),
+		(C.CGConfigureOption)(option),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -5993,7 +6007,7 @@ func EventPost(tap EventTapLocation, event EventRef) {
 	C.EventPost(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(tap),
+		(C.CGEventTapLocation)(tap),
 		// *typing.RefType
 		unsafe.Pointer(event),
 	)
@@ -6042,10 +6056,10 @@ func DisplayCaptureWithOptions(display DirectDisplayID, options CaptureOptions) 
 	rv := C.DisplayCaptureWithOptions(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(options),
+		(C.CGCaptureOptions)(options),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -6062,7 +6076,7 @@ func ContextPathContainsPoint(c ContextRef, point Point, mode PathDrawingMode) b
 		*(*C.CGPoint)(unsafe.Pointer(&point)),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(mode),
+		(C.CGPathDrawingMode)(mode),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -6183,7 +6197,7 @@ func PDFContextBeginTag(context ContextRef, tagType PDFTagType, tagProperties co
 		unsafe.Pointer(context),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(tagType),
+		(C.CGPDFTagType)(tagType),
 		// *typing.RefType
 		unsafe.Pointer(tagProperties),
 	)
@@ -6254,7 +6268,7 @@ func EventGetDoubleValueField(event EventRef, field EventField) float64 {
 		unsafe.Pointer(event),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(field),
+		(C.CGEventField)(field),
 	)
 	// *typing.PrimitiveType
 	return float64(rv)
@@ -6307,10 +6321,10 @@ func ConfigureDisplayMirrorOfDisplay(config unsafe.Pointer, display DirectDispla
 		unsafe.Pointer(config),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(master),
+		(C.CGDirectDisplayID)(master),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -6403,9 +6417,9 @@ func AcquireDisplayFadeReservation(seconds DisplayReservationInterval, token *Di
 	rv := C.AcquireDisplayFadeReservation(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(seconds),
+		(C.CGDisplayReservationInterval)(seconds),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(token)),
+		(*C.CGDisplayFadeReservationToken)(unsafe.Pointer(token)),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -6432,7 +6446,7 @@ func FontCopyGlyphNameForGlyph(font FontRef, glyph Glyph) corefoundation.StringR
 		unsafe.Pointer(font),
 		// *typing.AliasType
 		// *typing.AliasType
-		(C.long)(glyph),
+		(C.CGGlyph)(glyph),
 	)
 	// *typing.RefType
 	return corefoundation.StringRef(rv)
@@ -6621,7 +6635,7 @@ func FontCanCreatePostScriptSubset(font FontRef, format FontPostScriptFormat) bo
 		unsafe.Pointer(font),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(format),
+		(C.CGFontPostScriptFormat)(format),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -6713,13 +6727,13 @@ func ConfigureDisplayStereoOperation(config unsafe.Pointer, display DirectDispla
 		unsafe.Pointer(config),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int)(stereo),
+		(C.boolean_t)(stereo),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int)(forceBlueLine),
+		(C.boolean_t)(forceBlueLine),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -6770,7 +6784,7 @@ func DisplayIsBuiltin(display DirectDisplayID) int {
 	rv := C.DisplayIsBuiltin(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return int(rv)
@@ -6783,7 +6797,7 @@ func DisplayHideCursor(display DirectDisplayID) Error {
 	rv := C.DisplayHideCursor(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -6796,7 +6810,7 @@ func DisplayUnitNumber(display DirectDisplayID) uint32 {
 	rv := C.DisplayUnitNumber(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.PrimitiveType
 	return uint32(rv)
@@ -6809,7 +6823,7 @@ func DisplaySetDisplayMode(display DirectDisplayID, mode DisplayModeRef, options
 	rv := C.DisplaySetDisplayMode(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.RefType
 		unsafe.Pointer(mode),
 		// *typing.RefType
@@ -6827,7 +6841,7 @@ func ContextShowGlyphsAtPositions(c ContextRef, glyphs *Glyph, Lpositions *Point
 		// *typing.RefType
 		unsafe.Pointer(c),
 		// *typing.PointerType
-		(*C.long)(unsafe.Pointer(glyphs)),
+		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
 		// *typing.PointerType
 		(*C.CGPoint)(unsafe.Pointer(Lpositions)),
 		// *typing.PrimitiveType
@@ -6891,7 +6905,7 @@ func DisplayIsAlwaysInMirrorSet(display DirectDisplayID) int {
 	rv := C.DisplayIsAlwaysInMirrorSet(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return int(rv)
@@ -6972,34 +6986,34 @@ func SetDisplayTransferByFormula(display DirectDisplayID, redMin GammaValue, red
 	rv := C.SetDisplayTransferByFormula(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(redMin),
+		(C.CGGammaValue)(redMin),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(redMax),
+		(C.CGGammaValue)(redMax),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(redGamma),
+		(C.CGGammaValue)(redGamma),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(greenMin),
+		(C.CGGammaValue)(greenMin),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(greenMax),
+		(C.CGGammaValue)(greenMax),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(greenGamma),
+		(C.CGGammaValue)(greenGamma),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(blueMin),
+		(C.CGGammaValue)(blueMin),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(blueMax),
+		(C.CGGammaValue)(blueMax),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.float)(blueGamma),
+		(C.CGGammaValue)(blueGamma),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -7012,7 +7026,7 @@ func DisplayIsAsleep(display DirectDisplayID) int {
 	rv := C.DisplayIsAsleep(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return int(rv)
@@ -7099,7 +7113,7 @@ func DisplayCreateImage(displayID DirectDisplayID) ImageRef {
 	rv := C.DisplayCreateImage(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(displayID),
+		(C.CGDirectDisplayID)(displayID),
 	)
 	// *typing.RefType
 	return ImageRef(rv)
@@ -7196,10 +7210,10 @@ func EventSourceSetLocalEventsFilterDuringSuppressionState(source EventSourceRef
 		unsafe.Pointer(source),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(filter),
+		(C.CGEventFilterMask)(filter),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(state),
+		(C.CGEventSuppressionState)(state),
 	)
 }
 
@@ -7224,7 +7238,7 @@ func DisplayVendorNumber(display DirectDisplayID) uint32 {
 	rv := C.DisplayVendorNumber(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.PrimitiveType
 	return uint32(rv)
@@ -7260,7 +7274,7 @@ func DisplayGetDrawingContext(display DirectDisplayID) ContextRef {
 	rv := C.DisplayGetDrawingContext(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.RefType
 	return ContextRef(rv)
@@ -7297,7 +7311,7 @@ func DisplayMirrorsDisplay(display DirectDisplayID) DirectDisplayID {
 	rv := C.DisplayMirrorsDisplay(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return DirectDisplayID(rv)
@@ -7362,7 +7376,7 @@ func EventCreateScrollWheelEvent(source EventSourceRef, units ScrollEventUnit, w
 		unsafe.Pointer(source),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(units),
+		(C.CGScrollEventUnit)(units),
 		// *typing.PrimitiveType
 		C.uint32_t(wheelCount),
 		// *typing.PrimitiveType
@@ -7479,7 +7493,7 @@ func OpenGLDisplayMaskToDisplayID(mask OpenGLDisplayMask) DirectDisplayID {
 	rv := C.OpenGLDisplayMaskToDisplayID(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(mask),
+		(C.CGOpenGLDisplayMask)(mask),
 	)
 	// *typing.AliasType
 	return DirectDisplayID(rv)
@@ -7623,7 +7637,7 @@ func DisplaySerialNumber(display DirectDisplayID) uint32 {
 	rv := C.DisplaySerialNumber(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.PrimitiveType
 	return uint32(rv)
@@ -7650,7 +7664,7 @@ func ContextSetLineCap(c ContextRef, cap LineCap) {
 		unsafe.Pointer(c),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(cap),
+		(C.CGLineCap)(cap),
 	)
 }
 
@@ -7683,7 +7697,7 @@ func DisplayModelNumber(display DirectDisplayID) uint32 {
 	rv := C.DisplayModelNumber(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.PrimitiveType
 	return uint32(rv)
@@ -7844,7 +7858,7 @@ func PDFScannerPopBoolean(scanner unsafe.Pointer, value *PDFBoolean) bool {
 		// *typing.RefType
 		unsafe.Pointer(scanner),
 		// *typing.PointerType
-		(*C.char)(unsafe.Pointer(value)),
+		(*C.CGPDFBoolean)(unsafe.Pointer(value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -7871,7 +7885,7 @@ func ContextSetInterpolationQuality(c ContextRef, quality InterpolationQuality) 
 		unsafe.Pointer(c),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(quality),
+		(C.CGInterpolationQuality)(quality),
 	)
 }
 
@@ -7946,7 +7960,7 @@ func DisplayShowCursor(display DirectDisplayID) Error {
 	rv := C.DisplayShowCursor(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -7991,13 +8005,13 @@ func FontCreatePostScriptSubset(font FontRef, subsetName corefoundation.StringRe
 		unsafe.Pointer(subsetName),
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(format),
+		(C.CGFontPostScriptFormat)(format),
 		// *typing.PointerType
-		(*C.long)(unsafe.Pointer(glyphs)),
+		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
 		// *typing.PrimitiveType
 		C.uint(count),
 		// *typing.PointerType
-		(*C.long)(unsafe.Pointer(encoding)),
+		(*C.CGGlyph)(unsafe.Pointer(encoding)),
 	)
 	// *typing.RefType
 	return corefoundation.DataRef(rv)
@@ -8010,7 +8024,7 @@ func DisplayIsMain(display DirectDisplayID) int {
 	rv := C.DisplayIsMain(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.uint32_t)(display),
+		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
 	return int(rv)
@@ -8064,7 +8078,7 @@ func EventSourceFlagsState(stateID EventSourceStateID) EventFlags {
 	rv := C.EventSourceFlagsState(
 		// *typing.AliasType
 		// *typing.PrimitiveType
-		(C.int32_t)(stateID),
+		(C.CGEventSourceStateID)(stateID),
 	)
 	// *typing.AliasType
 	return EventFlags(rv)

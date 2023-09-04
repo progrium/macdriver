@@ -3,12 +3,8 @@ package coregraphics
 // #import <CoreGraphics/CGGeometry.h>
 import "C"
 import (
-	"unsafe"
-
 	"github.com/progrium/macdriver/objc"
 )
-
-type EventTapProxy = unsafe.Pointer
 
 // struct def should be sync with struct in <CoreGraphics/CGGeometry.h> <CoreGraphics/CGAffineTransform.h>
 

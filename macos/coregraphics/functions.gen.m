@@ -58,20 +58,20 @@ int64_t EventSourceGetUserData(void * source) {
 		(CGEventSourceRef)source
 	);
 }
-uint32_t ImageGetAlphaInfo(void * image) {
-	return (uint32_t)CGImageGetAlphaInfo(
+CGImageAlphaInfo ImageGetAlphaInfo(void * image) {
+	return (CGImageAlphaInfo)CGImageGetAlphaInfo(
 		// *typing.RefType
 		(CGImageRef)image
 	);
 }
-int DisplayIsOnline(uint32_t display) {
-	return (int)CGDisplayIsOnline(
+boolean_t DisplayIsOnline(CGDirectDisplayID display) {
+	return (boolean_t)CGDisplayIsOnline(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
 }
-int32_t ReleaseDisplayFadeReservation(uint32_t token) {
-	return (int32_t)CGReleaseDisplayFadeReservation(
+CGError ReleaseDisplayFadeReservation(CGDisplayFadeReservationToken token) {
+	return (CGError)CGReleaseDisplayFadeReservation(
 		// *typing.AliasType
 		(CGDisplayFadeReservationToken)token
 	);
@@ -119,7 +119,7 @@ void * ColorGetColorSpace(void * color) {
 		(CGColorRef)color
 	);
 }
-int64_t EventGetIntegerValueField(void * event, uint32_t field) {
+int64_t EventGetIntegerValueField(void * event, CGEventField field) {
 	return (int64_t)CGEventGetIntegerValueField(
 		// *typing.RefType
 		(CGEventRef)event,
@@ -212,11 +212,11 @@ void PathAddArc(void * path, const CGAffineTransform* m, float x, float y, float
 		(BOOL)clockwise
 	);
 }
-int32_t EventGetTypeID() {
-	return (int32_t)CGEventGetTypeID(
+CFTypeID EventGetTypeID() {
+	return (CFTypeID)CGEventGetTypeID(
 	);
 }
-void ContextDrawLinearGradient(void * c, void * gradient, CGPoint startPoint, CGPoint endPoint, uint32_t options) {
+void ContextDrawLinearGradient(void * c, void * gradient, CGPoint startPoint, CGPoint endPoint, CGGradientDrawingOptions options) {
 	return (void)CGContextDrawLinearGradient(
 		// *typing.RefType
 		(CGContextRef)c,
@@ -230,7 +230,7 @@ void ContextDrawLinearGradient(void * c, void * gradient, CGPoint startPoint, CG
 		(CGGradientDrawingOptions)options
 	);
 }
-CGRect PDFPageGetBoxRect(void * page, int32_t box) {
+CGRect PDFPageGetBoxRect(void * page, CGPDFBox box) {
 	return (CGRect)CGPDFPageGetBoxRect(
 		// *typing.RefType
 		(CGPDFPageRef)page,
@@ -252,8 +252,8 @@ void * SessionCopyCurrentDictionary() {
 	return (void *)CGSessionCopyCurrentDictionary(
 	);
 }
-int32_t ShadingGetTypeID() {
-	return (int32_t)CGShadingGetTypeID(
+CFTypeID ShadingGetTypeID() {
+	return (CFTypeID)CGShadingGetTypeID(
 	);
 }
 void * ColorSpaceCreatePattern(void * baseSpace) {
@@ -262,13 +262,13 @@ void * ColorSpaceCreatePattern(void * baseSpace) {
 		(CGColorSpaceRef)baseSpace
 	);
 }
-CGRect DisplayBounds(uint32_t display) {
+CGRect DisplayBounds(CGDirectDisplayID display) {
 	return (CGRect)CGDisplayBounds(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
 }
-void ContextSetTextDrawingMode(void * c, int32_t mode) {
+void ContextSetTextDrawingMode(void * c, CGTextDrawingMode mode) {
 	return (void)CGContextSetTextDrawingMode(
 		// *typing.RefType
 		(CGContextRef)c,
@@ -292,7 +292,7 @@ void * ColorSpaceCreateCalibratedGray(const float* whitePoint, const float* blac
 		(CGFloat)gamma
 	);
 }
-void * PathCreateCopyByStrokingPath(void * path, const CGAffineTransform* transform, float lineWidth, int32_t lineCap, int32_t lineJoin, float miterLimit) {
+void * PathCreateCopyByStrokingPath(void * path, const CGAffineTransform* transform, float lineWidth, CGLineCap lineCap, CGLineJoin lineJoin, float miterLimit) {
 	return (void *)CGPathCreateCopyByStrokingPath(
 		// *typing.RefType
 		(CGPathRef)path,
@@ -342,7 +342,7 @@ void * FontRetain(void * font) {
 		(CGFontRef)font
 	);
 }
-void * DisplayCopyColorSpace(uint32_t display) {
+void * DisplayCopyColorSpace(CGDirectDisplayID display) {
 	return (void *)CGDisplayCopyColorSpace(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
@@ -360,7 +360,7 @@ void * PDFDocumentCreateWithURL(void * url) {
 		(CFURLRef)url
 	);
 }
-void EventSetFlags(void * event, uint64_t flags) {
+void EventSetFlags(void * event, CGEventFlags flags) {
 	return (void)CGEventSetFlags(
 		// *typing.RefType
 		(CGEventRef)event,
@@ -501,14 +501,14 @@ void * ColorSpaceCreateExtendedLinearized(void * space) {
 		(CGColorSpaceRef)space
 	);
 }
-void * ColorSpaceCreateWithICCData(void* data) {
+void * ColorSpaceCreateWithICCData(CFTypeRef data) {
 	return (void *)CGColorSpaceCreateWithICCData(
 		// *typing.AliasType
 		(CFTypeRef)data
 	);
 }
-int32_t GetDisplaysWithRect(CGRect rect, uint32_t maxDisplays, uint32_t* displays, uint32_t* matchingDisplayCount) {
-	return (int32_t)CGGetDisplaysWithRect(
+CGError GetDisplaysWithRect(CGRect rect, uint32_t maxDisplays, CGDirectDisplayID* displays, uint32_t* matchingDisplayCount) {
+	return (CGError)CGGetDisplaysWithRect(
 		// *typing.StructType
 		(CGRect)rect,
 		// *typing.PrimitiveType
@@ -559,7 +559,7 @@ bool PDFDocumentUnlockWithPassword(void * document, char* password) {
 		(char*)password
 	);
 }
-double DisplayRotation(uint32_t display) {
+double DisplayRotation(CGDirectDisplayID display) {
 	return (double)CGDisplayRotation(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
@@ -607,12 +607,12 @@ void ContextRelease(void * c) {
 		(CGContextRef)c
 	);
 }
-int32_t DataConsumerGetTypeID() {
-	return (int32_t)CGDataConsumerGetTypeID(
+CFTypeID DataConsumerGetTypeID() {
+	return (CFTypeID)CGDataConsumerGetTypeID(
 	);
 }
-int32_t CompleteDisplayConfiguration(void * config, uint32_t option) {
-	return (int32_t)CGCompleteDisplayConfiguration(
+CGError CompleteDisplayConfiguration(void * config, CGConfigureOption option) {
+	return (CGError)CGCompleteDisplayConfiguration(
 		// *typing.RefType
 		(CGDisplayConfigRef)config,
 		// *typing.AliasType
@@ -666,13 +666,13 @@ void PathAddRoundedRect(void * path, const CGAffineTransform* transform, CGRect 
 		(CGFloat)cornerHeight
 	);
 }
-int32_t WindowLevelForKey(int32_t key) {
-	return (int32_t)CGWindowLevelForKey(
+CGWindowLevel WindowLevelForKey(CGWindowLevelKey key) {
+	return (CGWindowLevel)CGWindowLevelForKey(
 		// *typing.AliasType
 		(CGWindowLevelKey)key
 	);
 }
-void ContextSetRenderingIntent(void * c, int32_t intent) {
+void ContextSetRenderingIntent(void * c, CGColorRenderingIntent intent) {
 	return (void)CGContextSetRenderingIntent(
 		// *typing.RefType
 		(CGContextRef)c,
@@ -692,8 +692,8 @@ void ContextSetShadowWithColor(void * c, CGSize offset, float blur, void * color
 		(CGColorRef)color
 	);
 }
-int32_t PatternGetTypeID() {
-	return (int32_t)CGPatternGetTypeID(
+CFTypeID PatternGetTypeID() {
+	return (CFTypeID)CGPatternGetTypeID(
 	);
 }
 void * DisplayModeRetain(void * mode) {
@@ -702,8 +702,8 @@ void * DisplayModeRetain(void * mode) {
 		(CGDisplayModeRef)mode
 	);
 }
-uint64_t EventGetTimestamp(void * event) {
-	return (uint64_t)CGEventGetTimestamp(
+CGEventTimestamp EventGetTimestamp(void * event) {
+	return (CGEventTimestamp)CGEventGetTimestamp(
 		// *typing.RefType
 		(CGEventRef)event
 	);
@@ -728,8 +728,8 @@ void * EventCreateData(void * allocator, void * event) {
 		(CGEventRef)event
 	);
 }
-int DisplayIsStereo(uint32_t display) {
-	return (int)CGDisplayIsStereo(
+boolean_t DisplayIsStereo(CGDirectDisplayID display) {
+	return (boolean_t)CGDisplayIsStereo(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
@@ -750,7 +750,7 @@ CGSize ContextConvertSizeToUserSpace(void * c, CGSize size) {
 		(CGSize)size
 	);
 }
-bool PDFScannerPopInteger(void * scanner, int32_t* value) {
+bool PDFScannerPopInteger(void * scanner, CGPDFInteger* value) {
 	return (bool)CGPDFScannerPopInteger(
 		// *typing.RefType
 		(CGPDFScannerRef)scanner,
@@ -767,7 +767,7 @@ void PDFContextAddDocumentMetadata(void * context, void * metadata) {
 		(CFDataRef)metadata
 	);
 }
-CGSize DisplayScreenSize(uint32_t display) {
+CGSize DisplayScreenSize(CGDirectDisplayID display) {
 	return (CGSize)CGDisplayScreenSize(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
@@ -796,7 +796,7 @@ void ContextFillEllipseInRect(void * c, CGRect rect) {
 		(CGRect)rect
 	);
 }
-void * DisplayCopyDisplayMode(uint32_t display) {
+void * DisplayCopyDisplayMode(CGDirectDisplayID display) {
 	return (void *)CGDisplayCopyDisplayMode(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
@@ -812,8 +812,8 @@ void PDFContextSetDestinationForRect(void * context, void * name, CGRect rect) {
 		(CGRect)rect
 	);
 }
-int32_t GetDisplaysWithOpenGLDisplayMask(uint32_t mask, uint32_t maxDisplays, uint32_t* displays, uint32_t* matchingDisplayCount) {
-	return (int32_t)CGGetDisplaysWithOpenGLDisplayMask(
+CGError GetDisplaysWithOpenGLDisplayMask(CGOpenGLDisplayMask mask, uint32_t maxDisplays, CGDirectDisplayID* displays, uint32_t* matchingDisplayCount) {
+	return (CGError)CGGetDisplaysWithOpenGLDisplayMask(
 		// *typing.AliasType
 		(CGOpenGLDisplayMask)mask,
 		// *typing.PrimitiveType
@@ -891,7 +891,7 @@ void ContextAddArc(void * c, float x, float y, float radius, float startAngle, f
 		(int)clockwise
 	);
 }
-void EventSetType(void * event, uint32_t type_) {
+void EventSetType(void * event, CGEventType type_) {
 	return (void)CGEventSetType(
 		// *typing.RefType
 		(CGEventRef)event,
@@ -899,7 +899,7 @@ void EventSetType(void * event, uint32_t type_) {
 		(CGEventType)type_
 	);
 }
-void * EventCreateScrollWheelEvent2(void * source, uint32_t units, uint32_t wheelCount, int32_t wheel1, int32_t wheel2, int32_t wheel3) {
+void * EventCreateScrollWheelEvent2(void * source, CGScrollEventUnit units, uint32_t wheelCount, int32_t wheel1, int32_t wheel2, int32_t wheel3) {
 	return (void *)CGEventCreateScrollWheelEvent2(
 		// *typing.RefType
 		(CGEventSourceRef)source,
@@ -915,13 +915,13 @@ void * EventCreateScrollWheelEvent2(void * source, uint32_t units, uint32_t whee
 		(int32_t)wheel3
 	);
 }
-int32_t ColorSpaceGetModel(void * space) {
-	return (int32_t)CGColorSpaceGetModel(
+CGColorSpaceModel ColorSpaceGetModel(void * space) {
+	return (CGColorSpaceModel)CGColorSpaceGetModel(
 		// *typing.RefType
 		(CGColorSpaceRef)space
 	);
 }
-void * ImageCreateWithPNGDataProvider(void * source, const float* decode, bool shouldInterpolate, int32_t intent) {
+void * ImageCreateWithPNGDataProvider(void * source, const float* decode, bool shouldInterpolate, CGColorRenderingIntent intent) {
 	return (void *)CGImageCreateWithPNGDataProvider(
 		// *typing.RefType
 		(CGDataProviderRef)source,
@@ -957,8 +957,8 @@ void * ColorSpaceCreateDeviceCMYK() {
 	return (void *)CGColorSpaceCreateDeviceCMYK(
 	);
 }
-int32_t ConfigureDisplayFadeEffect(void * config, float fadeOutSeconds, float fadeInSeconds, float fadeRed, float fadeGreen, float fadeBlue) {
-	return (int32_t)CGConfigureDisplayFadeEffect(
+CGError ConfigureDisplayFadeEffect(void * config, CGDisplayFadeInterval fadeOutSeconds, CGDisplayFadeInterval fadeInSeconds, float fadeRed, float fadeGreen, float fadeBlue) {
+	return (CGError)CGConfigureDisplayFadeEffect(
 		// *typing.RefType
 		(CGDisplayConfigRef)config,
 		// *typing.AliasType
@@ -973,8 +973,8 @@ int32_t ConfigureDisplayFadeEffect(void * config, float fadeOutSeconds, float fa
 		(float)fadeBlue
 	);
 }
-int32_t DisplayFade(uint32_t token, float duration, float startBlend, float endBlend, float redBlend, float greenBlend, float blueBlend, int synchronous) {
-	return (int32_t)CGDisplayFade(
+CGError DisplayFade(CGDisplayFadeReservationToken token, CGDisplayFadeInterval duration, CGDisplayBlendFraction startBlend, CGDisplayBlendFraction endBlend, float redBlend, float greenBlend, float blueBlend, boolean_t synchronous) {
+	return (CGError)CGDisplayFade(
 		// *typing.AliasType
 		(CGDisplayFadeReservationToken)token,
 		// *typing.AliasType
@@ -1029,7 +1029,7 @@ void * SizeCreateDictionaryRepresentation(CGSize size) {
 		(CGSize)size
 	);
 }
-bool EventSourceButtonState(int32_t stateID, uint32_t button) {
+bool EventSourceButtonState(CGEventSourceStateID stateID, CGMouseButton button) {
 	return (bool)CGEventSourceButtonState(
 		// *typing.AliasType
 		(CGEventSourceStateID)stateID,
@@ -1064,8 +1064,8 @@ void * ColorSpaceCreateICCBased(uint nComponents, const float* range_, void * pr
 		(CGColorSpaceRef)alternate
 	);
 }
-int32_t AssociateMouseAndMouseCursorPosition(int connected) {
-	return (int32_t)CGAssociateMouseAndMouseCursorPosition(
+CGError AssociateMouseAndMouseCursorPosition(boolean_t connected) {
+	return (CGError)CGAssociateMouseAndMouseCursorPosition(
 		// *typing.AliasType
 		(boolean_t)connected
 	);
@@ -1100,8 +1100,8 @@ bool PreflightScreenCaptureAccess() {
 	return (bool)CGPreflightScreenCaptureAccess(
 	);
 }
-int32_t SetDisplayTransferByTable(uint32_t display, uint32_t tableSize, const float* redTable, const float* greenTable, const float* blueTable) {
-	return (int32_t)CGSetDisplayTransferByTable(
+CGError SetDisplayTransferByTable(CGDirectDisplayID display, uint32_t tableSize, const CGGammaValue* redTable, const CGGammaValue* greenTable, const CGGammaValue* blueTable) {
+	return (CGError)CGSetDisplayTransferByTable(
 		// *typing.AliasType
 		(CGDirectDisplayID)display,
 		// *typing.PrimitiveType
@@ -1125,8 +1125,8 @@ void ContextSetFlatness(void * c, float flatness) {
 		(CGFloat)flatness
 	);
 }
-int DisplayIsActive(uint32_t display) {
-	return (int)CGDisplayIsActive(
+boolean_t DisplayIsActive(CGDirectDisplayID display) {
+	return (boolean_t)CGDisplayIsActive(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
@@ -1145,7 +1145,7 @@ void PDFScannerRelease(void * scanner) {
 		(CGPDFScannerRef)scanner
 	);
 }
-void ContextSetLineJoin(void * c, int32_t join) {
+void ContextSetLineJoin(void * c, CGLineJoin join) {
 	return (void)CGContextSetLineJoin(
 		// *typing.RefType
 		(CGContextRef)c,
@@ -1159,8 +1159,8 @@ void * FontCopyTableTags(void * font) {
 		(CGFontRef)font
 	);
 }
-int32_t GetActiveDisplayList(uint32_t maxDisplays, uint32_t* activeDisplays, uint32_t* displayCount) {
-	return (int32_t)CGGetActiveDisplayList(
+CGError GetActiveDisplayList(uint32_t maxDisplays, CGDirectDisplayID* activeDisplays, uint32_t* displayCount) {
+	return (CGError)CGGetActiveDisplayList(
 		// *typing.PrimitiveType
 		(uint32_t)maxDisplays,
 		// *typing.PointerType
@@ -1186,14 +1186,14 @@ void * DataProviderCreateWithURL(void * url) {
 		(CFURLRef)url
 	);
 }
-void * EventSourceCreate(int32_t stateID) {
+void * EventSourceCreate(CGEventSourceStateID stateID) {
 	return (void *)CGEventSourceCreate(
 		// *typing.AliasType
 		(CGEventSourceStateID)stateID
 	);
 }
-int32_t ContextGetInterpolationQuality(void * c) {
-	return (int32_t)CGContextGetInterpolationQuality(
+CGInterpolationQuality ContextGetInterpolationQuality(void * c) {
+	return (CGInterpolationQuality)CGContextGetInterpolationQuality(
 		// *typing.RefType
 		(CGContextRef)c
 	);
@@ -1214,7 +1214,7 @@ bool RectContainsRect(CGRect rect1, CGRect rect2) {
 		(CGRect)rect2
 	);
 }
-void * FontCreatePostScriptEncoding(void * font, const long* encoding) {
+void * FontCreatePostScriptEncoding(void * font, const CGGlyph* encoding) {
 	return (void *)CGFontCreatePostScriptEncoding(
 		// *typing.RefType
 		(CGFontRef)font,
@@ -1241,7 +1241,7 @@ void EventSourceSetPixelsPerLine(void * source, double pixelsPerLine) {
 		(double)pixelsPerLine
 	);
 }
-void * EventCreateKeyboardEvent(void * source, uint16_t virtualKey, bool keyDown) {
+void * EventCreateKeyboardEvent(void * source, CGKeyCode virtualKey, bool keyDown) {
 	return (void *)CGEventCreateKeyboardEvent(
 		// *typing.RefType
 		(CGEventSourceRef)source,
@@ -1251,7 +1251,7 @@ void * EventCreateKeyboardEvent(void * source, uint16_t virtualKey, bool keyDown
 		(BOOL)keyDown
 	);
 }
-uint32_t EventSourceCounterForEventType(int32_t stateID, uint32_t eventType) {
+uint32_t EventSourceCounterForEventType(CGEventSourceStateID stateID, CGEventType eventType) {
 	return (uint32_t)CGEventSourceCounterForEventType(
 		// *typing.AliasType
 		(CGEventSourceStateID)stateID,
@@ -1273,7 +1273,7 @@ void PathAddRects(void * path, const CGAffineTransform* m, const CGRect* rects, 
 		(NSUInteger)count
 	);
 }
-void EventSetTimestamp(void * event, uint64_t timestamp) {
+void EventSetTimestamp(void * event, CGEventTimestamp timestamp) {
 	return (void)CGEventSetTimestamp(
 		// *typing.RefType
 		(CGEventRef)event,
@@ -1281,7 +1281,7 @@ void EventSetTimestamp(void * event, uint64_t timestamp) {
 		(CGEventTimestamp)timestamp
 	);
 }
-bool EventSourceKeyState(int32_t stateID, uint16_t key) {
+bool EventSourceKeyState(CGEventSourceStateID stateID, CGKeyCode key) {
 	return (bool)CGEventSourceKeyState(
 		// *typing.AliasType
 		(CGEventSourceStateID)stateID,
@@ -1295,7 +1295,7 @@ float RectGetHeight(CGRect rect) {
 		(CGRect)rect
 	);
 }
-bool PDFDictionaryGetInteger(void * dict, char* key, int32_t* value) {
+bool PDFDictionaryGetInteger(void * dict, char* key, CGPDFInteger* value) {
 	return (bool)CGPDFDictionaryGetInteger(
 		// *typing.RefType
 		(CGPDFDictionaryRef)dict,
@@ -1306,8 +1306,8 @@ bool PDFDictionaryGetInteger(void * dict, char* key, int32_t* value) {
 		(CGPDFInteger*)value
 	);
 }
-double EventSourceSecondsSinceLastEventType(int32_t stateID, uint32_t eventType) {
-	return (double)CGEventSourceSecondsSinceLastEventType(
+CFTimeInterval EventSourceSecondsSinceLastEventType(CGEventSourceStateID stateID, CGEventType eventType) {
+	return (CFTimeInterval)CGEventSourceSecondsSinceLastEventType(
 		// *typing.AliasType
 		(CGEventSourceStateID)stateID,
 		// *typing.AliasType
@@ -1328,7 +1328,7 @@ void ContextSetFillColorSpace(void * c, void * space) {
 		(CGColorSpaceRef)space
 	);
 }
-bool PDFArrayGetNumber(void * array, uint index, float* value) {
+bool PDFArrayGetNumber(void * array, uint index, CGPDFReal* value) {
 	return (bool)CGPDFArrayGetNumber(
 		// *typing.RefType
 		(CGPDFArrayRef)array,
@@ -1360,13 +1360,13 @@ void ContextTranslateCTM(void * c, float tx, float ty) {
 		(CGFloat)ty
 	);
 }
-int DisplayUsesOpenGLAcceleration(uint32_t display) {
-	return (int)CGDisplayUsesOpenGLAcceleration(
+boolean_t DisplayUsesOpenGLAcceleration(CGDirectDisplayID display) {
+	return (boolean_t)CGDisplayUsesOpenGLAcceleration(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
 }
-void ContextSetBlendMode(void * c, int32_t mode) {
+void ContextSetBlendMode(void * c, CGBlendMode mode) {
 	return (void)CGContextSetBlendMode(
 		// *typing.RefType
 		(CGContextRef)c,
@@ -1384,7 +1384,7 @@ void GetLastMouseDelta(int32_t* deltaX, int32_t* deltaY) {
 		(int32_t*)deltaY
 	);
 }
-bool FontGetGlyphBBoxes(void * font, const long* glyphs, uint count, CGRect* bboxes) {
+bool FontGetGlyphBBoxes(void * font, const CGGlyph* glyphs, uint count, CGRect* bboxes) {
 	return (bool)CGFontGetGlyphBBoxes(
 		// *typing.RefType
 		(CGFontRef)font,
@@ -1398,8 +1398,8 @@ bool FontGetGlyphBBoxes(void * font, const long* glyphs, uint count, CGRect* bbo
 		(CGRect*)bboxes
 	);
 }
-int32_t GetDisplaysWithPoint(CGPoint point, uint32_t maxDisplays, uint32_t* displays, uint32_t* matchingDisplayCount) {
-	return (int32_t)CGGetDisplaysWithPoint(
+CGError GetDisplaysWithPoint(CGPoint point, uint32_t maxDisplays, CGDirectDisplayID* displays, uint32_t* matchingDisplayCount) {
+	return (CGError)CGGetDisplaysWithPoint(
 		// *typing.StructType
 		(CGPoint)point,
 		// *typing.PrimitiveType
@@ -1436,7 +1436,7 @@ uint BitmapContextGetBytesPerRow(void * context) {
 		(CGContextRef)context
 	);
 }
-void * WindowListCreate(uint32_t option, uint32_t relativeToWindow) {
+void * WindowListCreate(CGWindowListOption option, CGWindowID relativeToWindow) {
 	return (void *)CGWindowListCreate(
 		// *typing.AliasType
 		(CGWindowListOption)option,
@@ -1452,8 +1452,16 @@ CGSize SizeApplyAffineTransform(CGSize size, CGAffineTransform t) {
 		(CGAffineTransform)t
 	);
 }
-int DisplayIsInMirrorSet(uint32_t display) {
-	return (int)CGDisplayIsInMirrorSet(
+void EventTapPostEvent(CGEventTapProxy proxy, void * event) {
+	return (void)CGEventTapPostEvent(
+		// *typing.AliasType
+		(CGEventTapProxy)proxy,
+		// *typing.RefType
+		(CGEventRef)event
+	);
+}
+boolean_t DisplayIsInMirrorSet(CGDirectDisplayID display) {
+	return (boolean_t)CGDisplayIsInMirrorSet(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
@@ -1472,8 +1480,8 @@ void ContextClearRect(void * c, CGRect rect) {
 		(CGRect)rect
 	);
 }
-int32_t DisplayRelease(uint32_t display) {
-	return (int32_t)CGDisplayRelease(
+CGError DisplayRelease(CGDirectDisplayID display) {
+	return (CGError)CGDisplayRelease(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
@@ -1484,8 +1492,8 @@ void * PDFPageGetDocument(void * page) {
 		(CGPDFPageRef)page
 	);
 }
-int32_t GetDisplayTransferByTable(uint32_t display, uint32_t capacity, float* redTable, float* greenTable, float* blueTable, uint32_t* sampleCount) {
-	return (int32_t)CGGetDisplayTransferByTable(
+CGError GetDisplayTransferByTable(CGDirectDisplayID display, uint32_t capacity, CGGammaValue* redTable, CGGammaValue* greenTable, CGGammaValue* blueTable, uint32_t* sampleCount) {
+	return (CGError)CGGetDisplayTransferByTable(
 		// *typing.AliasType
 		(CGDirectDisplayID)display,
 		// *typing.PrimitiveType
@@ -1535,13 +1543,13 @@ bool PreflightListenEventAccess() {
 	return (bool)CGPreflightListenEventAccess(
 	);
 }
-uint32_t EventGetType(void * event) {
-	return (uint32_t)CGEventGetType(
+CGEventType EventGetType(void * event) {
+	return (CGEventType)CGEventGetType(
 		// *typing.RefType
 		(CGEventRef)event
 	);
 }
-bool PDFScannerPopNumber(void * scanner, float* value) {
+bool PDFScannerPopNumber(void * scanner, CGPDFReal* value) {
 	return (bool)CGPDFScannerPopNumber(
 		// *typing.RefType
 		(CGPDFScannerRef)scanner,
@@ -1598,7 +1606,7 @@ CGPoint PointApplyAffineTransform(CGPoint point, CGAffineTransform t) {
 		(CGAffineTransform)t
 	);
 }
-void * ImageCreateWithJPEGDataProvider(void * source, const float* decode, bool shouldInterpolate, int32_t intent) {
+void * ImageCreateWithJPEGDataProvider(void * source, const float* decode, bool shouldInterpolate, CGColorRenderingIntent intent) {
 	return (void *)CGImageCreateWithJPEGDataProvider(
 		// *typing.RefType
 		(CGDataProviderRef)source,
@@ -1611,11 +1619,11 @@ void * ImageCreateWithJPEGDataProvider(void * source, const float* decode, bool 
 		(CGColorRenderingIntent)intent
 	);
 }
-int32_t EventSourceGetTypeID() {
-	return (int32_t)CGEventSourceGetTypeID(
+CFTypeID EventSourceGetTypeID() {
+	return (CFTypeID)CGEventSourceGetTypeID(
 	);
 }
-void * ImageCreate(uint width, uint height, uint bitsPerComponent, uint bitsPerPixel, uint bytesPerRow, void * space, uint32_t bitmapInfo, void * provider, const float* decode, bool shouldInterpolate, int32_t intent) {
+void * ImageCreate(uint width, uint height, uint bitsPerComponent, uint bitsPerPixel, uint bytesPerRow, void * space, CGBitmapInfo bitmapInfo, void * provider, const float* decode, bool shouldInterpolate, CGColorRenderingIntent intent) {
 	return (void *)CGImageCreate(
 		// *typing.PrimitiveType
 		(NSUInteger)width,
@@ -1648,8 +1656,8 @@ bool RectIsNull(CGRect rect) {
 		(CGRect)rect
 	);
 }
-int32_t EventSourceGetSourceStateID(void * source) {
-	return (int32_t)CGEventSourceGetSourceStateID(
+CGEventSourceStateID EventSourceGetSourceStateID(void * source) {
+	return (CGEventSourceStateID)CGEventSourceGetSourceStateID(
 		// *typing.RefType
 		(CGEventSourceRef)source
 	);
@@ -1660,7 +1668,7 @@ void * GradientRetain(void * gradient) {
 		(CGGradientRef)gradient
 	);
 }
-bool PDFArrayGetBoolean(void * array, uint index, char* value) {
+bool PDFArrayGetBoolean(void * array, uint index, CGPDFBoolean* value) {
 	return (bool)CGPDFArrayGetBoolean(
 		// *typing.RefType
 		(CGPDFArrayRef)array,
@@ -1692,8 +1700,8 @@ CGRect PathGetPathBoundingBox(void * path) {
 		(CGPathRef)path
 	);
 }
-int32_t CaptureAllDisplaysWithOptions(uint32_t options) {
-	return (int32_t)CGCaptureAllDisplaysWithOptions(
+CGError CaptureAllDisplaysWithOptions(CGCaptureOptions options) {
+	return (CGError)CGCaptureAllDisplaysWithOptions(
 		// *typing.AliasType
 		(CGCaptureOptions)options
 	);
@@ -1714,7 +1722,7 @@ void * PDFContentStreamCreateWithStream(void * stream, void * streamResources, v
 		(CGPDFContentStreamRef)parent
 	);
 }
-void ContextDrawRadialGradient(void * c, void * gradient, CGPoint startCenter, float startRadius, CGPoint endCenter, float endRadius, uint32_t options) {
+void ContextDrawRadialGradient(void * c, void * gradient, CGPoint startCenter, float startRadius, CGPoint endCenter, float endRadius, CGGradientDrawingOptions options) {
 	return (void)CGContextDrawRadialGradient(
 		// *typing.RefType
 		(CGContextRef)c,
@@ -1738,8 +1746,8 @@ void * PDFStringCopyDate(void * string_) {
 		(CGPDFStringRef)string_
 	);
 }
-int32_t GetOnlineDisplayList(uint32_t maxDisplays, uint32_t* onlineDisplays, uint32_t* displayCount) {
-	return (int32_t)CGGetOnlineDisplayList(
+CGError GetOnlineDisplayList(uint32_t maxDisplays, CGDirectDisplayID* onlineDisplays, uint32_t* displayCount) {
+	return (CGError)CGGetOnlineDisplayList(
 		// *typing.PrimitiveType
 		(uint32_t)maxDisplays,
 		// *typing.PointerType
@@ -1782,8 +1790,8 @@ void * FunctionRetain(void * function) {
 		(CGFunctionRef)function
 	);
 }
-int32_t GetDisplayTransferByFormula(uint32_t display, float* redMin, float* redMax, float* redGamma, float* greenMin, float* greenMax, float* greenGamma, float* blueMin, float* blueMax, float* blueGamma) {
-	return (int32_t)CGGetDisplayTransferByFormula(
+CGError GetDisplayTransferByFormula(CGDirectDisplayID display, CGGammaValue* redMin, CGGammaValue* redMax, CGGammaValue* redGamma, CGGammaValue* greenMin, CGGammaValue* greenMax, CGGammaValue* greenGamma, CGGammaValue* blueMin, CGGammaValue* blueMax, CGGammaValue* blueGamma) {
+	return (CGError)CGGetDisplayTransferByFormula(
 		// *typing.AliasType
 		(CGDirectDisplayID)display,
 		// *typing.PointerType
@@ -1859,7 +1867,7 @@ void * ShadingCreateRadial(void * space, CGPoint start, float startRadius, CGPoi
 		(BOOL)extendEnd
 	);
 }
-void RectDivide(CGRect rect, CGRect* slice, CGRect* remainder, float amount, uint32_t edge) {
+void RectDivide(CGRect rect, CGRect* slice, CGRect* remainder, float amount, CGRectEdge edge) {
 	return (void)CGRectDivide(
 		// *typing.StructType
 		(CGRect)rect,
@@ -1921,8 +1929,8 @@ void ContextAddQuadCurveToPoint(void * c, float cpx, float cpy, float x, float y
 		(CGFloat)y
 	);
 }
-int32_t ConfigureDisplayWithDisplayMode(void * config, uint32_t display, void * mode, void * options) {
-	return (int32_t)CGConfigureDisplayWithDisplayMode(
+CGError ConfigureDisplayWithDisplayMode(void * config, CGDirectDisplayID display, void * mode, void * options) {
+	return (CGError)CGConfigureDisplayWithDisplayMode(
 		// *typing.RefType
 		(CGDisplayConfigRef)config,
 		// *typing.AliasType
@@ -1939,14 +1947,14 @@ void * DataProviderCopyData(void * provider) {
 		(CGDataProviderRef)provider
 	);
 }
-int DisplayIsInHWMirrorSet(uint32_t display) {
-	return (int)CGDisplayIsInHWMirrorSet(
+boolean_t DisplayIsInHWMirrorSet(CGDirectDisplayID display) {
+	return (boolean_t)CGDisplayIsInHWMirrorSet(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
 }
-uint32_t EventSourceGetLocalEventsFilterDuringSuppressionState(void * source, uint32_t state) {
-	return (uint32_t)CGEventSourceGetLocalEventsFilterDuringSuppressionState(
+CGEventFilterMask EventSourceGetLocalEventsFilterDuringSuppressionState(void * source, CGEventSuppressionState state) {
+	return (CGEventFilterMask)CGEventSourceGetLocalEventsFilterDuringSuppressionState(
 		// *typing.RefType
 		(CGEventSourceRef)source,
 		// *typing.AliasType
@@ -1987,12 +1995,12 @@ void ContextSetAllowsFontSubpixelPositioning(void * c, bool allowsFontSubpixelPo
 		(BOOL)allowsFontSubpixelPositioning
 	);
 }
-int32_t ColorGetTypeID() {
-	return (int32_t)CGColorGetTypeID(
+CFTypeID ColorGetTypeID() {
+	return (CFTypeID)CGColorGetTypeID(
 	);
 }
-uint32_t ImageGetByteOrderInfo(void * image) {
-	return (uint32_t)CGImageGetByteOrderInfo(
+CGImageByteOrderInfo ImageGetByteOrderInfo(void * image) {
+	return (CGImageByteOrderInfo)CGImageGetByteOrderInfo(
 		// *typing.RefType
 		(CGImageRef)image
 	);
@@ -2003,7 +2011,7 @@ void * PDFDocumentCreateWithProvider(void * provider) {
 		(CGDataProviderRef)provider
 	);
 }
-bool FontGetGlyphAdvances(void * font, const long* glyphs, uint count, int* advances) {
+bool FontGetGlyphAdvances(void * font, const CGGlyph* glyphs, uint count, int* advances) {
 	return (bool)CGFontGetGlyphAdvances(
 		// *typing.RefType
 		(CGFontRef)font,
@@ -2017,8 +2025,8 @@ bool FontGetGlyphAdvances(void * font, const long* glyphs, uint count, int* adva
 		(int*)advances
 	);
 }
-uint32_t ImageGetPixelFormatInfo(void * image) {
-	return (uint32_t)CGImageGetPixelFormatInfo(
+CGImagePixelFormatInfo ImageGetPixelFormatInfo(void * image) {
+	return (CGImagePixelFormatInfo)CGImageGetPixelFormatInfo(
 		// *typing.RefType
 		(CGImageRef)image
 	);
@@ -2029,8 +2037,8 @@ void * FontCopyVariationAxes(void * font) {
 		(CGFontRef)font
 	);
 }
-void* ColorSpaceCopyPropertyList(void * space) {
-	return (void*)CGColorSpaceCopyPropertyList(
+CFPropertyListRef ColorSpaceCopyPropertyList(void * space) {
+	return (CFPropertyListRef)CGColorSpaceCopyPropertyList(
 		// *typing.RefType
 		(CGColorSpaceRef)space
 	);
@@ -2077,21 +2085,21 @@ void PathAddQuadCurveToPoint(void * path, const CGAffineTransform* m, float cpx,
 		(CGFloat)y
 	);
 }
-int32_t WarpMouseCursorPosition(CGPoint newCursorPosition) {
-	return (int32_t)CGWarpMouseCursorPosition(
+CGError WarpMouseCursorPosition(CGPoint newCursorPosition) {
+	return (CGError)CGWarpMouseCursorPosition(
 		// *typing.StructType
 		(CGPoint)newCursorPosition
 	);
 }
-int32_t DisplayMoveCursorToPoint(uint32_t display, CGPoint point) {
-	return (int32_t)CGDisplayMoveCursorToPoint(
+CGError DisplayMoveCursorToPoint(CGDirectDisplayID display, CGPoint point) {
+	return (CGError)CGDisplayMoveCursorToPoint(
 		// *typing.AliasType
 		(CGDirectDisplayID)display,
 		// *typing.StructType
 		(CGPoint)point
 	);
 }
-void * WindowListCopyWindowInfo(uint32_t option, uint32_t relativeToWindow) {
+void * WindowListCopyWindowInfo(CGWindowListOption option, CGWindowID relativeToWindow) {
 	return (void *)CGWindowListCopyWindowInfo(
 		// *typing.AliasType
 		(CGWindowListOption)option,
@@ -2099,8 +2107,8 @@ void * WindowListCopyWindowInfo(uint32_t option, uint32_t relativeToWindow) {
 		(CGWindowID)relativeToWindow
 	);
 }
-uint32_t ShieldingWindowID(uint32_t display) {
-	return (uint32_t)CGShieldingWindowID(
+CGWindowID ShieldingWindowID(CGDirectDisplayID display) {
+	return (CGWindowID)CGShieldingWindowID(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
@@ -2138,8 +2146,8 @@ uint ImageGetBitsPerComponent(void * image) {
 		(CGImageRef)image
 	);
 }
-int32_t CaptureAllDisplays() {
-	return (int32_t)CGCaptureAllDisplays(
+CGError CaptureAllDisplays() {
+	return (CGError)CGCaptureAllDisplays(
 	);
 }
 double EventSourceGetPixelsPerLine(void * source) {
@@ -2172,13 +2180,13 @@ const float* ImageGetDecode(void * image) {
 		(CGImageRef)image
 	);
 }
-void* DataProviderGetInfo(void * provider) {
-	return (void*)CGDataProviderGetInfo(
+void * DataProviderGetInfo(void * provider) {
+	return (void *)CGDataProviderGetInfo(
 		// *typing.RefType
 		(CGDataProviderRef)provider
 	);
 }
-void * PDFStreamCopyData(void * stream, int32_t* format) {
+void * PDFStreamCopyData(void * stream, CGPDFDataFormat* format) {
 	return (void *)CGPDFStreamCopyData(
 		// *typing.RefType
 		(CGPDFStreamRef)stream,
@@ -2211,8 +2219,8 @@ float RectGetMinY(CGRect rect) {
 		(CGRect)rect
 	);
 }
-int32_t ColorSpaceGetTypeID() {
-	return (int32_t)CGColorSpaceGetTypeID(
+CFTypeID ColorSpaceGetTypeID() {
+	return (CFTypeID)CGColorSpaceGetTypeID(
 	);
 }
 void * ShadingRetain(void * shading) {
@@ -2243,8 +2251,8 @@ void PDFPageRelease(void * page) {
 		(CGPDFPageRef)page
 	);
 }
-int32_t ImageGetTypeID() {
-	return (int32_t)CGImageGetTypeID(
+CFTypeID ImageGetTypeID() {
+	return (CFTypeID)CGImageGetTypeID(
 	);
 }
 void ContextRotateCTM(void * c, float angle) {
@@ -2261,7 +2269,7 @@ void ContextEndTransparencyLayer(void * c) {
 		(CGContextRef)c
 	);
 }
-void EventSourceSetLocalEventsSuppressionInterval(void * source, double seconds) {
+void EventSourceSetLocalEventsSuppressionInterval(void * source, CFTimeInterval seconds) {
 	return (void)CGEventSourceSetLocalEventsSuppressionInterval(
 		// *typing.RefType
 		(CGEventSourceRef)source,
@@ -2283,8 +2291,8 @@ int32_t DisplayModeGetIODisplayModeID(void * mode) {
 		(CGDisplayModeRef)mode
 	);
 }
-uint32_t DisplayPrimaryDisplay(uint32_t display) {
-	return (uint32_t)CGDisplayPrimaryDisplay(
+CGDirectDisplayID DisplayPrimaryDisplay(CGDirectDisplayID display) {
+	return (CGDirectDisplayID)CGDisplayPrimaryDisplay(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
@@ -2380,7 +2388,7 @@ bool ColorSpaceSupportsOutput(void * space) {
 		(CGColorSpaceRef)space
 	);
 }
-void EventSetDoubleValueField(void * event, uint32_t field, double value) {
+void EventSetDoubleValueField(void * event, CGEventField field, double value) {
 	return (void)CGEventSetDoubleValueField(
 		// *typing.RefType
 		(CGEventRef)event,
@@ -2409,8 +2417,8 @@ void * PDFContextCreateWithURL(void * url, const CGRect* mediaBox, void * auxili
 		(CFDictionaryRef)auxiliaryInfo
 	);
 }
-int32_t PDFPageGetTypeID() {
-	return (int32_t)CGPDFPageGetTypeID(
+CFTypeID PDFPageGetTypeID() {
+	return (CFTypeID)CGPDFPageGetTypeID(
 	);
 }
 void * PDFContentStreamCreateWithPage(void * page) {
@@ -2425,7 +2433,7 @@ void * FontCreateWithDataProvider(void * provider) {
 		(CGDataProviderRef)provider
 	);
 }
-bool PDFDictionaryGetNumber(void * dict, char* key, float* value) {
+bool PDFDictionaryGetNumber(void * dict, char* key, CGPDFReal* value) {
 	return (bool)CGPDFDictionaryGetNumber(
 		// *typing.RefType
 		(CGPDFDictionaryRef)dict,
@@ -2490,13 +2498,13 @@ void * PDFPageGetDictionary(void * page) {
 		(CGPDFPageRef)page
 	);
 }
-uint32_t DisplayGammaTableCapacity(uint32_t display) {
+uint32_t DisplayGammaTableCapacity(CGDirectDisplayID display) {
 	return (uint32_t)CGDisplayGammaTableCapacity(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
 }
-void EventSetIntegerValueField(void * event, uint32_t field, int64_t value) {
+void EventSetIntegerValueField(void * event, CGEventField field, int64_t value) {
 	return (void)CGEventSetIntegerValueField(
 		// *typing.RefType
 		(CGEventRef)event,
@@ -2526,7 +2534,7 @@ void ContextStrokePath(void * c) {
 		(CGContextRef)c
 	);
 }
-uint DisplayPixelsWide(uint32_t display) {
+uint DisplayPixelsWide(CGDirectDisplayID display) {
 	return (uint)CGDisplayPixelsWide(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
@@ -2546,7 +2554,7 @@ bool EventTapIsEnabled(void * tap) {
 		(CFMachPortRef)tap
 	);
 }
-char* PDFTagTypeGetName(int32_t tagType) {
+char* PDFTagTypeGetName(CGPDFTagType tagType) {
 	return (char*)CGPDFTagTypeGetName(
 		// *typing.AliasType
 		(CGPDFTagType)tagType
@@ -2572,7 +2580,7 @@ void * PDFContentStreamGetResource(void * cs, char* category, char* name) {
 		(char*)name
 	);
 }
-bool PDFDictionaryGetBoolean(void * dict, char* key, char* value) {
+bool PDFDictionaryGetBoolean(void * dict, char* key, CGPDFBoolean* value) {
 	return (bool)CGPDFDictionaryGetBoolean(
 		// *typing.RefType
 		(CGPDFDictionaryRef)dict,
@@ -2601,8 +2609,8 @@ void PDFContentStreamRelease(void * cs) {
 		(CGPDFContentStreamRef)cs
 	);
 }
-uint32_t DisplayIDToOpenGLDisplayMask(uint32_t display) {
-	return (uint32_t)CGDisplayIDToOpenGLDisplayMask(
+CGOpenGLDisplayMask DisplayIDToOpenGLDisplayMask(CGDirectDisplayID display) {
+	return (CGOpenGLDisplayMask)CGDisplayIDToOpenGLDisplayMask(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
@@ -2619,8 +2627,8 @@ bool ContextIsPathEmpty(void * c) {
 		(CGContextRef)c
 	);
 }
-int32_t ColorConversionInfoGetTypeID() {
-	return (int32_t)CGColorConversionInfoGetTypeID(
+CFTypeID ColorConversionInfoGetTypeID() {
+	return (CFTypeID)CGColorConversionInfoGetTypeID(
 	);
 }
 uint ImageGetBitsPerPixel(void * image) {
@@ -2662,7 +2670,7 @@ void * LayerGetContext(void * layer) {
 		(CGLayerRef)layer
 	);
 }
-bool PDFArrayGetInteger(void * array, uint index, int32_t* value) {
+bool PDFArrayGetInteger(void * array, uint index, CGPDFInteger* value) {
 	return (bool)CGPDFArrayGetInteger(
 		// *typing.RefType
 		(CGPDFArrayRef)array,
@@ -2679,8 +2687,8 @@ float FontGetItalicAngle(void * font) {
 		(CGFontRef)font
 	);
 }
-int32_t ConfigureDisplayOrigin(void * config, uint32_t display, int32_t x, int32_t y) {
-	return (int32_t)CGConfigureDisplayOrigin(
+CGError ConfigureDisplayOrigin(void * config, CGDirectDisplayID display, int32_t x, int32_t y) {
+	return (CGError)CGConfigureDisplayOrigin(
 		// *typing.RefType
 		(CGDisplayConfigRef)config,
 		// *typing.AliasType
@@ -2705,8 +2713,8 @@ void RestorePermanentDisplayConfiguration() {
 	return (void)CGRestorePermanentDisplayConfiguration(
 	);
 }
-uint32_t BitmapContextGetAlphaInfo(void * context) {
-	return (uint32_t)CGBitmapContextGetAlphaInfo(
+CGImageAlphaInfo BitmapContextGetAlphaInfo(void * context) {
+	return (CGImageAlphaInfo)CGBitmapContextGetAlphaInfo(
 		// *typing.RefType
 		(CGContextRef)context
 	);
@@ -2725,7 +2733,7 @@ bool PathEqualToPath(void * path1, void * path2) {
 		(CGPathRef)path2
 	);
 }
-void * EventCreateMouseEvent(void * source, uint32_t mouseType, CGPoint mouseCursorPosition, uint32_t mouseButton) {
+void * EventCreateMouseEvent(void * source, CGEventType mouseType, CGPoint mouseCursorPosition, CGMouseButton mouseButton) {
 	return (void *)CGEventCreateMouseEvent(
 		// *typing.RefType
 		(CGEventSourceRef)source,
@@ -2737,8 +2745,8 @@ void * EventCreateMouseEvent(void * source, uint32_t mouseType, CGPoint mouseCur
 		(CGMouseButton)mouseButton
 	);
 }
-uint32_t MainDisplayID() {
-	return (uint32_t)CGMainDisplayID(
+CGDirectDisplayID MainDisplayID() {
+	return (CGDirectDisplayID)CGMainDisplayID(
 	);
 }
 CGAffineTransform AffineTransformTranslate(CGAffineTransform t, float tx, float ty) {
@@ -2765,8 +2773,8 @@ float RectGetMidX(CGRect rect) {
 		(CGRect)rect
 	);
 }
-uint32_t EventSourceGetKeyboardType(void * source) {
-	return (uint32_t)CGEventSourceGetKeyboardType(
+CGEventSourceKeyboardType EventSourceGetKeyboardType(void * source) {
+	return (CGEventSourceKeyboardType)CGEventSourceGetKeyboardType(
 		// *typing.RefType
 		(CGEventSourceRef)source
 	);
@@ -2787,8 +2795,8 @@ void * ColorCreateCopyWithAlpha(void * color, float alpha) {
 		(CGFloat)alpha
 	);
 }
-uint32_t PDFDocumentGetAccessPermissions(void * document) {
-	return (uint32_t)CGPDFDocumentGetAccessPermissions(
+CGPDFAccessPermissions PDFDocumentGetAccessPermissions(void * document) {
+	return (CGPDFAccessPermissions)CGPDFDocumentGetAccessPermissions(
 		// *typing.RefType
 		(CGPDFDocumentRef)document
 	);
@@ -2813,7 +2821,7 @@ void ContextSynchronize(void * c) {
 		(CGContextRef)c
 	);
 }
-CGAffineTransform PDFPageGetDrawingTransform(void * page, int32_t box, CGRect rect, int rotate, bool preserveAspectRatio) {
+CGAffineTransform PDFPageGetDrawingTransform(void * page, CGPDFBox box, CGRect rect, int rotate, bool preserveAspectRatio) {
 	return (CGAffineTransform)CGPDFPageGetDrawingTransform(
 		// *typing.RefType
 		(CGPDFPageRef)page,
@@ -2827,8 +2835,8 @@ CGAffineTransform PDFPageGetDrawingTransform(void * page, int32_t box, CGRect re
 		(BOOL)preserveAspectRatio
 	);
 }
-int32_t ShieldingWindowLevel() {
-	return (int32_t)CGShieldingWindowLevel(
+CGWindowLevel ShieldingWindowLevel() {
+	return (CGWindowLevel)CGShieldingWindowLevel(
 	);
 }
 bool DisplayModeIsUsableForDesktopGUI(void * mode) {
@@ -2837,8 +2845,8 @@ bool DisplayModeIsUsableForDesktopGUI(void * mode) {
 		(CGDisplayModeRef)mode
 	);
 }
-int32_t GradientGetTypeID() {
-	return (int32_t)CGGradientGetTypeID(
+CFTypeID GradientGetTypeID() {
+	return (CFTypeID)CGGradientGetTypeID(
 	);
 }
 void * PointCreateDictionaryRepresentation(CGPoint point) {
@@ -2947,8 +2955,8 @@ CGRect FontGetFontBBox(void * font) {
 		(CGFontRef)font
 	);
 }
-int32_t DisplayCapture(uint32_t display) {
-	return (int32_t)CGDisplayCapture(
+CGError DisplayCapture(CGDirectDisplayID display) {
+	return (CGError)CGDisplayCapture(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
@@ -3005,7 +3013,7 @@ float RectGetMidY(CGRect rect) {
 		(CGRect)rect
 	);
 }
-void * DisplayCreateImageForRect(uint32_t display, CGRect rect) {
+void * DisplayCreateImageForRect(CGDirectDisplayID display, CGRect rect) {
 	return (void *)CGDisplayCreateImageForRect(
 		// *typing.AliasType
 		(CGDirectDisplayID)display,
@@ -3047,7 +3055,7 @@ uint PDFDocumentGetNumberOfPages(void * document) {
 		(CGPDFDocumentRef)document
 	);
 }
-void EventSourceSetKeyboardType(void * source, uint32_t keyboardType) {
+void EventSourceSetKeyboardType(void * source, CGEventSourceKeyboardType keyboardType) {
 	return (void)CGEventSourceSetKeyboardType(
 		// *typing.RefType
 		(CGEventSourceRef)source,
@@ -3055,7 +3063,7 @@ void EventSourceSetKeyboardType(void * source, uint32_t keyboardType) {
 		(CGEventSourceKeyboardType)keyboardType
 	);
 }
-void * DisplayCopyAllDisplayModes(uint32_t display, void * options) {
+void * DisplayCopyAllDisplayModes(CGDirectDisplayID display, void * options) {
 	return (void *)CGDisplayCopyAllDisplayModes(
 		// *typing.AliasType
 		(CGDirectDisplayID)display,
@@ -3063,14 +3071,14 @@ void * DisplayCopyAllDisplayModes(uint32_t display, void * options) {
 		(CFDictionaryRef)options
 	);
 }
-uint DisplayPixelsHigh(uint32_t display) {
+uint DisplayPixelsHigh(CGDirectDisplayID display) {
 	return (uint)CGDisplayPixelsHigh(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
 }
-int32_t SetDisplayTransferByByteTable(uint32_t display, uint32_t tableSize, const uint8_t* redTable, const uint8_t* greenTable, const uint8_t* blueTable) {
-	return (int32_t)CGSetDisplayTransferByByteTable(
+CGError SetDisplayTransferByByteTable(CGDirectDisplayID display, uint32_t tableSize, const uint8_t* redTable, const uint8_t* greenTable, const uint8_t* blueTable) {
+	return (CGError)CGSetDisplayTransferByByteTable(
 		// *typing.AliasType
 		(CGDirectDisplayID)display,
 		// *typing.PrimitiveType
@@ -3103,8 +3111,8 @@ void ContextSetFillPattern(void * c, void * pattern, const float* components) {
 		(CGFloat*)components
 	);
 }
-int32_t DataProviderGetTypeID() {
-	return (int32_t)CGDataProviderGetTypeID(
+CFTypeID DataProviderGetTypeID() {
+	return (CFTypeID)CGDataProviderGetTypeID(
 	);
 }
 void * DataProviderCreateWithFilename(char* filename) {
@@ -3131,7 +3139,7 @@ bool PDFDocumentAllowsCopying(void * document) {
 		(CGPDFDocumentRef)document
 	);
 }
-void * ColorCreateCopyByMatchingToColorSpace(void * arg0, int32_t intent, void * color, void * options) {
+void * ColorCreateCopyByMatchingToColorSpace(void * arg0, CGColorRenderingIntent intent, void * color, void * options) {
 	return (void *)CGColorCreateCopyByMatchingToColorSpace(
 		// *typing.RefType
 		(CGColorSpaceRef)arg0,
@@ -3171,7 +3179,7 @@ void ContextSetAllowsFontSmoothing(void * c, bool allowsFontSmoothing) {
 		(BOOL)allowsFontSmoothing
 	);
 }
-void ContextDrawPath(void * c, int32_t mode) {
+void ContextDrawPath(void * c, CGPathDrawingMode mode) {
 	return (void)CGContextDrawPath(
 		// *typing.RefType
 		(CGContextRef)c,
@@ -3179,8 +3187,8 @@ void ContextDrawPath(void * c, int32_t mode) {
 		(CGPathDrawingMode)mode
 	);
 }
-long FontGetGlyphWithGlyphName(void * font, void * name) {
-	return (long)CGFontGetGlyphWithGlyphName(
+CGGlyph FontGetGlyphWithGlyphName(void * font, void * name) {
+	return (CGGlyph)CGFontGetGlyphWithGlyphName(
 		// *typing.RefType
 		(CGFontRef)font,
 		// *typing.RefType
@@ -3193,8 +3201,8 @@ void * RectCreateDictionaryRepresentation(CGRect arg0) {
 		(CGRect)arg0
 	);
 }
-void* BitmapContextGetData(void * context) {
-	return (void*)CGBitmapContextGetData(
+void * BitmapContextGetData(void * context) {
+	return (void *)CGBitmapContextGetData(
 		// *typing.RefType
 		(CGContextRef)context
 	);
@@ -3205,8 +3213,8 @@ int FontGetAscent(void * font) {
 		(CGFontRef)font
 	);
 }
-int32_t DisplaySetStereoOperation(uint32_t display, int stereo, int forceBlueLine, uint32_t option) {
-	return (int32_t)CGDisplaySetStereoOperation(
+CGError DisplaySetStereoOperation(CGDirectDisplayID display, boolean_t stereo, boolean_t forceBlueLine, CGConfigureOption option) {
+	return (CGError)CGDisplaySetStereoOperation(
 		// *typing.AliasType
 		(CGDirectDisplayID)display,
 		// *typing.AliasType
@@ -3229,17 +3237,17 @@ void ContextFillPath(void * c) {
 		(CGContextRef)c
 	);
 }
-int32_t PDFDocumentGetTypeID() {
-	return (int32_t)CGPDFDocumentGetTypeID(
+CFTypeID PDFDocumentGetTypeID() {
+	return (CFTypeID)CGPDFDocumentGetTypeID(
 	);
 }
-int32_t ImageGetRenderingIntent(void * image) {
-	return (int32_t)CGImageGetRenderingIntent(
+CGColorRenderingIntent ImageGetRenderingIntent(void * image) {
+	return (CGColorRenderingIntent)CGImageGetRenderingIntent(
 		// *typing.RefType
 		(CGImageRef)image
 	);
 }
-void EventPost(uint32_t tap, void * event) {
+void EventPost(CGEventTapLocation tap, void * event) {
 	return (void)CGEventPost(
 		// *typing.AliasType
 		(CGEventTapLocation)tap,
@@ -3270,15 +3278,15 @@ void ContextEOFillPath(void * c) {
 		(CGContextRef)c
 	);
 }
-int32_t DisplayCaptureWithOptions(uint32_t display, uint32_t options) {
-	return (int32_t)CGDisplayCaptureWithOptions(
+CGError DisplayCaptureWithOptions(CGDirectDisplayID display, CGCaptureOptions options) {
+	return (CGError)CGDisplayCaptureWithOptions(
 		// *typing.AliasType
 		(CGDirectDisplayID)display,
 		// *typing.AliasType
 		(CGCaptureOptions)options
 	);
 }
-bool ContextPathContainsPoint(void * c, CGPoint point, int32_t mode) {
+bool ContextPathContainsPoint(void * c, CGPoint point, CGPathDrawingMode mode) {
 	return (bool)CGContextPathContainsPoint(
 		// *typing.RefType
 		(CGContextRef)c,
@@ -3306,8 +3314,8 @@ void PathRelease(void * path) {
 		(CGPathRef)path
 	);
 }
-int32_t PathGetTypeID() {
-	return (int32_t)CGPathGetTypeID(
+CFTypeID PathGetTypeID() {
+	return (CFTypeID)CGPathGetTypeID(
 	);
 }
 void PDFDocumentRelease(void * document) {
@@ -3349,7 +3357,7 @@ void * PathCreateWithRoundedRect(CGRect rect, float cornerWidth, float cornerHei
 		(CGAffineTransform*)transform
 	);
 }
-void PDFContextBeginTag(void * context, int32_t tagType, void * tagProperties) {
+void PDFContextBeginTag(void * context, CGPDFTagType tagType, void * tagProperties) {
 	return (void)CGPDFContextBeginTag(
 		// *typing.RefType
 		(CGContextRef)context,
@@ -3359,8 +3367,8 @@ void PDFContextBeginTag(void * context, int32_t tagType, void * tagProperties) {
 		(CFDictionaryRef)tagProperties
 	);
 }
-int32_t PDFObjectGetType(void * object) {
-	return (int32_t)CGPDFObjectGetType(
+CGPDFObjectType PDFObjectGetType(void * object) {
+	return (CGPDFObjectType)CGPDFObjectGetType(
 		// *typing.RefType
 		(CGPDFObjectRef)object
 	);
@@ -3398,7 +3406,7 @@ void * ColorCreateGenericRGB(float red, float green, float blue, float alpha) {
 		(CGFloat)alpha
 	);
 }
-double EventGetDoubleValueField(void * event, uint32_t field) {
+double EventGetDoubleValueField(void * event, CGEventField field) {
 	return (double)CGEventGetDoubleValueField(
 		// *typing.RefType
 		(CGEventRef)event,
@@ -3426,8 +3434,8 @@ void * FontCreateCopyWithVariations(void * font, void * variations) {
 		(CFDictionaryRef)variations
 	);
 }
-int32_t ConfigureDisplayMirrorOfDisplay(void * config, uint32_t display, uint32_t master) {
-	return (int32_t)CGConfigureDisplayMirrorOfDisplay(
+CGError ConfigureDisplayMirrorOfDisplay(void * config, CGDirectDisplayID display, CGDirectDisplayID master) {
+	return (CGError)CGConfigureDisplayMirrorOfDisplay(
 		// *typing.RefType
 		(CGDisplayConfigRef)config,
 		// *typing.AliasType
@@ -3442,8 +3450,8 @@ double DisplayModeGetRefreshRate(void * mode) {
 		(CGDisplayModeRef)mode
 	);
 }
-double EventSourceGetLocalEventsSuppressionInterval(void * source) {
-	return (double)CGEventSourceGetLocalEventsSuppressionInterval(
+CFTimeInterval EventSourceGetLocalEventsSuppressionInterval(void * source) {
+	return (CFTimeInterval)CGEventSourceGetLocalEventsSuppressionInterval(
 		// *typing.RefType
 		(CGEventSourceRef)source
 	);
@@ -3482,8 +3490,8 @@ void * ContextRetain(void * c) {
 		(CGContextRef)c
 	);
 }
-int32_t AcquireDisplayFadeReservation(float seconds, uint32_t* token) {
-	return (int32_t)CGAcquireDisplayFadeReservation(
+CGError AcquireDisplayFadeReservation(CGDisplayReservationInterval seconds, CGDisplayFadeReservationToken* token) {
+	return (CGError)CGAcquireDisplayFadeReservation(
 		// *typing.AliasType
 		(CGDisplayReservationInterval)seconds,
 		// *typing.PointerType
@@ -3491,13 +3499,13 @@ int32_t AcquireDisplayFadeReservation(float seconds, uint32_t* token) {
 		(CGDisplayFadeReservationToken*)token
 	);
 }
-uint64_t EventGetFlags(void * event) {
-	return (uint64_t)CGEventGetFlags(
+CGEventFlags EventGetFlags(void * event) {
+	return (CGEventFlags)CGEventGetFlags(
 		// *typing.RefType
 		(CGEventRef)event
 	);
 }
-void * FontCopyGlyphNameForGlyph(void * font, long glyph) {
+void * FontCopyGlyphNameForGlyph(void * font, CGGlyph glyph) {
 	return (void *)CGFontCopyGlyphNameForGlyph(
 		// *typing.RefType
 		(CGFontRef)font,
@@ -3608,7 +3616,7 @@ void * ImageGetUTType(void * image) {
 		(CGImageRef)image
 	);
 }
-bool FontCanCreatePostScriptSubset(void * font, int32_t format) {
+bool FontCanCreatePostScriptSubset(void * font, CGFontPostScriptFormat format) {
 	return (bool)CGFontCanCreatePostScriptSubset(
 		// *typing.RefType
 		(CGFontRef)font,
@@ -3622,8 +3630,8 @@ const float* ColorGetComponents(void * color) {
 		(CGColorRef)color
 	);
 }
-int32_t ContextGetTypeID() {
-	return (int32_t)CGContextGetTypeID(
+CFTypeID ContextGetTypeID() {
+	return (CFTypeID)CGContextGetTypeID(
 	);
 }
 void * DataConsumerCreateWithCFData(void * data) {
@@ -3665,8 +3673,8 @@ void DataConsumerRelease(void * consumer) {
 		(CGDataConsumerRef)consumer
 	);
 }
-int32_t ConfigureDisplayStereoOperation(void * config, uint32_t display, int stereo, int forceBlueLine) {
-	return (int32_t)CGConfigureDisplayStereoOperation(
+CGError ConfigureDisplayStereoOperation(void * config, CGDirectDisplayID display, boolean_t stereo, boolean_t forceBlueLine) {
+	return (CGError)CGConfigureDisplayStereoOperation(
 		// *typing.RefType
 		(CGDisplayConfigRef)config,
 		// *typing.AliasType
@@ -3706,26 +3714,26 @@ void PathAddCurveToPoint(void * path, const CGAffineTransform* m, float cp1x, fl
 		(CGFloat)y
 	);
 }
-int DisplayIsBuiltin(uint32_t display) {
-	return (int)CGDisplayIsBuiltin(
+boolean_t DisplayIsBuiltin(CGDirectDisplayID display) {
+	return (boolean_t)CGDisplayIsBuiltin(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
 }
-int32_t DisplayHideCursor(uint32_t display) {
-	return (int32_t)CGDisplayHideCursor(
+CGError DisplayHideCursor(CGDirectDisplayID display) {
+	return (CGError)CGDisplayHideCursor(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
 }
-uint32_t DisplayUnitNumber(uint32_t display) {
+uint32_t DisplayUnitNumber(CGDirectDisplayID display) {
 	return (uint32_t)CGDisplayUnitNumber(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
 }
-int32_t DisplaySetDisplayMode(uint32_t display, void * mode, void * options) {
-	return (int32_t)CGDisplaySetDisplayMode(
+CGError DisplaySetDisplayMode(CGDirectDisplayID display, void * mode, void * options) {
+	return (CGError)CGDisplaySetDisplayMode(
 		// *typing.AliasType
 		(CGDirectDisplayID)display,
 		// *typing.RefType
@@ -3734,7 +3742,7 @@ int32_t DisplaySetDisplayMode(uint32_t display, void * mode, void * options) {
 		(CFDictionaryRef)options
 	);
 }
-void ContextShowGlyphsAtPositions(void * c, const long* glyphs, const CGPoint* Lpositions, uint count) {
+void ContextShowGlyphsAtPositions(void * c, const CGGlyph* glyphs, const CGPoint* Lpositions, uint count) {
 	return (void)CGContextShowGlyphsAtPositions(
 		// *typing.RefType
 		(CGContextRef)c,
@@ -3762,8 +3770,8 @@ int FontGetLeading(void * font) {
 		(CGFontRef)font
 	);
 }
-int32_t PSConverterGetTypeID() {
-	return (int32_t)CGPSConverterGetTypeID(
+CFTypeID PSConverterGetTypeID() {
+	return (CFTypeID)CGPSConverterGetTypeID(
 	);
 }
 void * GradientCreateWithColors(void * space, void * colors, const float* locations) {
@@ -3777,8 +3785,8 @@ void * GradientCreateWithColors(void * space, void * colors, const float* locati
 		(CGFloat*)locations
 	);
 }
-int DisplayIsAlwaysInMirrorSet(uint32_t display) {
-	return (int)CGDisplayIsAlwaysInMirrorSet(
+boolean_t DisplayIsAlwaysInMirrorSet(CGDirectDisplayID display) {
+	return (boolean_t)CGDisplayIsAlwaysInMirrorSet(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
@@ -3815,8 +3823,8 @@ void ContextSetCMYKFillColor(void * c, float cyan, float magenta, float yellow, 
 		(CGFloat)alpha
 	);
 }
-int32_t CancelDisplayConfiguration(void * config) {
-	return (int32_t)CGCancelDisplayConfiguration(
+CGError CancelDisplayConfiguration(void * config) {
+	return (CGError)CGCancelDisplayConfiguration(
 		// *typing.RefType
 		(CGDisplayConfigRef)config
 	);
@@ -3835,8 +3843,8 @@ void PathAddLines(void * path, const CGAffineTransform* m, const CGPoint* points
 		(NSUInteger)count
 	);
 }
-int32_t SetDisplayTransferByFormula(uint32_t display, float redMin, float redMax, float redGamma, float greenMin, float greenMax, float greenGamma, float blueMin, float blueMax, float blueGamma) {
-	return (int32_t)CGSetDisplayTransferByFormula(
+CGError SetDisplayTransferByFormula(CGDirectDisplayID display, CGGammaValue redMin, CGGammaValue redMax, CGGammaValue redGamma, CGGammaValue greenMin, CGGammaValue greenMax, CGGammaValue greenGamma, CGGammaValue blueMin, CGGammaValue blueMax, CGGammaValue blueGamma) {
+	return (CGError)CGSetDisplayTransferByFormula(
 		// *typing.AliasType
 		(CGDirectDisplayID)display,
 		// *typing.AliasType
@@ -3859,14 +3867,14 @@ int32_t SetDisplayTransferByFormula(uint32_t display, float redMin, float redMax
 		(CGGammaValue)blueGamma
 	);
 }
-int DisplayIsAsleep(uint32_t display) {
-	return (int)CGDisplayIsAsleep(
+boolean_t DisplayIsAsleep(CGDirectDisplayID display) {
+	return (boolean_t)CGDisplayIsAsleep(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
 }
-uint32_t ImageGetBitmapInfo(void * image) {
-	return (uint32_t)CGImageGetBitmapInfo(
+CGBitmapInfo ImageGetBitmapInfo(void * image) {
+	return (CGBitmapInfo)CGImageGetBitmapInfo(
 		// *typing.RefType
 		(CGImageRef)image
 	);
@@ -3910,7 +3918,7 @@ bool RectIntersectsRect(CGRect rect1, CGRect rect2) {
 		(CGRect)rect2
 	);
 }
-void * DisplayCreateImage(uint32_t displayID) {
+void * DisplayCreateImage(CGDirectDisplayID displayID) {
 	return (void *)CGDisplayCreateImage(
 		// *typing.AliasType
 		(CGDirectDisplayID)displayID
@@ -3964,7 +3972,7 @@ void * DataConsumerRetain(void * consumer) {
 		(CGDataConsumerRef)consumer
 	);
 }
-void EventSourceSetLocalEventsFilterDuringSuppressionState(void * source, uint32_t filter, uint32_t state) {
+void EventSourceSetLocalEventsFilterDuringSuppressionState(void * source, CGEventFilterMask filter, CGEventSuppressionState state) {
 	return (void)CGEventSourceSetLocalEventsFilterDuringSuppressionState(
 		// *typing.RefType
 		(CGEventSourceRef)source,
@@ -3984,7 +3992,7 @@ void ContextSetGrayStrokeColor(void * c, float gray, float alpha) {
 		(CGFloat)alpha
 	);
 }
-uint32_t DisplayVendorNumber(uint32_t display) {
+uint32_t DisplayVendorNumber(CGDirectDisplayID display) {
 	return (uint32_t)CGDisplayVendorNumber(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
@@ -3998,11 +4006,11 @@ bool RectContainsPoint(CGRect rect, CGPoint point) {
 		(CGPoint)point
 	);
 }
-int32_t FontGetTypeID() {
-	return (int32_t)CGFontGetTypeID(
+CFTypeID FontGetTypeID() {
+	return (CFTypeID)CGFontGetTypeID(
 	);
 }
-void * DisplayGetDrawingContext(uint32_t display) {
+void * DisplayGetDrawingContext(CGDirectDisplayID display) {
 	return (void *)CGDisplayGetDrawingContext(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
@@ -4022,8 +4030,8 @@ void * EventCreate(void * source) {
 		(CGEventSourceRef)source
 	);
 }
-uint32_t DisplayMirrorsDisplay(uint32_t display) {
-	return (uint32_t)CGDisplayMirrorsDisplay(
+CGDirectDisplayID DisplayMirrorsDisplay(CGDirectDisplayID display) {
+	return (CGDirectDisplayID)CGDisplayMirrorsDisplay(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
@@ -4057,7 +4065,7 @@ CGPoint PointMake(float x, float y) {
 		(CGFloat)y
 	);
 }
-void * EventCreateScrollWheelEvent(void * source, uint32_t units, uint32_t wheelCount, int32_t wheel1) {
+void * EventCreateScrollWheelEvent(void * source, CGScrollEventUnit units, uint32_t wheelCount, int32_t wheel1) {
 	return (void *)CGEventCreateScrollWheelEvent(
 		// *typing.RefType
 		(CGEventSourceRef)source,
@@ -4123,8 +4131,8 @@ uint ColorSpaceGetColorTableCount(void * space) {
 		(CGColorSpaceRef)space
 	);
 }
-uint32_t OpenGLDisplayMaskToDisplayID(uint32_t mask) {
-	return (uint32_t)CGOpenGLDisplayMaskToDisplayID(
+CGDirectDisplayID OpenGLDisplayMaskToDisplayID(CGOpenGLDisplayMask mask) {
+	return (CGDirectDisplayID)CGOpenGLDisplayMaskToDisplayID(
 		// *typing.AliasType
 		(CGOpenGLDisplayMask)mask
 	);
@@ -4200,11 +4208,11 @@ void ContextClip(void * c) {
 		(CGContextRef)c
 	);
 }
-int32_t ReleaseAllDisplays() {
-	return (int32_t)CGReleaseAllDisplays(
+CGError ReleaseAllDisplays() {
+	return (CGError)CGReleaseAllDisplays(
 	);
 }
-uint32_t DisplaySerialNumber(uint32_t display) {
+uint32_t DisplaySerialNumber(CGDirectDisplayID display) {
 	return (uint32_t)CGDisplaySerialNumber(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
@@ -4216,7 +4224,7 @@ void * ColorSpaceCopyName(void * space) {
 		(CGColorSpaceRef)space
 	);
 }
-void ContextSetLineCap(void * c, int32_t cap) {
+void ContextSetLineCap(void * c, CGLineCap cap) {
 	return (void)CGContextSetLineCap(
 		// *typing.RefType
 		(CGContextRef)c,
@@ -4236,7 +4244,7 @@ void * PDFOperatorTableRetain(void * table) {
 		(CGPDFOperatorTableRef)table
 	);
 }
-uint32_t DisplayModelNumber(uint32_t display) {
+uint32_t DisplayModelNumber(CGDirectDisplayID display) {
 	return (uint32_t)CGDisplayModelNumber(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
@@ -4328,7 +4336,7 @@ void ContextAddLineToPoint(void * c, float x, float y) {
 		(CGFloat)y
 	);
 }
-bool PDFScannerPopBoolean(void * scanner, char* value) {
+bool PDFScannerPopBoolean(void * scanner, CGPDFBoolean* value) {
 	return (bool)CGPDFScannerPopBoolean(
 		// *typing.RefType
 		(CGPDFScannerRef)scanner,
@@ -4343,7 +4351,7 @@ void * FontCreateWithFontName(void * name) {
 		(CFStringRef)name
 	);
 }
-void ContextSetInterpolationQuality(void * c, int32_t quality) {
+void ContextSetInterpolationQuality(void * c, CGInterpolationQuality quality) {
 	return (void)CGContextSetInterpolationQuality(
 		// *typing.RefType
 		(CGContextRef)c,
@@ -4363,12 +4371,12 @@ void LayerRelease(void * layer) {
 		(CGLayerRef)layer
 	);
 }
-int32_t LayerGetTypeID() {
-	return (int32_t)CGLayerGetTypeID(
+CFTypeID LayerGetTypeID() {
+	return (CFTypeID)CGLayerGetTypeID(
 	);
 }
-int32_t FunctionGetTypeID() {
-	return (int32_t)CGFunctionGetTypeID(
+CFTypeID FunctionGetTypeID() {
+	return (CFTypeID)CGFunctionGetTypeID(
 	);
 }
 void * PDFContentStreamGetStreams(void * cs) {
@@ -4383,14 +4391,14 @@ uint PDFDictionaryGetCount(void * dict) {
 		(CGPDFDictionaryRef)dict
 	);
 }
-int32_t DisplayShowCursor(uint32_t display) {
-	return (int32_t)CGDisplayShowCursor(
+CGError DisplayShowCursor(CGDirectDisplayID display) {
+	return (CGError)CGDisplayShowCursor(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
 }
-uint32_t BitmapContextGetBitmapInfo(void * context) {
-	return (uint32_t)CGBitmapContextGetBitmapInfo(
+CGBitmapInfo BitmapContextGetBitmapInfo(void * context) {
+	return (CGBitmapInfo)CGBitmapContextGetBitmapInfo(
 		// *typing.RefType
 		(CGContextRef)context
 	);
@@ -4405,7 +4413,7 @@ CGAffineTransform AffineTransformScale(CGAffineTransform t, float sx, float sy) 
 		(CGFloat)sy
 	);
 }
-void * FontCreatePostScriptSubset(void * font, void * subsetName, int32_t format, const long* glyphs, uint count, const long* encoding) {
+void * FontCreatePostScriptSubset(void * font, void * subsetName, CGFontPostScriptFormat format, const CGGlyph* glyphs, uint count, const CGGlyph* encoding) {
 	return (void *)CGFontCreatePostScriptSubset(
 		// *typing.RefType
 		(CGFontRef)font,
@@ -4423,8 +4431,8 @@ void * FontCreatePostScriptSubset(void * font, void * subsetName, int32_t format
 		(CGGlyph*)encoding
 	);
 }
-int DisplayIsMain(uint32_t display) {
-	return (int)CGDisplayIsMain(
+boolean_t DisplayIsMain(CGDirectDisplayID display) {
+	return (boolean_t)CGDisplayIsMain(
 		// *typing.AliasType
 		(CGDirectDisplayID)display
 	);
@@ -4450,12 +4458,12 @@ void ContextSetLineDash(void * c, float phase, const float* lengths, uint count)
 		(NSUInteger)count
 	);
 }
-int32_t DisplayModeGetTypeID() {
-	return (int32_t)CGDisplayModeGetTypeID(
+CFTypeID DisplayModeGetTypeID() {
+	return (CFTypeID)CGDisplayModeGetTypeID(
 	);
 }
-uint64_t EventSourceFlagsState(int32_t stateID) {
-	return (uint64_t)CGEventSourceFlagsState(
+CGEventFlags EventSourceFlagsState(CGEventSourceStateID stateID) {
+	return (CGEventFlags)CGEventSourceFlagsState(
 		// *typing.AliasType
 		(CGEventSourceStateID)stateID
 	);

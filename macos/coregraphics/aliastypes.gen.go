@@ -173,3 +173,58 @@ type DataProviderReleaseInfoCallback = func(info unsafe.Pointer)
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/cgdataproviderskipforwardcallback?language=objc
 type DataProviderSkipForwardCallback = func(info unsafe.Pointer, count int) int
+
+// An opaque type that provides access to the data that describes the appearance of a PDF page. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/coregraphics/cgpdfcontentstreamref?language=objc
+type PDFContentStreamRef = unsafe.Pointer
+
+// A type that stores callback functions for PDF operators. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/coregraphics/cgpdfoperatortableref?language=objc
+type PDFOperatorTableRef = unsafe.Pointer
+
+// A reference to a display configuration transaction. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/coregraphics/cgdisplayconfigref?language=objc
+type DisplayConfigRef = unsafe.Pointer
+
+// A data type that represents a string in a PDF document. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/coregraphics/cgpdfstringref?language=objc
+type PDFStringRef = unsafe.Pointer
+
+// An opaque type that encapsulates a PDF array. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/coregraphics/cgpdfarrayref?language=objc
+type PDFArrayRef = unsafe.Pointer
+
+// An immutable graphics path: a mathematical description of shapes or lines to be drawn in a graphics context. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/coregraphics/cgpathref?language=objc
+type PathRef = unsafe.Pointer
+
+// Defines an opaque type that represents state within the client application that’s associated with an event tap. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/coregraphics/cgeventtapproxy?language=objc
+type EventTapProxy = unsafe.Pointer
+
+// A type that represents a PDF stream. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/coregraphics/cgpdfstreamref?language=objc
+type PDFStreamRef = unsafe.Pointer
+
+// A type that encapsulates a PDF dictionary. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/coregraphics/cgpdfdictionaryref?language=objc
+type PDFDictionaryRef = unsafe.Pointer
+
+// A type used to parse a PDF content stream. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/coregraphics/cgpdfscannerref?language=objc
+type PDFScannerRef = unsafe.Pointer
+
+// A type that contains information about a PDF object. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/coregraphics/cgpdfobjectref?language=objc
+type PDFObjectRef = unsafe.Pointer
