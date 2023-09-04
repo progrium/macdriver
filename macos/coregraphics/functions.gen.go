@@ -265,7 +265,7 @@ package coregraphics
 // double EventSourceGetPixelsPerLine(void * source);
 // CGRect RectInset(CGRect rect, float dx, float dy);
 // bool PDFArrayGetNull(void * array, uint index);
-// float* ImageGetDecode(void * image);
+// float ImageGetDecode(void * image);
 // void* DataProviderGetInfo(void * provider);
 // void * PDFStreamCopyData(void * stream, CGPDFDataFormat* format);
 // void * PatternRetain(void * pattern);
@@ -457,7 +457,7 @@ package coregraphics
 // void * ContextCopyPath(void * c);
 // void * ImageGetUTType(void * image);
 // bool FontCanCreatePostScriptSubset(void * font, CGFontPostScriptFormat format);
-// float* ColorGetComponents(void * color);
+// float ColorGetComponents(void * color);
 // CFTypeID ContextGetTypeID();
 // void * DataConsumerCreateWithCFData(void * data);
 // void ContextAddRect(void * c, CGRect rect);
@@ -635,7 +635,7 @@ func ContextClipToRects(c ContextRef, rects *Rect, count uint) {
 		// *typing.RefType
 		unsafe.Pointer(c),
 		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(rects)),
+		(*C.CGRect)(unsafe.Pointer(&rects)),
 		// *typing.PrimitiveType
 		C.uint(count),
 	)
@@ -737,7 +737,7 @@ func PDFContextCreate(consumer DataConsumerRef, mediaBox *Rect, auxiliaryInfo co
 		// *typing.RefType
 		unsafe.Pointer(consumer),
 		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(mediaBox)),
+		(*C.CGRect)(unsafe.Pointer(&mediaBox)),
 		// *typing.RefType
 		unsafe.Pointer(auxiliaryInfo),
 	)
@@ -914,7 +914,7 @@ func PathAddArc(path MutablePathRef, m *AffineTransform, x float64, y float64, r
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&m)),
 		// *typing.PrimitiveType
 		C.float(x),
 		// *typing.PrimitiveType
@@ -1058,9 +1058,9 @@ func ColorSpaceCreateDeviceGray() ColorSpaceRef {
 func ColorSpaceCreateCalibratedGray(whitePoint *float64, blackPoint *float64, gamma float64) ColorSpaceRef {
 	rv := C.ColorSpaceCreateCalibratedGray(
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(whitePoint)),
+		(*C.float)(unsafe.Pointer(&whitePoint)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(blackPoint)),
+		(*C.float)(unsafe.Pointer(&blackPoint)),
 		// *typing.PrimitiveType
 		C.float(gamma),
 	)
@@ -1076,7 +1076,7 @@ func PathCreateCopyByStrokingPath(path unsafe.Pointer, transform *AffineTransfor
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&transform)),
 		// *typing.PrimitiveType
 		C.float(lineWidth),
 		// *typing.AliasType
@@ -1114,7 +1114,7 @@ func PathContainsPoint(path unsafe.Pointer, m *AffineTransform, point Point, eoF
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&m)),
 		// *typing.StructType
 		*(*C.CGPoint)(unsafe.Pointer(&point)),
 		// *typing.PrimitiveType
@@ -1236,7 +1236,7 @@ func PathCreateWithRect(rect Rect, transform *AffineTransform) unsafe.Pointer {
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&transform)),
 	)
 	// *typing.RefType
 	return unsafe.Pointer(rv)
@@ -1272,7 +1272,7 @@ func PathAddPath(path1 MutablePathRef, m *AffineTransform, path2 unsafe.Pointer)
 		// *typing.RefType
 		unsafe.Pointer(path1),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&m)),
 		// *typing.RefType
 		unsafe.Pointer(path2),
 	)
@@ -1295,7 +1295,7 @@ func SizeMakeWithDictionaryRepresentation(dict corefoundation.DictionaryRef, siz
 		// *typing.RefType
 		unsafe.Pointer(dict),
 		// *typing.PointerType
-		(*C.CGSize)(unsafe.Pointer(size)),
+		(*C.CGSize)(unsafe.Pointer(&size)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -1436,9 +1436,9 @@ func GetDisplaysWithRect(rect Rect, maxDisplays uint32, displays *DirectDisplayI
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.CGDirectDisplayID)(unsafe.Pointer(displays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(&displays)),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(matchingDisplayCount)),
+		(*C.uint32_t)(unsafe.Pointer(&matchingDisplayCount)),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -1670,9 +1670,9 @@ func PDFDocumentGetVersion(document PDFDocumentRef, majorVersion *int, minorVers
 		// *typing.RefType
 		unsafe.Pointer(document),
 		// *typing.PointerType
-		(*C.int)(unsafe.Pointer(majorVersion)),
+		(*C.int)(unsafe.Pointer(&majorVersion)),
 		// *typing.PointerType
-		(*C.int)(unsafe.Pointer(minorVersion)),
+		(*C.int)(unsafe.Pointer(&minorVersion)),
 	)
 }
 
@@ -1684,7 +1684,7 @@ func PathAddRoundedRect(path MutablePathRef, transform *AffineTransform, rect Re
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&transform)),
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 		// *typing.PrimitiveType
@@ -1854,7 +1854,7 @@ func PDFScannerPopInteger(scanner unsafe.Pointer, value *PDFInteger) bool {
 		// *typing.RefType
 		unsafe.Pointer(scanner),
 		// *typing.PointerType
-		(*C.CGPDFInteger)(unsafe.Pointer(value)),
+		(*C.CGPDFInteger)(unsafe.Pointer(&value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -1893,7 +1893,7 @@ func ColorSpaceGetColorTable(space ColorSpaceRef, table *uint8) {
 		// *typing.RefType
 		unsafe.Pointer(space),
 		// *typing.PointerType
-		(*C.uint8_t)(unsafe.Pointer(table)),
+		(*C.uint8_t)(unsafe.Pointer(&table)),
 	)
 }
 
@@ -1959,9 +1959,9 @@ func GetDisplaysWithOpenGLDisplayMask(mask OpenGLDisplayMask, maxDisplays uint32
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.CGDirectDisplayID)(unsafe.Pointer(displays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(&displays)),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(matchingDisplayCount)),
+		(*C.uint32_t)(unsafe.Pointer(&matchingDisplayCount)),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -2011,7 +2011,7 @@ func PointMakeWithDictionaryRepresentation(dict corefoundation.DictionaryRef, po
 		// *typing.RefType
 		unsafe.Pointer(dict),
 		// *typing.PointerType
-		(*C.CGPoint)(unsafe.Pointer(point)),
+		(*C.CGPoint)(unsafe.Pointer(&point)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -2119,7 +2119,7 @@ func ImageCreateWithPNGDataProvider(source DataProviderRef, decode *float64, sho
 		// *typing.RefType
 		unsafe.Pointer(source),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(decode)),
+		(*C.float)(unsafe.Pointer(&decode)),
 		// *typing.PrimitiveType
 		C.bool(shouldInterpolate),
 		// *typing.AliasType
@@ -2138,7 +2138,7 @@ func PathAddEllipseInRect(path MutablePathRef, m *AffineTransform, rect Rect) {
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&m)),
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
@@ -2332,7 +2332,7 @@ func ColorSpaceCreateICCBased(nComponents uint, range_ *float64, profile DataPro
 		// *typing.PrimitiveType
 		C.uint(nComponents),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(range_)),
+		(*C.float)(unsafe.Pointer(&range_)),
 		// *typing.RefType
 		unsafe.Pointer(profile),
 		// *typing.RefType
@@ -2417,11 +2417,11 @@ func SetDisplayTransferByTable(display DirectDisplayID, tableSize uint32, redTab
 		// *typing.PrimitiveType
 		C.uint32_t(tableSize),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(redTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(&redTable)),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(greenTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(&greenTable)),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(blueTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(&blueTable)),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -2507,9 +2507,9 @@ func GetActiveDisplayList(maxDisplays uint32, activeDisplays *DirectDisplayID, d
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.CGDirectDisplayID)(unsafe.Pointer(activeDisplays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(&activeDisplays)),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(displayCount)),
+		(*C.uint32_t)(unsafe.Pointer(&displayCount)),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -2523,7 +2523,7 @@ func PathIsRect(path unsafe.Pointer, rect *Rect) bool {
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(rect)),
+		(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -2602,7 +2602,7 @@ func FontCreatePostScriptEncoding(font FontRef, encoding *Glyph) corefoundation.
 		// *typing.RefType
 		unsafe.Pointer(font),
 		// *typing.PointerType
-		(*C.CGGlyph)(unsafe.Pointer(encoding)),
+		(*C.CGGlyph)(unsafe.Pointer(&encoding)),
 	)
 	// *typing.RefType
 	return corefoundation.DataRef(rv)
@@ -2675,9 +2675,9 @@ func PathAddRects(path MutablePathRef, m *AffineTransform, rects *Rect, count ui
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&m)),
 		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(rects)),
+		(*C.CGRect)(unsafe.Pointer(&rects)),
 		// *typing.PrimitiveType
 		C.uint(count),
 	)
@@ -2736,7 +2736,7 @@ func PDFDictionaryGetInteger(dict unsafe.Pointer, key string, value *PDFInteger)
 		// *typing.CStringType
 		keyVal,
 		// *typing.PointerType
-		(*C.CGPDFInteger)(unsafe.Pointer(value)),
+		(*C.CGPDFInteger)(unsafe.Pointer(&value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -2792,7 +2792,7 @@ func PDFArrayGetNumber(array unsafe.Pointer, index uint, value *PDFReal) bool {
 		// *typing.PrimitiveType
 		C.uint(index),
 		// *typing.PointerType
-		(*C.CGPDFReal)(unsafe.Pointer(value)),
+		(*C.CGPDFReal)(unsafe.Pointer(&value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -2808,7 +2808,7 @@ func ColorCreateWithPattern(space ColorSpaceRef, pattern PatternRef, components 
 		// *typing.RefType
 		unsafe.Pointer(pattern),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(components)),
+		(*C.float)(unsafe.Pointer(&components)),
 	)
 	// *typing.RefType
 	return ColorRef(rv)
@@ -2860,9 +2860,9 @@ func ContextSetBlendMode(c ContextRef, mode BlendMode) {
 func GetLastMouseDelta(deltaX *int32, deltaY *int32) {
 	C.GetLastMouseDelta(
 		// *typing.PointerType
-		(*C.int32_t)(unsafe.Pointer(deltaX)),
+		(*C.int32_t)(unsafe.Pointer(&deltaX)),
 		// *typing.PointerType
-		(*C.int32_t)(unsafe.Pointer(deltaY)),
+		(*C.int32_t)(unsafe.Pointer(&deltaY)),
 	)
 }
 
@@ -2874,11 +2874,11 @@ func FontGetGlyphBBoxes(font FontRef, glyphs *Glyph, count uint, bboxes *Rect) b
 		// *typing.RefType
 		unsafe.Pointer(font),
 		// *typing.PointerType
-		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
+		(*C.CGGlyph)(unsafe.Pointer(&glyphs)),
 		// *typing.PrimitiveType
 		C.uint(count),
 		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(bboxes)),
+		(*C.CGRect)(unsafe.Pointer(&bboxes)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -2894,9 +2894,9 @@ func GetDisplaysWithPoint(point Point, maxDisplays uint32, displays *DirectDispl
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.CGDirectDisplayID)(unsafe.Pointer(displays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(&displays)),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(matchingDisplayCount)),
+		(*C.uint32_t)(unsafe.Pointer(&matchingDisplayCount)),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -3062,13 +3062,13 @@ func GetDisplayTransferByTable(display DirectDisplayID, capacity uint32, redTabl
 		// *typing.PrimitiveType
 		C.uint32_t(capacity),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(redTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(&redTable)),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(greenTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(&greenTable)),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(blueTable)),
+		(*C.CGGammaValue)(unsafe.Pointer(&blueTable)),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(sampleCount)),
+		(*C.uint32_t)(unsafe.Pointer(&sampleCount)),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -3108,7 +3108,7 @@ func PathAddLineToPoint(path MutablePathRef, m *AffineTransform, x float64, y fl
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&m)),
 		// *typing.PrimitiveType
 		C.float(x),
 		// *typing.PrimitiveType
@@ -3145,7 +3145,7 @@ func PDFScannerPopNumber(scanner unsafe.Pointer, value *PDFReal) bool {
 		// *typing.RefType
 		unsafe.Pointer(scanner),
 		// *typing.PointerType
-		(*C.CGPDFReal)(unsafe.Pointer(value)),
+		(*C.CGPDFReal)(unsafe.Pointer(&value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -3157,11 +3157,11 @@ func PDFScannerPopNumber(scanner unsafe.Pointer, value *PDFReal) bool {
 func ColorSpaceCreateLab(whitePoint *float64, blackPoint *float64, range_ *float64) ColorSpaceRef {
 	rv := C.ColorSpaceCreateLab(
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(whitePoint)),
+		(*C.float)(unsafe.Pointer(&whitePoint)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(blackPoint)),
+		(*C.float)(unsafe.Pointer(&blackPoint)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(range_)),
+		(*C.float)(unsafe.Pointer(&range_)),
 	)
 	// *typing.RefType
 	return ColorSpaceRef(rv)
@@ -3206,7 +3206,7 @@ func PathAddRect(path MutablePathRef, m *AffineTransform, rect Rect) {
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&m)),
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
@@ -3234,7 +3234,7 @@ func ImageCreateWithJPEGDataProvider(source DataProviderRef, decode *float64, sh
 		// *typing.RefType
 		unsafe.Pointer(source),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(decode)),
+		(*C.float)(unsafe.Pointer(&decode)),
 		// *typing.PrimitiveType
 		C.bool(shouldInterpolate),
 		// *typing.AliasType
@@ -3277,7 +3277,7 @@ func ImageCreate(width uint, height uint, bitsPerComponent uint, bitsPerPixel ui
 		// *typing.RefType
 		unsafe.Pointer(provider),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(decode)),
+		(*C.float)(unsafe.Pointer(&decode)),
 		// *typing.PrimitiveType
 		C.bool(shouldInterpolate),
 		// *typing.AliasType
@@ -3334,7 +3334,7 @@ func PDFArrayGetBoolean(array unsafe.Pointer, index uint, value *PDFBoolean) boo
 		// *typing.PrimitiveType
 		C.uint(index),
 		// *typing.PointerType
-		(*C.CGPDFBoolean)(unsafe.Pointer(value)),
+		(*C.CGPDFBoolean)(unsafe.Pointer(&value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -3348,7 +3348,7 @@ func ContextSetFillColor(c ContextRef, components *float64) {
 		// *typing.RefType
 		unsafe.Pointer(c),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(components)),
+		(*C.float)(unsafe.Pointer(&components)),
 	)
 }
 
@@ -3460,9 +3460,9 @@ func GetOnlineDisplayList(maxDisplays uint32, onlineDisplays *DirectDisplayID, d
 		// *typing.PrimitiveType
 		C.uint32_t(maxDisplays),
 		// *typing.PointerType
-		(*C.CGDirectDisplayID)(unsafe.Pointer(onlineDisplays)),
+		(*C.CGDirectDisplayID)(unsafe.Pointer(&onlineDisplays)),
 		// *typing.PointerType
-		(*C.uint32_t)(unsafe.Pointer(displayCount)),
+		(*C.uint32_t)(unsafe.Pointer(&displayCount)),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -3539,23 +3539,23 @@ func GetDisplayTransferByFormula(display DirectDisplayID, redMin *GammaValue, re
 		// *typing.PrimitiveType
 		(C.CGDirectDisplayID)(display),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(redMin)),
+		(*C.CGGammaValue)(unsafe.Pointer(&redMin)),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(redMax)),
+		(*C.CGGammaValue)(unsafe.Pointer(&redMax)),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(redGamma)),
+		(*C.CGGammaValue)(unsafe.Pointer(&redGamma)),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(greenMin)),
+		(*C.CGGammaValue)(unsafe.Pointer(&greenMin)),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(greenMax)),
+		(*C.CGGammaValue)(unsafe.Pointer(&greenMax)),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(greenGamma)),
+		(*C.CGGammaValue)(unsafe.Pointer(&greenGamma)),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(blueMin)),
+		(*C.CGGammaValue)(unsafe.Pointer(&blueMin)),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(blueMax)),
+		(*C.CGGammaValue)(unsafe.Pointer(&blueMax)),
 		// *typing.PointerType
-		(*C.CGGammaValue)(unsafe.Pointer(blueGamma)),
+		(*C.CGGammaValue)(unsafe.Pointer(&blueGamma)),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -3637,9 +3637,9 @@ func RectDivide(rect Rect, slice *Rect, remainder *Rect, amount float64, edge Re
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(slice)),
+		(*C.CGRect)(unsafe.Pointer(&slice)),
 		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(remainder)),
+		(*C.CGRect)(unsafe.Pointer(&remainder)),
 		// *typing.PrimitiveType
 		C.float(amount),
 		// *typing.AliasType
@@ -3888,11 +3888,11 @@ func FontGetGlyphAdvances(font FontRef, glyphs *Glyph, count uint, advances *int
 		// *typing.RefType
 		unsafe.Pointer(font),
 		// *typing.PointerType
-		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
+		(*C.CGGlyph)(unsafe.Pointer(&glyphs)),
 		// *typing.PrimitiveType
 		C.uint(count),
 		// *typing.PointerType
-		(*C.int)(unsafe.Pointer(advances)),
+		(*C.int)(unsafe.Pointer(&advances)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -3944,7 +3944,7 @@ func ContextSetStrokePattern(c ContextRef, pattern PatternRef, components *float
 		// *typing.RefType
 		unsafe.Pointer(pattern),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(components)),
+		(*C.float)(unsafe.Pointer(&components)),
 	)
 }
 
@@ -3978,7 +3978,7 @@ func PathAddQuadCurveToPoint(path MutablePathRef, m *AffineTransform, cpx float6
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&m)),
 		// *typing.PrimitiveType
 		C.float(cpx),
 		// *typing.PrimitiveType
@@ -4066,7 +4066,7 @@ func PathAddArcToPoint(path MutablePathRef, m *AffineTransform, x1 float64, y1 f
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&m)),
 		// *typing.PrimitiveType
 		C.float(x1),
 		// *typing.PrimitiveType
@@ -4175,7 +4175,7 @@ func PDFStreamCopyData(stream unsafe.Pointer, format *PDFDataFormat) corefoundat
 		// *typing.RefType
 		unsafe.Pointer(stream),
 		// *typing.PointerType
-		(*C.CGPDFDataFormat)(unsafe.Pointer(format)),
+		(*C.CGPDFDataFormat)(unsafe.Pointer(&format)),
 	)
 	// *typing.RefType
 	return corefoundation.DataRef(rv)
@@ -4403,7 +4403,7 @@ func ContextSetStrokeColor(c ContextRef, components *float64) {
 		// *typing.RefType
 		unsafe.Pointer(c),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(components)),
+		(*C.float)(unsafe.Pointer(&components)),
 	)
 }
 
@@ -4425,7 +4425,7 @@ func ContextAddRects(c ContextRef, rects *Rect, count uint) {
 		// *typing.RefType
 		unsafe.Pointer(c),
 		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(rects)),
+		(*C.CGRect)(unsafe.Pointer(&rects)),
 		// *typing.PrimitiveType
 		C.uint(count),
 	)
@@ -4439,7 +4439,7 @@ func PathCreateMutableCopyByTransformingPath(path unsafe.Pointer, transform *Aff
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&transform)),
 	)
 	// *typing.RefType
 	return MutablePathRef(rv)
@@ -4552,7 +4552,7 @@ func PDFContextCreateWithURL(url corefoundation.URLRef, mediaBox *Rect, auxiliar
 		// *typing.RefType
 		unsafe.Pointer(url),
 		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(mediaBox)),
+		(*C.CGRect)(unsafe.Pointer(&mediaBox)),
 		// *typing.RefType
 		unsafe.Pointer(auxiliaryInfo),
 	)
@@ -4605,7 +4605,7 @@ func PDFDictionaryGetNumber(dict unsafe.Pointer, key string, value *PDFReal) boo
 		// *typing.CStringType
 		keyVal,
 		// *typing.PointerType
-		(*C.CGPDFReal)(unsafe.Pointer(value)),
+		(*C.CGPDFReal)(unsafe.Pointer(&value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -4863,7 +4863,7 @@ func PDFDictionaryGetBoolean(dict unsafe.Pointer, key string, value *PDFBoolean)
 		// *typing.CStringType
 		keyVal,
 		// *typing.PointerType
-		(*C.CGPDFBoolean)(unsafe.Pointer(value)),
+		(*C.CGPDFBoolean)(unsafe.Pointer(&value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -4963,7 +4963,7 @@ func RectMakeWithDictionaryRepresentation(dict corefoundation.DictionaryRef, rec
 		// *typing.RefType
 		unsafe.Pointer(dict),
 		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(rect)),
+		(*C.CGRect)(unsafe.Pointer(&rect)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -5024,7 +5024,7 @@ func PDFArrayGetInteger(array unsafe.Pointer, index uint, value *PDFInteger) boo
 		// *typing.PrimitiveType
 		C.uint(index),
 		// *typing.PointerType
-		(*C.CGPDFInteger)(unsafe.Pointer(value)),
+		(*C.CGPDFInteger)(unsafe.Pointer(&value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -5424,7 +5424,7 @@ func ImageCreateWithMaskingColors(image ImageRef, components *float64) ImageRef 
 		// *typing.RefType
 		unsafe.Pointer(image),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(components)),
+		(*C.float)(unsafe.Pointer(&components)),
 	)
 	// *typing.RefType
 	return ImageRef(rv)
@@ -5438,7 +5438,7 @@ func ContextFillRects(c ContextRef, rects *Rect, count uint) {
 		// *typing.RefType
 		unsafe.Pointer(c),
 		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(rects)),
+		(*C.CGRect)(unsafe.Pointer(&rects)),
 		// *typing.PrimitiveType
 		C.uint(count),
 	)
@@ -5537,9 +5537,9 @@ func GradientCreateWithColorComponents(space ColorSpaceRef, components *float64,
 		// *typing.RefType
 		unsafe.Pointer(space),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(components)),
+		(*C.float)(unsafe.Pointer(&components)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(locations)),
+		(*C.float)(unsafe.Pointer(&locations)),
 		// *typing.PrimitiveType
 		C.uint(count),
 	)
@@ -5553,13 +5553,13 @@ func GradientCreateWithColorComponents(space ColorSpaceRef, components *float64,
 func ColorSpaceCreateCalibratedRGB(whitePoint *float64, blackPoint *float64, gamma *float64, matrix *float64) ColorSpaceRef {
 	rv := C.ColorSpaceCreateCalibratedRGB(
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(whitePoint)),
+		(*C.float)(unsafe.Pointer(&whitePoint)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(blackPoint)),
+		(*C.float)(unsafe.Pointer(&blackPoint)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(gamma)),
+		(*C.float)(unsafe.Pointer(&gamma)),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(matrix)),
+		(*C.float)(unsafe.Pointer(&matrix)),
 	)
 	// *typing.RefType
 	return ColorSpaceRef(rv)
@@ -5612,7 +5612,7 @@ func ColorCreate(space ColorSpaceRef, components *float64) ColorRef {
 		// *typing.RefType
 		unsafe.Pointer(space),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(components)),
+		(*C.float)(unsafe.Pointer(&components)),
 	)
 	// *typing.RefType
 	return ColorRef(rv)
@@ -5626,7 +5626,7 @@ func PathMoveToPoint(path MutablePathRef, m *AffineTransform, x float64, y float
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&m)),
 		// *typing.PrimitiveType
 		C.float(x),
 		// *typing.PrimitiveType
@@ -5708,11 +5708,11 @@ func SetDisplayTransferByByteTable(display DirectDisplayID, tableSize uint32, re
 		// *typing.PrimitiveType
 		C.uint32_t(tableSize),
 		// *typing.PointerType
-		(*C.uint8_t)(unsafe.Pointer(redTable)),
+		(*C.uint8_t)(unsafe.Pointer(&redTable)),
 		// *typing.PointerType
-		(*C.uint8_t)(unsafe.Pointer(greenTable)),
+		(*C.uint8_t)(unsafe.Pointer(&greenTable)),
 		// *typing.PointerType
-		(*C.uint8_t)(unsafe.Pointer(blueTable)),
+		(*C.uint8_t)(unsafe.Pointer(&blueTable)),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -5740,7 +5740,7 @@ func ContextSetFillPattern(c ContextRef, pattern PatternRef, components *float64
 		// *typing.RefType
 		unsafe.Pointer(pattern),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(components)),
+		(*C.float)(unsafe.Pointer(&components)),
 	)
 }
 
@@ -6033,7 +6033,7 @@ func ContextStrokeLineSegments(c ContextRef, points *Point, count uint) {
 		// *typing.RefType
 		unsafe.Pointer(c),
 		// *typing.PointerType
-		(*C.CGPoint)(unsafe.Pointer(points)),
+		(*C.CGPoint)(unsafe.Pointer(&points)),
 		// *typing.PrimitiveType
 		C.uint(count),
 	)
@@ -6182,7 +6182,7 @@ func PathCreateWithRoundedRect(rect Rect, cornerWidth float64, cornerHeight floa
 		// *typing.PrimitiveType
 		C.float(cornerHeight),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&transform)),
 	)
 	// *typing.RefType
 	return unsafe.Pointer(rv)
@@ -6233,7 +6233,7 @@ func ImageMaskCreate(width uint, height uint, bitsPerComponent uint, bitsPerPixe
 		// *typing.RefType
 		unsafe.Pointer(provider),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(decode)),
+		(*C.float)(unsafe.Pointer(&decode)),
 		// *typing.PrimitiveType
 		C.bool(shouldInterpolate),
 	)
@@ -6419,7 +6419,7 @@ func AcquireDisplayFadeReservation(seconds DisplayReservationInterval, token *Di
 		// *typing.PrimitiveType
 		(C.CGDisplayReservationInterval)(seconds),
 		// *typing.PointerType
-		(*C.CGDisplayFadeReservationToken)(unsafe.Pointer(token)),
+		(*C.CGDisplayFadeReservationToken)(unsafe.Pointer(&token)),
 	)
 	// *typing.AliasType
 	return Error(rv)
@@ -6488,7 +6488,7 @@ func PathCreateCopyByTransformingPath(path unsafe.Pointer, transform *AffineTran
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&transform)),
 	)
 	// *typing.RefType
 	return unsafe.Pointer(rv)
@@ -6694,7 +6694,7 @@ func PathAddRelativeArc(path MutablePathRef, matrix *AffineTransform, x float64,
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(matrix)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&matrix)),
 		// *typing.PrimitiveType
 		C.float(x),
 		// *typing.PrimitiveType
@@ -6761,7 +6761,7 @@ func PathAddCurveToPoint(path MutablePathRef, m *AffineTransform, cp1x float64, 
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&m)),
 		// *typing.PrimitiveType
 		C.float(cp1x),
 		// *typing.PrimitiveType
@@ -6841,9 +6841,9 @@ func ContextShowGlyphsAtPositions(c ContextRef, glyphs *Glyph, Lpositions *Point
 		// *typing.RefType
 		unsafe.Pointer(c),
 		// *typing.PointerType
-		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
+		(*C.CGGlyph)(unsafe.Pointer(&glyphs)),
 		// *typing.PointerType
-		(*C.CGPoint)(unsafe.Pointer(Lpositions)),
+		(*C.CGPoint)(unsafe.Pointer(&Lpositions)),
 		// *typing.PrimitiveType
 		C.uint(count),
 	)
@@ -6892,7 +6892,7 @@ func GradientCreateWithColors(space ColorSpaceRef, colors corefoundation.ArrayRe
 		// *typing.RefType
 		unsafe.Pointer(colors),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(locations)),
+		(*C.float)(unsafe.Pointer(&locations)),
 	)
 	// *typing.RefType
 	return GradientRef(rv)
@@ -6919,11 +6919,11 @@ func PathCreateCopyByDashingPath(path unsafe.Pointer, transform *AffineTransform
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&transform)),
 		// *typing.PrimitiveType
 		C.float(phase),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(lengths)),
+		(*C.float)(unsafe.Pointer(&lengths)),
 		// *typing.PrimitiveType
 		C.uint(count),
 	)
@@ -6971,9 +6971,9 @@ func PathAddLines(path MutablePathRef, m *AffineTransform, points *Point, count 
 		// *typing.RefType
 		unsafe.Pointer(path),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(m)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&m)),
 		// *typing.PointerType
-		(*C.CGPoint)(unsafe.Pointer(points)),
+		(*C.CGPoint)(unsafe.Pointer(&points)),
 		// *typing.PrimitiveType
 		C.uint(count),
 	)
@@ -7086,7 +7086,7 @@ func PathCreateWithEllipseInRect(rect Rect, transform *AffineTransform) unsafe.P
 		// *typing.StructType
 		*(*C.CGRect)(unsafe.Pointer(&rect)),
 		// *typing.PointerType
-		(*C.CGAffineTransform)(unsafe.Pointer(transform)),
+		(*C.CGAffineTransform)(unsafe.Pointer(&transform)),
 	)
 	// *typing.RefType
 	return unsafe.Pointer(rv)
@@ -7337,7 +7337,7 @@ func ContextBeginPage(c ContextRef, mediaBox *Rect) {
 		// *typing.RefType
 		unsafe.Pointer(c),
 		// *typing.PointerType
-		(*C.CGRect)(unsafe.Pointer(mediaBox)),
+		(*C.CGRect)(unsafe.Pointer(&mediaBox)),
 	)
 }
 
@@ -7569,7 +7569,7 @@ func ContextAddLines(c ContextRef, points *Point, count uint) {
 		// *typing.RefType
 		unsafe.Pointer(c),
 		// *typing.PointerType
-		(*C.CGPoint)(unsafe.Pointer(points)),
+		(*C.CGPoint)(unsafe.Pointer(&points)),
 		// *typing.PrimitiveType
 		C.uint(count),
 	)
@@ -7858,7 +7858,7 @@ func PDFScannerPopBoolean(scanner unsafe.Pointer, value *PDFBoolean) bool {
 		// *typing.RefType
 		unsafe.Pointer(scanner),
 		// *typing.PointerType
-		(*C.CGPDFBoolean)(unsafe.Pointer(value)),
+		(*C.CGPDFBoolean)(unsafe.Pointer(&value)),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
@@ -8007,11 +8007,11 @@ func FontCreatePostScriptSubset(font FontRef, subsetName corefoundation.StringRe
 		// *typing.PrimitiveType
 		(C.CGFontPostScriptFormat)(format),
 		// *typing.PointerType
-		(*C.CGGlyph)(unsafe.Pointer(glyphs)),
+		(*C.CGGlyph)(unsafe.Pointer(&glyphs)),
 		// *typing.PrimitiveType
 		C.uint(count),
 		// *typing.PointerType
-		(*C.CGGlyph)(unsafe.Pointer(encoding)),
+		(*C.CGGlyph)(unsafe.Pointer(&encoding)),
 	)
 	// *typing.RefType
 	return corefoundation.DataRef(rv)
@@ -8056,7 +8056,7 @@ func ContextSetLineDash(c ContextRef, phase float64, lengths *float64, count uin
 		// *typing.PrimitiveType
 		C.float(phase),
 		// *typing.PointerType
-		(*C.float)(unsafe.Pointer(lengths)),
+		(*C.float)(unsafe.Pointer(&lengths)),
 		// *typing.PrimitiveType
 		C.uint(count),
 	)

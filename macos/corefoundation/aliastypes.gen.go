@@ -310,3 +310,63 @@ type AllocatorCopyDescriptionCallBack = func(info unsafe.Pointer) StringRef
 //
 // [Full Topic]: https://developer.apple.com/documentation/corefoundation/cfxmlparserresolveexternalentitycallback?language=objc
 type XMLParserResolveExternalEntityCallBack = func(parser unsafe.Pointer, extID *XMLExternalID, info unsafe.Pointer) DataRef
+
+// A reference to a mutable character set object. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/corefoundation/cfmutablecharactersetref?language=objc
+type MutableCharacterSetRef = unsafe.Pointer
+
+// A reference to a CFMutableAttributedString object. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/corefoundation/cfmutableattributedstringref?language=objc
+type MutableAttributedStringRef = unsafe.Pointer
+
+// A reference to a mutable set object. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/corefoundation/cfmutablesetref?language=objc
+type MutableSetRef = unsafe.Pointer
+
+// A reference to an XML parser object. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/corefoundation/cfxmlparserref?language=objc
+type XMLParserRef = unsafe.Pointer
+
+// A reference to a mutable dictionary object. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/corefoundation/cfmutabledictionaryref?language=objc
+type MutableDictionaryRef = unsafe.Pointer
+
+// A reference to a CFPlugin object. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/corefoundation/cfpluginref?language=objc
+type PlugInRef = unsafe.Pointer
+
+// A reference to a CFXMLNode object. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/corefoundation/cfxmlnoderef?language=objc
+type XMLNodeRef = unsafe.Pointer
+
+// A reference to a mutable bit vector object. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/corefoundation/cfmutablebitvectorref?language=objc
+type MutableBitVectorRef = unsafe.Pointer
+
+// A reference to a CFMutableString object. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/corefoundation/cfmutablestringref?language=objc
+type MutableStringRef = unsafe.Pointer
+
+// A reference to a mutable array object. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/corefoundation/cfmutablearrayref?language=objc
+type MutableArrayRef = unsafe.Pointer
+
+// A reference to a CFMutableData object. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/corefoundation/cfmutabledataref?language=objc
+type MutableDataRef = unsafe.Pointer
+
+// A reference to a mutable bag object. [Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/corefoundation/cfmutablebagref?language=objc
+type MutableBagRef = unsafe.Pointer
