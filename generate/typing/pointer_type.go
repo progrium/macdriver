@@ -1,8 +1,6 @@
 package typing
 
 import (
-	"fmt"
-
 	"github.com/progrium/macdriver/generate/modules"
 	"github.com/progrium/macdriver/internal/set"
 )
@@ -77,7 +75,6 @@ func (c *PointerType) CSignature() string {
 	if c.IsConst {
 		t = "const " + t
 	}
-	fmt.Printf("PointerType.CSignature: %T: %s -> %s\n", c.Type, c.Type.ObjcName(), t)
 	return t
 }
 
