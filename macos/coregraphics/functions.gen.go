@@ -676,7 +676,7 @@ func ImageGetAlphaInfo(image ImageRef) ImageAlphaInfo {
 		unsafe.Pointer(image),
 	)
 	// *typing.AliasType
-	return ImageAlphaInfo(rv)
+	return *(*ImageAlphaInfo)(unsafe.Pointer(&rv))
 }
 
 // Returns a Boolean value indicating whether a display is connected or online. [Full Topic]
@@ -689,7 +689,7 @@ func DisplayIsOnline(display DirectDisplayID) int {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return int(rv)
+	return *(*int)(unsafe.Pointer(&rv))
 }
 
 // Releases a display fade reservation, and unfades the display if needed. [Full Topic]
@@ -702,7 +702,7 @@ func ReleaseDisplayFadeReservation(token DisplayFadeReservationToken) Error {
 		(C.CGDisplayFadeReservationToken)(token),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 //	[Full Topic]
@@ -936,7 +936,7 @@ func PathAddArc(path MutablePathRef, m *AffineTransform, x float64, y float64, r
 func EventGetTypeID() corefoundation.TypeID {
 	rv := C.EventGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Paints a gradient fill that varies along the line defined by the provided starting and ending points. [Full Topic]
@@ -1002,7 +1002,7 @@ func SessionCopyCurrentDictionary() corefoundation.DictionaryRef {
 func ShadingGetTypeID() corefoundation.TypeID {
 	rv := C.ShadingGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Creates a pattern color space. [Full Topic]
@@ -1441,7 +1441,7 @@ func GetDisplaysWithRect(rect Rect, maxDisplays uint32, displays *DirectDisplayI
 		(*C.uint32_t)(unsafe.Pointer(&matchingDisplayCount)),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Returns the width of the specified display mode. [Full Topic]
@@ -1608,7 +1608,7 @@ func ContextRelease(c ContextRef) {
 func DataConsumerGetTypeID() corefoundation.TypeID {
 	rv := C.DataConsumerGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Completes a set of display configuration changes. [Full Topic]
@@ -1623,7 +1623,7 @@ func CompleteDisplayConfiguration(config unsafe.Pointer, option ConfigureOption)
 		(C.CGConfigureOption)(option),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 //	[Full Topic]
@@ -1704,7 +1704,7 @@ func WindowLevelForKey(key WindowLevelKey) WindowLevel {
 		(C.CGWindowLevelKey)(key),
 	)
 	// *typing.AliasType
-	return WindowLevel(rv)
+	return *(*WindowLevel)(unsafe.Pointer(&rv))
 }
 
 // Sets the rendering intent in the current graphics state. [Full Topic]
@@ -1742,7 +1742,7 @@ func ContextSetShadowWithColor(c ContextRef, offset Size, blur float64, color Co
 func PatternGetTypeID() corefoundation.TypeID {
 	rv := C.PatternGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Retains a Core Graphics display mode. [Full Topic]
@@ -1766,7 +1766,7 @@ func EventGetTimestamp(event EventRef) EventTimestamp {
 		unsafe.Pointer(event),
 	)
 	// *typing.AliasType
-	return EventTimestamp(rv)
+	return *(*EventTimestamp)(unsafe.Pointer(&rv))
 }
 
 // Creates a mutable copy of an existing graphics path. [Full Topic]
@@ -1817,7 +1817,7 @@ func DisplayIsStereo(display DirectDisplayID) int {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return int(rv)
+	return *(*int)(unsafe.Pointer(&rv))
 }
 
 // Transforms the user coordinate system in a context using a specified matrix. [Full Topic]
@@ -1964,7 +1964,7 @@ func GetDisplaysWithOpenGLDisplayMask(mask OpenGLDisplayMask, maxDisplays uint32
 		(*C.uint32_t)(unsafe.Pointer(&matchingDisplayCount)),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Creates a shading object to use for axial shading. [Full Topic]
@@ -2108,7 +2108,7 @@ func ColorSpaceGetModel(space ColorSpaceRef) ColorSpaceModel {
 		unsafe.Pointer(space),
 	)
 	// *typing.AliasType
-	return ColorSpaceModel(rv)
+	return *(*ColorSpaceModel)(unsafe.Pointer(&rv))
 }
 
 // Creates a bitmap image using PNG-encoded data supplied by a data provider. [Full Topic]
@@ -2188,7 +2188,7 @@ func ConfigureDisplayFadeEffect(config unsafe.Pointer, fadeOutSeconds DisplayFad
 		C.float(fadeBlue),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Performs a single fade operation. [Full Topic]
@@ -2219,7 +2219,7 @@ func DisplayFade(token DisplayFadeReservationToken, duration DisplayFadeInterval
 		(C.boolean_t)(synchronous),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Enables or disables subpixel quantization in a graphics context. [Full Topic]
@@ -2352,7 +2352,7 @@ func AssociateMouseAndMouseCursorPosition(connected int) Error {
 		(C.boolean_t)(connected),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Increments the retain count of a Core Graphics PDF document. [Full Topic]
@@ -2424,7 +2424,7 @@ func SetDisplayTransferByTable(display DirectDisplayID, tableSize uint32, redTab
 		(*C.CGGammaValue)(unsafe.Pointer(&blueTable)),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Sets the accuracy of curved paths in a graphics context. [Full Topic]
@@ -2449,7 +2449,7 @@ func DisplayIsActive(display DirectDisplayID) int {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return int(rv)
+	return *(*int)(unsafe.Pointer(&rv))
 }
 
 // Sets the pattern phase of a context. [Full Topic]
@@ -2512,7 +2512,7 @@ func GetActiveDisplayList(maxDisplays uint32, activeDisplays *DirectDisplayID, d
 		(*C.uint32_t)(unsafe.Pointer(&displayCount)),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Indicates whether or not a graphics path represents a rectangle. [Full Topic]
@@ -2563,7 +2563,7 @@ func ContextGetInterpolationQuality(c ContextRef) InterpolationQuality {
 		unsafe.Pointer(c),
 	)
 	// *typing.AliasType
-	return InterpolationQuality(rv)
+	return *(*InterpolationQuality)(unsafe.Pointer(&rv))
 }
 
 // Creates a conversion between two specified color spaces. [Full Topic]
@@ -2755,7 +2755,7 @@ func EventSourceSecondsSinceLastEventType(stateID EventSourceStateID, eventType 
 		(C.CGEventType)(eventType),
 	)
 	// *typing.AliasType
-	return corefoundation.TimeInterval(rv)
+	return *(*corefoundation.TimeInterval)(unsafe.Pointer(&rv))
 }
 
 // Returns the smallest rectangle that results from converting the source rectangle values to integers. [Full Topic]
@@ -2838,7 +2838,7 @@ func DisplayUsesOpenGLAcceleration(display DirectDisplayID) int {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return int(rv)
+	return *(*int)(unsafe.Pointer(&rv))
 }
 
 // Sets how sample values are composited by a graphics context. [Full Topic]
@@ -2899,7 +2899,7 @@ func GetDisplaysWithPoint(point Point, maxDisplays uint32, displays *DirectDispl
 		(*C.uint32_t)(unsafe.Pointer(&matchingDisplayCount)),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Decrements the retain count of a bitmap image. [Full Topic]
@@ -2999,7 +2999,7 @@ func DisplayIsInMirrorSet(display DirectDisplayID) int {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return int(rv)
+	return *(*int)(unsafe.Pointer(&rv))
 }
 
 //	[Full Topic]
@@ -3036,7 +3036,7 @@ func DisplayRelease(display DirectDisplayID) Error {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Returns the document for a page. [Full Topic]
@@ -3071,7 +3071,7 @@ func GetDisplayTransferByTable(display DirectDisplayID, capacity uint32, redTabl
 		(*C.uint32_t)(unsafe.Pointer(&sampleCount)),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Checks whether two affine transforms are equal. [Full Topic]
@@ -3134,7 +3134,7 @@ func EventGetType(event EventRef) EventType {
 		unsafe.Pointer(event),
 	)
 	// *typing.AliasType
-	return EventType(rv)
+	return *(*EventType)(unsafe.Pointer(&rv))
 }
 
 // Retrieves a real value object from the scanner stack. [Full Topic]
@@ -3251,7 +3251,7 @@ func ImageCreateWithJPEGDataProvider(source DataProviderRef, decode *float64, sh
 func EventSourceGetTypeID() corefoundation.TypeID {
 	rv := C.EventSourceGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Creates a bitmap image from data supplied by a data provider. [Full Topic]
@@ -3309,7 +3309,7 @@ func EventSourceGetSourceStateID(source EventSourceRef) EventSourceStateID {
 		unsafe.Pointer(source),
 	)
 	// *typing.AliasType
-	return EventSourceStateID(rv)
+	return *(*EventSourceStateID)(unsafe.Pointer(&rv))
 }
 
 // Increments the retain count of a CGGradient object. [Full Topic]
@@ -3386,7 +3386,7 @@ func CaptureAllDisplaysWithOptions(options CaptureOptions) Error {
 		(C.CGCaptureOptions)(options),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Generates and returns information about windows with the specified window IDs. [Full Topic]
@@ -3465,7 +3465,7 @@ func GetOnlineDisplayList(maxDisplays uint32, onlineDisplays *DirectDisplayID, d
 		(*C.uint32_t)(unsafe.Pointer(&displayCount)),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Returns a point that is transformed from user space coordinates to device space coordinates. [Full Topic]
@@ -3558,7 +3558,7 @@ func GetDisplayTransferByFormula(display DirectDisplayID, redMin *GammaValue, re
 		(*C.CGGammaValue)(unsafe.Pointer(&blueGamma)),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Increments the retain count of a color space. [Full Topic]
@@ -3742,7 +3742,7 @@ func ConfigureDisplayWithDisplayMode(config unsafe.Pointer, display DirectDispla
 		unsafe.Pointer(options),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Returns a copy of the provider’s data. [Full Topic]
@@ -3767,7 +3767,7 @@ func DisplayIsInHWMirrorSet(display DirectDisplayID) int {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return int(rv)
+	return *(*int)(unsafe.Pointer(&rv))
 }
 
 // Returns the mask that indicates which classes of local hardware events are enabled during event suppression. [Full Topic]
@@ -3782,7 +3782,7 @@ func EventSourceGetLocalEventsFilterDuringSuppressionState(source EventSourceRef
 		(C.CGEventSuppressionState)(state),
 	)
 	// *typing.AliasType
-	return EventFilterMask(rv)
+	return *(*EventFilterMask)(unsafe.Pointer(&rv))
 }
 
 // Returns the font table that corresponds to the provided tag. [Full Topic]
@@ -3853,7 +3853,7 @@ func ContextSetAllowsFontSubpixelPositioning(c ContextRef, allowsFontSubpixelPos
 func ColorGetTypeID() corefoundation.TypeID {
 	rv := C.ColorGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 //	[Full Topic]
@@ -3865,7 +3865,7 @@ func ImageGetByteOrderInfo(image ImageRef) ImageByteOrderInfo {
 		unsafe.Pointer(image),
 	)
 	// *typing.AliasType
-	return ImageByteOrderInfo(rv)
+	return *(*ImageByteOrderInfo)(unsafe.Pointer(&rv))
 }
 
 // Creates a Core Graphics PDF document using a data provider. [Full Topic]
@@ -3907,7 +3907,7 @@ func ImageGetPixelFormatInfo(image ImageRef) ImagePixelFormatInfo {
 		unsafe.Pointer(image),
 	)
 	// *typing.AliasType
-	return ImagePixelFormatInfo(rv)
+	return *(*ImagePixelFormatInfo)(unsafe.Pointer(&rv))
 }
 
 // Returns an array of the variation axis dictionaries for a font. [Full Topic]
@@ -3931,7 +3931,7 @@ func ColorSpaceCopyPropertyList(space ColorSpaceRef) corefoundation.PropertyList
 		unsafe.Pointer(space),
 	)
 	// *typing.AliasType
-	return corefoundation.PropertyListRef(rv)
+	return *(*corefoundation.PropertyListRef)(unsafe.Pointer(&rv))
 }
 
 // Sets the stroke pattern in the specified graphics context. [Full Topic]
@@ -3999,7 +3999,7 @@ func WarpMouseCursorPosition(newCursorPosition Point) Error {
 		*(*C.CGPoint)(unsafe.Pointer(&newCursorPosition)),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Moves the mouse cursor to a specified point relative to the upper-left corner of the display. [Full Topic]
@@ -4014,7 +4014,7 @@ func DisplayMoveCursorToPoint(display DirectDisplayID, point Point) Error {
 		*(*C.CGPoint)(unsafe.Pointer(&point)),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Generates and returns information about the selected windows in the current user session. [Full Topic]
@@ -4043,7 +4043,7 @@ func ShieldingWindowID(display DirectDisplayID) WindowID {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return WindowID(rv)
+	return *(*WindowID)(unsafe.Pointer(&rv))
 }
 
 //	[Full Topic]
@@ -4098,7 +4098,7 @@ func ImageGetBitsPerComponent(image ImageRef) uint {
 func CaptureAllDisplays() Error {
 	rv := C.CaptureAllDisplays()
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Gets the scale of pixels per line in a scrolling event source. [Full Topic]
@@ -4235,7 +4235,7 @@ func RectGetMinY(rect Rect) float64 {
 func ColorSpaceGetTypeID() corefoundation.TypeID {
 	rv := C.ColorSpaceGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Increments the retain count of a shading object. [Full Topic]
@@ -4292,7 +4292,7 @@ func PDFPageRelease(page PDFPageRef) {
 func ImageGetTypeID() corefoundation.TypeID {
 	rv := C.ImageGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Rotates the user coordinate system in a context. [Full Topic]
@@ -4366,7 +4366,7 @@ func DisplayPrimaryDisplay(display DirectDisplayID) DirectDisplayID {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return DirectDisplayID(rv)
+	return *(*DirectDisplayID)(unsafe.Pointer(&rv))
 }
 
 // Sets a destination to jump to when a point in the current page of a PDF graphics context is clicked. [Full Topic]
@@ -4566,7 +4566,7 @@ func PDFContextCreateWithURL(url corefoundation.URLRef, mediaBox *Rect, auxiliar
 func PDFPageGetTypeID() corefoundation.TypeID {
 	rv := C.PDFPageGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Creates a content stream object from a PDF page object. [Full Topic]
@@ -4907,7 +4907,7 @@ func DisplayIDToOpenGLDisplayMask(display DirectDisplayID) OpenGLDisplayMask {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return OpenGLDisplayMask(rv)
+	return *(*OpenGLDisplayMask)(unsafe.Pointer(&rv))
 }
 
 // Returns the largest value of the x-coordinate for the rectangle. [Full Topic]
@@ -4940,7 +4940,7 @@ func ContextIsPathEmpty(c ContextRef) bool {
 func ColorConversionInfoGetTypeID() corefoundation.TypeID {
 	rv := C.ColorConversionInfoGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the number of bits allocated for a single pixel in a bitmap image. [Full Topic]
@@ -5058,7 +5058,7 @@ func ConfigureDisplayOrigin(config unsafe.Pointer, display DirectDisplayID, x in
 		C.int32_t(y),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 //	[Full Topic]
@@ -5093,7 +5093,7 @@ func BitmapContextGetAlphaInfo(context ContextRef) ImageAlphaInfo {
 		unsafe.Pointer(context),
 	)
 	// *typing.AliasType
-	return ImageAlphaInfo(rv)
+	return *(*ImageAlphaInfo)(unsafe.Pointer(&rv))
 }
 
 // Closes and terminates the current path’s subpath. [Full Topic]
@@ -5146,7 +5146,7 @@ func EventCreateMouseEvent(source EventSourceRef, mouseType EventType, mouseCurs
 func MainDisplayID() DirectDisplayID {
 	rv := C.MainDisplayID()
 	// *typing.AliasType
-	return DirectDisplayID(rv)
+	return *(*DirectDisplayID)(unsafe.Pointer(&rv))
 }
 
 // Returns an affine transformation matrix constructed by translating an existing affine transform. [Full Topic]
@@ -5200,7 +5200,7 @@ func EventSourceGetKeyboardType(source EventSourceRef) EventSourceKeyboardType {
 		unsafe.Pointer(source),
 	)
 	// *typing.AliasType
-	return EventSourceKeyboardType(rv)
+	return *(*EventSourceKeyboardType)(unsafe.Pointer(&rv))
 }
 
 // Begins a new page in a PDF graphics context. [Full Topic]
@@ -5238,7 +5238,7 @@ func PDFDocumentGetAccessPermissions(document PDFDocumentRef) PDFAccessPermissio
 		unsafe.Pointer(document),
 	)
 	// *typing.AliasType
-	return PDFAccessPermissions(rv)
+	return *(*PDFAccessPermissions)(unsafe.Pointer(&rv))
 }
 
 // Returns an affine transformation matrix constructed by rotating an existing affine transform. [Full Topic]
@@ -5304,7 +5304,7 @@ func PDFPageGetDrawingTransform(page PDFPageRef, box PDFBox, rect Rect, rotate i
 func ShieldingWindowLevel() WindowLevel {
 	rv := C.ShieldingWindowLevel()
 	// *typing.AliasType
-	return WindowLevel(rv)
+	return *(*WindowLevel)(unsafe.Pointer(&rv))
 }
 
 // Returns a Boolean value indicating whether the specified display mode is usable for a desktop graphical user interface. [Full Topic]
@@ -5325,7 +5325,7 @@ func DisplayModeIsUsableForDesktopGUI(mode DisplayModeRef) bool {
 func GradientGetTypeID() corefoundation.TypeID {
 	rv := C.GradientGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns a dictionary representation of the specified point. [Full Topic]
@@ -5514,7 +5514,7 @@ func DisplayCapture(display DirectDisplayID) Error {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Adds an ellipse that fits inside the specified rectangle. [Full Topic]
@@ -5715,7 +5715,7 @@ func SetDisplayTransferByByteTable(display DirectDisplayID, tableSize uint32, re
 		(*C.uint8_t)(unsafe.Pointer(&blueTable)),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Returns the data provider for a bitmap image. [Full Topic]
@@ -5750,7 +5750,7 @@ func ContextSetFillPattern(c ContextRef, pattern PatternRef, components *float64
 func DataProviderGetTypeID() corefoundation.TypeID {
 	rv := C.DataProviderGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Creates a direct-access data provider that uses a file to supply data. [Full Topic]
@@ -5896,7 +5896,7 @@ func FontGetGlyphWithGlyphName(font FontRef, name corefoundation.StringRef) Glyp
 		unsafe.Pointer(name),
 	)
 	// *typing.AliasType
-	return Glyph(rv)
+	return *(*Glyph)(unsafe.Pointer(&rv))
 }
 
 // Returns a dictionary representation of the provided rectangle. [Full Topic]
@@ -5954,7 +5954,7 @@ func DisplaySetStereoOperation(display DirectDisplayID, stereo int, forceBlueLin
 		(C.CGConfigureOption)(option),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Returns the interpolation setting for a bitmap image. [Full Topic]
@@ -5985,7 +5985,7 @@ func ContextFillPath(c ContextRef) {
 func PDFDocumentGetTypeID() corefoundation.TypeID {
 	rv := C.PDFDocumentGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the rendering intent setting for a bitmap image. [Full Topic]
@@ -5997,7 +5997,7 @@ func ImageGetRenderingIntent(image ImageRef) ColorRenderingIntent {
 		unsafe.Pointer(image),
 	)
 	// *typing.AliasType
-	return ColorRenderingIntent(rv)
+	return *(*ColorRenderingIntent)(unsafe.Pointer(&rv))
 }
 
 // Posts a Quartz event into the event stream at a specified location. [Full Topic]
@@ -6062,7 +6062,7 @@ func DisplayCaptureWithOptions(display DirectDisplayID, options CaptureOptions) 
 		(C.CGCaptureOptions)(options),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Checks to see whether the specified point is contained in the current path. [Full Topic]
@@ -6122,7 +6122,7 @@ func PathRelease(path unsafe.Pointer) {
 func PathGetTypeID() corefoundation.TypeID {
 	rv := C.PathGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Decrements the retain count of a PDF document. [Full Topic]
@@ -6212,7 +6212,7 @@ func PDFObjectGetType(object unsafe.Pointer) PDFObjectType {
 		unsafe.Pointer(object),
 	)
 	// *typing.AliasType
-	return PDFObjectType(rv)
+	return *(*PDFObjectType)(unsafe.Pointer(&rv))
 }
 
 // Creates a bitmap image mask from data supplied by a data provider. [Full Topic]
@@ -6327,7 +6327,7 @@ func ConfigureDisplayMirrorOfDisplay(config unsafe.Pointer, display DirectDispla
 		(C.CGDirectDisplayID)(master),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Returns the refresh rate of the specified display mode. [Full Topic]
@@ -6351,7 +6351,7 @@ func EventSourceGetLocalEventsSuppressionInterval(source EventSourceRef) corefou
 		unsafe.Pointer(source),
 	)
 	// *typing.AliasType
-	return corefoundation.TimeInterval(rv)
+	return *(*corefoundation.TimeInterval)(unsafe.Pointer(&rv))
 }
 
 // Adds an arc of a circle to the current path, using a radius and tangent points. [Full Topic]
@@ -6422,7 +6422,7 @@ func AcquireDisplayFadeReservation(seconds DisplayReservationInterval, token *Di
 		(*C.CGDisplayFadeReservationToken)(unsafe.Pointer(&token)),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Returns the event flags of a Quartz event. [Full Topic]
@@ -6434,7 +6434,7 @@ func EventGetFlags(event EventRef) EventFlags {
 		unsafe.Pointer(event),
 	)
 	// *typing.AliasType
-	return EventFlags(rv)
+	return *(*EventFlags)(unsafe.Pointer(&rv))
 }
 
 // Returns the glyph name of the specified glyph in the specified font. [Full Topic]
@@ -6659,7 +6659,7 @@ func ColorGetComponents(color ColorRef) *float64 {
 func ContextGetTypeID() corefoundation.TypeID {
 	rv := C.ContextGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Creates a data consumer that writes to a CFData object. [Full Topic]
@@ -6736,7 +6736,7 @@ func ConfigureDisplayStereoOperation(config unsafe.Pointer, display DirectDispla
 		(C.boolean_t)(forceBlueLine),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Returns a size that is transformed from user space coordinates to device space coordinates. [Full Topic]
@@ -6787,7 +6787,7 @@ func DisplayIsBuiltin(display DirectDisplayID) int {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return int(rv)
+	return *(*int)(unsafe.Pointer(&rv))
 }
 
 // Hides the mouse cursor, and increments the hide cursor count. [Full Topic]
@@ -6800,7 +6800,7 @@ func DisplayHideCursor(display DirectDisplayID) Error {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Returns the logical unit number of a display. [Full Topic]
@@ -6830,7 +6830,7 @@ func DisplaySetDisplayMode(display DirectDisplayID, mode DisplayModeRef, options
 		unsafe.Pointer(options),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Draws glyphs at the provided position. [Full Topic]
@@ -6879,7 +6879,7 @@ func FontGetLeading(font FontRef) int {
 func PSConverterGetTypeID() corefoundation.TypeID {
 	rv := C.PSConverterGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Creates a gradient object from a color space and the provided color objects and locations. [Full Topic]
@@ -6908,7 +6908,7 @@ func DisplayIsAlwaysInMirrorSet(display DirectDisplayID) int {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return int(rv)
+	return *(*int)(unsafe.Pointer(&rv))
 }
 
 // Creates a dashed copy of another path. [Full Topic]
@@ -6960,7 +6960,7 @@ func CancelDisplayConfiguration(config unsafe.Pointer) Error {
 		unsafe.Pointer(config),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Appends an array of new line segments to a mutable graphics path. [Full Topic]
@@ -7016,7 +7016,7 @@ func SetDisplayTransferByFormula(display DirectDisplayID, redMin GammaValue, red
 		(C.CGGammaValue)(blueGamma),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Returns a Boolean value indicating whether a display is sleeping (and is therefore not drawable). [Full Topic]
@@ -7029,7 +7029,7 @@ func DisplayIsAsleep(display DirectDisplayID) int {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return int(rv)
+	return *(*int)(unsafe.Pointer(&rv))
 }
 
 // Returns the bitmap information for a bitmap image. [Full Topic]
@@ -7041,7 +7041,7 @@ func ImageGetBitmapInfo(image ImageRef) BitmapInfo {
 		unsafe.Pointer(image),
 	)
 	// *typing.AliasType
-	return BitmapInfo(rv)
+	return *(*BitmapInfo)(unsafe.Pointer(&rv))
 }
 
 // Returns the width in pixels of a bitmap context. [Full Topic]
@@ -7264,7 +7264,7 @@ func RectContainsPoint(rect Rect, point Point) bool {
 func FontGetTypeID() corefoundation.TypeID {
 	rv := C.FontGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns a graphics context suitable for drawing to a captured display. [Full Topic]
@@ -7314,7 +7314,7 @@ func DisplayMirrorsDisplay(display DirectDisplayID) DirectDisplayID {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return DirectDisplayID(rv)
+	return *(*DirectDisplayID)(unsafe.Pointer(&rv))
 }
 
 // Checks whether an affine transform is the identity transform. [Full Topic]
@@ -7496,7 +7496,7 @@ func OpenGLDisplayMaskToDisplayID(mask OpenGLDisplayMask) DirectDisplayID {
 		(C.CGOpenGLDisplayMask)(mask),
 	)
 	// *typing.AliasType
-	return DirectDisplayID(rv)
+	return *(*DirectDisplayID)(unsafe.Pointer(&rv))
 }
 
 // Forces all pending drawing operations in a window context to be rendered immediately to the destination device. [Full Topic]
@@ -7627,7 +7627,7 @@ func ContextClip(c ContextRef) {
 func ReleaseAllDisplays() Error {
 	rv := C.ReleaseAllDisplays()
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Returns the serial number of a display monitor. [Full Topic]
@@ -7917,7 +7917,7 @@ func LayerRelease(layer LayerRef) {
 func LayerGetTypeID() corefoundation.TypeID {
 	rv := C.LayerGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the type identifier for Core Graphics function objects. [Full Topic]
@@ -7926,7 +7926,7 @@ func LayerGetTypeID() corefoundation.TypeID {
 func FunctionGetTypeID() corefoundation.TypeID {
 	rv := C.FunctionGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Gets the array of PDF content streams contained in a PDF content stream object. [Full Topic]
@@ -7963,7 +7963,7 @@ func DisplayShowCursor(display DirectDisplayID) Error {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return Error(rv)
+	return *(*Error)(unsafe.Pointer(&rv))
 }
 
 // Obtains the bitmap information associated with a bitmap graphics context. [Full Topic]
@@ -7975,7 +7975,7 @@ func BitmapContextGetBitmapInfo(context ContextRef) BitmapInfo {
 		unsafe.Pointer(context),
 	)
 	// *typing.AliasType
-	return BitmapInfo(rv)
+	return *(*BitmapInfo)(unsafe.Pointer(&rv))
 }
 
 // Returns an affine transformation matrix constructed by scaling an existing affine transform. [Full Topic]
@@ -8027,7 +8027,7 @@ func DisplayIsMain(display DirectDisplayID) int {
 		(C.CGDirectDisplayID)(display),
 	)
 	// *typing.AliasType
-	return int(rv)
+	return *(*int)(unsafe.Pointer(&rv))
 }
 
 // Creates a mutable graphics path. [Full Topic]
@@ -8068,7 +8068,7 @@ func ContextSetLineDash(c ContextRef, phase float64, lengths *float64, count uin
 func DisplayModeGetTypeID() corefoundation.TypeID {
 	rv := C.DisplayModeGetTypeID()
 	// *typing.AliasType
-	return corefoundation.TypeID(rv)
+	return *(*corefoundation.TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the current flags of a Quartz event source. [Full Topic]
@@ -8081,7 +8081,7 @@ func EventSourceFlagsState(stateID EventSourceStateID) EventFlags {
 		(C.CGEventSourceStateID)(stateID),
 	)
 	// *typing.AliasType
-	return EventFlags(rv)
+	return *(*EventFlags)(unsafe.Pointer(&rv))
 }
 
 //	[Full Topic]

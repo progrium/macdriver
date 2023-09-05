@@ -7,27 +7,28 @@ package mps
 // #import <stdbool.h>
 // #import "MetalPerformanceShaders/MetalPerformanceShaders.h"
 // uint StateBatchResourceSize(MPSStateBatch* batch);
-// void HintTemporaryMemoryHighWaterMark(id<MTLCommandBuffer> cmdBuf, uint bytes);
+// void HintTemporaryMemoryHighWaterMark(void * cmdBuf, uint bytes);
 // uint ImageBatchResourceSize(MPSImageBatch* batch);
-// void SetHeapCacheDuration(id<MTLCommandBuffer> cmdBuf, double seconds);
+// void SetHeapCacheDuration(void * cmdBuf, double seconds);
 // uint StateBatchIncrementReadCount(MPSStateBatch* batch, long amount);
-// void StateBatchSynchronize(MPSStateBatch* batch, id<MTLCommandBuffer> cmdBuf);
+// void StateBatchSynchronize(MPSStateBatch* batch, void * cmdBuf);
 // int32_t GetCustomKernelBatchedDestinationIndex(MPSCustomKernelArgumentCount c);
 // int32_t GetCustomKernelMaxBatchSize(MPSCustomKernelArgumentCount c, int32_t MPSMaxTextures);
 // uint ImageBatchIncrementReadCount(MPSImageBatch* batch, long amount);
-// id<MTLDevice> GetPreferredDevice(MPSDeviceOptions options);
+// void * GetPreferredDevice(MPSDeviceOptions options);
 // int32_t GetCustomKernelBroadcastSourceIndex(MPSCustomKernelArgumentCount c, int32_t sourceIndex, int32_t MPSMaxTextures);
 // MPSImageType GetImageType(void * image);
 // MPSIntegerDivisionParams FindIntegerDivisionParams(uint16_t divisor);
 // int32_t GetCustomKernelBatchedSourceIndex(MPSCustomKernelArgumentCount c, int32_t sourceIndex, int32_t MPSMaxTextures);
-// void ImageBatchSynchronize(MPSImageBatch* batch, id<MTLCommandBuffer> cmdBuf);
-// bool SupportsMTLDevice(id<MTLDevice> device);
+// void ImageBatchSynchronize(MPSImageBatch* batch, void * cmdBuf);
+// bool SupportsMTLDevice(void * device);
 import "C"
 import (
 	"unsafe"
 
 	"github.com/progrium/macdriver/macos/foundation"
 	"github.com/progrium/macdriver/macos/metal"
+	"github.com/progrium/macdriver/objc"
 )
 
 // Returns the number of bytes used to allocate the specified state batch. [Full Topic]
@@ -154,7 +155,7 @@ func GetPreferredDevice(options DeviceOptions) metal.DeviceWrapper {
 		(C.MPSDeviceOptions)(options),
 	)
 	// *typing.ProtocolType
-	return metal.DeviceWrapper(rv)
+	return metal.DeviceWrapper{objc.ObjectFrom(rv)}
 }
 
 // Returns the index of the specified nonbatched source texture argument. [Full Topic]

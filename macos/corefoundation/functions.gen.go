@@ -550,7 +550,7 @@ func DictionaryCreateMutableCopy(allocator AllocatorRef, capacity Index, theDict
 func NullGetTypeID() TypeID {
 	rv := C.NullGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the error associated with a stream. [Full Topic]
@@ -618,7 +618,7 @@ func CalendarSetFirstWeekday(calendar CalendarRef, wkdy Index) {
 func NumberFormatterGetTypeID() TypeID {
 	rv := C.NumberFormatterGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 //	[Full Topic]
@@ -723,7 +723,7 @@ func BagGetCount(theBag BagRef) Index {
 		unsafe.Pointer(theBag),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Returns the location of a bundle’s auxiliary executable code. [Full Topic]
@@ -842,7 +842,7 @@ func BitVectorGetBitAtIndex(bv BitVectorRef, idx Index) Bit {
 		(C.CFIndex)(idx),
 	)
 	// *typing.AliasType
-	return Bit(rv)
+	return *(*Bit)(unsafe.Pointer(&rv))
 }
 
 // Returns the allocator used to allocate a Core Foundation object. [Full Topic]
@@ -879,7 +879,7 @@ func ErrorGetCode(err ErrorRef) Index {
 		unsafe.Pointer(err),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Returns by reference the byte representation of a URL object. [Full Topic]
@@ -896,7 +896,7 @@ func URLGetBytes(url URLRef, buffer *uint8, bufferLength Index) Index {
 		(C.CFIndex)(bufferLength),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Sets the value of a particular bit in a bit vector. [Full Topic]
@@ -934,7 +934,7 @@ func CalendarGetMinimumDaysInFirstWeek(calendar CalendarRef) Index {
 		unsafe.Pointer(calendar),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Increases the length of a CFMutableData object's internal byte buffer, zero-filling the extension to the buffer. [Full Topic]
@@ -1011,7 +1011,7 @@ func ReadStreamRead(stream ReadStreamRef, buffer *uint8, bufferLength Index) Ind
 		(C.CFIndex)(bufferLength),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Returns the type identifier for the CFRunLoopObserver opaque type. [Full Topic]
@@ -1020,7 +1020,7 @@ func ReadStreamRead(stream ReadStreamRef, buffer *uint8, bufferLength Index) Ind
 func RunLoopObserverGetTypeID() TypeID {
 	rv := C.RunLoopObserverGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Creates a new CFNumberFormatter object, localized to the given locale, which will format numbers to the given style. [Full Topic]
@@ -1075,7 +1075,7 @@ func RunLoopObserverGetActivities(observer RunLoopObserverRef) OptionFlags {
 		unsafe.Pointer(observer),
 	)
 	// *typing.AliasType
-	return OptionFlags(rv)
+	return *(*OptionFlags)(unsafe.Pointer(&rv))
 }
 
 // Determines if a property list is valid. [Full Topic]
@@ -1103,7 +1103,7 @@ func RunLoopTimerGetInterval(timer RunLoopTimerRef) TimeInterval {
 		unsafe.Pointer(timer),
 	)
 	// *typing.AliasType
-	return TimeInterval(rv)
+	return *(*TimeInterval)(unsafe.Pointer(&rv))
 }
 
 // Returns the primary double value represented by a string. [Full Topic]
@@ -1289,7 +1289,7 @@ func ReadStreamGetStatus(stream ReadStreamRef) StreamStatus {
 		unsafe.Pointer(stream),
 	)
 	// *typing.AliasType
-	return StreamStatus(rv)
+	return *(*StreamStatus)(unsafe.Pointer(&rv))
 }
 
 // Creates and returns a directory enumerator with provided enumerator behavior options and properties to be prefetched. [Full Topic]
@@ -1353,7 +1353,7 @@ func SwapInt16BigToHost(arg uint16) uint16 {
 func TimeZoneGetTypeID() TypeID {
 	rv := C.TimeZoneGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns a dictionary containing preference values for multiple keys. [Full Topic]
@@ -1387,7 +1387,7 @@ func URLCreateResourcePropertyForKeyFromBookmarkData(allocator AllocatorRef, res
 		unsafe.Pointer(bookmark),
 	)
 	// *typing.AliasType
-	return TypeRef(rv)
+	return *(*TypeRef)(unsafe.Pointer(&rv))
 }
 
 // Sets the name of a local CFMessagePort object. [Full Topic]
@@ -1488,7 +1488,7 @@ func RunLoopTimerGetTolerance(timer RunLoopTimerRef) TimeInterval {
 		unsafe.Pointer(timer),
 	)
 	// *typing.AliasType
-	return TimeInterval(rv)
+	return *(*TimeInterval)(unsafe.Pointer(&rv))
 }
 
 // Returns a localized string from a bundle’s strings file. [Full Topic]
@@ -1586,7 +1586,7 @@ func CopyDescription(cf TypeRef) StringRef {
 func TreeGetTypeID() TypeID {
 	rv := C.TreeGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Inserts a new sibling after a given tree. [Full Topic]
@@ -1677,7 +1677,7 @@ func WriteStreamGetStatus(stream WriteStreamRef) StreamStatus {
 		unsafe.Pointer(stream),
 	)
 	// *typing.AliasType
-	return StreamStatus(rv)
+	return *(*StreamStatus)(unsafe.Pointer(&rv))
 }
 
 // Creates a mutable copy of an attributed string. [Full Topic]
@@ -1751,7 +1751,7 @@ func MakeCollectable(cf TypeRef) TypeRef {
 		(C.CFTypeRef)(cf),
 	)
 	// *typing.AliasType
-	return TypeRef(rv)
+	return *(*TypeRef)(unsafe.Pointer(&rv))
 }
 
 // Sets the minimum number of days in the first week of a specified calendar. [Full Topic]
@@ -1836,7 +1836,7 @@ func ReadStreamClose(stream ReadStreamRef) {
 func CalendarGetTypeID() TypeID {
 	rv := C.CalendarGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the bundle identifier from a bundle’s information property list. [Full Topic]
@@ -1895,7 +1895,7 @@ func FileSecurityGetMode(fileSec FileSecurityRef, mode *int) bool {
 func RunLoopGetTypeID() TypeID {
 	rv := C.RunLoopGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Tells a recursive enumerator not to descend into the directory at the URL that was returned by the most recent call to the CFURLEnumeratorGetNextURL function. [Full Topic]
@@ -1914,7 +1914,7 @@ func URLEnumeratorSkipDescendents(enumerator URLEnumeratorRef) {
 func RunLoopTimerGetTypeID() TypeID {
 	rv := C.RunLoopTimerGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the path portion of a given URL. [Full Topic]
@@ -1992,7 +1992,7 @@ func Hash(cf TypeRef) HashCode {
 		(C.CFTypeRef)(cf),
 	)
 	// *typing.AliasType
-	return HashCode(rv)
+	return *(*HashCode)(unsafe.Pointer(&rv))
 }
 
 // Fills a buffer with the file system's native string representation of a given URL's path. [Full Topic]
@@ -2074,7 +2074,7 @@ func DataGetLength(theData DataRef) Index {
 		unsafe.Pointer(theData),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Determines whether or not a given key has been imposed on the user. [Full Topic]
@@ -2100,7 +2100,7 @@ func StringGetFastestEncoding(theString StringRef) StringEncoding {
 		unsafe.Pointer(theString),
 	)
 	// *typing.AliasType
-	return StringEncoding(rv)
+	return *(*StringEncoding)(unsafe.Pointer(&rv))
 }
 
 // Creates a string from a buffer containing characters in a specified encoding. [Full Topic]
@@ -2241,7 +2241,7 @@ func URLCopyScheme(anURL URLRef) StringRef {
 func NumberGetTypeID() TypeID {
 	rv := C.NumberGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns by reference the start time and duration of a given calendar unit that contains a given absolute time. [Full Topic]
@@ -2315,7 +2315,7 @@ func CalendarGetFirstWeekday(calendar CalendarRef) Index {
 		unsafe.Pointer(calendar),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Returns an array containing all of the bundles currently open in the application. [Full Topic]
@@ -2426,7 +2426,7 @@ func NumberGetType(number NumberRef) NumberType {
 		unsafe.Pointer(number),
 	)
 	// *typing.AliasType
-	return NumberType(rv)
+	return *(*NumberType)(unsafe.Pointer(&rv))
 }
 
 // Returns a format string for the given date formatter object. [Full Topic]
@@ -2545,7 +2545,7 @@ func UserNotificationSecureTextField(i Index) OptionFlags {
 		(C.CFIndex)(i),
 	)
 	// *typing.AliasType
-	return OptionFlags(rv)
+	return *(*OptionFlags)(unsafe.Pointer(&rv))
 }
 
 // Returns flags that control certain behaviors of a CFSocket object. [Full Topic]
@@ -2557,7 +2557,7 @@ func SocketGetSocketFlags(s SocketRef) OptionFlags {
 		unsafe.Pointer(s),
 	)
 	// *typing.AliasType
-	return OptionFlags(rv)
+	return *(*OptionFlags)(unsafe.Pointer(&rv))
 }
 
 // Returns the type identifier for the CFString opaque type. [Full Topic]
@@ -2566,7 +2566,7 @@ func SocketGetSocketFlags(s SocketRef) OptionFlags {
 func StringGetTypeID() TypeID {
 	rv := C.StringGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the Windows codepage identifier that maps most closely to a given Core Foundation encoding constant. [Full Topic]
@@ -2619,7 +2619,7 @@ func URLCreateWithBytes(allocator AllocatorRef, URLBytes *uint8, length Index, e
 func URLEnumeratorGetTypeID() TypeID {
 	rv := C.URLEnumeratorGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Advances the tokenizer to the next token and sets that as the current token. [Full Topic]
@@ -2631,7 +2631,7 @@ func StringTokenizerAdvanceToNextToken(tokenizer StringTokenizerRef) StringToken
 		unsafe.Pointer(tokenizer),
 	)
 	// *typing.AliasType
-	return StringTokenizerTokenType(rv)
+	return *(*StringTokenizerTokenType)(unsafe.Pointer(&rv))
 }
 
 // Creates a mutable copy of a string. [Full Topic]
@@ -2719,7 +2719,7 @@ func Autorelease(arg TypeRef) TypeRef {
 		(C.CFTypeRef)(arg),
 	)
 	// *typing.AliasType
-	return TypeRef(rv)
+	return *(*TypeRef)(unsafe.Pointer(&rv))
 }
 
 // Returns an array of CFURL objects describing the locations of all resources in a bundle of the specified type without needing to create a CFBundle object. [Full Topic]
@@ -2861,7 +2861,7 @@ func BundleGetValueForInfoDictionaryKey(bundle BundleRef, key StringRef) TypeRef
 		unsafe.Pointer(key),
 	)
 	// *typing.AliasType
-	return TypeRef(rv)
+	return *(*TypeRef)(unsafe.Pointer(&rv))
 }
 
 // Changes the size of a mutable bit vector. [Full Topic]
@@ -2895,7 +2895,7 @@ func URLGetBaseURL(anURL URLRef) URLRef {
 func BagGetTypeID() TypeID {
 	rv := C.BagGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the value of a CFBoolean object as a standard C type Boolean. [Full Topic]
@@ -2943,7 +2943,7 @@ func NumberFormatterGetStyle(formatter NumberFormatterRef) NumberFormatterStyle 
 		unsafe.Pointer(formatter),
 	)
 	// *typing.AliasType
-	return NumberFormatterStyle(rv)
+	return *(*NumberFormatterStyle)(unsafe.Pointer(&rv))
 }
 
 // Changes the first character in each word of a string to uppercase (if it is a lowercase alphabetical character). [Full Topic]
@@ -2995,7 +2995,7 @@ func UserNotificationCheckBoxChecked(i Index) OptionFlags {
 		(C.CFIndex)(i),
 	)
 	// *typing.AliasType
-	return OptionFlags(rv)
+	return *(*OptionFlags)(unsafe.Pointer(&rv))
 }
 
 // Returns the last path component of a given URL. [Full Topic]
@@ -3019,7 +3019,7 @@ func StringGetMaximumSizeOfFileSystemRepresentation(string_ StringRef) Index {
 		unsafe.Pointer(string_),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Returns the location of a bundle’s Resources directory. [Full Topic]
@@ -3040,7 +3040,7 @@ func BundleCopyResourcesDirectoryURL(bundle BundleRef) URLRef {
 func BooleanGetTypeID() TypeID {
 	rv := C.BooleanGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Gets as a mutable string the string for an attributed string. [Full Topic]
@@ -3229,7 +3229,7 @@ func WriteStreamCanAcceptBytes(stream WriteStreamRef) bool {
 func SetGetTypeID() TypeID {
 	rv := C.SetGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the type ID for CFStringTokenizer. [Full Topic]
@@ -3238,7 +3238,7 @@ func SetGetTypeID() TypeID {
 func StringTokenizerGetTypeID() TypeID {
 	rv := C.StringTokenizerGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the localized name of a given time zone. [Full Topic]
@@ -3269,7 +3269,7 @@ func PreferencesCopyAppValue(key StringRef, applicationID StringRef) PropertyLis
 		unsafe.Pointer(applicationID),
 	)
 	// *typing.AliasType
-	return PropertyListRef(rv)
+	return *(*PropertyListRef)(unsafe.Pointer(&rv))
 }
 
 // Returns the type identifier for the CFAttributedString opaque type. [Full Topic]
@@ -3278,7 +3278,7 @@ func PreferencesCopyAppValue(key StringRef, applicationID StringRef) PropertyLis
 func AttributedStringGetTypeID() TypeID {
 	rv := C.AttributedStringGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the net location portion of a given URL. [Full Topic]
@@ -3363,7 +3363,7 @@ func RunLoopTimerGetOrder(timer RunLoopTimerRef) Index {
 		unsafe.Pointer(timer),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Replaces all characters of a CFMutableString object with other characters. [Full Topic]
@@ -3411,7 +3411,7 @@ func TimeZoneGetSecondsFromGMT(tz TimeZoneRef, at AbsoluteTime) TimeInterval {
 		(C.CFAbsoluteTime)(at),
 	)
 	// *typing.AliasType
-	return TimeInterval(rv)
+	return *(*TimeInterval)(unsafe.Pointer(&rv))
 }
 
 // Creates a readable stream for a file. [Full Topic]
@@ -3492,7 +3492,7 @@ func ArrayGetCount(theArray ArrayRef) Index {
 		unsafe.Pointer(theArray),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Returns the parent of a given tree. [Full Topic]
@@ -3560,7 +3560,7 @@ func URLEnumeratorGetDescendentLevel(enumerator URLEnumeratorRef) Index {
 		unsafe.Pointer(enumerator),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Returns the type identifier for the CFSocket opaque type. [Full Topic]
@@ -3569,7 +3569,7 @@ func URLEnumeratorGetDescendentLevel(enumerator URLEnumeratorRef) Index {
 func SocketGetTypeID() TypeID {
 	rv := C.SocketGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns a Boolean value that indicates whether a CFMessagePort object represents a remote port. [Full Topic]
@@ -3631,7 +3631,7 @@ func SocketSendData(s SocketRef, address DataRef, data DataRef, timeout TimeInte
 		(C.CFTimeInterval)(timeout),
 	)
 	// *typing.AliasType
-	return SocketError(rv)
+	return *(*SocketError)(unsafe.Pointer(&rv))
 }
 
 // Returns the native socket associated with a CFSocket object. [Full Topic]
@@ -3643,7 +3643,7 @@ func SocketGetNative(s SocketRef) SocketNativeHandle {
 		unsafe.Pointer(s),
 	)
 	// *typing.AliasType
-	return SocketNativeHandle(rv)
+	return *(*SocketNativeHandle)(unsafe.Pointer(&rv))
 }
 
 // Sets the default port number with which to connect to a CFSocket name server. [Full Topic]
@@ -3665,7 +3665,7 @@ func StringConvertIANACharSetNameToEncoding(theString StringRef) StringEncoding 
 		unsafe.Pointer(theString),
 	)
 	// *typing.AliasType
-	return StringEncoding(rv)
+	return *(*StringEncoding)(unsafe.Pointer(&rv))
 }
 
 // Creates a string from its “external representation.” [Full Topic]
@@ -3806,7 +3806,7 @@ func LocaleGetLanguageLineDirection(isoLangCode StringRef) LocaleLanguageDirecti
 		unsafe.Pointer(isoLangCode),
 	)
 	// *typing.AliasType
-	return LocaleLanguageDirection(rv)
+	return *(*LocaleLanguageDirection)(unsafe.Pointer(&rv))
 }
 
 // Creates a new CFDateFormatter object, localized to the given locale, which will format dates to the given date and time styles. [Full Topic]
@@ -3864,7 +3864,7 @@ func RunLoopTimerGetNextFireDate(timer RunLoopTimerRef) AbsoluteTime {
 		unsafe.Pointer(timer),
 	)
 	// *typing.AliasType
-	return AbsoluteTime(rv)
+	return *(*AbsoluteTime)(unsafe.Pointer(&rv))
 }
 
 // Returns the number of fraction digits that should be displayed, and the rounding increment, for a given currency. [Full Topic]
@@ -3909,7 +3909,7 @@ func WriteStreamWrite(stream WriteStreamRef, buffer *uint8, bufferLength Index) 
 		(C.CFIndex)(bufferLength),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Prints a description of a Core Foundation object to stderr. [Full Topic]
@@ -3947,7 +3947,7 @@ func StringTokenizerCopyCurrentTokenAttribute(tokenizer StringTokenizerRef, attr
 		(C.CFOptionFlags)(attribute),
 	)
 	// *typing.AliasType
-	return TypeRef(rv)
+	return *(*TypeRef)(unsafe.Pointer(&rv))
 }
 
 // Creates a CFUUID object for a specified string. [Full Topic]
@@ -3970,7 +3970,7 @@ func UUIDCreateFromString(alloc AllocatorRef, uuidStr StringRef) UUIDRef {
 func ArrayGetTypeID() TypeID {
 	rv := C.ArrayGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Signals a CFRunLoopSource object, marking it as ready to fire. [Full Topic]
@@ -3994,7 +3994,7 @@ func SocketSetAddress(s SocketRef, address DataRef) SocketError {
 		unsafe.Pointer(address),
 	)
 	// *typing.AliasType
-	return SocketError(rv)
+	return *(*SocketError)(unsafe.Pointer(&rv))
 }
 
 // Creates an immutable string from a C string. [Full Topic]
@@ -4083,7 +4083,7 @@ func DateGetAbsoluteTime(theDate DateRef) AbsoluteTime {
 		unsafe.Pointer(theDate),
 	)
 	// *typing.AliasType
-	return AbsoluteTime(rv)
+	return *(*AbsoluteTime)(unsafe.Pointer(&rv))
 }
 
 // Sets the locale for a calendar. [Full Topic]
@@ -4151,7 +4151,7 @@ func StringGetMaximumSizeForEncoding(length Index, encoding StringEncoding) Inde
 		(C.CFStringEncoding)(encoding),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Returns a Boolean value that indicates whether a CFRunLoopTimer object repeats. [Full Topic]
@@ -4241,7 +4241,7 @@ func TimeZoneGetDaylightSavingTimeOffset(tz TimeZoneRef, at AbsoluteTime) TimeIn
 		(C.CFAbsoluteTime)(at),
 	)
 	// *typing.AliasType
-	return TimeInterval(rv)
+	return *(*TimeInterval)(unsafe.Pointer(&rv))
 }
 
 // Sets all bits in a bit vector to a particular value. [Full Topic]
@@ -4283,7 +4283,7 @@ func GetTypeID(cf TypeRef) TypeID {
 		(C.CFTypeRef)(cf),
 	)
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Convenience function that directly obtains an integer preference value for the specified key. [Full Topic]
@@ -4299,7 +4299,7 @@ func PreferencesGetAppIntegerValue(key StringRef, applicationID StringRef, keyEx
 		(*C.bool)(unsafe.Pointer(&keyExistsAndHasValidFormat)),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Creates a CFString object from an external C string buffer that might serve as the backing store for the object. [Full Topic]
@@ -4329,7 +4329,7 @@ func StringCreateWithCStringNoCopy(alloc AllocatorRef, cStr string, encoding Str
 func ReadStreamGetTypeID() TypeID {
 	rv := C.ReadStreamGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Creates a CFDate object given an absolute time. [Full Topic]
@@ -4368,7 +4368,7 @@ func StringConvertNSStringEncodingToEncoding(encoding int32) StringEncoding {
 		C.int32_t(encoding),
 	)
 	// *typing.AliasType
-	return StringEncoding(rv)
+	return *(*StringEncoding)(unsafe.Pointer(&rv))
 }
 
 // Returns the smallest encoding on the current system for the character contents of a string. [Full Topic]
@@ -4380,7 +4380,7 @@ func StringGetSmallestEncoding(theString StringRef) StringEncoding {
 		unsafe.Pointer(theString),
 	)
 	// *typing.AliasType
-	return StringEncoding(rv)
+	return *(*StringEncoding)(unsafe.Pointer(&rv))
 }
 
 // Determines if the character data of a string begin with a specified sequence of characters. [Full Topic]
@@ -4452,7 +4452,7 @@ func BitVectorGetCount(bv BitVectorRef) Index {
 		unsafe.Pointer(bv),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Forces a CFRunLoop object to stop running. [Full Topic]
@@ -4695,7 +4695,7 @@ func DateFormatterSetProperty(formatter DateFormatterRef, key StringRef, value T
 func MachPortGetTypeID() TypeID {
 	rv := C.MachPortGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Creates a new CFURL object for a file system entity using the native representation. [Full Topic]
@@ -4740,7 +4740,7 @@ func StringConvertWindowsCodepageToEncoding(codepage uint32) StringEncoding {
 		C.uint32_t(codepage),
 	)
 	// *typing.AliasType
-	return StringEncoding(rv)
+	return *(*StringEncoding)(unsafe.Pointer(&rv))
 }
 
 // Trims whitespace from the beginning and end of a CFMutableString object. [Full Topic]
@@ -4771,7 +4771,7 @@ func MachPortIsValid(port MachPortRef) bool {
 func BinaryHeapGetTypeID() TypeID {
 	rv := C.BinaryHeapGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Defers internal consistency-checking and coalescing for a mutable attributed string. [Full Topic]
@@ -4820,7 +4820,7 @@ func GetRetainCount(cf TypeRef) Index {
 		(C.CFTypeRef)(cf),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Creates a time zone with a given name and data. [Full Topic]
@@ -4876,7 +4876,7 @@ func DateFormatterCreateISO8601Formatter(allocator AllocatorRef, formatOptions I
 func StringGetSystemEncoding() StringEncoding {
 	rv := C.StringGetSystemEncoding()
 	// *typing.AliasType
-	return StringEncoding(rv)
+	return *(*StringEncoding)(unsafe.Pointer(&rv))
 }
 
 // Quickly obtains a pointer to a C-string buffer containing the characters of a string in a given encoding. [Full Topic]
@@ -4923,7 +4923,7 @@ func CharacterSetCreateBitmapRepresentation(alloc AllocatorRef, theSet Character
 func AbsoluteTimeGetCurrent() AbsoluteTime {
 	rv := C.AbsoluteTimeGetCurrent()
 	// *typing.AliasType
-	return AbsoluteTime(rv)
+	return *(*AbsoluteTime)(unsafe.Pointer(&rv))
 }
 
 // Returns a Boolean value that indicates whether a given character is a low character in a surrogate pair. [Full Topic]
@@ -5077,7 +5077,7 @@ func BundleGetPackageInfo(bundle BundleRef, packageType *uint32, packageCreator 
 func FileDescriptorGetTypeID() TypeID {
 	rv := C.FileDescriptorGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Creates a CFMutableString object whose Unicode character buffer is controlled externally. [Full Topic]
@@ -5111,7 +5111,7 @@ func StringGetLength(theString StringRef) Index {
 		unsafe.Pointer(theString),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Converts a 32-bit integer from the host’s native byte order to little-endian format. [Full Topic]
@@ -5283,7 +5283,7 @@ func RunLoopSourceGetOrder(source RunLoopSourceRef) Index {
 		unsafe.Pointer(source),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Returns the first child of a tree. [Full Topic]
@@ -5319,7 +5319,7 @@ func DateFormatterGetTimeStyle(formatter DateFormatterRef) DateFormatterStyle {
 		unsafe.Pointer(formatter),
 	)
 	// *typing.AliasType
-	return DateFormatterStyle(rv)
+	return *(*DateFormatterStyle)(unsafe.Pointer(&rv))
 }
 
 // Determines whether two Core Foundation objects are considered equal. [Full Topic]
@@ -5444,7 +5444,7 @@ func UserNotificationDisplayNotice(timeout TimeInterval, flags OptionFlags, icon
 func BundleGetTypeID() TypeID {
 	rv := C.BundleGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Obtains the number of bytes likely to be allocated upon a specific request. [Full Topic]
@@ -5462,7 +5462,7 @@ func AllocatorGetPreferredSizeForSize(allocator AllocatorRef, size Index, hint O
 		(C.CFOptionFlags)(hint),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Normalizes the string into the specified form as described in Unicode Technical Report #15. [Full Topic]
@@ -5498,7 +5498,7 @@ func Retain(cf TypeRef) TypeRef {
 		(C.CFTypeRef)(cf),
 	)
 	// *typing.AliasType
-	return TypeRef(rv)
+	return *(*TypeRef)(unsafe.Pointer(&rv))
 }
 
 // Creates an immutable bit vector that is a copy of another bit vector. [Full Topic]
@@ -5540,7 +5540,7 @@ func TimeZoneResetSystem() {
 func WriteStreamGetTypeID() TypeID {
 	rv := C.WriteStreamGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the ordering parameter for a CFRunLoopObserver object. [Full Topic]
@@ -5552,7 +5552,7 @@ func RunLoopObserverGetOrder(observer RunLoopObserverRef) Index {
 		unsafe.Pointer(observer),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Unloads the main executable for the specified bundle. [Full Topic]
@@ -5598,7 +5598,7 @@ func DateGetTimeIntervalSinceDate(theDate DateRef, otherDate DateRef) TimeInterv
 		unsafe.Pointer(otherDate),
 	)
 	// *typing.AliasType
-	return TimeInterval(rv)
+	return *(*TimeInterval)(unsafe.Pointer(&rv))
 }
 
 // Returns the native file descriptor for a given CFFileDescriptor. [Full Topic]
@@ -5610,7 +5610,7 @@ func FileDescriptorGetNativeDescriptor(f FileDescriptorRef) FileDescriptorNative
 		unsafe.Pointer(f),
 	)
 	// *typing.AliasType
-	return FileDescriptorNativeDescriptor(rv)
+	return *(*FileDescriptorNativeDescriptor)(unsafe.Pointer(&rv))
 }
 
 // Creates a CFFileSecurityRef object. [Full Topic]
@@ -5667,7 +5667,7 @@ func StringTokenizerGoToTokenAtIndex(tokenizer StringTokenizerRef, index Index) 
 		(C.CFIndex)(index),
 	)
 	// *typing.AliasType
-	return StringTokenizerTokenType(rv)
+	return *(*StringTokenizerTokenType)(unsafe.Pointer(&rv))
 }
 
 // Returns the most compatible Mac OS script value for the given input encoding. [Full Topic]
@@ -5680,7 +5680,7 @@ func StringGetMostCompatibleMacStringEncoding(encoding StringEncoding) StringEnc
 		(C.CFStringEncoding)(encoding),
 	)
 	// *typing.AliasType
-	return StringEncoding(rv)
+	return *(*StringEncoding)(unsafe.Pointer(&rv))
 }
 
 // Creates a single string from the individual CFString objects that comprise the elements of an array. [Full Topic]
@@ -5748,7 +5748,7 @@ func BundleCopySupportFilesDirectoryURL(bundle BundleRef) URLRef {
 func MessagePortGetTypeID() TypeID {
 	rv := C.MessagePortGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the location of a bundle’s private Frameworks directory. [Full Topic]
@@ -5832,7 +5832,7 @@ func AttributedStringGetLength(aStr AttributedStringRef) Index {
 		unsafe.Pointer(aStr),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Returns a bundle’s localized information dictionary. [Full Topic]
@@ -5969,7 +5969,7 @@ func TreeGetChildAtIndex(tree TreeRef, idx Index) TreeRef {
 func DictionaryGetTypeID() TypeID {
 	rv := C.DictionaryGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns a plug-in's bundle. [Full Topic]
@@ -6268,7 +6268,7 @@ func PreferencesCopyValue(key StringRef, applicationID StringRef, userName Strin
 		unsafe.Pointer(hostName),
 	)
 	// *typing.AliasType
-	return PropertyListRef(rv)
+	return *(*PropertyListRef)(unsafe.Pointer(&rv))
 }
 
 // Returns the type identifier for the CFPlugIn opaque type. [Full Topic]
@@ -6277,7 +6277,7 @@ func PreferencesCopyValue(key StringRef, applicationID StringRef, userName Strin
 func PlugInGetTypeID() TypeID {
 	rv := C.PlugInGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Creates an array of CFString objects from a single CFString object. [Full Topic]
@@ -6355,7 +6355,7 @@ func CharacterSetGetPredefined(theSetIdentifier CharacterSetPredefinedSet) Chara
 func DataGetTypeID() TypeID {
 	rv := C.DataGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Waits for the user to respond to a notification or for the notification to time out. [Full Topic]
@@ -6381,7 +6381,7 @@ func UserNotificationReceiveResponse(userNotification UserNotificationRef, timeo
 func CharacterSetGetTypeID() TypeID {
 	rv := C.CharacterSetGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the application’s local notification center. [Full Topic]
@@ -6424,7 +6424,7 @@ func DictionaryGetCount(theDict DictionaryRef) Index {
 		unsafe.Pointer(theDict),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Returns the path extension of a given URL. [Full Topic]
@@ -6472,7 +6472,7 @@ func NumberGetByteSize(number NumberRef) Index {
 		unsafe.Pointer(number),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Creates a copy of a given URL and appends a path component. [Full Topic]
@@ -6507,7 +6507,7 @@ func StringCompare(theString1 StringRef, theString2 StringRef, compareOptions St
 		(C.CFStringCompareFlags)(compareOptions),
 	)
 	// *typing.AliasType
-	return ComparisonResult(rv)
+	return *(*ComparisonResult)(unsafe.Pointer(&rv))
 }
 
 // Returns a flag used to set the selected element of a pop-up menu. [Full Topic]
@@ -6520,7 +6520,7 @@ func UserNotificationPopUpSelection(n Index) OptionFlags {
 		(C.CFIndex)(n),
 	)
 	// *typing.AliasType
-	return OptionFlags(rv)
+	return *(*OptionFlags)(unsafe.Pointer(&rv))
 }
 
 // Returns the byte order of the current computer. [Full Topic]
@@ -6529,7 +6529,7 @@ func UserNotificationPopUpSelection(n Index) OptionFlags {
 func ByteOrderGetCurrent() ByteOrder {
 	rv := C.ByteOrderGetCurrent()
 	// *typing.AliasType
-	return ByteOrder(rv)
+	return *(*ByteOrder)(unsafe.Pointer(&rv))
 }
 
 // Opens a stream for reading. [Full Topic]
@@ -6550,7 +6550,7 @@ func ReadStreamOpen(stream ReadStreamRef) bool {
 func DateGetTypeID() TypeID {
 	rv := C.DateGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Converts a 16-bit integer from the host’s native byte order to little-endian format. [Full Topic]
@@ -6623,7 +6623,7 @@ func SocketCreateRunLoopSource(allocator AllocatorRef, s SocketRef, order Index)
 func BitVectorGetTypeID() TypeID {
 	rv := C.BitVectorGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Forms the union of two character sets. [Full Topic]
@@ -6659,7 +6659,7 @@ func SetGetCount(theSet SetRef) Index {
 		unsafe.Pointer(theSet),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Opens a stream for writing. [Full Topic]
@@ -6693,7 +6693,7 @@ func SocketSetSocketFlags(s SocketRef, flags OptionFlags) {
 func DateFormatterGetTypeID() TypeID {
 	rv := C.DateFormatterGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the type identifier for the CFURL opaque type. [Full Topic]
@@ -6702,7 +6702,7 @@ func DateFormatterGetTypeID() TypeID {
 func URLGetTypeID() TypeID {
 	rv := C.URLGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Removes all values from a mutable bag. [Full Topic]
@@ -6744,7 +6744,7 @@ func BitVectorFlipBitAtIndex(bv unsafe.Pointer, idx Index) {
 func NotificationCenterGetTypeID() TypeID {
 	rv := C.NotificationCenterGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the number of children in a tree. [Full Topic]
@@ -6756,7 +6756,7 @@ func TreeGetChildCount(tree TreeRef) Index {
 		unsafe.Pointer(tree),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Returns the type identifier for the CFFileSecurityRef opaque type. [Full Topic]
@@ -6765,7 +6765,7 @@ func TreeGetChildCount(tree TreeRef) Index {
 func FileSecurityGetTypeID() TypeID {
 	rv := C.FileSecurityGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the location of a resource contained in the specified bundle directory without requiring the creation of a CFBundle object. [Full Topic]
@@ -6804,7 +6804,7 @@ func BundleIsExecutableLoadable(bundle BundleRef) bool {
 func AllocatorGetTypeID() TypeID {
 	rv := C.AllocatorGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Sets a temporary resource value on the URL. [Full Topic]
@@ -6828,7 +6828,7 @@ func URLSetTemporaryResourcePropertyForKey(url URLRef, key StringRef, propertyVa
 func PlugInInstanceGetTypeID() TypeID {
 	rv := C.PlugInInstanceGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Registers a type and its corresponding factory function with a CFPlugIn object. [Full Topic]
@@ -6851,7 +6851,7 @@ func PlugInRegisterPlugInType(factoryUUID UUIDRef, typeUUID UUIDRef) bool {
 func UUIDGetTypeID() TypeID {
 	rv := C.UUIDGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns the data that stores the information used by a time zone. [Full Topic]
@@ -6875,7 +6875,7 @@ func LocaleGetLanguageCharacterDirection(isoLangCode StringRef) LocaleLanguageDi
 		unsafe.Pointer(isoLangCode),
 	)
 	// *typing.AliasType
-	return LocaleLanguageDirection(rv)
+	return *(*LocaleLanguageDirection)(unsafe.Pointer(&rv))
 }
 
 // Creates a string from a buffer, containing characters in a specified encoding, that might serve as the backing store for the new string. [Full Topic]
@@ -6958,7 +6958,7 @@ func TimeZoneGetNextDaylightSavingTimeTransition(tz TimeZoneRef, at AbsoluteTime
 		(C.CFAbsoluteTime)(at),
 	)
 	// *typing.AliasType
-	return AbsoluteTime(rv)
+	return *(*AbsoluteTime)(unsafe.Pointer(&rv))
 }
 
 // Returns the minimum value in a binary heap. [Full Topic]
@@ -7008,7 +7008,7 @@ func MessagePortCreateRunLoopSource(allocator AllocatorRef, local MessagePortRef
 func LocaleGetTypeID() TypeID {
 	rv := C.LocaleGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Computes the absolute time from components in a description string. [Full Topic]
@@ -7067,7 +7067,7 @@ func StringGetCharacterAtIndex(theString StringRef, idx Index) uint16 {
 		(C.CFIndex)(idx),
 	)
 	// *typing.AliasType
-	return uint16(rv)
+	return *(*uint16)(unsafe.Pointer(&rv))
 }
 
 // Returns the ordinal number of a calendrical unit within a larger unit at a specified absolute time. [Full Topic]
@@ -7088,7 +7088,7 @@ func CalendarGetOrdinalityOfUnit(calendar CalendarRef, smallerUnit CalendarUnit,
 		(C.CFAbsoluteTime)(at),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Recursively creates a copy of a given property list. [Full Topic]
@@ -7106,7 +7106,7 @@ func PropertyListCreateDeepCopy(allocator AllocatorRef, propertyList PropertyLis
 		(C.CFOptionFlags)(mutabilityOption),
 	)
 	// *typing.AliasType
-	return PropertyListRef(rv)
+	return *(*PropertyListRef)(unsafe.Pointer(&rv))
 }
 
 // Returns a time zone object for a specified calendar. [Full Topic]
@@ -7203,7 +7203,7 @@ func CharacterSetInvert(theSet unsafe.Pointer) {
 func ErrorGetTypeID() TypeID {
 	rv := C.ErrorGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Returns a pointer to a function in a bundle’s executable code using the function name as the search key. [Full Topic]
@@ -7280,7 +7280,7 @@ func SocketConnectToAddress(s SocketRef, address DataRef, timeout TimeInterval) 
 		(C.CFTimeInterval)(timeout),
 	)
 	// *typing.AliasType
-	return SocketError(rv)
+	return *(*SocketError)(unsafe.Pointer(&rv))
 }
 
 // Appends a C string to the character contents of a CFMutableString object. [Full Topic]
@@ -7309,7 +7309,7 @@ func DateFormatterGetDateStyle(formatter DateFormatterRef) DateFormatterStyle {
 		unsafe.Pointer(formatter),
 	)
 	// *typing.AliasType
-	return DateFormatterStyle(rv)
+	return *(*DateFormatterStyle)(unsafe.Pointer(&rv))
 }
 
 // Returns an array containing the localizations for a bundle or executable at a particular location. [Full Topic]
@@ -7345,7 +7345,7 @@ func BinaryHeapGetCount(heap BinaryHeapRef) Index {
 		unsafe.Pointer(heap),
 	)
 	// *typing.AliasType
-	return Index(rv)
+	return *(*Index)(unsafe.Pointer(&rv))
 }
 
 // Returns the type identifier for the CFUserNotification opaque type. [Full Topic]
@@ -7354,7 +7354,7 @@ func BinaryHeapGetCount(heap BinaryHeapRef) Index {
 func UserNotificationGetTypeID() TypeID {
 	rv := C.UserNotificationGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Assembles an array of URLs specifying all of the resources of the specified type found in a bundle. [Full Topic]
@@ -7379,7 +7379,7 @@ func BundleCopyResourceURLsOfType(bundle BundleRef, resourceType StringRef, subD
 func RunLoopSourceGetTypeID() TypeID {
 	rv := C.RunLoopSourceGetTypeID()
 	// *typing.AliasType
-	return TypeID(rv)
+	return *(*TypeID)(unsafe.Pointer(&rv))
 }
 
 // Inserts a string at a specified location in the character buffer of a CFMutableString object. [Full Topic]

@@ -8,7 +8,7 @@ uint StateBatchResourceSize(MPSStateBatch* batch) {
 		(MPSStateBatch*)batch
 	);
 }
-void HintTemporaryMemoryHighWaterMark(id<MTLCommandBuffer> cmdBuf, uint bytes) {
+void HintTemporaryMemoryHighWaterMark(void * cmdBuf, uint bytes) {
 	return (void)MPSHintTemporaryMemoryHighWaterMark(
 		// *typing.ProtocolType
 		(id<MTLCommandBuffer>)cmdBuf,
@@ -23,7 +23,7 @@ uint ImageBatchResourceSize(MPSImageBatch* batch) {
 		(MPSImageBatch*)batch
 	);
 }
-void SetHeapCacheDuration(id<MTLCommandBuffer> cmdBuf, double seconds) {
+void SetHeapCacheDuration(void * cmdBuf, double seconds) {
 	return (void)MPSSetHeapCacheDuration(
 		// *typing.ProtocolType
 		(id<MTLCommandBuffer>)cmdBuf,
@@ -40,7 +40,7 @@ uint StateBatchIncrementReadCount(MPSStateBatch* batch, long amount) {
 		(NSInteger)amount
 	);
 }
-void StateBatchSynchronize(MPSStateBatch* batch, id<MTLCommandBuffer> cmdBuf) {
+void StateBatchSynchronize(MPSStateBatch* batch, void * cmdBuf) {
 	return (void)MPSStateBatchSynchronize(
 		// *typing.PointerType
 		// -> *typing.AliasType
@@ -72,8 +72,8 @@ uint ImageBatchIncrementReadCount(MPSImageBatch* batch, long amount) {
 		(NSInteger)amount
 	);
 }
-id<MTLDevice> GetPreferredDevice(MPSDeviceOptions options) {
-	return (id<MTLDevice>)MPSGetPreferredDevice(
+void * GetPreferredDevice(MPSDeviceOptions options) {
+	return (void *)MPSGetPreferredDevice(
 		// *typing.AliasType
 		(MPSDeviceOptions)options
 	);
@@ -110,7 +110,7 @@ int32_t GetCustomKernelBatchedSourceIndex(MPSCustomKernelArgumentCount c, int32_
 		(int32_t)MPSMaxTextures
 	);
 }
-void ImageBatchSynchronize(MPSImageBatch* batch, id<MTLCommandBuffer> cmdBuf) {
+void ImageBatchSynchronize(MPSImageBatch* batch, void * cmdBuf) {
 	return (void)MPSImageBatchSynchronize(
 		// *typing.PointerType
 		// -> *typing.AliasType
@@ -119,7 +119,7 @@ void ImageBatchSynchronize(MPSImageBatch* batch, id<MTLCommandBuffer> cmdBuf) {
 		(id<MTLCommandBuffer>)cmdBuf
 	);
 }
-bool SupportsMTLDevice(id<MTLDevice> device) {
+bool SupportsMTLDevice(void * device) {
 	return (bool)MPSSupportsMTLDevice(
 		// *typing.ProtocolType
 		(id<MTLDevice>)device

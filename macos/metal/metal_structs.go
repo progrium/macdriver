@@ -17,7 +17,10 @@ type Viewport struct{}
 type ScissorRect struct{}
 type VertexAmplificationViewMapping struct{}
 type SizeAndAlign struct{}
-type SamplePosition struct{}
+type SamplePosition struct {
+	X float32
+	Y float32
+}
 type ClearColor struct{}
 type AccelerationStructureSizes struct{}
 
