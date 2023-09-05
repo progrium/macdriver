@@ -8,7 +8,11 @@ type Coordinate2D = SamplePosition
 type Region struct{}
 type Origin struct{}
 type TextureSwizzleChannels struct{}
-type Size struct{}
+type Size struct {
+	Width  uint
+	Height uint
+	Depth  uint
+}
 type Viewport struct{}
 type ScissorRect struct{}
 type VertexAmplificationViewMapping struct{}
