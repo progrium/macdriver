@@ -49,7 +49,7 @@ func StateBatchResourceSize(batch *foundation.Array) uint {
 func HintTemporaryMemoryHighWaterMark(cmdBuf metal.CommandBufferWrapper, bytes uint) {
 	C.HintTemporaryMemoryHighWaterMark(
 		// *typing.ProtocolType
-		cmdBuf,
+		unsafe.Pointer(&cmdBuf),
 		// *typing.PrimitiveType
 		C.uint(bytes),
 	)
@@ -73,7 +73,7 @@ func ImageBatchResourceSize(batch *foundation.Array) uint {
 func SetHeapCacheDuration(cmdBuf metal.CommandBufferWrapper, seconds float64) {
 	C.SetHeapCacheDuration(
 		// *typing.ProtocolType
-		cmdBuf,
+		unsafe.Pointer(&cmdBuf),
 		// *typing.PrimitiveType
 		C.double(seconds),
 	)
@@ -101,7 +101,7 @@ func StateBatchSynchronize(batch *foundation.Array, cmdBuf metal.CommandBufferWr
 		// *typing.PointerType
 		(*C.MPSStateBatch)(unsafe.Pointer(&batch)),
 		// *typing.ProtocolType
-		cmdBuf,
+		unsafe.Pointer(&cmdBuf),
 	)
 }
 
@@ -180,10 +180,10 @@ func GetCustomKernelBroadcastSourceIndex(c CustomKernelArgumentCount, sourceInde
 func GetImageType(image Image) ImageType {
 	rv := C.GetImageType(
 		// *typing.ClassType
-		image,
+		unsafe.Pointer(&image),
 	)
 	// *typing.AliasType
-	return ImageType(rv)
+	return *(*ImageType)(unsafe.Pointer(&rv))
 }
 
 // Returns the integer division parameters for a specified divisor. [Full Topic]
@@ -222,7 +222,7 @@ func ImageBatchSynchronize(batch *foundation.Array, cmdBuf metal.CommandBufferWr
 		// *typing.PointerType
 		(*C.MPSImageBatch)(unsafe.Pointer(&batch)),
 		// *typing.ProtocolType
-		cmdBuf,
+		unsafe.Pointer(&cmdBuf),
 	)
 }
 
@@ -232,7 +232,7 @@ func ImageBatchSynchronize(batch *foundation.Array, cmdBuf metal.CommandBufferWr
 func SupportsMTLDevice(device metal.DeviceWrapper) bool {
 	rv := C.SupportsMTLDevice(
 		// *typing.ProtocolType
-		device,
+		unsafe.Pointer(&device),
 	)
 	// *typing.PrimitiveType
 	return bool(rv)
