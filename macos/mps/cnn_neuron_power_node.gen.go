@@ -45,32 +45,6 @@ func CNNNeuronPowerNode_NodeWithSource(sourceNode INNImageNode) CNNNeuronPowerNo
 	return CNNNeuronPowerNodeClass.NodeWithSource(sourceNode)
 }
 
-func (cc _CNNNeuronPowerNodeClass) NodeWithSourceABC(sourceNode INNImageNode, a float64, b float64, c float64) CNNNeuronPowerNode {
-	rv := objc.Call[CNNNeuronPowerNode](cc, objc.Sel("nodeWithSource:a:b:c:"), objc.Ptr(sourceNode), a, b, c)
-	return rv
-}
-
-//	[Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnneuronpowernode/2951951-nodewithsource?language=objc
-func CNNNeuronPowerNode_NodeWithSourceABC(sourceNode INNImageNode, a float64, b float64, c float64) CNNNeuronPowerNode {
-	return CNNNeuronPowerNodeClass.NodeWithSourceABC(sourceNode, a, b, c)
-}
-
-func (c_ CNNNeuronPowerNode) InitWithSourceABC(sourceNode INNImageNode, a float64, b float64, c float64) CNNNeuronPowerNode {
-	rv := objc.Call[CNNNeuronPowerNode](c_, objc.Sel("initWithSource:a:b:c:"), objc.Ptr(sourceNode), a, b, c)
-	return rv
-}
-
-//	[Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnneuronpowernode/2951946-initwithsource?language=objc
-func NewCNNNeuronPowerNodeWithSourceABC(sourceNode INNImageNode, a float64, b float64, c float64) CNNNeuronPowerNode {
-	instance := CNNNeuronPowerNodeClass.Alloc().InitWithSourceABC(sourceNode, a, b, c)
-	instance.Autorelease()
-	return instance
-}
-
 func (c_ CNNNeuronPowerNode) InitWithSource(sourceNode INNImageNode) CNNNeuronPowerNode {
 	rv := objc.Call[CNNNeuronPowerNode](c_, objc.Sel("initWithSource:"), objc.Ptr(sourceNode))
 	return rv

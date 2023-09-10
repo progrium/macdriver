@@ -19,14 +19,14 @@ type _ImageCannyClass struct {
 // An interface definition for the [ImageCanny] class.
 type IImageCanny interface {
 	IUnaryImageKernel
-	Sigma() float64
 	LowThreshold() float64
 	SetLowThreshold(value float64)
+	ColorTransform() *float64
 	UseFastMode() bool
 	SetUseFastMode(value bool)
+	Sigma() float64
 	HighThreshold() float64
 	SetHighThreshold(value float64)
-	ColorTransform() *float64
 }
 
 //	[Full Topic]
@@ -40,21 +40,6 @@ func ImageCannyFrom(ptr unsafe.Pointer) ImageCanny {
 	return ImageCanny{
 		UnaryImageKernel: UnaryImageKernelFrom(ptr),
 	}
-}
-
-func (i_ ImageCanny) InitWithDeviceLinearToGrayScaleTransformSigma(device metal.PDevice, transform *float64, sigma float64) ImageCanny {
-	po0 := objc.WrapAsProtocol("MTLDevice", device)
-	rv := objc.Call[ImageCanny](i_, objc.Sel("initWithDevice:linearToGrayScaleTransform:sigma:"), po0, transform, sigma)
-	return rv
-}
-
-//	[Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpsimagecanny/3547973-initwithdevice?language=objc
-func NewImageCannyWithDeviceLinearToGrayScaleTransformSigma(device metal.PDevice, transform *float64, sigma float64) ImageCanny {
-	instance := ImageCannyClass.Alloc().InitWithDeviceLinearToGrayScaleTransformSigma(device, transform, sigma)
-	instance.Autorelease()
-	return instance
 }
 
 func (i_ ImageCanny) InitWithDevice(device metal.PDevice) ImageCanny {
@@ -109,14 +94,6 @@ func ImageCanny_CopyWithZoneDevice(zone unsafe.Pointer, device metal.PDevice) Im
 
 //	[Full Topic]
 //
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpsimagecanny/3547975-sigma?language=objc
-func (i_ ImageCanny) Sigma() float64 {
-	rv := objc.Call[float64](i_, objc.Sel("sigma"))
-	return rv
-}
-
-//	[Full Topic]
-//
 // [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpsimagecanny/3547974-lowthreshold?language=objc
 func (i_ ImageCanny) LowThreshold() float64 {
 	rv := objc.Call[float64](i_, objc.Sel("lowThreshold"))
@@ -128,6 +105,14 @@ func (i_ ImageCanny) LowThreshold() float64 {
 // [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpsimagecanny/3547974-lowthreshold?language=objc
 func (i_ ImageCanny) SetLowThreshold(value float64) {
 	objc.Call[objc.Void](i_, objc.Sel("setLowThreshold:"), value)
+}
+
+//	[Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpsimagecanny/3547969-colortransform?language=objc
+func (i_ ImageCanny) ColorTransform() *float64 {
+	rv := objc.Call[*float64](i_, objc.Sel("colorTransform"))
+	return rv
 }
 
 //	[Full Topic]
@@ -147,6 +132,14 @@ func (i_ ImageCanny) SetUseFastMode(value bool) {
 
 //	[Full Topic]
 //
+// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpsimagecanny/3547975-sigma?language=objc
+func (i_ ImageCanny) Sigma() float64 {
+	rv := objc.Call[float64](i_, objc.Sel("sigma"))
+	return rv
+}
+
+//	[Full Topic]
+//
 // [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpsimagecanny/3547970-highthreshold?language=objc
 func (i_ ImageCanny) HighThreshold() float64 {
 	rv := objc.Call[float64](i_, objc.Sel("highThreshold"))
@@ -158,12 +151,4 @@ func (i_ ImageCanny) HighThreshold() float64 {
 // [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpsimagecanny/3547970-highthreshold?language=objc
 func (i_ ImageCanny) SetHighThreshold(value float64) {
 	objc.Call[objc.Void](i_, objc.Sel("setHighThreshold:"), value)
-}
-
-//	[Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpsimagecanny/3547969-colortransform?language=objc
-func (i_ ImageCanny) ColorTransform() *float64 {
-	rv := objc.Call[*float64](i_, objc.Sel("colorTransform"))
-	return rv
 }

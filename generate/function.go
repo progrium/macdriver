@@ -77,7 +77,7 @@ func (db *Generator) ToFunction(fw string, sym Symbol) *codegen.Function {
 		"MTLSizeMake": true, // duplicate symbol issue
 	}
 	if knownIssues[sym.Name] {
-		_, err := sym.Parse()
+		_, err := sym.Parse("macos") // TODO(tmc): think about this
 		log.Printf("skipping function %s %s because of known issue: decl='%s' err='%v'\n", fw, sym.Name, sym.Declaration, err)
 		return nil
 	}

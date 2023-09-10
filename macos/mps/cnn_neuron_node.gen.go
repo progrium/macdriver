@@ -18,9 +18,9 @@ type _CNNNeuronNodeClass struct {
 // An interface definition for the [CNNNeuronNode] class.
 type ICNNNeuronNode interface {
 	INNFilterNode
+	A() float64
 	C() float64
 	B() float64
-	A() float64
 }
 
 // The virtual base class for MPS CNN neuron nodes. [Full Topic]
@@ -70,6 +70,14 @@ func (c_ CNNNeuronNode) Init() CNNNeuronNode {
 
 //	[Full Topic]
 //
+// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnneuronnode/2921459-a?language=objc
+func (c_ CNNNeuronNode) A() float64 {
+	rv := objc.Call[float64](c_, objc.Sel("a"))
+	return rv
+}
+
+//	[Full Topic]
+//
 // [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnneuronnode/2935553-c?language=objc
 func (c_ CNNNeuronNode) C() float64 {
 	rv := objc.Call[float64](c_, objc.Sel("c"))
@@ -81,13 +89,5 @@ func (c_ CNNNeuronNode) C() float64 {
 // [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnneuronnode/2921461-b?language=objc
 func (c_ CNNNeuronNode) B() float64 {
 	rv := objc.Call[float64](c_, objc.Sel("b"))
-	return rv
-}
-
-//	[Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnneuronnode/2921459-a?language=objc
-func (c_ CNNNeuronNode) A() float64 {
-	rv := objc.Call[float64](c_, objc.Sel("a"))
 	return rv
 }

@@ -36,22 +36,6 @@ func CNNBinaryConvolutionFrom(ptr unsafe.Pointer) CNNBinaryConvolution {
 	}
 }
 
-func (c_ CNNBinaryConvolution) InitWithDeviceConvolutionDataOutputBiasTermsOutputScaleTermsInputBiasTermsInputScaleTermsTypeFlags(device metal.PDevice, convolutionData PCNNConvolutionDataSource, outputBiasTerms *float64, outputScaleTerms *float64, inputBiasTerms *float64, inputScaleTerms *float64, type_ CNNBinaryConvolutionType, flags CNNBinaryConvolutionFlags) CNNBinaryConvolution {
-	po0 := objc.WrapAsProtocol("MTLDevice", device)
-	po1 := objc.WrapAsProtocol("MPSCNNConvolutionDataSource", convolutionData)
-	rv := objc.Call[CNNBinaryConvolution](c_, objc.Sel("initWithDevice:convolutionData:outputBiasTerms:outputScaleTerms:inputBiasTerms:inputScaleTerms:type:flags:"), po0, po1, outputBiasTerms, outputScaleTerms, inputBiasTerms, inputScaleTerms, type_, flags)
-	return rv
-}
-
-// Initializes a binary convolution kernel. [Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnbinaryconvolution/2866978-initwithdevice?language=objc
-func NewCNNBinaryConvolutionWithDeviceConvolutionDataOutputBiasTermsOutputScaleTermsInputBiasTermsInputScaleTermsTypeFlags(device metal.PDevice, convolutionData PCNNConvolutionDataSource, outputBiasTerms *float64, outputScaleTerms *float64, inputBiasTerms *float64, inputScaleTerms *float64, type_ CNNBinaryConvolutionType, flags CNNBinaryConvolutionFlags) CNNBinaryConvolution {
-	instance := CNNBinaryConvolutionClass.Alloc().InitWithDeviceConvolutionDataOutputBiasTermsOutputScaleTermsInputBiasTermsInputScaleTermsTypeFlags(device, convolutionData, outputBiasTerms, outputScaleTerms, inputBiasTerms, inputScaleTerms, type_, flags)
-	instance.Autorelease()
-	return instance
-}
-
 func (c_ CNNBinaryConvolution) InitWithDeviceConvolutionDataScaleValueTypeFlags(device metal.PDevice, convolutionData PCNNConvolutionDataSource, scaleValue float64, type_ CNNBinaryConvolutionType, flags CNNBinaryConvolutionFlags) CNNBinaryConvolution {
 	po0 := objc.WrapAsProtocol("MTLDevice", device)
 	po1 := objc.WrapAsProtocol("MPSCNNConvolutionDataSource", convolutionData)

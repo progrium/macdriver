@@ -114,7 +114,7 @@ func (db *Generator) TypeFromSymbol(sym Symbol) typing.Type {
 			Module: modules.Get(module),
 		}
 	case "Function":
-		typ, err := sym.Parse()
+		typ, err := sym.Parse("tmc") // TODO(tmc): consider this
 		if err != nil {
 			fmt.Printf("TypeFromSymbol: failed to parse %s: %s\n", sym.Declaration, err)
 			return nil
