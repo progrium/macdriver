@@ -1,5 +1,7 @@
 package mps
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestMPSValid(t *testing.T) {}

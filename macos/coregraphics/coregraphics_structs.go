@@ -3,8 +3,6 @@ package coregraphics
 // #import <CoreGraphics/CGGeometry.h>
 import "C"
 import (
-	"unsafe"
-
 	"github.com/progrium/macdriver/objc"
 )
 
@@ -13,9 +11,6 @@ import (
 // todo
 type PathElement struct{}
 type ScreenUpdateMoveDelta struct{}
-
-type ColorConversionInfoRef unsafe.Pointer
-type DisplayStreamUpdateRef unsafe.Pointer
 
 type AffineTransform struct {
 	A  Float
@@ -34,6 +29,11 @@ type Point struct {
 type Rect struct {
 	Origin Point
 	Size   Size
+}
+
+type Vector struct {
+	Dx Float
+	Dy Float
 }
 
 type Size struct {

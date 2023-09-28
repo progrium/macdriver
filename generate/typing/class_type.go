@@ -43,6 +43,14 @@ func (c *ClassType) ObjcName() string {
 	return c.Name + "*"
 }
 
+func (c *ClassType) CName() string {
+	return c.Name + "*"
+}
+
+func (c *ClassType) CSignature() string {
+	return "void *"
+}
+
 func (c *ClassType) DeclareModule() *modules.Module {
 	return c.Module
 }

@@ -54,19 +54,23 @@ func (db *Generator) TypeFromSymbol(sym Symbol) typing.Type {
 		}
 	case "Union":
 		return &typing.RefType{
-			Name: sym.Name,
+			Name:  sym.Name,
+			GName: modules.TrimPrefix(sym.Name),
 		}
 	case "Type":
 		if sym.Type != "Type Alias" {
 			fmt.Printf("TypeFromSymbol: name=%s declaration=%s path=%s\n", sym.Name, sym.Declaration, sym.Path)
 			panic("unknown type")
 		}
+
+		// special handling of Ref structs
 		if (strings.HasSuffix(sym.Name, "Ref") && strings.Contains(sym.Declaration, "struct")) ||
 			sym.Name == "AudioComponent" ||
 			// sym.Name == "NSZone" ||
 			sym.Name == "MusicSequence" {
 			return &typing.RefType{
-				Name: sym.Name,
+				Name:  sym.Name,
+				GName: modules.TrimPrefix(sym.Name),
 			}
 		}
 		st, err := sym.Parse(db.Platform)
@@ -76,7 +80,8 @@ func (db *Generator) TypeFromSymbol(sym Symbol) typing.Type {
 		}
 		if st.Struct != nil {
 			return &typing.RefType{
-				Name: st.Struct.Name,
+				Name:  st.Struct.Name,
+				GName: modules.TrimPrefix(sym.Name),
 			}
 		}
 		if st.TypeAlias == nil {
@@ -88,18 +93,50 @@ func (db *Generator) TypeFromSymbol(sym Symbol) typing.Type {
 			fmt.Printf("TypeFromSymbol: name=%s declaration=%s path=%s\n", sym.Name, sym.Declaration, sym.Path)
 			panic("unable to parse type")
 		}
-		return &typing.AliasType{
+		typ = &typing.AliasType{
 			Name:   sym.Name,
 			GName:  modules.TrimPrefix(sym.Name),
 			Module: modules.Get(module),
 			Type:   typ,
 		}
+		return typ
 	case "Struct":
+		if strings.HasSuffix(sym.Name, "Ref") {
+			return &typing.RefType{
+				Name:   sym.Name,
+				GName:  modules.TrimPrefix(sym.Name),
+				Module: modules.Get(module),
+			}
+		}
 		return &typing.StructType{
 			Name:   sym.Name,
 			GName:  modules.TrimPrefix(sym.Name),
 			Module: modules.Get(module),
 		}
+	case "Function":
+		typ, err := sym.Parse("tmc") // TODO(tmc): consider this
+		if err != nil {
+			fmt.Printf("TypeFromSymbol: failed to parse %s: %s\n", sym.Declaration, err)
+			return nil
+		}
+		fn := typ.Function
+		if fn == nil {
+			fmt.Printf("TypeFromSymbol: name=%s declaration=%s\n", sym.Name, sym.Declaration)
+			return nil
+		}
+		ft := &typing.FunctionType{
+			Name:   sym.Name,
+			GName:  modules.TrimPrefix(sym.Name),
+			Module: modules.Get(module),
+		}
+		for _, arg := range fn.Args {
+			ft.Parameters = append(ft.Parameters, typing.Parameter{
+				Name: arg.Name,
+				Type: db.ParseType(arg.Type),
+			})
+		}
+		ft.ReturnType = db.ParseType(fn.ReturnType)
+		return ft
 	default:
 		fmt.Printf("TypeFromSymbol: kind=%s name=%s path=%s\n", sym.Kind, sym.Name, sym.Path)
 		panic("bad type")
@@ -107,6 +144,7 @@ func (db *Generator) TypeFromSymbol(sym Symbol) typing.Type {
 
 }
 
+// ParseType parses a type from a declparse.TypeInfo.
 func (db *Generator) ParseType(ti declparse.TypeInfo) (typ typing.Type) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -160,8 +198,32 @@ func (db *Generator) ParseType(ti declparse.TypeInfo) (typ typing.Type) {
 	case "Class":
 		// objc type
 		typ = typing.Class
+	case "off_t":
+		typ = typing.Int
 	case "CGFloat", "Float64":
 		typ = typing.Float
+	case "float":
+		typ = &typing.PrimitiveType{
+			GoName_:   "float64",
+			ObjcName_: "float",
+			CName_:    "float",
+		}
+	case "int":
+		typ = &typing.PrimitiveType{
+			GoName_:   "int",
+			ObjcName_: "int",
+			CName_:    "int",
+		}
+	case "char":
+		cTyp := "char"
+		if ti.IsPtr {
+			typ = &typing.CStringType{}
+		} else {
+			typ = &typing.PrimitiveType{
+				GoName_:   "byte",
+				ObjcName_: cTyp,
+			}
+		}
 	case "NSString":
 		typ = &typing.StringType{}
 		ref = true
@@ -199,31 +261,47 @@ func (db *Generator) ParseType(ti declparse.TypeInfo) (typ typing.Type) {
 		typ = typing.Object
 		ref = true
 	default:
+
 		var ok bool
 		typ, ok = typing.GetPrimitiveType(ti.Name)
+		// log.Println("primitive", ti.Name, ok)
 		if !ok {
 			typ, ok = typing.GetDispatchType(ti.Name)
 		}
+		// log.Println("dispatch", ti.Name, ok)
 		if !ok {
 			typ, ok = typing.GetKernelType(ti.Name)
 		}
+		// log.Println("kernel", ti.Name, ok)
 		if !ok {
 			typ = db.TypeFromSymbolName(ti.Name)
+			// log.Printf("symbol %v %T %v - %v", ti.Name, typ, ok, string(j))
 			switch typ.(type) {
 			case *typing.ClassType:
 				ref = true
+			case *typing.StructType:
+				//ref = true
 			case *typing.ProtocolType:
 				panic("standalone proto type")
 			}
 		}
 	}
 
-	if ti.IsPtr && !ref {
+	if _, ok := typ.(*typing.CStringType); ok {
+		return typ
+	}
+
+	//fmt.Printf("ParseType: %s %s %s\n", ti.Name, typ, ti)
+	if (ti.IsPtr || ti.IsPtrPtr) && !ref {
 		if _, ok := typ.(*typing.VoidType); ok {
 			typ = &typing.VoidPointerType{}
 		} else {
+			if typ == nil {
+				panic("nil type")
+			}
 			typ = &typing.PointerType{
-				Type: typ,
+				Type:    typ,
+				IsConst: ti.Annots[declparse.TypeAnnotConst],
 			}
 		}
 	}

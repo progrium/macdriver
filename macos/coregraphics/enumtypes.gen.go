@@ -618,7 +618,7 @@ const (
 // A PDF Boolean value. [Full Topic]
 //
 // [Full Topic]: https://developer.apple.com/documentation/coregraphics/cgpdfboolean?language=objc
-type PDFBoolean uint8
+type PDFBoolean byte
 
 // Box types for a PDF page. [Full Topic]
 //

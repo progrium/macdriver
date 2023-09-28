@@ -101,6 +101,7 @@ func CanIgnoreNotFound(p any) bool {
 		"QuickLook",
 		"force feedback",
 		"opengl es",
+		"ColorSync",
 	} {
 		if strings.EqualFold(m, mod) {
 			return true
@@ -154,8 +155,8 @@ var All = []Module{
 	{"IOSurface", "IOSurface", "iosurface", "IOSurface/IOSurface.h", []string{"IOSurface", "kIOSurface"}},
 	{"Metal", "Metal", "metal", "Metal/Metal.h", []string{"MTL"}},
 	{"MetalKit", "Metal Kit", "metalkit", "MetalKit/MetalKit.h", []string{"MTK"}},
-	{"MetalPerformanceShadersGraph", "Metal Performance Shaders Graph", "mpsgraph", "MetalPerformanceShadersGraph/MetalPerformanceShadersGraph.h", []string{"MPSGraph"}},
 	{"MetalPerformanceShaders", "Metal Performance Shaders", "mps", "MetalPerformanceShaders/MetalPerformanceShaders.h", []string{"MPS"}},
+	{"MetalPerformanceShadersGraph", "Metal Performance Shaders Graph", "mpsgraph", "MetalPerformanceShadersGraph/MetalPerformanceShadersGraph.h", []string{"MPSGraph"}},
 	{"SystemConfiguration", "System Configuration", "sysconfig", "SystemConfiguration/SystemConfiguration.h", []string{"SC", "kSC"}},
 	{"MediaPlayer", "Media Player", "mediaplayer", "MediaPlayer/MediaPlayer.h", []string{"MP"}},
 }

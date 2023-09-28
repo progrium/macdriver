@@ -24,20 +24,20 @@ type ICNNArithmetic interface {
 	EncodeBatchToCommandBufferObjectPrimaryImagesSecondaryImagesDestinationStatesDestinationImages(commandBufferObject objc.IObject, primaryImages *foundation.Array, secondaryImages *foundation.Array, destinationStates *foundation.Array, destinationImages *foundation.Array)
 	EncodeToCommandBufferPrimaryImageSecondaryImageDestinationStateDestinationImage(commandBuffer metal.PCommandBuffer, primaryImage IImage, secondaryImage IImage, destinationState ICNNArithmeticGradientState, destinationImage IImage)
 	EncodeToCommandBufferObjectPrimaryImageSecondaryImageDestinationStateDestinationImage(commandBufferObject objc.IObject, primaryImage IImage, secondaryImage IImage, destinationState ICNNArithmeticGradientState, destinationImage IImage)
-	PrimaryScale() float64
-	SetPrimaryScale(value float64)
-	PrimaryStrideInFeatureChannels() uint
-	SetPrimaryStrideInFeatureChannels(value uint)
 	SecondaryScale() float64
 	SetSecondaryScale(value float64)
-	MinimumValue() float64
-	SetMinimumValue(value float64)
 	MaximumValue() float64
 	SetMaximumValue(value float64)
-	SecondaryStrideInFeatureChannels() uint
-	SetSecondaryStrideInFeatureChannels(value uint)
+	PrimaryScale() float64
+	SetPrimaryScale(value float64)
+	MinimumValue() float64
+	SetMinimumValue(value float64)
 	Bias() float64
 	SetBias(value float64)
+	SecondaryStrideInFeatureChannels() uint
+	SetSecondaryStrideInFeatureChannels(value uint)
+	PrimaryStrideInFeatureChannels() uint
+	SetPrimaryStrideInFeatureChannels(value uint)
 }
 
 // The base class for arithmetic operators. [Full Topic]
@@ -135,36 +135,6 @@ func (c_ CNNArithmetic) EncodeToCommandBufferObjectPrimaryImageSecondaryImageDes
 
 //	[Full Topic]
 //
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2942509-primaryscale?language=objc
-func (c_ CNNArithmetic) PrimaryScale() float64 {
-	rv := objc.Call[float64](c_, objc.Sel("primaryScale"))
-	return rv
-}
-
-//	[Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2942509-primaryscale?language=objc
-func (c_ CNNArithmetic) SetPrimaryScale(value float64) {
-	objc.Call[objc.Void](c_, objc.Sel("setPrimaryScale:"), value)
-}
-
-//	[Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2947963-primarystrideinfeaturechannels?language=objc
-func (c_ CNNArithmetic) PrimaryStrideInFeatureChannels() uint {
-	rv := objc.Call[uint](c_, objc.Sel("primaryStrideInFeatureChannels"))
-	return rv
-}
-
-//	[Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2947963-primarystrideinfeaturechannels?language=objc
-func (c_ CNNArithmetic) SetPrimaryStrideInFeatureChannels(value uint) {
-	objc.Call[objc.Void](c_, objc.Sel("setPrimaryStrideInFeatureChannels:"), value)
-}
-
-//	[Full Topic]
-//
 // [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2942497-secondaryscale?language=objc
 func (c_ CNNArithmetic) SecondaryScale() float64 {
 	rv := objc.Call[float64](c_, objc.Sel("secondaryScale"))
@@ -176,21 +146,6 @@ func (c_ CNNArithmetic) SecondaryScale() float64 {
 // [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2942497-secondaryscale?language=objc
 func (c_ CNNArithmetic) SetSecondaryScale(value float64) {
 	objc.Call[objc.Void](c_, objc.Sel("setSecondaryScale:"), value)
-}
-
-//	[Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2942502-minimumvalue?language=objc
-func (c_ CNNArithmetic) MinimumValue() float64 {
-	rv := objc.Call[float64](c_, objc.Sel("minimumValue"))
-	return rv
-}
-
-//	[Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2942502-minimumvalue?language=objc
-func (c_ CNNArithmetic) SetMinimumValue(value float64) {
-	objc.Call[objc.Void](c_, objc.Sel("setMinimumValue:"), value)
 }
 
 //	[Full Topic]
@@ -210,17 +165,32 @@ func (c_ CNNArithmetic) SetMaximumValue(value float64) {
 
 //	[Full Topic]
 //
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2947964-secondarystrideinfeaturechannels?language=objc
-func (c_ CNNArithmetic) SecondaryStrideInFeatureChannels() uint {
-	rv := objc.Call[uint](c_, objc.Sel("secondaryStrideInFeatureChannels"))
+// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2942509-primaryscale?language=objc
+func (c_ CNNArithmetic) PrimaryScale() float64 {
+	rv := objc.Call[float64](c_, objc.Sel("primaryScale"))
 	return rv
 }
 
 //	[Full Topic]
 //
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2947964-secondarystrideinfeaturechannels?language=objc
-func (c_ CNNArithmetic) SetSecondaryStrideInFeatureChannels(value uint) {
-	objc.Call[objc.Void](c_, objc.Sel("setSecondaryStrideInFeatureChannels:"), value)
+// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2942509-primaryscale?language=objc
+func (c_ CNNArithmetic) SetPrimaryScale(value float64) {
+	objc.Call[objc.Void](c_, objc.Sel("setPrimaryScale:"), value)
+}
+
+//	[Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2942502-minimumvalue?language=objc
+func (c_ CNNArithmetic) MinimumValue() float64 {
+	rv := objc.Call[float64](c_, objc.Sel("minimumValue"))
+	return rv
+}
+
+//	[Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2942502-minimumvalue?language=objc
+func (c_ CNNArithmetic) SetMinimumValue(value float64) {
+	objc.Call[objc.Void](c_, objc.Sel("setMinimumValue:"), value)
 }
 
 //	[Full Topic]
@@ -236,4 +206,34 @@ func (c_ CNNArithmetic) Bias() float64 {
 // [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2942499-bias?language=objc
 func (c_ CNNArithmetic) SetBias(value float64) {
 	objc.Call[objc.Void](c_, objc.Sel("setBias:"), value)
+}
+
+//	[Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2947964-secondarystrideinfeaturechannels?language=objc
+func (c_ CNNArithmetic) SecondaryStrideInFeatureChannels() uint {
+	rv := objc.Call[uint](c_, objc.Sel("secondaryStrideInFeatureChannels"))
+	return rv
+}
+
+//	[Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2947964-secondarystrideinfeaturechannels?language=objc
+func (c_ CNNArithmetic) SetSecondaryStrideInFeatureChannels(value uint) {
+	objc.Call[objc.Void](c_, objc.Sel("setSecondaryStrideInFeatureChannels:"), value)
+}
+
+//	[Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2947963-primarystrideinfeaturechannels?language=objc
+func (c_ CNNArithmetic) PrimaryStrideInFeatureChannels() uint {
+	rv := objc.Call[uint](c_, objc.Sel("primaryStrideInFeatureChannels"))
+	return rv
+}
+
+//	[Full Topic]
+//
+// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnarithmetic/2947963-primarystrideinfeaturechannels?language=objc
+func (c_ CNNArithmetic) SetPrimaryStrideInFeatureChannels(value uint) {
+	objc.Call[objc.Void](c_, objc.Sel("setPrimaryStrideInFeatureChannels:"), value)
 }

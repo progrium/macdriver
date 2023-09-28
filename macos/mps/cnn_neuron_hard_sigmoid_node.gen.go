@@ -33,30 +33,16 @@ func CNNNeuronHardSigmoidNodeFrom(ptr unsafe.Pointer) CNNNeuronHardSigmoidNode {
 	}
 }
 
-func (c_ CNNNeuronHardSigmoidNode) InitWithSourceAB(sourceNode INNImageNode, a float64, b float64) CNNNeuronHardSigmoidNode {
-	rv := objc.Call[CNNNeuronHardSigmoidNode](c_, objc.Sel("initWithSource:a:b:"), objc.Ptr(sourceNode), a, b)
+func (cc _CNNNeuronHardSigmoidNodeClass) NodeWithSource(sourceNode INNImageNode) CNNNeuronHardSigmoidNode {
+	rv := objc.Call[CNNNeuronHardSigmoidNode](cc, objc.Sel("nodeWithSource:"), objc.Ptr(sourceNode))
 	return rv
 }
 
 //	[Full Topic]
 //
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnneuronhardsigmoidnode/2875181-initwithsource?language=objc
-func NewCNNNeuronHardSigmoidNodeWithSourceAB(sourceNode INNImageNode, a float64, b float64) CNNNeuronHardSigmoidNode {
-	instance := CNNNeuronHardSigmoidNodeClass.Alloc().InitWithSourceAB(sourceNode, a, b)
-	instance.Autorelease()
-	return instance
-}
-
-func (cc _CNNNeuronHardSigmoidNodeClass) NodeWithSourceAB(sourceNode INNImageNode, a float64, b float64) CNNNeuronHardSigmoidNode {
-	rv := objc.Call[CNNNeuronHardSigmoidNode](cc, objc.Sel("nodeWithSource:a:b:"), objc.Ptr(sourceNode), a, b)
-	return rv
-}
-
-//	[Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnneuronhardsigmoidnode/2875986-nodewithsource?language=objc
-func CNNNeuronHardSigmoidNode_NodeWithSourceAB(sourceNode INNImageNode, a float64, b float64) CNNNeuronHardSigmoidNode {
-	return CNNNeuronHardSigmoidNodeClass.NodeWithSourceAB(sourceNode, a, b)
+// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnneuronhardsigmoidnode/2921453-nodewithsource?language=objc
+func CNNNeuronHardSigmoidNode_NodeWithSource(sourceNode INNImageNode) CNNNeuronHardSigmoidNode {
+	return CNNNeuronHardSigmoidNodeClass.NodeWithSource(sourceNode)
 }
 
 func (c_ CNNNeuronHardSigmoidNode) InitWithSource(sourceNode INNImageNode) CNNNeuronHardSigmoidNode {
@@ -71,18 +57,6 @@ func NewCNNNeuronHardSigmoidNodeWithSource(sourceNode INNImageNode) CNNNeuronHar
 	instance := CNNNeuronHardSigmoidNodeClass.Alloc().InitWithSource(sourceNode)
 	instance.Autorelease()
 	return instance
-}
-
-func (cc _CNNNeuronHardSigmoidNodeClass) NodeWithSource(sourceNode INNImageNode) CNNNeuronHardSigmoidNode {
-	rv := objc.Call[CNNNeuronHardSigmoidNode](cc, objc.Sel("nodeWithSource:"), objc.Ptr(sourceNode))
-	return rv
-}
-
-//	[Full Topic]
-//
-// [Full Topic]: https://developer.apple.com/documentation/metalperformanceshaders/mpscnnneuronhardsigmoidnode/2921453-nodewithsource?language=objc
-func CNNNeuronHardSigmoidNode_NodeWithSource(sourceNode INNImageNode) CNNNeuronHardSigmoidNode {
-	return CNNNeuronHardSigmoidNodeClass.NodeWithSource(sourceNode)
 }
 
 func (cc _CNNNeuronHardSigmoidNodeClass) Alloc() CNNNeuronHardSigmoidNode {
